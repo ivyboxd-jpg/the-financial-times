@@ -14,7 +14,7 @@
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size: 18px;
             line-height: 1.6;
-            padding-bottom: 80px;
+            padding-bottom: 100px;
         }
 
         .container {
@@ -59,11 +59,21 @@
             font-size: 13px;
             font-weight: 700;
             color: #888;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
         }
         .meta span { color: #2662EA; margin-right: 15px; text-transform: uppercase; }
+
+        /* INTRO TEXT */
+        .intro-text {
+            font-size: 19px;
+            font-weight: 400;
+            font-style: italic;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .intro-text strong { font-weight: 800; font-style: normal; }
 
         /* BODY CONTENT */
         p { margin-bottom: 24px; color: #222; }
@@ -82,7 +92,7 @@
             font-weight: 600;
         }
 
-        /* MODERN CODE EDITOR STYLING */
+        /* --- CODE EDITOR STYLING --- */
         .editor-container {
             background: #1E1E1E;
             border-radius: 12px;
@@ -93,7 +103,6 @@
             border: 1px solid #333;
         }
 
-        /* TOOLBAR */
         .editor-header {
             background: #252526;
             padding: 12px 20px;
@@ -103,78 +112,43 @@
             border-bottom: 1px solid #333;
         }
 
-        .window-controls {
-            display: flex;
-            gap: 8px;
-        }
+        .window-controls { display: flex; gap: 8px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
         .red { background: #FF5F56; }
         .yellow { background: #FFBD2E; }
         .green { background: #27C93F; }
 
-        .filename {
-            color: #999;
-            font-size: 13px;
-            font-weight: 500;
-            opacity: 0.8;
-        }
+        .filename { color: #999; font-size: 13px; font-weight: 500; opacity: 0.8; margin-left: 10px; }
+        .action-buttons { display: flex; gap: 10px; align-items: center; }
 
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        /* ICONS */
         .icon-btn {
-            background: none;
+            background: transparent;
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.1s ease;
+            padding: 6px;
+            border-radius: 6px;
+            transition: background 0.2s ease;
             position: relative;
         }
         
-        .icon-btn:active { transform: scale(0.95); }
+        .icon-btn:hover { background: rgba(255,255,255,0.1); }
+        .icon-btn svg { width: 20px; height: 20px; fill: #aaa; transition: fill 0.2s; }
+        .icon-btn:hover svg { fill: #fff; }
+        .play-btn:hover svg { fill: #27C93F; }
 
-        .play-btn {
-            width: 32px;
-            height: 32px;
-            background-color: #27C93F; /* Green play button */
-            border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-        
-        .play-btn:hover { background-color: #2ecc71; }
+        .code-area { padding: 25px; color: #D4D4D4; font-size: 14px; line-height: 1.6; position: relative; }
 
-        .copy-btn svg {
-            fill: #aaa;
-            width: 18px;
-            height: 18px;
-            transition: fill 0.2s;
-        }
-        .copy-btn:hover svg { fill: #fff; }
+        /* SYNTAX */
+        .kwd { color: #C586C0; font-weight: bold; }
+        .func { color: #DCDCAA; }
+        .str { color: #CE9178; }
+        .var { color: #9CDCFE; }
+        .comment { color: #6A9955; font-style: italic; }
 
-        /* CODE AREA */
-        .code-area {
-            padding: 25px;
-            color: #D4D4D4;
-            font-size: 14px;
-            line-height: 1.6;
-            position: relative;
-        }
-
-        /* SYNTAX HIGHLIGHTING */
-        .kwd { color: #C586C0; font-weight: bold; } /* Keywords (purple) */
-        .func { color: #DCDCAA; } /* Functions (yellow) */
-        .str { color: #CE9178; } /* Strings (orange) */
-        .var { color: #9CDCFE; } /* Variables (blue) */
-        .num { color: #B5CEA8; } /* Numbers (green) */
-        .comment { color: #6A9955; font-style: italic; } /* Comments */
-
-        /* TERMINAL OUTPUT */
+        /* TERMINAL */
         .terminal {
             background: #090909;
             color: #33FF00;
@@ -186,43 +160,157 @@
             transition: all 0.3s ease;
             overflow: hidden;
         }
-        
-        .terminal.active {
-            height: auto;
-            min-height: 60px;
-            padding: 20px 25px;
-            opacity: 1;
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 15px;
-            background: #33FF00;
-            animation: blink 1s infinite;
-            vertical-align: sub;
-        }
-
+        .terminal.active { height: auto; min-height: 60px; padding: 20px 25px; opacity: 1; }
+        .cursor { display: inline-block; width: 8px; height: 15px; background: #33FF00; animation: blink 1s infinite; vertical-align: sub; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
 
         /* TOOLTIP */
         .tooltip {
             position: absolute;
-            top: -30px;
-            right: 0;
-            background: #333;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2662EA;
             color: white;
-            padding: 4px 8px;
+            padding: 5px 10px;
             border-radius: 4px;
             font-size: 12px;
+            font-weight: 700;
+            font-family: sans-serif;
             opacity: 0;
-            transition: opacity 0.2s;
+            visibility: hidden;
+            transition: opacity 0.2s, top 0.2s;
             pointer-events: none;
+            white-space: nowrap;
+            z-index: 10;
         }
-        .tooltip.show { opacity: 1; }
+        .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #2662EA transparent transparent transparent;
+        }
+        .tooltip.show { opacity: 1; visibility: visible; top: -45px; }
 
-        /* SVG ICONS */
-        svg { display: block; }
+        /* --- SYSTEM HEALTH --- */
+        .status-dashboard {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 40px 0;
+            background: #FAFAFA;
+        }
+
+        .status-header {
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .status-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .status-label { font-weight: 700; font-size: 15px; color: #333; }
+        .status-bar-bg { flex-grow: 1; height: 8px; background: #E0E0E0; border-radius: 10px; margin: 0 20px; overflow: hidden; }
+        .status-bar-fill { height: 100%; background: #27C93F; border-radius: 10px; }
+        .fill-100 { width: 100%; }
+        .status-value { font-family: monospace; font-weight: 700; color: #27C93F; font-size: 14px; min-width: 80px; text-align: right; }
+
+        /* --- ROADMAP SECTION (NEW) --- */
+        .roadmap-container {
+            margin-top: 30px;
+            border-left: 3px solid #eee;
+            padding-left: 20px;
+        }
+        
+        .roadmap-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .roadmap-item::before {
+            content: "";
+            width: 12px;
+            height: 12px;
+            background: #2662EA;
+            border-radius: 50%;
+            position: absolute;
+            left: -27.5px;
+            top: 5px;
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 1px #2662EA;
+        }
+        
+        .roadmap-time {
+            font-size: 12px;
+            font-weight: 800;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        
+        .roadmap-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #111;
+        }
+
+        /* --- REVIEWS --- */
+        .review-box {
+            background: #F0F4F8;
+            padding: 20px;
+            border-left: 4px solid #2662EA;
+            margin-top: 30px;
+        }
+        .stars { color: #FFBD2E; font-size: 18px; margin-bottom: 5px; }
+        .review-text { font-style: italic; font-size: 16px; color: #444; margin-bottom: 10px; }
+        .reviewer { font-weight: 800; font-size: 13px; text-transform: uppercase; color: #111; }
+
+        /* --- TOAST NOTIFICATION (NEW) --- */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #eee;
+            transform: translateY(100px);
+            opacity: 0;
+            animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: 2s;
+            z-index: 100;
+            max-width: 320px;
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .toast-icon {
+            width: 40px;
+            height: 40px;
+            background: #E8F0FE;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2662EA;
+        }
+
+        .toast-content h4 { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
+        .toast-content p { font-size: 13px; color: #666; margin: 0; line-height: 1.3; }
+
     </style>
 </head>
 <body>
@@ -243,6 +331,11 @@
         <span>By Niv</span> // Feb 20, 2026, 4:05 PM
     </div>
 
+    <!-- INTRO -->
+    <p class="intro-text">
+        <strong>Good afternoon.</strong> I shouldn’t be offering technical analysis on Physics since my understanding of "electricity" is limited to charging my phone. So this is just me passing along details of a new industry trend: recognizing that you are the standard, regardless of how the exam went.
+    </p>
+
     <!-- CONTENT -->
     <p>There is a concept in Silicon Valley called "shipping." It doesn't matter how messy the code was, or how much coffee was consumed in the sprint. What matters is that you shipped. Today, you shipped the Physics Exam.</p>
 
@@ -254,34 +347,60 @@
 
     <p>You managed your internal resources (sanity) while dealing with external threats (confusing questions about velocity). That shows executive function. That shows a Founder mindset. The exam result is just a single data point in a massive dataset of brilliance. <span class="highlight">Your valuation is locked in.</span></p>
 
+    <!-- SYSTEM HEALTH DASHBOARD -->
+    <div class="status-dashboard">
+        <div class="status-header">AARADHYA INC. // SYSTEM HEALTH METRICS</div>
+        
+        <div class="status-item">
+            <span class="status-label">Resilience</span>
+            <div class="status-bar-bg"><div class="status-bar-fill fill-100"></div></div>
+            <span class="status-value">100% OK</span>
+        </div>
+        
+        <div class="status-item">
+            <span class="status-label">Intelligence</span>
+            <div class="status-bar-bg"><div class="status-bar-fill fill-100"></div></div>
+            <span class="status-value">OPTIMAL</span>
+        </div>
+
+        <div class="status-item">
+            <span class="status-label">Lovability</span>
+            <div class="status-bar-bg"><div class="status-bar-fill fill-100"></div></div>
+            <span class="status-value">OVERFLOW</span>
+        </div>
+    </div>
+
     <h3>The Algorithm of Adoration</h3>
 
     <p>I ran a quick diagnostic on my feelings regarding this exam season. While you were calculating forces and friction, I was calculating my own investment thesis. It turns out, the math is actually quite simple.</p>
 
-    <p>I’ve written a small script to visualize the logic. Press the play button to see the output.</p>
+    <p>I’ve written a small script to visualize the logic. You can audit the code yourself below.</p>
 
     <!-- INTERACTIVE CODE EDITOR -->
     <div class="editor-container">
         
         <!-- HEADER / TOOLBAR -->
         <div class="editor-header">
-            <div class="window-controls">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
+            <div style="display:flex; align-items:center;">
+                <div class="window-controls">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="filename">valuation_model.py</div>
             </div>
-            <div class="filename">valuation_model.py</div>
+
             <div class="action-buttons">
                 <!-- Copy Button -->
-                <button class="icon-btn copy-btn" onclick="copyCode()" title="Copy Code">
+                <button class="icon-btn copy-btn" onclick="copyCode()" aria-label="Copy Code">
                     <div class="tooltip" id="copyTooltip">Copied!</div>
                     <svg viewBox="0 0 24 24">
                         <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
                     </svg>
                 </button>
                 <!-- Play Button -->
-                <button class="icon-btn play-btn" onclick="runCode()" title="Run Script">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+                <button class="icon-btn play-btn" onclick="runCode()" aria-label="Run Code">
+                    <svg viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z"/>
                     </svg>
                 </button>
@@ -290,61 +409,89 @@
 
         <!-- CODE CONTENT -->
         <div class="code-area" id="codeBlock">
-<span class="comment"># Configuring parameters for the Physics Exam Post-Mortem</span>
-<span class="kwd">import</span> <span class="var">love_module</span>
+<span class="comment"># Configuring parameters for Post-Exam Analysis</span>
+<span class="kwd">import</span> <span class="var">unconditional_love</span>
 
-<span class="kwd">def</span> <span class="func">calculate_market_value</span>(<span class="var">physics_score</span>, <span class="var">stress_level</span>):
+<span class="kwd">def</span> <span class="func">analyze_performance</span>(<span class="var">physics_score</span>):
     <span class="comment"># Define core investment thesis</span>
-    <span class="var">my_sentiment</span> = <span class="str">"Bullish"</span>
-    <span class="var">exam_relevance</span> = <span class="num">0.0</span>
-
+    <span class="var">my_admiration</span> = <span class="str">"Infinite"</span>
+    
     <span class="kwd">if</span> <span class="var">physics_score</span> == <span class="str">"Perfect"</span>:
-        <span class="kwd">return</span> <span class="str">"Status: You are incredible (I knew it)."</span>
+        <span class="kwd">return</span> <span class="str">"Result: You are amazing (I knew it)."</span>
     
     <span class="kwd">elif</span> <span class="var">physics_score</span> == <span class="str">"Disaster"</span>:
-        <span class="kwd">return</span> <span class="str">"Status: You are incredible (let me buy you food)."</span>
+        <span class="kwd">return</span> <span class="str">"Result: You are amazing (let me buy you food)."</span>
     
     <span class="kwd">else</span>:
-        <span class="kwd">return</span> <span class="str">"Status: You are incredible (come here)."</span>
+        <span class="kwd">return</span> <span class="str">"Result: You are amazing (come here)."</span>
 
-<span class="comment"># Execute Analysis</span>
-<span class="func">print</span>(<span class="func">calculate_market_value</span>(<span class="str">"Unknown"</span>, <span class="str">"High"</span>))
+<span class="comment"># Execute Analysis on current status</span>
+<span class="func">print</span>(<span class="func">analyze_performance</span>(<span class="str">"Unknown"</span>))
         </div>
 
         <!-- TERMINAL OUTPUT -->
         <div class="terminal" id="terminal">
             > python3 valuation_model.py<br>
-            > compiling_feelings...<br>
+            > connecting_to_heart_server...<br>
             > <span id="typewriter"></span><span class="cursor"></span>
         </div>
 
     </div>
 
-    <h3>Future Outlook: Bullish</h3>
+    <h3>Strategic Roadmap: The Next 12 Hours</h3>
+    <p>We are now pivoting to the "Recovery Phase." Here is the official roadmap for the rest of the evening.</p>
+    
+    <div class="roadmap-container">
+        <div class="roadmap-item">
+            <div class="roadmap-time">NOW</div>
+            <div class="roadmap-title">Cease all intellectual operations. Close the books.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-time">18:00 HOURS</div>
+            <div class="roadmap-title">Caloric injection (Eat something delicious).</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-time">20:00 HOURS</div>
+            <div class="roadmap-title">Mandatory distraction protocols (Talk to me).</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-time">ONGOING</div>
+            <div class="roadmap-title">Accepting the fact that you did a great job.</div>
+        </div>
+    </div>
 
-    <p>My sentiment analysis on you remains overwhelmingly positive. The Physics paper was just one hurdle in a much larger roadmap. You cleared it. The system is stable.</p>
+    <!-- VERIFIED REVIEW -->
+    <div class="review-box">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"The most resilient human I know. Handles pressure with grace, even if she doesn't think so. Would invest in this startup again and again."</p>
+        <div class="reviewer">Verified Review • Niv</div>
+    </div>
 
-    <p>So, take the win. The win isn't the grade—the win is that you faced the challenge and didn't fold. You are smart, you are capable, and frankly, you look great even when you're stressed about thermodynamics.</p>
+    <p style="margin-top: 30px;"><strong>Recommendation:</strong> Close the books. Order food. Accept adoration. The market loves you.</p>
 
-    <p><strong>Recommendation:</strong> Close the books. Order food. Accept adoration. The market loves you.</p>
+</div>
 
+<!-- TOAST NOTIFICATION -->
+<div class="toast-notification">
+    <div class="toast-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+        </svg>
+    </div>
+    <div class="toast-content">
+        <h4>New Message from Niv</h4>
+        <p>Just a reminder: I'm incredibly proud of you.</p>
+    </div>
 </div>
 
 <script>
     function runCode() {
         const terminal = document.getElementById('terminal');
         const typewriterSpan = document.getElementById('typewriter');
-        
-        // Show terminal with animation
         terminal.classList.add('active');
-        
-        // Text to type
-        const text = "RESULT: You are loved unconditionally. Logic is irrefutable.";
+        const text = "OUTPUT: You are loved unconditionally. Logic is irrefutable.";
         let i = 0;
-        
-        // Clear previous
         typewriterSpan.innerHTML = "";
-        
         function typeWriter() {
             if (i < text.length) {
                 typewriterSpan.innerHTML += text.charAt(i);
@@ -352,8 +499,6 @@
                 setTimeout(typeWriter, 50);
             }
         }
-        
-        // Start typing effect after slight delay to simulate processing
         setTimeout(typeWriter, 600);
     }
 
@@ -362,9 +507,7 @@
         navigator.clipboard.writeText(codeText).then(() => {
             const tooltip = document.getElementById('copyTooltip');
             tooltip.classList.add('show');
-            setTimeout(() => {
-                tooltip.classList.remove('show');
-            }, 2000);
+            setTimeout(() => { tooltip.classList.remove('show'); }, 2000);
         });
     }
 </script>
