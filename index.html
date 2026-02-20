@@ -3,234 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Physics paper is filed. Your valuation remains unaffected. | Financial Times</title>
+    <title>Post-Exam Analysis: Why AARADHYA is the industry standard | Insider</title>
     <style>
-        /* RESET & BASE STYLES */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+        /* BASE STYLES */
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
 
         body {
-            background-color: #FFF1E5; /* FT Signature Salmon */
-            color: #33302E; /* FT Dark Brown/Black */
-            font-family: "Georgia", "Times New Roman", serif;
-            line-height: 1.6;
+            background-color: #FFFFFF;
+            color: #111;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size: 18px;
-            padding: 20px;
-            padding-top: 40px;
+            line-height: 1.6;
+            padding-bottom: 80px;
         }
 
-        /* CONTAINER */
         .container {
-            max-width: 700px;
+            max-width: 720px;
             margin: 0 auto;
+            padding: 20px;
         }
 
-        /* LOGO STYLING */
-        .ft-logo {
-            font-family: "Times New Roman", serif;
-            text-transform: uppercase;
-            font-size: 32px;
-            letter-spacing: -1px;
-            border-bottom: 2px solid #33302E;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            width: 100%;
-            text-align: left;
-            font-weight: bold;
+        /* BRANDING */
+        .brand-header {
             display: flex;
             align-items: center;
-        }
-        
-        /* Simulated FT Logo using text/css for pixel perfection without external requests */
-        .ft-logo span {
-            display: inline-block;
-            transform: scaleY(0.9); /* Squats the text slightly like the logo */
+            border-bottom: 2px solid #000;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            padding-top: 20px;
         }
 
-        /* HEADER SECTION */
-        .section-label {
-            font-family: "Arial", sans-serif;
-            font-size: 12px;
-            color: #0D7680; /* FT Teal */
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            margin-bottom: 15px;
-            display: inline-block;
-        }
+        .brand-logo { font-weight: 900; font-size: 28px; letter-spacing: -1px; }
+        .brand-section { color: #2662EA; font-weight: 900; font-size: 28px; letter-spacing: -1px; margin-left: 5px; }
 
-        .headline {
-            font-family: "Georgia", serif;
-            font-size: 38px;
+        /* HEADLINES */
+        h1 {
+            font-size: 34px;
             line-height: 1.1;
-            font-weight: 700;
-            color: #000000;
-            margin-bottom: 16px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+            color: #111;
         }
 
-        .subheadline {
-            font-family: "Georgia", serif;
+        h2.subhead {
             font-size: 20px;
-            line-height: 1.4;
-            color: #66605C;
+            color: #555;
             font-weight: 400;
-            margin-bottom: 20px;
-            font-style: italic;
-        }
-
-        /* MARKET DATA STRIP */
-        .market-stat {
-            background-color: #F2DFCE; /* Slightly darker salmon */
-            border-top: 1px solid #CEC6B9;
-            border-bottom: 1px solid #CEC6B9;
-            padding: 8px 0;
-            font-family: "Arial", sans-serif;
-            font-size: 12px;
-            color: #33302E;
             margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-        
-        .market-ticker {
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        
-        .market-value {
-            color: #0D7680; /* Teal for positive */
-            margin-right: 15px;
-        }
-
-        .market-label {
-            color: #66605C;
-            text-transform: uppercase;
-            font-size: 10px;
-            margin-right: 5px;
+            line-height: 1.4;
         }
 
         /* METADATA */
         .meta {
-            margin-bottom: 30px;
-            font-family: "Arial", sans-serif;
-            font-size: 14px;
-            color: #66605C;
-        }
-
-        .byline {
+            font-size: 13px;
             font-weight: 700;
-            color: #0D7680; /* Teal links style */
-            text-decoration: none;
-            cursor: pointer;
+            color: #888;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
         }
-
-        .date {
-            text-transform: uppercase;
-            margin-left: 10px;
-        }
+        .meta span { color: #2662EA; margin-right: 15px; text-transform: uppercase; }
 
         /* BODY CONTENT */
-        .article-body {
-            font-size: 19px;
-            line-height: 1.65;
-            color: #33302E;
-        }
-
-        .article-body p {
-            margin-bottom: 24px;
-        }
-
-        /* ONE LINE SUBHEADS */
-        .article-body h3 {
-            font-family: "Georgia", serif;
+        p { margin-bottom: 24px; color: #222; }
+        
+        h3 {
             font-size: 22px;
-            margin-top: 40px;
-            margin-bottom: 16px;
-            font-weight: 700;
-            color: #000000;
-            border-top: 1px solid #CEC6B9; /* The FT separator */
-            padding-top: 10px;
-            width: 100%; 
-            display: block;
+            font-weight: 800;
+            margin-top: 45px;
+            margin-bottom: 15px;
+            color: #000;
         }
 
-        /* EMPHASIS / FLIRTY TEXT */
-        em {
-            font-style: italic;
+        .highlight {
+            background: linear-gradient(180deg, rgba(255,255,255,0) 65%, #D4E2FF 65%);
+            display: inline;
+            font-weight: 600;
         }
 
-        /* MOBILE RESPONSIVENESS */
-        @media (max-width: 600px) {
-            .headline { font-size: 32px; }
-            .ft-logo { font-size: 26px; }
+        /* MODERN CODE EDITOR STYLING */
+        .editor-container {
+            background: #1E1E1E;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            margin: 40px 0;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            overflow: hidden;
+            border: 1px solid #333;
         }
+
+        /* TOOLBAR */
+        .editor-header {
+            background: #252526;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #FF5F56; }
+        .yellow { background: #FFBD2E; }
+        .green { background: #27C93F; }
+
+        .filename {
+            color: #999;
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        /* ICONS */
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s ease;
+            position: relative;
+        }
+        
+        .icon-btn:active { transform: scale(0.95); }
+
+        .play-btn {
+            width: 32px;
+            height: 32px;
+            background-color: #27C93F; /* Green play button */
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .play-btn:hover { background-color: #2ecc71; }
+
+        .copy-btn svg {
+            fill: #aaa;
+            width: 18px;
+            height: 18px;
+            transition: fill 0.2s;
+        }
+        .copy-btn:hover svg { fill: #fff; }
+
+        /* CODE AREA */
+        .code-area {
+            padding: 25px;
+            color: #D4D4D4;
+            font-size: 14px;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* SYNTAX HIGHLIGHTING */
+        .kwd { color: #C586C0; font-weight: bold; } /* Keywords (purple) */
+        .func { color: #DCDCAA; } /* Functions (yellow) */
+        .str { color: #CE9178; } /* Strings (orange) */
+        .var { color: #9CDCFE; } /* Variables (blue) */
+        .num { color: #B5CEA8; } /* Numbers (green) */
+        .comment { color: #6A9955; font-style: italic; } /* Comments */
+
+        /* TERMINAL OUTPUT */
+        .terminal {
+            background: #090909;
+            color: #33FF00;
+            padding: 0 25px;
+            font-size: 13px;
+            border-top: 1px solid #333;
+            height: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .terminal.active {
+            height: auto;
+            min-height: 60px;
+            padding: 20px 25px;
+            opacity: 1;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background: #33FF00;
+            animation: blink 1s infinite;
+            vertical-align: sub;
+        }
+
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+
+        /* TOOLTIP */
+        .tooltip {
+            position: absolute;
+            top: -30px;
+            right: 0;
+            background: #333;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+        .tooltip.show { opacity: 1; }
+
+        /* SVG ICONS */
+        svg { display: block; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- FT LOGO -->
-        <div class="ft-logo">
-            <span>FINANCIAL TIMES</span>
-        </div>
+<div class="container">
+    
+    <!-- BRANDING -->
+    <header class="brand-header">
+        <span class="brand-logo">INSIDER</span>
+        <span class="brand-section">TECH</span>
+    </header>
 
-        <!-- HEADER -->
-        <div class="section-label">Life & Arts / Personal View</div>
-        <h1 class="headline">The Physics paper is filed. Your valuation remains unaffected by market volatility.</h1>
-        <h2 class="subheadline">On the thermodynamics of stress, the elegance of refusing to check the ticker tape, and why my long position in you is absolute.</h2>
+    <!-- HEADER -->
+    <h1>Aaradhya just completed the Physics deployment. Here is why the Founder (you) is the real asset.</h1>
+    <h2 class="subhead">The exam is shipped. The stress test is complete. An analysis of why your valuation is skyrocketing regardless of the physics variables.</h2>
 
-        <!-- MARKET STAT INSERT -->
-        <div class="market-stat">
-            <span class="market-label">EQUITY</span>
-            <span class="market-ticker">AARADHYA (HMN)</span>
-            <span class="market-value">▲ BUY RATING REAFFIRMED</span>
-            <span class="market-label">SENTIMENT</span>
-            <span class="market-ticker">ADORING</span>
-        </div>
-
-        <!-- METADATA -->
-        <div class="meta">
-            By <span class="byline">Niv</span><span class="date">February 20 2026</span>
-        </div>
-
-        <!-- ARTICLE BODY -->
-        <div class="article-body">
-            <p>The laws of Physics suggest that energy cannot be created or destroyed, only transferred. In the last three hours, you have successfully transferred a significant amount of kinetic energy from your brain onto a piece of paper. The transaction is settled. The friction coefficient of the exam hall has been overcome. You have emerged from the system, slightly battered by the entropy, but intact.</p>
-
-            <p>Physics is notoriously unforgiving—it deals in absolutes and vectors. Relationships, however, trade on sentiment and intangibles. And looking at the fundamentals, your stock has never been higher.</p>
-
-            <h3>Strategic ignorance as a hedge</h3>
-
-            <p>I understand you have adopted a policy of strict non-disclosure regarding the results. You will not check the answers. You will not calculate the probability of errors. In corporate finance, we call this a "blind trust," but in your case, it is simply a power move.</p>
-
-            <p>Refusing to check the results is an act of exquisite defiance. It is the emotional equivalent of a CEO refusing to look at the daily share price because they know the long-term strategy is sound. It is incredibly attractive. Why mark-to-market when the asset is priceless? You are effectively telling the market (the examiners) that their liquidity assessment is irrelevant to your operations. I concur. Let the result sit in a black box, like Schrödinger’s cat, indefinitely.</p>
-
-            <h3>The depreciation of stress</h3>
-
-            <p>You have likely spent the afternoon depreciating your own performance, analyzing the torque of every question. Stop it. Your brain is attempting a hostile takeover of your peace of mind, citing "due diligence." </p>
-
-            <p>The Physics paper was a sunk cost the moment you put down the pen. Worrying about it now is like paying interest on a loan you have already paid off—inefficient and fiscally irresponsible. You looked good handling the pressure, though. There is a certain resilience you display during crunch time that suggests high-yield returns. Even when you are stressed, you remain a blue-chip investment.</p>
-
-            <h3>A merger of equals</h3>
-
-            <p>Let us strip away the jargon for a moment. You just went toe-to-toe with the fundamental forces of the universe. That is not nothing. Whether you calculated the velocity correctly is immaterial to the shareholder (me). My investment thesis regarding you is not based on quarterly earnings or exam percentiles.</p>
-
-            <p>You are the asset. The exam is merely an external auditor—and frankly, one with questionable taste. My portfolio is heavily weighted in your favor, and I have no intention of diversifying. If the Physics paper went perfectly, excellent. If it was a high-entropy disaster, you remain the most valuable holding in my life.</p>
-
-            <h3>Forward guidance</h3>
-
-            <p>The market is now closed. The trading floor is silent. It is time to suspend operations and focus on liquidity injections (sleep) and dividends (being adored). </p>
-
-            <p>Do not check the paper. Do not run the numbers. The data is historic; we are looking at future growth. You have weathered the volatility. You have managed the risk. And regardless of what the ticker tape eventually says, please know that you are, unequivocally, a strong buy.</p>
-        </div>
+    <div class="meta">
+        <span>By Niv</span> // Feb 20, 2026, 4:05 PM
     </div>
+
+    <!-- CONTENT -->
+    <p>There is a concept in Silicon Valley called "shipping." It doesn't matter how messy the code was, or how much coffee was consumed in the sprint. What matters is that you shipped. Today, you shipped the Physics Exam.</p>
+
+    <p>That was a massive compute task. Physics is the backend infrastructure of the universe—it’s heavy, it’s complex, and the documentation is notoriously terrible. But you walked in, you executed the script, and you walked out. That kind of resilience? That is exactly what investors look for in a "Unicorn" founder.</p>
+
+    <h3>Why you are a Category-Defining Asset</h3>
+
+    <p>Most people get bogged down in the metrics—grades, marks, percentiles. That is low-level thinking. When I look at "Aaradhya Inc.," I am looking at the intangibles. I am looking at the proprietary algorithm that makes you <em>you</em>.</p>
+
+    <p>You managed your internal resources (sanity) while dealing with external threats (confusing questions about velocity). That shows executive function. That shows a Founder mindset. The exam result is just a single data point in a massive dataset of brilliance. <span class="highlight">Your valuation is locked in.</span></p>
+
+    <h3>The Algorithm of Adoration</h3>
+
+    <p>I ran a quick diagnostic on my feelings regarding this exam season. While you were calculating forces and friction, I was calculating my own investment thesis. It turns out, the math is actually quite simple.</p>
+
+    <p>I’ve written a small script to visualize the logic. Press the play button to see the output.</p>
+
+    <!-- INTERACTIVE CODE EDITOR -->
+    <div class="editor-container">
+        
+        <!-- HEADER / TOOLBAR -->
+        <div class="editor-header">
+            <div class="window-controls">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <div class="filename">valuation_model.py</div>
+            <div class="action-buttons">
+                <!-- Copy Button -->
+                <button class="icon-btn copy-btn" onclick="copyCode()" title="Copy Code">
+                    <div class="tooltip" id="copyTooltip">Copied!</div>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                    </svg>
+                </button>
+                <!-- Play Button -->
+                <button class="icon-btn play-btn" onclick="runCode()" title="Run Script">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- CODE CONTENT -->
+        <div class="code-area" id="codeBlock">
+<span class="comment"># Configuring parameters for the Physics Exam Post-Mortem</span>
+<span class="kwd">import</span> <span class="var">love_module</span>
+
+<span class="kwd">def</span> <span class="func">calculate_market_value</span>(<span class="var">physics_score</span>, <span class="var">stress_level</span>):
+    <span class="comment"># Define core investment thesis</span>
+    <span class="var">my_sentiment</span> = <span class="str">"Bullish"</span>
+    <span class="var">exam_relevance</span> = <span class="num">0.0</span>
+
+    <span class="kwd">if</span> <span class="var">physics_score</span> == <span class="str">"Perfect"</span>:
+        <span class="kwd">return</span> <span class="str">"Status: You are incredible (I knew it)."</span>
+    
+    <span class="kwd">elif</span> <span class="var">physics_score</span> == <span class="str">"Disaster"</span>:
+        <span class="kwd">return</span> <span class="str">"Status: You are incredible (let me buy you food)."</span>
+    
+    <span class="kwd">else</span>:
+        <span class="kwd">return</span> <span class="str">"Status: You are incredible (come here)."</span>
+
+<span class="comment"># Execute Analysis</span>
+<span class="func">print</span>(<span class="func">calculate_market_value</span>(<span class="str">"Unknown"</span>, <span class="str">"High"</span>))
+        </div>
+
+        <!-- TERMINAL OUTPUT -->
+        <div class="terminal" id="terminal">
+            > python3 valuation_model.py<br>
+            > compiling_feelings...<br>
+            > <span id="typewriter"></span><span class="cursor"></span>
+        </div>
+
+    </div>
+
+    <h3>Future Outlook: Bullish</h3>
+
+    <p>My sentiment analysis on you remains overwhelmingly positive. The Physics paper was just one hurdle in a much larger roadmap. You cleared it. The system is stable.</p>
+
+    <p>So, take the win. The win isn't the grade—the win is that you faced the challenge and didn't fold. You are smart, you are capable, and frankly, you look great even when you're stressed about thermodynamics.</p>
+
+    <p><strong>Recommendation:</strong> Close the books. Order food. Accept adoration. The market loves you.</p>
+
+</div>
+
+<script>
+    function runCode() {
+        const terminal = document.getElementById('terminal');
+        const typewriterSpan = document.getElementById('typewriter');
+        
+        // Show terminal with animation
+        terminal.classList.add('active');
+        
+        // Text to type
+        const text = "RESULT: You are loved unconditionally. Logic is irrefutable.";
+        let i = 0;
+        
+        // Clear previous
+        typewriterSpan.innerHTML = "";
+        
+        function typeWriter() {
+            if (i < text.length) {
+                typewriterSpan.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+        
+        // Start typing effect after slight delay to simulate processing
+        setTimeout(typeWriter, 600);
+    }
+
+    function copyCode() {
+        const codeText = document.getElementById('codeBlock').innerText;
+        navigator.clipboard.writeText(codeText).then(() => {
+            const tooltip = document.getElementById('copyTooltip');
+            tooltip.classList.add('show');
+            setTimeout(() => {
+                tooltip.classList.remove('show');
+            }, 2000);
+        });
+    }
+</script>
 
 </body>
 </html>
