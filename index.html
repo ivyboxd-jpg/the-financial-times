@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Insider: My Girlfriend's Chemistry Prep Was A Volatile Market</title>
+    <title>Business Insider: The Economics of Loving You</title>
     <style>
         /* Base Reset & Variables */
         * {
@@ -20,7 +20,7 @@
             --bi-gray: #555555;
             --bi-light-gray: #f5f5f5;
             --bi-border: #eaeaea;
-            --bi-green: #228b22;
+            --bi-highlight: #fff3cd;
             --bi-ticker-green: #00ff41;
             --bi-ticker-red: #ff3333;
             --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -58,7 +58,7 @@
             overflow: hidden;
             border-top: 1px solid #333;
             border-bottom: 2px solid var(--bi-black);
-            padding: 8px 0;
+            padding: 10px 0;
             white-space: nowrap;
             font-family: 'Courier New', Courier, monospace;
             font-size: 14px;
@@ -69,7 +69,7 @@
             display: inline-block;
             white-space: nowrap;
             padding-right: 100%;
-            animation: ticker-scroll 25s linear infinite;
+            animation: ticker-scroll 20s linear infinite;
         }
 
         @keyframes ticker-scroll {
@@ -87,17 +87,9 @@
             color: #ffffff;
         }
 
-        .ticker-up {
-            color: var(--bi-ticker-green);
-        }
-
-        .ticker-down {
-            color: var(--bi-ticker-red);
-        }
-
-        .ticker-heart {
-            color: #ff66b2;
-        }
+        .ticker-up { color: var(--bi-ticker-green); }
+        .ticker-down { color: var(--bi-ticker-red); }
+        .ticker-heart { color: #ff66b2; }
 
         /* Main Article Container */
         .article-container {
@@ -143,8 +135,8 @@
         .author-block {
             display: flex;
             align-items: center;
-            margin-bottom: 32px;
-            padding-bottom: 32px;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
             border-bottom: 1px solid var(--bi-border);
         }
 
@@ -184,6 +176,49 @@
             font-size: 13px;
         }
 
+        /* Executive Summary / Key Takeaways Box */
+        .executive-summary {
+            background-color: var(--bi-light-gray);
+            border-left: 4px solid var(--bi-blue);
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .summary-title {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            color: var(--bi-black);
+            letter-spacing: 0.5px;
+        }
+
+        .summary-list {
+            list-style-type: none;
+        }
+
+        .summary-list li {
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .summary-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--bi-blue);
+            font-weight: bold;
+        }
+
+        .summary-list li:last-child {
+            margin-bottom: 0;
+        }
+
         /* Article Body Text */
         .article-body {
             font-family: var(--font-serif);
@@ -196,7 +231,6 @@
             margin-bottom: 24px;
         }
 
-        /* Subheadings */
         .article-body h2 {
             font-family: var(--font-sans);
             font-size: 24px;
@@ -211,6 +245,20 @@
         .bold-intro {
             font-family: var(--font-sans);
             font-weight: 700;
+        }
+
+        /* Pull Quote */
+        .pull-quote {
+            font-family: var(--font-sans);
+            font-size: 26px;
+            font-weight: 800;
+            line-height: 1.3;
+            color: var(--bi-black);
+            border-top: 2px solid var(--bi-black);
+            border-bottom: 2px solid var(--bi-black);
+            padding: 24px 0;
+            margin: 40px 0;
+            text-align: center;
         }
 
         /* Data Viz / Charts Styling */
@@ -251,12 +299,12 @@
             text-align: right;
         }
 
-        /* Footer */
+        /* Romantic Footer */
         .site-footer {
-            border-top: 1px solid var(--bi-black);
-            padding: 40px 20px;
+            border-top: 2px solid var(--bi-black);
+            padding: 50px 20px;
             text-align: center;
-            background-color: #f9f9f9;
+            background-color: #fffafb;
             font-family: var(--font-sans);
             color: var(--bi-gray);
             font-size: 13px;
@@ -266,8 +314,15 @@
             font-weight: 900;
             font-size: 20px;
             color: var(--bi-black);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             letter-spacing: -1px;
+        }
+
+        .footer-tagline {
+            font-style: italic;
+            margin-bottom: 24px;
+            font-size: 15px;
+            color: var(--bi-red);
         }
 
         .footer-links {
@@ -282,31 +337,28 @@
             color: var(--bi-black);
             text-decoration: none;
             font-weight: 600;
+            border-bottom: 1px dotted var(--bi-gray);
+            padding-bottom: 2px;
         }
 
         .footer-links a:hover {
-            color: var(--bi-blue);
+            color: var(--bi-red);
+            border-bottom-style: solid;
         }
 
         .copyright {
             color: #888;
+            margin-top: 20px;
+            font-size: 12px;
         }
 
         /* Responsive */
         @media (max-width: 600px) {
-            .headline {
-                font-size: 32px;
-            }
-            .subheadline {
-                font-size: 18px;
-            }
-            .article-body {
-                font-size: 18px;
-            }
-            .footer-links {
-                flex-direction: column;
-                gap: 12px;
-            }
+            .headline { font-size: 32px; }
+            .subheadline { font-size: 18px; }
+            .article-body { font-size: 18px; }
+            .pull-quote { font-size: 22px; }
+            .footer-links { flex-direction: column; gap: 12px; }
         }
     </style>
 </head>
@@ -320,20 +372,20 @@
     <!-- The Cute Stock Ticker -->
     <div class="ticker-wrap">
         <div class="ticker">
-            <span class="ticker-item">$GRIT <span class="ticker-up">▲ 450.21 (+12.4%)</span></span>
-            <span class="ticker-item">$SLEEP <span class="ticker-down">▼ 04.12 (-88.1%)</span></span>
-            <span class="ticker-item">$LOVE <span class="ticker-heart">♥ 999.99 (+MAX)</span></span>
-            <span class="ticker-item">$CAFFEINE <span class="ticker-up">▲ 150.00 (+45.0%)</span></span>
-            <span class="ticker-item">$CHEM_STRESS <span class="ticker-down">▼ 0.00 (DELISTED)</span></span>
+            <span class="ticker-item">$HER_SMILE <span class="ticker-up">▲ 850.21 (+14.4%)</span></span>
+            <span class="ticker-item">$MY_HEART <span class="ticker-heart">♥ 999.99 (+MAX)</span></span>
+            <span class="ticker-item">$EXAM_STRESS <span class="ticker-down">▼ 0.00 (LIQUIDATED)</span></span>
+            <span class="ticker-item">$GRIT <span class="ticker-up">▲ 450.00 (+45.0%)</span></span>
+            <span class="ticker-item">$MISS_YOU <span class="ticker-up">▲ 1000.00 (+ALL TIME HIGH)</span></span>
             <span class="ticker-item">$ENG_LIT <span class="ticker-up">▲ 10.50 (NEW IPO)</span></span>
             <span class="ticker-item">$DISTANCE <span class="ticker-down">▼ HOLDING STEADY</span></span>
             <span class="ticker-item">$PROUD_BF <span class="ticker-up">▲ 500.00 (+100%)</span></span>
             <!-- Duplicate for seamless loop -->
-            <span class="ticker-item">$GRIT <span class="ticker-up">▲ 450.21 (+12.4%)</span></span>
-            <span class="ticker-item">$SLEEP <span class="ticker-down">▼ 04.12 (-88.1%)</span></span>
-            <span class="ticker-item">$LOVE <span class="ticker-heart">♥ 999.99 (+MAX)</span></span>
-            <span class="ticker-item">$CAFFEINE <span class="ticker-up">▲ 150.00 (+45.0%)</span></span>
-            <span class="ticker-item">$CHEM_STRESS <span class="ticker-down">▼ 0.00 (DELISTED)</span></span>
+            <span class="ticker-item">$HER_SMILE <span class="ticker-up">▲ 850.21 (+14.4%)</span></span>
+            <span class="ticker-item">$MY_HEART <span class="ticker-heart">♥ 999.99 (+MAX)</span></span>
+            <span class="ticker-item">$EXAM_STRESS <span class="ticker-down">▼ 0.00 (LIQUIDATED)</span></span>
+            <span class="ticker-item">$GRIT <span class="ticker-up">▲ 450.00 (+45.0%)</span></span>
+            <span class="ticker-item">$MISS_YOU <span class="ticker-up">▲ 1000.00 (+ALL TIME HIGH)</span></span>
             <span class="ticker-item">$ENG_LIT <span class="ticker-up">▲ 10.50 (NEW IPO)</span></span>
             <span class="ticker-item">$DISTANCE <span class="ticker-down">▼ HOLDING STEADY</span></span>
             <span class="ticker-item">$PROUD_BF <span class="ticker-up">▲ 500.00 (+100%)</span></span>
@@ -345,37 +397,51 @@
         
         <span class="badge">LIFE</span>
         
-        <h1 class="headline">My girlfriend’s chemistry prep was a volatile market. Here’s why she’s my best long-term investment.</h1>
+        <h1 class="headline">I tracked my girlfriend's exam burnout like a volatile stock. Here is why the ROI on loving her is infinite.</h1>
         
-        <p class="subheadline">She just survived a brutal syllabus. Watching her from states away taught me that the highest yields in a relationship come from simply holding on during the dips.</p>
+        <p class="subheadline">She just emerged from an absolute gauntlet of a syllabus. Watching her fight through it from states away completely shifted my perspective on what makes a relationship a blue-chip asset.</p>
         
         <div class="author-block">
             <div class="avatar">N</div>
             <div class="author-info">
                 <div class="author-name">Niv <span>as told to Niv</span></div>
-                <div class="meta-data">Mar 1, 2026, 11:40 AM IST • 6 min read</div>
+                <div class="meta-data">Mar 1, 2026, 11:47 AM IST • 6 min read</div>
             </div>
         </div>
 
+        <!-- BI Style Executive Summary -->
+        <div class="executive-summary">
+            <div class="summary-title">Executive Summary</div>
+            <ul class="summary-list">
+                <li>My girlfriend just finished a brutal chemistry exam, triggering a massive sell-off in her sleep schedule and sanity.</li>
+                <li>Because I am several states away, I had to learn that the best way to support a high-achiever isn't to "fix" their stress, but to just hold their shares through the dip.</li>
+                <li>With English Lit opening for trading next, my long-term outlook on her brilliance remains overwhelmingly bullish.</li>
+            </ul>
+        </div>
+
         <div class="article-body">
-            <p><span class="bold-intro">Happy Sunday!</span> The global stock market is currently experiencing extreme volatility over AI regulations, techies are aggressively buying into a robotics startup called Clawdbot, and economists are debating whether we're entering a bull or bear market.</p>
+            <p><span class="bold-intro">Happy Sunday!</span> Wall Street is currently panicking over inflation metrics, Elon Musk is tweeting something unhinged about space travel again, and Silicon Valley is aggressively trying to put AI inside our kitchen appliances. </p>
 
-            <p>But frankly, all the global market fluctuations and tech news in the world can't distract me from the fact that the person I love most just survived an absolute academic stress-test, and she did it several states away.</p>
+            <p>But honestly? All the global market fluctuations and tech news in the world can't distract me today. My entire portfolio of attention is heavily concentrated on exactly one person, located several states away, who just survived an absolute bloodbath of chemical equations.</p>
 
-            <p>Let's talk about high-stakes chemistry, the peculiar romance of watching someone work incredibly hard, and why the most valuable asset you can have in a relationship isn't proximity—it's the ability to weather the storm together.</p>
+            <p>Let's talk about the economics of exhaustion, the intense appeal of watching someone work incredibly hard, and why the most valuable metric in a long-distance relationship is just knowing when to shut up and be a safe harbor.</p>
 
-            <p>My girlfriend took a massive chemistry exam this week. Because we live states apart, I couldn’t do anything practically useful. I couldn't inject liquidity into her coffee supply. I couldn't forcefully close her textbook to initiate a mandatory cooling-off period. I couldn't physically be there to act as a stabilizing asset.</p>
+            <h2>The Fundamentals of Grit</h2>
 
-            <p>Instead, I did what any data-driven, supportive long-distance boyfriend would do: I paced around my apartment, tracked her study habits like a blue-chip stock on the NASDAQ, and learned a lot about what it actually means to care for someone when you literally cannot be there to manipulate the market.</p>
+            <p>To understand the sheer magnitude of what she just accomplished, we have to look at the historical data. She didn't just casually review flashcards while scrolling TikTok. This was trench warfare studying. She poured her entire soul into this subject, treating the syllabus with a level of dedication that would make a Fortune 500 CEO look lazy.</p>
 
-            <h2>The initial bull run and the fundamental analysis of grit.</h2>
+            <p>There is a specific kind of magnetism in watching the person you love dedicate themselves to something insanely difficult. We don't talk about this enough in modern romance. We obsess over dinner dates and grand romantic gestures, but we rarely talk about the deep, profound affection that hits you when you watch your partner absolutely refuse to capitulate to a hard task.</p>
 
-            <p>To understand the sheer magnitude of this investment, you have to look at the historical data leading up to the bell ringing. She studied for this exam for weeks. This wasn't casual, low-volume trading. This was trench warfare studying. She was putting in the kind of hours that would make a Wall Street analyst flinch.</p>
+            <div class="pull-quote">
+                "We rarely talk about the deep, profound affection that hits you when you watch your partner absolutely refuse to capitulate to a hard task."
+            </div>
+
+            <p>She put her head down and did the work. And while she was entirely focused on reaction rates and electron configurations, I was entirely focused on how exceptionally lucky I am to be invested in a woman with that kind of relentless internal engine.</p>
 
             <!-- Chart 1: Line Graph -->
             <div class="chart-container">
-                <div class="chart-title">Figure 1: Operational Effort vs. Time</div>
-                <div class="chart-subtitle">A sustained bullish trend in determination during the weeks prior to the exam.</div>
+                <div class="chart-title">Figure 1: The "I'm Not Quitting" Index</div>
+                <div class="chart-subtitle">Tracking her sheer determination relative to her caffeine intake.</div>
                 <svg viewBox="0 0 600 300" class="chart-svg">
                     <!-- Grid lines -->
                     <line x1="50" y1="250" x2="550" y2="250" stroke="#cccccc" stroke-width="1"/>
@@ -389,7 +455,7 @@
                     <line x1="50" y1="250" x2="550" y2="250" stroke="#333333" stroke-width="2"/>
                     
                     <!-- Y-axis labels -->
-                    <text x="40" y="255" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">0</text>
+                    <text x="40" y="255" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">Low</text>
                     <text x="40" y="155" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">Base</text>
                     <text x="40" y="55" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">Max</text>
                     
@@ -398,77 +464,61 @@
                     <text x="300" y="270" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">Week 2</text>
                     <text x="500" y="270" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">Exam Day</text>
 
-                    <!-- The Data Line (Effort/Resilience) -->
+                    <!-- The Data Line (Grit) -->
                     <polyline points="50,220 100,200 150,210 200,160 250,170 300,110 350,130 400,80 450,90 500,40" fill="none" stroke="#0073bb" stroke-width="4" stroke-linejoin="round"/>
                     
                     <!-- Data points -->
-                    <circle cx="500" cy="40" r="5" fill="#cc0000" />
-                    <text x="480" y="30" font-family="Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#cc0000">Peak Resistance</text>
+                    <circle cx="500" cy="40" r="6" fill="#cc0000" />
+                    <text x="480" y="25" font-family="Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#cc0000">Absolute Brilliance</text>
                 </svg>
-                <div class="chart-caption">Source: My daily observations of her textbook-to-sleep ratio.</div>
             </div>
 
-            <p>There is a specific kind of beauty in watching the person you love dedicate themselves to something difficult. We don't talk about this enough in modern romance. We talk about dates and vacations, but we rarely talk about the deep, quiet affection that blooms when you watch your partner absolutely refuse to capitulate to a brutal syllabus.</p>
+            <h2>Trading Through a Bear Market of Exhaustion</h2>
 
-            <p>She put her head down and did the work. And while she was entirely focused on reaction rates and molecular structures, I was entirely focused on how exceptionally lucky I am to be invested in someone with that kind of internal drive.</p>
+            <p>Here is the brutal, unglamorous truth about long-distance relationships: sometimes, the logistics are just agonizing. When she hit peak exhaustion, I didn't have the geographic leverage to fix it. </p>
 
-            <h2>Intraday Volatility and The Art of Holding</h2>
+            <p>I couldn't magically lower the interest rates on her anxiety. I couldn't walk into the room, gently pull the textbook out of her hands, and hand her a plate of warm food. Being states away means realizing your "I want to help" instinct is entirely useless against the cold, hard reality of miles.</p>
 
-            <p>To truly understand the conditions she was trading in, you have to look at the intraday volatility. In the final 48 hours before the exam, her energy levels started fluctuating wildly. I watched her perfectly organized study plan experience sudden, dramatic dips in serotonin as exhaustion took hold.</p>
+            <p>So, I had to learn the hardest strategy in relationship investing: the art of the <em>Hold</em>.</p>
 
-            <p>She went from calmly reciting equations to questioning her life choices in a span of three hours. It was a chaotic, entirely relatable display of human endurance. Most novice investors would panic at that level of volatility. They would try to "fix" the market with unhelpful platitudes or overly cheerful pep talks.</p>
+            <p>When someone you love is running entirely on fumes, your job isn't to day-trade their emotions. Your job isn't to offer toxic positivity or try to perfectly "optimize" their stress away. Your job is to just sit in the red with them. It means listening, validating, and being a completely stable, unwavering presence on the other side of a FaceTime call.</p>
 
-            <p>But me? I just held my position. Because watching someone you love refuse to quit—even when their personal stock of energy is temporarily depleted and they are running entirely on fumes—is genuinely the most endearing thing in the world. Only she could make a sleep-deprived rant about chemistry sound utterly charming.</p>
+            <h2>The Earnings Call (To Her)</h2>
 
-            <h2>Navigating a long-distance bear market.</h2>
+            <p>If she happens to be reading this between study sessions (hi, beautiful), here is the official Q1 audit of my feelings:</p>
 
-            <p>Here is the brutal truth about long-distance relationships: sometimes, the logistics are just agonizing. I don't have Federal Reserve powers over her stress levels. I can’t magically lower the interest rates on her anxiety. I can’t be there physically to break the tension.</p>
+            <p>That exam measured your grasp of chemistry on a random day in late February. It did not measure you. It didn't measure your worth, your brilliant mind, or the effortless way you make my life infinitely better.</p>
 
-            <p>I realized that my desperate urge to "do something" was actually just an urge to make <em>myself</em> feel better about being states away. I wanted to fix her exhaustion, but you can't fix exhaustion with a well-timed text message.</p>
+            <p>I know you are exhausted right now. You gave it everything you had, and I am in complete awe of you. You don’t need to immediately find your energy or pretend you aren't completely burned out. I love the highly-focused, energized version of you, and I am equally obsessed with the currently-fried, wrapped-in-a-blanket version of you.</p>
 
-            <p>Long-distance support is an art form. It requires restraint. It means realizing that "being there" for someone doesn't always mean solving their problems. Sometimes it just means being a consistent, unwavering presence on the other end of the phone. Support isn't about actively day-trading her emotions; it's about seeing someone in their struggle and actively choosing to just sit in the red with them.</p>
+            <p>I cannot magically shrink the states between us today. I can't take the exhaustion away. But I see exactly how hard you're working, and it makes me so damn proud to be yours.</p>
 
-            <p>It means listening, validating, gently suggesting she drink water, and letting her be completely fried without rushing her through the recovery process just so I can feel like a helpful boyfriend.</p>
+            <h2>The Q2 Forecast: English Lit</h2>
 
-            <h2>If she’s reading this (hi), here’s the official earnings report.</h2>
+            <p>The chemistry paper is done. The market has officially closed on that syllabus.</p>
 
-            <p>The exam measured your grasp of chemistry on a random day in February. It did not measure you. It didn't measure your worth, your brilliance, or the way you light up a room.</p>
+            <p>But because academia is an unregulated monopoly that actively roots against human joy, the trading floor waits for no one. Her English Lit exam is up next. Which means she is currently liquidating her chemistry assets and shifting her portfolio entirely into metaphors, literary analysis, and essays.</p>
 
-            <p>I know you are exhausted right now, and you have every right to be. You gave it everything you had. I watched you do it, and I am in complete awe of you. </p>
+            <p>I am putting all my chips on her. I am overwhelmingly bullish on her success, not just because she is incredibly smart, but because I know exactly what she is made of.</p>
 
-            <p>You don’t need to bounce back quickly. You don't need to immediately find your energy or pretend you aren't burned out. I love the version of you that is driven and focused, and I love the version of you that is currently functioning entirely on caffeine and willpower. </p>
-
-            <p>I love that you care so much. I love the way your mind works. I love that you push through the dips, because it shows exactly how much grit you actually have.</p>
-
-            <p>You are more than a chemistry student. You are the person who tries hard things, who doesn't back down, and who makes my life infinitely better just by existing in it. I cannot make this exhaustion go away. I cannot shrink the states between us today. But I can see you, I can appreciate you, and I can promise that my investment in us is entirely recession-proof.</p>
-
-            <h2>The Q2 Forecast: English Lit (IPO Opening Soon)</h2>
-
-            <p>The chemistry paper is done. The market has closed on that syllabus. The textbooks can finally be shelved.</p>
-
-            <p>But because academia is an unregulated monopoly that actively roots against sleep, the market waits for no one. Her English Lit exam is up next. Which means she is currently shifting her portfolio from balancing complex chemical equations to deconstructing literature, analyzing metaphors, and writing essays.</p>
-
-            <p>She is going to absolutely dominate Q2 as well. Not just because she's incredibly smart, but because of her unrelenting spirit. She has the kind of resilience that you simply can't model on a spreadsheet.</p>
-
-            <p>I will still be here, states away, cheering her on from the digital sidelines. I will keep ordering her food when she forgets to eat, I will keep answering the silent FaceTimes, and I will keep marveling at how incredibly lucky I am to be holding this position.</p>
-            
-            <p>Now, if anyone needs me, I'll be analyzing the literary market for good English puns that won't result in my immediate liquidation.</p>
+            <p>Now, if anyone needs me, I'll be over here Googling "cute food delivery places near her" and preparing my long-term strategy of never, ever letting her go.</p>
         </div>
     </main>
 
-    <!-- Site Footer -->
+    <!-- Romantic Site Footer -->
     <footer class="site-footer">
-        <div class="footer-logo">BUSINESS INSIDER</div>
+        <div class="footer-logo">THE INSIDER TRUTH</div>
+        <div class="footer-tagline">"Invested in you, regardless of market conditions."</div>
+        
         <div class="footer-links">
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Newsletters</a>
-            <a href="#">Careers</a>
+            <a href="#">About Us (Just Me, Obsessed With You)</a>
+            <a href="#">Contact (Available 24/7)</a>
+            <a href="#">Terms of Adoration</a>
+            <a href="#">Inside Jokes Policy</a>
         </div>
+        
         <div class="copyright">
-            &copy; 2026 Insider Inc. All rights reserved. Registration on or use of this site constitutes acceptance of our Terms of Service and Privacy Policy.
+            &copy; 2026. All rights reserved. No part of my heart may be reproduced, distributed, or transmitted in any form without your direct permission.
         </div>
     </footer>
 
