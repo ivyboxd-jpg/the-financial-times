@@ -3,693 +3,658 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Economics of Loving You</title>
+    <title>NVAA | LIFE TERMINAL v9.0</title>
     <style>
-        /* Base Reset & Variables */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        :root {
+            --bg-color: #000000;
+            --panel-border: #333333;
+            --text-primary: #FF9500; /* Bloomberg Amber */
+            --text-secondary: #AAAAAA;
+            --text-dim: #666666;
+            --accent-green: #00FF41;
+            --accent-red: #FF0844;
+            --accent-blue: #00A8FF;
+            --font-mono: 'Courier New', 'Monaco', 'Consolas', monospace;
+            --font-sans: 'Arial', 'Helvetica', sans-serif;
         }
 
-        :root {
-            --bi-black: #000000;
-            --bi-text: #1a1a1a;
-            --bi-blue: #0073bb;
-            --bi-red: #cc0000;
-            --bi-gray: #555555;
-            --bi-light-gray: #f5f5f5;
-            --bi-border: #eaeaea;
-            --bi-highlight: #fff3cd;
-            --bi-ticker-green: #00ff41;
-            --bi-ticker-red: #ff3333;
-            --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            --font-serif: Georgia, 'Times New Roman', Times, serif;
+        * {
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: var(--text-dim) var(--bg-color);
         }
 
         body {
-            background-color: #ffffff;
-            color: var(--bi-text);
-            font-family: var(--font-sans);
-            -webkit-font-smoothing: antialiased;
-            text-rendering: optimizeLegibility;
-        }
-
-        /* Top Navigation Mockup */
-        .top-nav {
-            padding: 16px 20px;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+            overflow-x: hidden;
+            height: 100vh;
             display: flex;
+            flex-direction: column;
+        }
+
+        /* UTILITIES */
+        .positive { color: var(--accent-green); }
+        .negative { color: var(--accent-red); }
+        .neutral { color: var(--text-secondary); }
+        .flash { animation: flashText 2s infinite; }
+        .blink { animation: blinkCursor 1s infinite; }
+        .uppercase { text-transform: uppercase; }
+        .text-right { text-align: right; }
+        .bold { font-weight: bold; }
+        
+        @keyframes blinkCursor { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+        @keyframes flashText { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+
+        /* HEADER */
+        header {
+            background-color: #111;
+            border-bottom: 2px solid var(--text-primary);
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-        }
-
-        .logo {
             font-family: var(--font-sans);
-            font-weight: 900;
-            font-size: 28px;
-            letter-spacing: -1.5px;
-            color: var(--bi-black);
-            text-transform: uppercase;
-        }
-
-        /* Cute Stock Ticker */
-        .ticker-wrap {
-            width: 100%;
-            background-color: var(--bi-black);
-            overflow: hidden;
-            border-top: 1px solid #333;
-            border-bottom: 2px solid var(--bi-black);
-            padding: 10px 0;
-            white-space: nowrap;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
             font-weight: bold;
+            font-size: 12px;
+            z-index: 100;
         }
 
-        .ticker {
-            display: inline-block;
+        .ticker-scroll {
+            flex-grow: 1;
+            margin: 0 20px;
             white-space: nowrap;
-            padding-right: 100%;
-            animation: ticker-scroll 20s linear infinite;
+            overflow: hidden;
+            color: white;
         }
 
-        @keyframes ticker-scroll {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
+        /* MAIN GRID */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 2px;
+            background-color: var(--panel-border);
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 2px;
         }
 
-        .ticker-item {
-            display: inline-block;
-            margin-right: 40px;
-            color: #ffffff;
+        .panel {
+            background-color: var(--bg-color);
+            padding: 12px;
+            position: relative;
+            overflow-y: auto;
+            min-height: 250px;
         }
 
-        .ticker-up { color: var(--bi-ticker-green); }
-        .ticker-down { color: var(--bi-ticker-red); }
-        .ticker-heart { color: #ff66b2; }
+        /* Large Panels */
+        .panel-large { grid-column: span 2; }
+        .panel-tall { grid-row: span 2; }
 
-        /* Main Article Container */
-        .article-container {
-            max-width: 680px;
-            margin: 0 auto;
-            padding: 24px 20px 60px 20px;
-        }
-
-        /* Article Header */
-        .badge {
-            background-color: var(--bi-red);
-            color: #ffffff;
+        /* PANEL HEADERS */
+        .panel-header {
+            background-color: #1a1a1a;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            margin: -12px -12px 10px -12px;
             font-family: var(--font-sans);
             font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            padding: 4px 8px;
-            display: inline-block;
-            margin-bottom: 16px;
-            letter-spacing: 0.5px;
-            cursor: default;
-        }
-
-        .headline {
-            font-family: var(--font-sans);
-            font-size: 38px;
-            font-weight: 800;
-            line-height: 1.15;
-            color: var(--bi-black);
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-        }
-
-        .subheadline {
-            font-family: var(--font-sans);
-            font-size: 20px;
-            font-weight: 400;
-            line-height: 1.4;
-            color: var(--bi-gray);
-            margin-bottom: 24px;
-        }
-
-        /* Author Block */
-        .author-block {
+            border-bottom: 1px solid var(--panel-border);
             display: flex;
-            align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid var(--bi-border);
-        }
-
-        .avatar {
-            width: 44px;
-            height: 44px;
-            background-color: #f0f0f0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-sans);
-            font-weight: 700;
-            color: var(--bi-blue);
-            font-size: 18px;
-            margin-right: 12px;
-        }
-
-        .author-info {
-            font-family: var(--font-sans);
-            font-size: 14px;
-            color: var(--bi-gray);
-        }
-
-        .author-name {
-            color: var(--bi-blue);
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-        
-        .author-name span {
-            color: var(--bi-black);
-            font-weight: 400;
-        }
-
-        .meta-data {
-            font-size: 13px;
-        }
-
-        /* Executive Summary / Key Takeaways Box */
-        .executive-summary {
-            background-color: var(--bi-light-gray);
-            border-left: 4px solid var(--bi-blue);
-            padding: 24px;
-            margin-bottom: 32px;
-        }
-
-        .summary-title {
-            font-family: var(--font-sans);
-            font-size: 16px;
-            font-weight: 800;
+            justify-content: space-between;
             text-transform: uppercase;
-            margin-bottom: 12px;
-            color: var(--bi-black);
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
-        .summary-list {
-            list-style-type: none;
-        }
-
-        .summary-list li {
-            font-family: var(--font-sans);
-            font-size: 16px;
-            line-height: 1.5;
-            margin-bottom: 12px;
-            padding-left: 24px;
-            position: relative;
-        }
-
-        .summary-list li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: var(--bi-blue);
-            font-weight: bold;
-        }
-
-        .summary-list li:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Article Body Text */
-        .article-body {
-            font-family: var(--font-serif);
-            font-size: 19px;
-            line-height: 1.7;
-            color: var(--bi-text);
-        }
-
-        .article-body p {
-            margin-bottom: 24px;
-        }
-
-        .article-body h2 {
-            font-family: var(--font-sans);
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--bi-black);
-            margin-top: 48px;
-            margin-bottom: 16px;
-            line-height: 1.3;
-            letter-spacing: -0.3px;
-        }
-
-        .bold-intro {
-            font-family: var(--font-sans);
-            font-weight: 700;
-        }
-
-        /* Pull Quote */
-        .pull-quote {
-            font-family: var(--font-sans);
-            font-size: 26px;
-            font-weight: 800;
-            line-height: 1.3;
-            color: var(--bi-black);
-            border-top: 2px solid var(--bi-black);
-            border-bottom: 2px solid var(--bi-black);
-            padding: 24px 0;
-            margin: 40px 0;
-            text-align: center;
-        }
-
-        /* Data Viz / Charts Styling */
-        .chart-container {
-            border: 1px solid var(--bi-border);
-            padding: 20px;
-            margin: 40px 0;
-            background-color: #fafafa;
-        }
-
-        .chart-title {
-            font-family: var(--font-sans);
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--bi-black);
-        }
-
-        .chart-subtitle {
-            font-family: var(--font-sans);
-            font-size: 13px;
-            color: var(--bi-gray);
-            margin-bottom: 20px;
-        }
-
-        .chart-svg {
+        /* TABLES */
+        table {
             width: 100%;
-            height: auto;
-            background-color: #ffffff;
-            border: 1px solid #eeeeee;
-        }
-
-        /* Romantic Footer */
-        .site-footer {
-            border-top: 2px solid var(--bi-black);
-            padding: 50px 20px;
-            text-align: center;
-            background-color: #fffafb;
-            font-family: var(--font-sans);
-            color: var(--bi-gray);
-            font-size: 13px;
-        }
-
-        .footer-logo {
-            font-weight: 900;
-            font-size: 20px;
-            color: var(--bi-black);
-            margin-bottom: 16px;
-            letter-spacing: -1px;
-        }
-
-        .footer-tagline {
-            font-style: italic;
-            margin-bottom: 24px;
-            font-size: 15px;
-            color: var(--bi-red);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links button {
-            background: none;
-            border: none;
-            color: var(--bi-black);
-            font-family: var(--font-sans);
-            font-size: 14px;
-            font-weight: 600;
-            border-bottom: 1px dotted var(--bi-gray);
-            padding-bottom: 2px;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-
-        .footer-links button:hover {
-            color: var(--bi-red);
-            border-bottom-style: solid;
-        }
-
-        .copyright {
-            color: #888;
-            margin-top: 20px;
+            border-collapse: collapse;
             font-size: 12px;
         }
+        
+        th {
+            text-align: left;
+            border-bottom: 1px solid var(--text-dim);
+            color: var(--text-secondary);
+            padding-bottom: 5px;
+            font-weight: normal;
+        }
 
-        /* Modal / Pop-up Styling */
-        .modal-overlay {
+        td {
+            padding: 4px 0;
+        }
+
+        /* DATA VISUALIZATION BARS */
+        .bar-container {
+            background-color: #222;
+            height: 10px;
+            width: 100%;
+            margin-top: 5px;
+        }
+        .bar-fill {
+            height: 100%;
+            background-color: var(--text-primary);
+        }
+
+        /* SPECIFIC PANEL STYLES */
+        .activity-item {
+            border-bottom: 1px dashed #333;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .news-item {
+            margin-bottom: 12px;
+            border-left: 2px solid var(--text-primary);
+            padding-left: 10px;
+        }
+        
+        .weather-grid {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        /* MODAL (Research Report) */
+        #research-modal {
             display: none;
             position: fixed;
-            z-index: 1000;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(3px);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-overlay.show {
-            display: block;
-            opacity: 1;
-        }
-
-        .modal-content {
-            background-color: #ffffff;
-            margin: 10% auto;
+            background-color: rgba(0,0,0,0.95);
+            z-index: 1000;
             padding: 40px;
-            border-radius: 4px;
-            width: 90%;
-            max-width: 500px;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            font-family: var(--font-sans);
-            transform: translateY(-20px);
-            transition: transform 0.3s ease;
-            border-top: 5px solid var(--bi-red);
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid var(--text-primary);
+            padding: 30px;
+            background: #050505;
         }
 
-        .modal-overlay.show .modal-content {
-            transform: translateY(0);
+        .btn {
+            background: var(--text-primary);
+            color: black;
+            border: none;
+            padding: 4px 10px;
+            font-family: var(--font-sans);
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        
+        .btn:hover {
+            background: #fff;
         }
 
         .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            font-weight: 300;
-            color: #888;
+            float: right;
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 5px 15px;
             cursor: pointer;
-            line-height: 1;
         }
 
-        .close-btn:hover {
-            color: var(--bi-black);
-        }
-
-        .modal-header {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--bi-black);
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-        }
-
-        .modal-body {
-            font-size: 16px;
-            line-height: 1.6;
-            color: var(--bi-text);
-        }
-
-        .modal-body p {
-            margin-bottom: 16px;
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .dashboard-grid { grid-template-columns: 1fr 1fr; }
+            .panel-large { grid-column: span 2; }
         }
         
-        .modal-body ul {
-            margin-bottom: 16px;
-            padding-left: 20px;
-        }
-        
-        .modal-body li {
-            margin-bottom: 8px;
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .headline { font-size: 32px; }
-            .subheadline { font-size: 18px; }
-            .article-body { font-size: 18px; }
-            .pull-quote { font-size: 22px; }
-            .footer-links { flex-direction: column; gap: 12px; }
-            .modal-content { margin: 20% auto; padding: 24px; }
+        @media (max-width: 768px) {
+            .dashboard-grid { grid-template-columns: 1fr; display: flex; flex-direction: column; }
+            .panel { min-height: auto; max-height: none; }
+            .ticker-scroll { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Navigation -->
-    <header class="top-nav">
-        <div class="logo">BUSINESS INSIDER</div>
+    <!-- TOP STATUS BAR -->
+    <header>
+        <div>LIFE TERMINAL <span style="color:var(--accent-green)">v9.0</span></div>
+        <div class="ticker-scroll">
+            NVAA: INFINITE <span class="positive">[+MAX%]</span> &nbsp;|&nbsp; 
+            LOVE: 100,000 <span class="positive">[+274.00%]</span> &nbsp;|&nbsp; 
+            DIST: 2,083km <span class="neutral">[FLAT]</span> &nbsp;|&nbsp; 
+            MISS: MAXIMUM <span class="negative">[CRITICAL]</span> &nbsp;|&nbsp; 
+            NEXT EVENT: 1YR ANNIVERSARY <span class="neutral">[89 DAYS]</span>
+        </div>
+        <div id="clock">FEB 19 2026 14:37:23</div>
     </header>
 
-    <!-- The Cute Stock Ticker -->
-    <div class="ticker-wrap">
-        <div class="ticker">
-            <span class="ticker-item">$HER_SMILE <span class="ticker-up">▲ 850.21 (+14.4%)</span></span>
-            <span class="ticker-item">$MY_HEART <span class="ticker-heart">♥ 999.99 (+MAX)</span></span>
-            <span class="ticker-item">$CHEM_STRESS <span class="ticker-down">▼ 0.00 (LIQUIDATED)</span></span>
-            <span class="ticker-item">$GRIT <span class="ticker-up">▲ 450.00 (+45.0%)</span></span>
-            <span class="ticker-item">$MISS_YOU <span class="ticker-up">▲ 1000.00 (+ALL TIME HIGH)</span></span>
-            <span class="ticker-item">$ENG_LIT <span class="ticker-up">▲ 10.50 (NEW IPO)</span></span>
-            <span class="ticker-item">$DISTANCE <span class="ticker-down">▼ HOLDING STEADY</span></span>
-            <span class="ticker-item">$PROUD_BF <span class="ticker-up">▲ 500.00 (+100%)</span></span>
-            <!-- Duplicate for seamless loop -->
-            <span class="ticker-item">$HER_SMILE <span class="ticker-up">▲ 850.21 (+14.4%)</span></span>
-            <span class="ticker-item">$MY_HEART <span class="ticker-heart">♥ 999.99 (+MAX)</span></span>
-            <span class="ticker-item">$CHEM_STRESS <span class="ticker-down">▼ 0.00 (LIQUIDATED)</span></span>
-            <span class="ticker-item">$GRIT <span class="ticker-up">▲ 450.00 (+45.0%)</span></span>
-            <span class="ticker-item">$MISS_YOU <span class="ticker-up">▲ 1000.00 (+ALL TIME HIGH)</span></span>
-            <span class="ticker-item">$ENG_LIT <span class="ticker-up">▲ 10.50 (NEW IPO)</span></span>
-            <span class="ticker-item">$DISTANCE <span class="ticker-down">▼ HOLDING STEADY</span></span>
-            <span class="ticker-item">$PROUD_BF <span class="ticker-up">▲ 500.00 (+100%)</span></span>
+    <!-- DASHBOARD GRID -->
+    <div class="dashboard-grid">
+
+        <!-- PANEL 1: MARKET OVERVIEW -->
+        <div class="panel panel-large">
+            <div class="panel-header">
+                <span>MARKET OVERVIEW - NIV-AARADHYA HOLDINGS</span>
+                <span>NVAA <span class="blink">■</span></span>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>SYMBOL</th>
+                        <th>LAST</th>
+                        <th>CHANGE</th>
+                        <th>%CHG</th>
+                        <th>STATUS</th>
+                        <th>TREND</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="bold">LOVE</span></td>
+                        <td>100,000</td>
+                        <td class="positive">+274.00</td>
+                        <td class="positive">+0.27%</td>
+                        <td>ALL-TIME HIGH</td>
+                        <td><span class="positive">▲▲▲</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">MISS</span></td>
+                        <td>MAXIMUM</td>
+                        <td class="neutral">FLAT</td>
+                        <td class="negative">MAX</td>
+                        <td>CONSTANT</td>
+                        <td><span class="negative">═══</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">DIST</span></td>
+                        <td>2,083km</td>
+                        <td class="neutral">0.00</td>
+                        <td class="neutral">0.00%</td>
+                        <td>UNCHANGED</td>
+                        <td><span class="neutral">═══</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">HPPY</span></td>
+                        <td>9,847</td>
+                        <td class="positive">+2,374</td>
+                        <td class="positive">+31.8%</td>
+                        <td>RALLY (POEM)</td>
+                        <td><span class="positive">▲▲▲</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">VOIC</span></td>
+                        <td>800+</td>
+                        <td class="positive">+15</td>
+                        <td class="positive">+1.91%</td>
+                        <td>CAPACITY WARNING</td>
+                        <td><span class="positive">▲▲</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">SLEP</span></td>
+                        <td>52%</td>
+                        <td class="negative">-12%</td>
+                        <td class="negative">-18.7%</td>
+                        <td>BELOW TARGET</td>
+                        <td><span class="negative">▼▼</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <div style="border: 1px solid #333; padding: 10px;">
+                <span style="color: var(--text-secondary);">MARKET SENTIMENT:</span> <span class="positive bold">BULLISH</span><br>
+                <span style="color: var(--text-secondary);">TRADING STATUS:</span> ACTIVE (274 CONSECUTIVE DAYS)<br>
+                <span style="color: var(--text-secondary);">RISK LEVEL:</span> MODERATE (DISTANCE FACTOR ONLY)
+            </div>
         </div>
+
+        <!-- PANEL 2: VITAL SIGNS -->
+        <div class="panel">
+            <div class="panel-header">
+                <span>HEALTH METRICS</span>
+                <span>LIVE</span>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <div style="display:flex; justify-content:space-between;">
+                    <span>HEART RATE</span>
+                    <span class="positive bold flash">87 BPM</span>
+                </div>
+                <div class="bar-container"><div class="bar-fill" style="width: 60%; background-color: var(--accent-red);"></div></div>
+                <div style="font-size: 10px; color: var(--text-dim); margin-top: 2px;">PEAK: 164 BPM (POEM RECEIVED)</div>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <div style="display:flex; justify-content:space-between;">
+                    <span>MISSING HER</span>
+                    <span class="negative bold">100%</span>
+                </div>
+                <div class="bar-container"><div class="bar-fill" style="width: 100%;"></div></div>
+                <div style="font-size: 10px; color: var(--text-dim); margin-top: 2px;">274/274 DAYS COMPLETED</div>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <div style="display:flex; justify-content:space-between;">
+                    <span>SLEEP QUAL</span>
+                    <span class="neutral bold">52%</span>
+                </div>
+                <div class="bar-container"><div class="bar-fill" style="width: 52%; background-color: var(--text-secondary);"></div></div>
+                <div style="font-size: 10px; color: var(--text-dim); margin-top: 2px;">INTERRUPTED BY THOUGHTS</div>
+            </div>
+
+            <div>
+                <div style="display:flex; justify-content:space-between;">
+                    <span>COFFEE</span>
+                    <span class="positive bold">23 CUPS</span>
+                </div>
+                <div style="font-size: 10px; color: var(--text-dim);">CORRELATION TO DISTANCE: 0.89</div>
+            </div>
+        </div>
+
+        <!-- PANEL 3: ACTIVITY FEED -->
+        <div class="panel panel-tall">
+            <div class="panel-header">
+                <span>ACTIVITY FEED (STRAVA)</span>
+                <span>LOG</span>
+            </div>
+            
+            <div class="activity-item">
+                <div style="display:flex; justify-content:space-between;">
+                    <span class="bold text-primary">MISSING HER</span>
+                    <span class="neutral">ONGOING</span>
+                </div>
+                <div style="color: var(--text-secondary); margin: 2px 0;">Morning Session • Mental Endurance</div>
+                <div style="display:flex; justify-content:space-between; font-size: 11px;">
+                    <span>Dist: 2,083km</span>
+                    <span>HR: 84bpm</span>
+                    <span>Cal: 847</span>
+                </div>
+                <div style="color: var(--text-dim); font-size: 11px; margin-top: 4px;">"Standard morning protocol. Intensity consistent."</div>
+            </div>
+
+            <div class="activity-item">
+                <div style="display:flex; justify-content:space-between;">
+                    <span class="bold text-primary">VOICE NOTE MARATHON</span>
+                    <span class="positive">COMPLETED</span>
+                </div>
+                <div style="color: var(--text-secondary); margin: 2px 0;">Evening • Active Listening</div>
+                <div style="display:flex; justify-content:space-between; font-size: 11px;">
+                    <span>Count: 47 Files</span>
+                    <span>Peak: 112bpm</span>
+                    <span>Mood: High</span>
+                </div>
+                <div style="color: var(--text-dim); font-size: 11px; margin-top: 4px;">"Replayed favorites. Peak at 21:33 when she laughed."</div>
+            </div>
+
+            <div class="activity-item">
+                <div style="display:flex; justify-content:space-between;">
+                    <span class="bold text-primary">READING POETRY</span>
+                    <span class="positive">PR SET</span>
+                </div>
+                <div style="color: var(--text-secondary); margin: 2px 0;">Strength Training • Emotional</div>
+                <div style="display:flex; justify-content:space-between; font-size: 11px;">
+                    <span>Time: 00:03:24</span>
+                    <span class="negative bold">Peak: 164bpm</span>
+                </div>
+                <div style="color: var(--text-dim); font-size: 11px; margin-top: 4px;">"New poem received. Personal record heart rate. Researcher compromised."</div>
+            </div>
+
+            <div class="activity-item">
+                <div style="display:flex; justify-content:space-between;">
+                    <span class="bold text-primary">THINKING ABOUT HER</span>
+                    <span class="neutral">24H</span>
+                </div>
+                <div style="color: var(--text-secondary); margin: 2px 0;">Continuous Interval</div>
+                <div style="color: var(--text-dim); font-size: 11px; margin-top: 4px;">"Background process. Always running since May 19."</div>
+            </div>
+        </div>
+
+        <!-- PANEL 4: PORTFOLIO -->
+        <div class="panel">
+            <div class="panel-header">
+                <span>PORTFOLIO ALLOCATION</span>
+                <span>ASSETS</span>
+            </div>
+            <table>
+                <tr>
+                    <td>VOICE NOTES</td>
+                    <td class="text-right">800+</td>
+                    <td class="text-right positive">60%</td>
+                </tr>
+                <tr>
+                    <td>TEXT MSGS</td>
+                    <td class="text-right">10k+</td>
+                    <td class="text-right positive">MAX</td>
+                </tr>
+                <tr>
+                    <td>FACETIME</td>
+                    <td class="text-right">1 (n=1)</td>
+                    <td class="text-right neutral">LEGEND</td>
+                </tr>
+                <tr>
+                    <td>MEMORIES</td>
+                    <td class="text-right">274</td>
+                    <td class="text-right positive">GROWING</td>
+                </tr>
+                <tr>
+                    <td>POEMS</td>
+                    <td class="text-right">[COUNT]</td>
+                    <td class="text-right positive">SACRED</td>
+                </tr>
+                <tr>
+                    <td>JOKES</td>
+                    <td class="text-right">INFINITE</td>
+                    <td class="text-right positive">PRICELESS</td>
+                </tr>
+            </table>
+            <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 5px;">
+                <span style="color: var(--text-secondary);">TOTAL VALUE:</span> <span class="bold">INCALCULABLE</span><br>
+                <span style="color: var(--text-secondary);">LIQUIDITY:</span> INFINITE (ALWAYS ACCESSIBLE)<br>
+                <span style="color: var(--text-secondary);">ROI:</span> +INFINITE% (YTD)
+            </div>
+        </div>
+
+        <!-- PANEL 5: NEWS FEED -->
+        <div class="panel panel-large">
+            <div class="panel-header">
+                <span>BREAKING NEWS</span>
+                <span>RSS</span>
+            </div>
+            
+            <div class="news-item">
+                <div style="margin-bottom: 2px;">
+                    <span class="positive bold">14:32</span> <span class="bold">MARKET ALERT: NVAA Hits All-Time High on 9-Month Milestone</span>
+                </div>
+                <div style="color: var(--text-secondary);">
+                    Love Index surges as relationship reaches 274-day mark. Analysts cite "exceptional fundamentals" and "perfect subject."
+                </div>
+            </div>
+
+            <div class="news-item">
+                <div style="margin-bottom: 2px;">
+                    <span class="neutral bold">13:47</span> <span class="bold">STORAGE WARNING: Voice Note Capacity Approaching Critical</span>
+                </div>
+                <div style="color: var(--text-secondary);">
+                    At 60% utilization. COO (Niv) refuses to delete files. "I need all 800," he stated in a press conference.
+                </div>
+            </div>
+
+            <div class="news-item">
+                <div style="margin-bottom: 2px;">
+                    <span class="positive bold">11:23</span> <span class="bold">BREAKING: Happiness Index Jumps 31%</span>
+                </div>
+                <div style="color: var(--text-secondary);">
+                    Markets rally on unexpected poetry delivery. Heart rate peaked at 164 bpm. Recovery time estimated 48+ hours.
+                </div>
+            </div>
+
+             <div class="news-item">
+                <div style="margin-bottom: 2px;">
+                    <span class="neutral bold">YEST</span> <span class="bold">Chemistry Exam Results In</span>
+                </div>
+                <div style="color: var(--text-secondary);">
+                    Result: 82. Market Unfazed. "Fundamentals remain solid," insists research team. Post-exam relief rally expected.
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL 6: WEATHER / MOOD -->
+        <div class="panel">
+            <div class="panel-header">
+                <span>EMOTIONAL FORECAST</span>
+                <span>WTHR</span>
+            </div>
+            
+            <div class="weather-grid">
+                <div>
+                    <div style="color:var(--text-secondary); font-size: 10px;">LOCATION: NIV</div>
+                    <div class="bold positive" style="font-size: 14px;">MISSING HER</div>
+                    <div style="font-size: 11px;">Temp: WARM</div>
+                    <div style="font-size: 11px;">Wind: SIGHS</div>
+                </div>
+                <div class="text-right">
+                    <div style="color:var(--text-secondary); font-size: 10px;">AARADHYA (2,083KM)</div>
+                    <div class="bold positive" style="font-size: 14px;">RELIEF</div>
+                    <div style="font-size: 11px;">Cond: SUNNY</div>
+                    <div style="font-size: 11px;">Press: LOW (EXAM DONE)</div>
+                </div>
+            </div>
+
+            <table style="font-size: 11px;">
+                <tr>
+                    <td>TODAY</td>
+                    <td>LOVE: 100%</td>
+                    <td class="text-right">STEADY</td>
+                </tr>
+                <tr>
+                    <td>TOMORROW</td>
+                    <td>LOVE: 100%</td>
+                    <td class="text-right">STABLE</td>
+                </tr>
+                <tr>
+                    <td>WEEKEND</td>
+                    <td>MISSING: 80%</td>
+                    <td class="text-right">VN EXPECTED</td>
+                </tr>
+            </table>
+            
+            <div style="margin-top: 10px; color: var(--text-dim); font-size: 10px;">
+                LONG TERM: HIGH PROBABILITY OF DISTANCE REDUCTION TO 0KM.
+            </div>
+        </div>
+
+        <!-- PANEL 7: WATCHLIST & RESEARCH -->
+        <div class="panel">
+            <div class="panel-header">
+                <span>WATCHLIST</span>
+                <span>ALERTS</span>
+            </div>
+            <table>
+                <tr>
+                    <td>LIPSTICK</td>
+                    <td class="neutral">FACETIME</td>
+                    <td class="positive">HISTORIC</td>
+                </tr>
+                <tr>
+                    <td>PIZZA</td>
+                    <td class="neutral">TOPPINGS</td>
+                    <td class="positive">TOP TIER</td>
+                </tr>
+                <tr>
+                    <td>DIET COKE</td>
+                    <td class="neutral">SYMBOL</td>
+                    <td class="positive">HOLD</td>
+                </tr>
+            </table>
+            
+            <br>
+            <div style="border: 1px solid var(--text-primary); padding: 10px; text-align: center; cursor: pointer;" onclick="document.getElementById('research-modal').style.display='block'">
+                <span class="blink">►</span> ACCESS RESEARCH REPORT<br>
+                <span style="font-size: 10px;">9-MONTH ANNIVERSARY ANALYSIS</span>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Main Content -->
-    <main class="article-container">
-        
-        <span class="badge">MARKETS & RELATIONSHIPS</span>
-        
-        <h1 class="headline">I tracked my girlfriend's exam burnout like a volatile stock. Here is why the ROI on loving her is infinite.</h1>
-        
-        <p class="subheadline">She just emerged from an absolute gauntlet of a syllabus. Watching her fight through it from states away completely shifted my perspective on what makes a relationship a blue-chip asset.</p>
-        
-        <div class="author-block">
-            <div class="avatar">N</div>
-            <div class="author-info">
-                <div class="author-name">Niv <span>as told to Niv</span></div>
-                <div class="meta-data">Mar 1, 2026, 10:10 AM IST • 6 min read</div>
-            </div>
-        </div>
-
-        <!-- BI Style Executive Summary -->
-        <div class="executive-summary">
-            <div class="summary-title">Executive Summary</div>
-            <ul class="summary-list">
-                <li>My girlfriend just finished a brutal chemistry exam, triggering a massive sell-off in her sleep schedule and sanity.</li>
-                <li>Because I am away, I had to learn that the best way to support a high-achiever isn't to "fix" their stress, but to just hold their shares through the dip.</li>
-                <li>With English opening for trading next, my long-term outlook on her brilliance remains overwhelmingly bullish.</li>
-            </ul>
-        </div>
-
-        <div class="article-body">
-            <p><span class="bold-intro">Happy Sunday!</span> Wall Street is currently panicking over inflation metrics, Elon Musk is tweeting something unhinged about space travel again, and Silicon Valley is aggressively trying to put AI inside our kitchen appliances. </p>
-
-            <p>All the global market fluctuations and tech news in the world can't distract me today. My entire portfolio of attention is heavily concentrated on exactly one person, located several states away, who just survived an absolute bloodbath of chemical equations.</p>
-
-            <p>Let's talk about the economics of exhaustion, the intense appeal of watching someone work incredibly hard, and why the most valuable metric in a long-distance relationship is just knowing when to shut up and be a safe harbor.</p>
-
-            <h2>The Fundamentals of Grit</h2>
-
-            <p>To understand the sheer magnitude of what she just accomplished, we have to look at the historical data. She didn't just casually review her syllabus. This was trench warfare studying. She poured her entire soul into this subject, treating the syllabus with a level of dedication that would make a Fortune 500 CEO look lazy.</p>
-
-            <p>There's this kind of magnetism in watching the person you love dedicate themselves to something insanely difficult. We don't talk about this enough in modern romance. We obsess over dinner dates and grand romantic gestures, but we rarely talk about the deep, profound affection that hits you when you watch your partner absolutely refuse to capitulate to a hard task.</p>
-
-            <div class="pull-quote">
-                We rarely talk about the deep, profound affection that hits you when you watch your partner absolutely refuse to capitulate to a hard task.
-            </div>
-
-            <p>She put her head down and did the work. And while she was entirely focused on reaction rates and electron configurations, I was entirely focused on how exceptionally lucky I am to be invested in a woman with that kind of relentless internal engine.</p>
-
-            <!-- Chart 1: Line Graph -->
-            <div class="chart-container">
-                <div class="chart-title">Figure 1: The "I'm Not Quitting" Index</div>
-                <div class="chart-subtitle">Tracking her sheer determination relative to her caffeine intake.</div>
-                <svg viewBox="0 0 600 300" class="chart-svg">
-                    <!-- Grid lines -->
-                    <line x1="50" y1="250" x2="550" y2="250" stroke="#cccccc" stroke-width="1"/>
-                    <line x1="50" y1="200" x2="550" y2="200" stroke="#eeeeee" stroke-width="1"/>
-                    <line x1="50" y1="150" x2="550" y2="150" stroke="#eeeeee" stroke-width="1"/>
-                    <line x1="50" y1="100" x2="550" y2="100" stroke="#eeeeee" stroke-width="1"/>
-                    <line x1="50" y1="50" x2="550" y2="50" stroke="#eeeeee" stroke-width="1"/>
-                    
-                    <!-- Axes -->
-                    <line x1="50" y1="50" x2="50" y2="250" stroke="#333333" stroke-width="2"/>
-                    <line x1="50" y1="250" x2="550" y2="250" stroke="#333333" stroke-width="2"/>
-                    
-                    <!-- Y-axis labels -->
-                    <text x="40" y="255" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">Low</text>
-                    <text x="40" y="155" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">Base</text>
-                    <text x="40" y="55" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">Max</text>
-                    
-                    <!-- X-axis labels -->
-                    <text x="100" y="270" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">Week 1</text>
-                    <text x="300" y="270" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">Week 2</text>
-                    <text x="500" y="270" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">Exam Day</text>
-
-                    <!-- The Data Line (Grit) -->
-                    <polyline points="50,220 100,200 150,210 200,160 250,170 300,110 350,130 400,80 450,90 500,40" fill="none" stroke="#0073bb" stroke-width="4" stroke-linejoin="round"/>
-                    
-                    <!-- Data points -->
-                    <circle cx="500" cy="40" r="6" fill="#cc0000" />
-                    <text x="480" y="25" font-family="Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#cc0000">Absolute Brilliance</text>
-                </svg>
-            </div>
-
-            <h2>Trading Through a Bear Market of Exhaustion</h2>
-
-            <p>Here is the brutal, unglamorous truth about long-distance relationships: sometimes, the logistics are just agonizing. When she hit peak exhaustion, I didn't have the geographic leverage to fix it. </p>
-
-            <p>I couldn't magically lower the interest rates on her anxiety. I couldn't walk into the room, gently pull the textbook out of her hands, and hand her a plate of warm food. Being states away means realizing your "I want to help" instinct is entirely useless against the cold, hard reality of miles.</p>
-
-            <p>So, I had to learn the hardest strategy in relationship investing: the art of the <em>Hold</em>.</p>
-
-            <p>When someone you love is running entirely on fumes, your job isn't to day-trade their emotions. Your job isn't to offer toxic positivity or try to perfectly "optimize" their stress away. Your job is to just sit in the red with them. It means listening, validating, and being a completely stable, unwavering presence on the other side of the Instagram chat.</p>
-
-            <h2>The Earnings Call (To Her)</h2>
-
-            <p>If she happens to be reading this between study sessions (hi, beautiful), here is the official Q2 audit of my feelings:</p>
-
-            <p>That exam measured your grasp of chemistry on a random day in late February. It did not measure you. It didn't measure your worth, your brilliant mind, or the effortless way you make my life infinitely better.</p>
-
-            <p>I know you are exhausted right now. You gave it everything you had, and I am in complete awe of you. You don’t need to immediately find your energy or pretend you aren't completely burned out. I love the highly-focused, energized version of you, and I am equally obsessed with the currently-fried, wrapped-in-a-blanket version of you.</p>
-
-            <p>I cannot magically shrink the distance between us today. I can't take the exhaustion away. But I see exactly how hard you're working, and it makes me so damn proud to be yours.</p>
-
-            <h2>The Q3 Forecast: English</h2>
-
-            <p>The chemistry paper is done. The market has officially closed on that syllabus.</p>
-
-            <p>But because academia is an unregulated monopoly that actively roots against human joy, the trading floor waits for no one. Her English exam is up next. Which means she is currently liquidating her chemistry assets and shifting her portfolio entirely into metaphors, literary analysis, and essays.</p>
-
-            <p>I am putting all my chips on her. I am overwhelmingly bullish on her success, not just because she is incredibly smart, but because I know exactly what she is made of.</p>
-
-            <p>Now, if anyone needs me, I'll be over here Googling "Sweet treats for my sweetheart" and preparing my long-term strategy of never, ever letting her go.</p>
-        </div>
-    </main>
-
-    <!-- Romantic Site Footer -->
-    <footer class="site-footer">
-        <div class="footer-logo">THE INSIDER TRUTH</div>
-        <div class="footer-tagline">Invested in you, regardless of market conditions.</div>
-        
-        <div class="footer-links">
-            <button onclick="openModal('modal-about')">About Us (Just Me, Obsessed With You)</button>
-            <button onclick="openModal('modal-contact')">Contact (Available 24/7)</button>
-            <button onclick="openModal('modal-terms')">Terms of Adoration</button>
-            <button onclick="openModal('modal-jokes')">Inside Jokes Policy</button>
-        </div>
-        
-        <div class="copyright">
-            &copy; 2026. All rights reserved. No part of my heart may be reproduced, distributed, or transmitted in any form without your direct permission.
-        </div>
-    </footer>
-
-    <!-- Modals (Hidden by default) -->
-
-    <!-- About Us Modal -->
-    <div id="modal-about" class="modal-overlay">
+    <!-- RESEARCH MODAL -->
+    <div id="research-modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal-about')">&times;</span>
-            <div class="modal-header">Corporate Overview</div>
-            <div class="modal-body">
-                <p><strong>Founded:</strong> The moment you first replied to me.</p>
-                <p><strong>Mission Statement:</strong> To continuously invest time, energy, and terrible jokes into making your day slightly better, even from several states away.</p>
-                <p><strong>Core Competencies:</strong></p>
-                <ul>
-                    <li>Underthinking text messages before sending.</li>
-                    <li>Tracking your exam schedule like a Wall Street hedge fund manager.</li>
-                    <li>An unwavering, scientifically proven belief that you are the smartest and most beautiful person in any room.</li>
-                </ul>
-                <p><strong>Current Valuation:</strong> Absolutely priceless.</p>
+            <button class="close-btn" onclick="document.getElementById('research-modal').style.display='none'">X CLOSE</button>
+            
+            <div style="border-bottom: 2px solid var(--text-primary); margin-bottom: 20px; padding-bottom: 10px;">
+                <h1 style="margin:0; font-size: 24px;">NIVI SECURITIES - EQUITY RESEARCH</h1>
+                <div style="display: flex; justify-content: space-between; margin-top: 10px; color: var(--text-secondary);">
+                    <span>SECURITY: NVAA</span>
+                    <span>RATING: STRONG BUY</span>
+                    <span>TARGET: INFINITE</span>
+                </div>
+            </div>
+
+            <div style="font-family: 'Courier New', monospace; line-height: 1.6; color: #ddd;">
+                <h3 style="color: var(--text-primary);">INVESTMENT THESIS: 9 MONTHS</h3>
+                <p>
+                    We initiate coverage on Niv-Aaradhya Holdings (NVAA) with a <strong>STRONG BUY</strong> rating and a price target of <strong>INFINITE</strong>. Despite facing structural headwinds (specifically the 2,083km distance factor), the partnership has demonstrated exceptional performance across all operational metrics over its 274-day history since the IPO on May 19, 2025.
+                </p>
+
+                <h3 style="color: var(--text-primary);">KEY PERFORMANCE INDICATORS</h3>
+                <p>
+                    <strong>1. Communication Volume:</strong> With over 10,000 text messages and 800 voice notes, data throughput exceeds all sector benchmarks. The storage crisis on the analyst's phone (Niv) indicates a refusal to divest any assets (memories).
+                </p>
+                <p>
+                    <strong>2. Resilience (The Distance Factor):</strong> The market was initially skeptical about the 2,083km spread. However, the proprietary "Voice Note Technology" and "Shared Dreams" algorithm have successfully hedged this risk. Volatility remains low, despite the physical gap.
+                </p>
+                <p>
+                    <strong>3. Notable Events:</strong>
+                    <br> - <em>The Lipstick Tutorial (FaceTime):</em> A singular, high-impact event that permanently altered the happiness index.
+                    <br> - <em>The Pizza Topping Voice Note:</em> Demonstrated compatibility in culinary philosophy.
+                    <br> - <em>The Chemistry Exam:</em> While stressful, the support systems held firm.
+                </p>
+
+                <h3 style="color: var(--text-primary);">ANALYST NOTE (PERSONAL)</h3>
+                <p>
+                    On a personal note, this analyst finds the subject (Aaradhya) to be statistically significant in every way. The way she laughs at 21:33 in voice notes, the poetry she writes, and even her exam stress are all priced in as "Adorable."
+                </p>
+                <p>
+                    <strong>CONCLUSION:</strong>
+                    The past 9 months have outperformed all models. The recommendation is to HOLD forever and BUY every dip. 
+                </p>
+                <p style="text-align: center; margin-top: 30px; font-size: 14px; border: 1px solid var(--text-primary); padding: 10px;">
+                    HAPPY 9 MONTH ANNIVERSARY.<br>
+                    I LOVE YOU.<br>
+                    - Niv
+                </p>
             </div>
         </div>
     </div>
 
-    <!-- Contact Modal -->
-    <div id="modal-contact" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal-contact')">&times;</span>
-            <div class="modal-header">Global Headquarters Support</div>
-            <div class="modal-body">
-                <p>Our dedicated support lines (my phone) are open 24 hours a day, 7 days a week, 365 days a year.</p>
-                <p><strong>Directory:</strong></p>
-                <ul>
-                    <li><em>For study panic:</em> Call immediately. I will pick up.</li>
-                    <li><em>For rants about English metaphors:</em> Text anytime. I will enthusiastically agree with you.</li>
-                    <li><em>For emergency food delivery requests:</em> Please provide exact cravings via Calls or Text Messages.</li>
-                </ul>
-                <p><strong>Service Level Agreement:</strong> Response time is guaranteed to be immediate, barring active Wi-Fi outages or deep sleep (even then, just call twice).</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Terms of Adoration Modal -->
-    <div id="modal-terms" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal-terms')">&times;</span>
-            <div class="modal-header">Terms of Adoration</div>
-            <div class="modal-body">
-                <p>By continuing to date me, you agree to the following legally binding clauses:</p>
-                <ul>
-                    <li><strong>Clause 1 (The Beauty Mandate):</strong> You must accept that you look gorgeous, even when running on zero sleep and wearing your comfiest night wear (You look hot in it).</li>
-                    <li><strong>Clause 2 (The Brilliance Act):</strong> You are objectively brilliant. Any self-doubt regarding exams is hereby classified as market misinformation.</li>
-                    <li><strong>Clause 3 (The Distance Tax):</strong> I am legally obligated to miss you entirely too much until we finally close the geographic gap.</li>
-                    <li><strong>Clause 4 (No-Cancellation Policy):</strong> My investment in you is locked in permanently. No take-backs.</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- Inside Jokes Policy Modal -->
-    <div id="modal-jokes" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal-jokes')">&times;</span>
-            <div class="modal-header">Data Privacy & Inside Jokes</div>
-            <div class="modal-body">
-                <p>At <em>The Insider Truth</em>, we take the security of our inside jokes very seriously.</p>
-                <p>All proprietary shared humor, absolutely absurd delirious voice notes, and text messages of you deeply unamused by my puns are classified as strictly confidential.</p>
-                <p><strong>Data Storage:</strong> Stored securely in my brain and backed up to my phone's "Favorites" album forever.</p>
-                <p><strong>Third-Party Sharing:</strong> Never. We are a closed ecosystem of our own weirdness, and frankly, I wouldn't trade it for the world.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript for Modals -->
     <script>
-        // Open Modal
-        function openModal(id) {
-            document.getElementById(id).classList.add('show');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        // Real-time Clock
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour12: false });
+            const dateString = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            document.getElementById('clock').innerHTML = `${dateString.toUpperCase()} ${timeString} EST`;
         }
+        setInterval(updateTime, 1000);
+        updateTime();
 
-        // Close Modal
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('show');
-            document.body.style.overflow = 'auto'; // Restore scrolling
-        }
-
-        // Close when clicking outside of the modal content
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal-overlay')) {
-                event.target.classList.remove('show');
-                document.body.style.overflow = 'auto';
-            }
-        }
+        // Simulate random subtle data changes to make it feel "live"
+        setInterval(() => {
+            const elements = document.querySelectorAll('.flash');
+            elements.forEach(el => {
+                if(Math.random() > 0.7) {
+                    el.style.opacity = (Math.random() * 0.5) + 0.5;
+                }
+            });
+        }, 2000);
     </script>
-
 </body>
 </html>
