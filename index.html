@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Insider: I Tracked My Girlfriend's Exam Prep Like A Volatile Stock</title>
+    <title>Business Insider: My Girlfriend's Chemistry Prep Was A Volatile Market</title>
     <style>
         /* Base Reset & Variables */
         * {
@@ -21,6 +21,8 @@
             --bi-light-gray: #f5f5f5;
             --bi-border: #eaeaea;
             --bi-green: #228b22;
+            --bi-ticker-green: #00ff41;
+            --bi-ticker-red: #ff3333;
             --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             --font-serif: Georgia, 'Times New Roman', Times, serif;
         }
@@ -36,7 +38,6 @@
         /* Top Navigation Mockup */
         .top-nav {
             padding: 16px 20px;
-            border-bottom: 2px solid var(--bi-black);
             display: flex;
             align-items: center;
         }
@@ -48,6 +49,54 @@
             letter-spacing: -1.5px;
             color: var(--bi-black);
             text-transform: uppercase;
+        }
+
+        /* Cute Stock Ticker */
+        .ticker-wrap {
+            width: 100%;
+            background-color: var(--bi-black);
+            overflow: hidden;
+            border-top: 1px solid #333;
+            border-bottom: 2px solid var(--bi-black);
+            padding: 8px 0;
+            white-space: nowrap;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            animation: ticker-scroll 25s linear infinite;
+        }
+
+        @keyframes ticker-scroll {
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                transform: translate3d(-100%, 0, 0);
+            }
+        }
+
+        .ticker-item {
+            display: inline-block;
+            margin-right: 40px;
+            color: #ffffff;
+        }
+
+        .ticker-up {
+            color: var(--bi-ticker-green);
+        }
+
+        .ticker-down {
+            color: var(--bi-ticker-red);
+        }
+
+        .ticker-heart {
+            color: #ff66b2;
         }
 
         /* Main Article Container */
@@ -268,20 +317,43 @@
         <div class="logo">BUSINESS INSIDER</div>
     </header>
 
+    <!-- The Cute Stock Ticker -->
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <span class="ticker-item">$GRIT <span class="ticker-up">▲ 450.21 (+12.4%)</span></span>
+            <span class="ticker-item">$SLEEP <span class="ticker-down">▼ 04.12 (-88.1%)</span></span>
+            <span class="ticker-item">$LOVE <span class="ticker-heart">♥ 999.99 (+MAX)</span></span>
+            <span class="ticker-item">$CAFFEINE <span class="ticker-up">▲ 150.00 (+45.0%)</span></span>
+            <span class="ticker-item">$CHEM_STRESS <span class="ticker-down">▼ 0.00 (DELISTED)</span></span>
+            <span class="ticker-item">$ENG_LIT <span class="ticker-up">▲ 10.50 (NEW IPO)</span></span>
+            <span class="ticker-item">$DISTANCE <span class="ticker-down">▼ HOLDING STEADY</span></span>
+            <span class="ticker-item">$PROUD_BF <span class="ticker-up">▲ 500.00 (+100%)</span></span>
+            <!-- Duplicate for seamless loop -->
+            <span class="ticker-item">$GRIT <span class="ticker-up">▲ 450.21 (+12.4%)</span></span>
+            <span class="ticker-item">$SLEEP <span class="ticker-down">▼ 04.12 (-88.1%)</span></span>
+            <span class="ticker-item">$LOVE <span class="ticker-heart">♥ 999.99 (+MAX)</span></span>
+            <span class="ticker-item">$CAFFEINE <span class="ticker-up">▲ 150.00 (+45.0%)</span></span>
+            <span class="ticker-item">$CHEM_STRESS <span class="ticker-down">▼ 0.00 (DELISTED)</span></span>
+            <span class="ticker-item">$ENG_LIT <span class="ticker-up">▲ 10.50 (NEW IPO)</span></span>
+            <span class="ticker-item">$DISTANCE <span class="ticker-down">▼ HOLDING STEADY</span></span>
+            <span class="ticker-item">$PROUD_BF <span class="ticker-up">▲ 500.00 (+100%)</span></span>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <main class="article-container">
         
         <span class="badge">LIFE</span>
         
-        <h1 class="headline">I tracked my girlfriend’s chemistry prep like a volatile stock. Here’s why I'm doubling down on my investment.</h1>
+        <h1 class="headline">My girlfriend’s chemistry prep was a volatile market. Here’s why she’s my best long-term investment.</h1>
         
-        <p class="subheadline">She just survived a brutal exam. While watching from states away, I learned that supporting someone through a high-stress market means knowing exactly when to just hold your position.</p>
+        <p class="subheadline">She just survived a brutal syllabus. Watching her from states away taught me that the highest yields in a relationship come from simply holding on during the dips.</p>
         
         <div class="author-block">
             <div class="avatar">N</div>
             <div class="author-info">
                 <div class="author-name">Niv <span>as told to Niv</span></div>
-                <div class="meta-data">Mar 1, 2026, 11:30 AM IST • 6 min read</div>
+                <div class="meta-data">Mar 1, 2026, 11:40 AM IST • 6 min read</div>
             </div>
         </div>
 
@@ -290,11 +362,11 @@
 
             <p>But frankly, all the global market fluctuations and tech news in the world can't distract me from the fact that the person I love most just survived an absolute academic stress-test, and she did it several states away.</p>
 
-            <p>Let's talk about high-stakes chemistry, the peculiar romance of watching someone work incredibly hard, and why the most valuable asset you can have in a relationship is the ability to weather the storm together.</p>
+            <p>Let's talk about high-stakes chemistry, the peculiar romance of watching someone work incredibly hard, and why the most valuable asset you can have in a relationship isn't proximity—it's the ability to weather the storm together.</p>
 
-            <p>My girlfriend took a massive chemistry exam this week. Because we live states apart, I couldn’t do anything practically useful. I couldn't inject liquidity into her coffee supply. I couldn't massage her shoulders when she hunched over her notes. I couldn't aggressively snatch the textbook out of her hands and force her to take a walk.</p>
+            <p>My girlfriend took a massive chemistry exam this week. Because we live states apart, I couldn’t do anything practically useful. I couldn't inject liquidity into her coffee supply. I couldn't forcefully close her textbook to initiate a mandatory cooling-off period. I couldn't physically be there to act as a stabilizing asset.</p>
 
-            <p>Instead, I did what any data-driven, supportive long-distance boyfriend would do: I paced around my apartment, tracked her study habits like a blue-chip stock on the NASDAQ, and learned a lot about what it actually means to care for someone when you literally cannot be there to fix the margins.</p>
+            <p>Instead, I did what any data-driven, supportive long-distance boyfriend would do: I paced around my apartment, tracked her study habits like a blue-chip stock on the NASDAQ, and learned a lot about what it actually means to care for someone when you literally cannot be there to manipulate the market.</p>
 
             <h2>The initial bull run and the fundamental analysis of grit.</h2>
 
@@ -336,80 +408,29 @@
                 <div class="chart-caption">Source: My daily observations of her textbook-to-sleep ratio.</div>
             </div>
 
-            <p>There is a specific kind of beauty in watching the person you love dedicate themselves to something difficult. We don't talk about this enough in modern romance. We talk about dates and vacations, but we rarely talk about the deep, quiet affection that blooms when you watch your partner absolutely refuse to give up in the face of strong market resistance.</p>
+            <p>There is a specific kind of beauty in watching the person you love dedicate themselves to something difficult. We don't talk about this enough in modern romance. We talk about dates and vacations, but we rarely talk about the deep, quiet affection that blooms when you watch your partner absolutely refuse to capitulate to a brutal syllabus.</p>
 
-            <p>She put her head down and did the work. And while she was entirely focused on covalent bonds and reaction rates, I was entirely focused on how lucky I am to be with someone who has that kind of internal drive.</p>
+            <p>She put her head down and did the work. And while she was entirely focused on reaction rates and molecular structures, I was entirely focused on how exceptionally lucky I am to be invested in someone with that kind of internal drive.</p>
 
-            <h2>The Intraday Volatility: A Midnight Flash Crash</h2>
+            <h2>Intraday Volatility and The Art of Holding</h2>
 
-            <p>To truly understand the conditions she was trading in, you have to look at the intraday volatility. The night before the exam, her energy levels started fluctuating like a meme stock during a coordinated short squeeze.</p>
+            <p>To truly understand the conditions she was trading in, you have to look at the intraday volatility. In the final 48 hours before the exam, her energy levels started fluctuating wildly. I watched her perfectly organized study plan experience sudden, dramatic dips in serotonin as exhaustion took hold.</p>
 
-            <p>She had been reviewing notes for hours. As the clock slipped past midnight, the cognitive fatigue set in. I watched her perfectly organized study plan experience a sudden, dramatic flash crash in serotonin.</p>
+            <p>She went from calmly reciting equations to questioning her life choices in a span of three hours. It was a chaotic, entirely relatable display of human endurance. Most novice investors would panic at that level of volatility. They would try to "fix" the market with unhelpful platitudes or overly cheerful pep talks.</p>
 
-            <!-- Chart 2: Candlestick Chart -->
-            <div class="chart-container">
-                <div class="chart-title">Figure 2: The Pre-Exam Candlestick Chart</div>
-                <div class="chart-subtitle">Intraday volatility of her Sanity Index, peaking in a 2:00 AM sell-off.</div>
-                <svg viewBox="0 0 600 280" class="chart-svg">
-                    <!-- Grid Lines -->
-                    <line x1="50" y1="240" x2="550" y2="240" stroke="#ccc" />
-                    <line x1="50" y1="180" x2="550" y2="180" stroke="#eee" />
-                    <line x1="50" y1="120" x2="550" y2="120" stroke="#eee" />
-                    <line x1="50" y1="60" x2="550" y2="60" stroke="#eee" />
-                    
-                    <!-- Axes -->
-                    <line x1="50" y1="40" x2="50" y2="240" stroke="#333" stroke-width="2"/>
-                    <line x1="50" y1="240" x2="550" y2="240" stroke="#333" stroke-width="2"/>
-                    
-                    <!-- Y Axis Labels (Inverted values for visual logic) -->
-                    <text x="40" y="245" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">Low</text>
-                    <text x="40" y="125" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">Base</text>
-                    <text x="40" y="65" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">High</text>
-
-                    <!-- X Axis Labels -->
-                    <text x="150" y="260" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">8:00 PM</text>
-                    <text x="250" y="260" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">11:00 PM</text>
-                    <text x="350" y="260" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">2:00 AM</text>
-                    <text x="450" y="260" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">5:00 AM</text>
-
-                    <!-- Candlestick 1: 8 PM (Bullish/Green) -->
-                    <line x1="150" y1="60" x2="150" y2="160" stroke="#333" stroke-width="2"/>
-                    <rect x="135" y="80" width="30" height="50" fill="#228b22" />
-                    
-                    <!-- Candlestick 2: 11 PM (Bearish/Red) -->
-                    <line x1="250" y1="70" x2="250" y2="190" stroke="#333" stroke-width="2"/>
-                    <rect x="235" y="100" width="30" height="70" fill="#cc0000" />
-
-                    <!-- Candlestick 3: 2 AM (The Flash Crash - Bearish/Red) -->
-                    <line x1="350" y1="130" x2="350" y2="250" stroke="#333" stroke-width="2"/>
-                    <rect x="335" y="160" width="30" height="80" fill="#cc0000" />
-                    <text x="350" y="115" font-family="Helvetica, sans-serif" font-size="11" fill="#cc0000" text-anchor="middle" font-weight="bold">Delirium Dip</text>
-
-                    <!-- Candlestick 4: 5 AM (The Caffeinated Rebound - Bullish/Green) -->
-                    <line x1="450" y1="110" x2="450" y2="210" stroke="#333" stroke-width="2"/>
-                    <rect x="435" y="140" width="30" height="60" fill="#228b22" />
-
-                    <!-- Moving Average Line -->
-                    <polyline points="150,105 250,135 350,200 450,170" fill="none" stroke="#0073bb" stroke-width="2" stroke-dasharray="5,5"/>
-                </svg>
-                <div class="chart-caption">Note: 2:00 AM dip correlates perfectly with the "staring blankly at the wall" phase.</div>
-            </div>
-
-            <p>She went from calmly reciting equations to aggressively questioning the fundamental nature of the universe in a span of three hours. It was a chaotic, beautiful display of human endurance. Most investors would have panicked at that level of volatility. They would have sold their positions and logged off.</p>
-
-            <p>But me? I was holding. Because watching someone you love refuse to quit, even when their personal stock is temporarily down and they are running entirely on fumes, is genuinely the most endearing thing in the world. Only she could make a sleep-deprived ramble about electron configurations sound utterly charming.</p>
+            <p>But me? I just held my position. Because watching someone you love refuse to quit—even when their personal stock of energy is temporarily depleted and they are running entirely on fumes—is genuinely the most endearing thing in the world. Only she could make a sleep-deprived rant about chemistry sound utterly charming.</p>
 
             <h2>Navigating a long-distance bear market.</h2>
 
-            <p>Here is the brutal truth about long-distance relationships: sometimes, the logistics are just agonizing. You hit a wall where Wi-Fi and cell towers are simply not enough. I don't have Federal Reserve powers. I can’t magically lower the interest rates on her stress. I can’t be there physically to break the tension or pull her onto the couch and tell her to rest her eyes.</p>
+            <p>Here is the brutal truth about long-distance relationships: sometimes, the logistics are just agonizing. I don't have Federal Reserve powers over her stress levels. I can’t magically lower the interest rates on her anxiety. I can’t be there physically to break the tension.</p>
 
-            <p>I realized that my desperate urge to "do something" was actually just an urge to make <em>myself</em> feel better about being states away. I wanted to fix her exhaustion, but you can't fix exhaustion with a text message.</p>
+            <p>I realized that my desperate urge to "do something" was actually just an urge to make <em>myself</em> feel better about being states away. I wanted to fix her exhaustion, but you can't fix exhaustion with a well-timed text message.</p>
 
-            <p>Long-distance support is an art form. It requires restraint. It means realizing that "being there" for someone doesn't always mean solving their problems. Sometimes it just means being a consistent, unwavering presence on the other end of the phone. Support isn't about actively trading; it's about seeing someone in their struggle and actively choosing to just sit in it with them.</p>
+            <p>Long-distance support is an art form. It requires restraint. It means realizing that "being there" for someone doesn't always mean solving their problems. Sometimes it just means being a consistent, unwavering presence on the other end of the phone. Support isn't about actively day-trading her emotions; it's about seeing someone in their struggle and actively choosing to just sit in the red with them.</p>
 
-            <p>It means listening, validating, reminding her to drink water, and letting her be completely fried without rushing her through the recovery process just so I can feel like a helpful boyfriend.</p>
+            <p>It means listening, validating, gently suggesting she drink water, and letting her be completely fried without rushing her through the recovery process just so I can feel like a helpful boyfriend.</p>
 
-            <h2>If she’s reading this (hi), here’s the ROI report.</h2>
+            <h2>If she’s reading this (hi), here’s the official earnings report.</h2>
 
             <p>The exam measured your grasp of chemistry on a random day in February. It did not measure you. It didn't measure your worth, your brilliance, or the way you light up a room.</p>
 
@@ -417,19 +438,21 @@
 
             <p>You don’t need to bounce back quickly. You don't need to immediately find your energy or pretend you aren't burned out. I love the version of you that is driven and focused, and I love the version of you that is currently functioning entirely on caffeine and willpower. </p>
 
-            <p>I love that you care so much. I love the way your mind works. I love that you push through the midnight flash crashes, because it shows exactly how much grit you actually have.</p>
+            <p>I love that you care so much. I love the way your mind works. I love that you push through the dips, because it shows exactly how much grit you actually have.</p>
 
             <p>You are more than a chemistry student. You are the person who tries hard things, who doesn't back down, and who makes my life infinitely better just by existing in it. I cannot make this exhaustion go away. I cannot shrink the states between us today. But I can see you, I can appreciate you, and I can promise that my investment in us is entirely recession-proof.</p>
 
-            <h2>The Q2 Forecast: English Lit</h2>
+            <h2>The Q2 Forecast: English Lit (IPO Opening Soon)</h2>
 
             <p>The chemistry paper is done. The market has closed on that syllabus. The textbooks can finally be shelved.</p>
 
-            <p>Of course, this is college, which means the academic economy has absolutely no sense of mercy. Her English exam is up next. Which means she is currently shifting gears from balancing complex chemical equations to deconstructing literature, analyzing metaphors, and writing essays.</p>
+            <p>But because academia is an unregulated monopoly that actively roots against sleep, the market waits for no one. Her English Lit exam is up next. Which means she is currently shifting her portfolio from balancing complex chemical equations to deconstructing literature, analyzing metaphors, and writing essays.</p>
 
-            <p>She is going to absolutely crush Q2 as well. Not just because she's smart, but because of her unrelenting spirit. She has the kind of resilience that you can't teach in a lecture hall or model on a spreadsheet.</p>
+            <p>She is going to absolutely dominate Q2 as well. Not just because she's incredibly smart, but because of her unrelenting spirit. She has the kind of resilience that you simply can't model on a spreadsheet.</p>
 
             <p>I will still be here, states away, cheering her on from the digital sidelines. I will keep ordering her food when she forgets to eat, I will keep answering the silent FaceTimes, and I will keep marveling at how incredibly lucky I am to be holding this position.</p>
+            
+            <p>Now, if anyone needs me, I'll be analyzing the literary market for good English puns that won't result in my immediate liquidation.</p>
         </div>
     </main>
 
