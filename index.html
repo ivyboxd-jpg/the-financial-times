@@ -3,539 +3,451 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post-Exam Analysis: Why AARADHYA is the industry standard | Insider</title>
+    <title>Business Insider: I Tracked My Girlfriend's Exam Prep Like A Volatile Stock</title>
     <style>
-        /* BASE STYLES */
-        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        /* Base Reset & Variables */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bi-black: #000000;
+            --bi-text: #1a1a1a;
+            --bi-blue: #0073bb;
+            --bi-red: #cc0000;
+            --bi-gray: #555555;
+            --bi-light-gray: #f5f5f5;
+            --bi-border: #eaeaea;
+            --bi-green: #228b22;
+            --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-serif: Georgia, 'Times New Roman', Times, serif;
+        }
 
         body {
-            background-color: #FFFFFF;
-            color: #111;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 18px;
-            line-height: 1.6;
-            padding-bottom: 100px;
+            background-color: #ffffff;
+            color: var(--bi-text);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
         }
 
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* BRANDING */
-        .brand-header {
-            display: flex;
-            align-items: center;
-            border-bottom: 2px solid #000;
-            padding-bottom: 15px;
-            margin-bottom: 30px;
-            padding-top: 20px;
-        }
-
-        .brand-logo { font-weight: 900; font-size: 28px; letter-spacing: -1px; }
-        .brand-section { color: #2662EA; font-weight: 900; font-size: 28px; letter-spacing: -1px; margin-left: 5px; }
-
-        /* HEADLINES */
-        h1 {
-            font-size: 34px;
-            line-height: 1.1;
-            font-weight: 800;
-            margin-bottom: 15px;
-            letter-spacing: -0.5px;
-            color: #111;
-        }
-
-        h2.subhead {
-            font-size: 20px;
-            color: #555;
-            font-weight: 400;
-            margin-bottom: 25px;
-            line-height: 1.4;
-        }
-
-        /* METADATA */
-        .meta {
-            font-size: 13px;
-            font-weight: 700;
-            color: #888;
-            margin-bottom: 30px;
+        /* Top Navigation Mockup */
+        .top-nav {
+            padding: 16px 20px;
+            border-bottom: 2px solid var(--bi-black);
             display: flex;
             align-items: center;
         }
-        .meta span { color: #2662EA; margin-right: 15px; text-transform: uppercase; }
 
-        /* INTRO TEXT */
-        .intro-text {
-            font-size: 19px;
-            font-weight: 400;
-            font-style: italic;
-            color: #333;
-            margin-bottom: 30px;
-        }
-        .intro-text strong { font-weight: 800; font-style: normal; }
-
-        /* BODY CONTENT */
-        p { margin-bottom: 24px; color: #222; }
-        
-        h3 {
-            font-size: 22px;
-            font-weight: 800;
-            margin-top: 50px;
-            margin-bottom: 20px;
-            color: #000;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-
-        .highlight {
-            background: linear-gradient(180deg, rgba(255,255,255,0) 65%, #D4E2FF 65%);
-            display: inline;
-            font-weight: 600;
-        }
-
-        /* --- CODE EDITOR STYLING --- */
-        .editor-container {
-            background: #1E1E1E;
-            border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            margin: 40px 0;
-            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-            overflow: hidden;
-            border: 1px solid #333;
-        }
-
-        .editor-header {
-            background: #252526;
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #333;
-        }
-
-        .window-controls { display: flex; gap: 8px; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .red { background: #FF5F56; }
-        .yellow { background: #FFBD2E; }
-        .green { background: #27C93F; }
-
-        .filename { color: #999; font-size: 13px; font-weight: 500; opacity: 0.8; margin-left: 10px; }
-        .action-buttons { display: flex; gap: 10px; align-items: center; }
-
-        .icon-btn {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 6px;
-            border-radius: 6px;
-            transition: background 0.2s ease;
-            position: relative;
-        }
-        
-        .icon-btn:hover { background: rgba(255,255,255,0.1); }
-        .icon-btn svg { width: 20px; height: 20px; fill: #aaa; transition: fill 0.2s; }
-        .icon-btn:hover svg { fill: #fff; }
-        .play-btn:hover svg { fill: #27C93F; }
-
-        .code-area { padding: 25px; color: #D4D4D4; font-size: 14px; line-height: 1.6; position: relative; }
-
-        /* SYNTAX */
-        .kwd { color: #C586C0; font-weight: bold; }
-        .func { color: #DCDCAA; }
-        .str { color: #CE9178; }
-        .var { color: #9CDCFE; }
-        .comment { color: #6A9955; font-style: italic; }
-
-        /* TERMINAL */
-        .terminal {
-            background: #090909;
-            color: #33FF00;
-            padding: 0 25px;
-            font-size: 13px;
-            border-top: 1px solid #333;
-            height: 0;
-            opacity: 0;
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        .terminal.active { height: auto; min-height: 60px; padding: 20px 25px; opacity: 1; }
-        .cursor { display: inline-block; width: 8px; height: 15px; background: #33FF00; animation: blink 1s infinite; vertical-align: sub; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
-
-        /* TOOLTIP */
-        .tooltip {
-            position: absolute;
-            top: -35px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #2662EA;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 700;
-            font-family: sans-serif;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.2s, top 0.2s;
-            pointer-events: none;
-            white-space: nowrap;
-            z-index: 10;
-        }
-        .tooltip::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #2662EA transparent transparent transparent;
-        }
-        .tooltip.show { opacity: 1; visibility: visible; top: -45px; }
-
-        /* --- SYSTEM HEALTH --- */
-        .status-dashboard {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 25px;
-            margin: 40px 0;
-            background: #FAFAFA;
-        }
-
-        .status-header {
-            font-size: 14px;
-            font-weight: 800;
+        .logo {
+            font-family: var(--font-sans);
+            font-weight: 900;
+            font-size: 28px;
+            letter-spacing: -1.5px;
+            color: var(--bi-black);
             text-transform: uppercase;
-            color: #555;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
         }
 
-        .status-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .status-label { font-weight: 700; font-size: 15px; color: #333; }
-        .status-bar-bg { flex-grow: 1; height: 8px; background: #E0E0E0; border-radius: 10px; margin: 0 20px; overflow: hidden; }
-        .status-bar-fill { height: 100%; background: #27C93F; border-radius: 10px; }
-        .fill-100 { width: 100%; }
-        .status-value { font-family: monospace; font-weight: 700; color: #27C93F; font-size: 14px; min-width: 80px; text-align: right; }
-
-        /* --- UPDATED ROADMAP UI --- */
-        .roadmap-wrapper {
-            margin-top: 30px;
-            padding: 20px 0;
-            position: relative;
-        }
-        
-        .roadmap-line {
-            position: absolute;
-            left: 20px;
-            top: 10px;
-            bottom: 30px;
-            width: 2px;
-            background: #E0E0E0;
-            z-index: 1;
+        /* Main Article Container */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 24px 20px 60px 20px;
         }
 
-        .roadmap-card {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .status-dot {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: #fff;
-            border: 2px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            margin-right: 15px;
-            flex-shrink: 0;
-            color: #ddd;
-        }
-
-        .status-dot.completed {
-            background: #27C93F;
-            border-color: #27C93F;
-            color: #fff;
-        }
-
-        .status-dot.pending {
-            background: #fff;
-            border-color: #2662EA;
-            color: #2662EA;
-        }
-
-        .card-content {
-            background: #F9F9F9;
-            padding: 15px 20px;
-            border-radius: 8px;
-            flex-grow: 1;
-            border: 1px solid #eee;
-        }
-
-        .card-time {
+        /* Article Header */
+        .badge {
+            background-color: var(--bi-red);
+            color: #ffffff;
+            font-family: var(--font-sans);
             font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
-            color: #888;
-            margin-bottom: 5px;
+            padding: 4px 8px;
+            display: inline-block;
+            margin-bottom: 16px;
             letter-spacing: 0.5px;
         }
 
-        .card-title {
+        .headline {
+            font-family: var(--font-sans);
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1.15;
+            color: var(--bi-black);
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .subheadline {
+            font-family: var(--font-sans);
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 1.4;
+            color: var(--bi-gray);
+            margin-bottom: 24px;
+        }
+
+        /* Author Block */
+        .author-block {
+            display: flex;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--bi-border);
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-sans);
+            font-weight: 700;
+            color: var(--bi-blue);
+            font-size: 18px;
+            margin-right: 12px;
+        }
+
+        .author-info {
+            font-family: var(--font-sans);
+            font-size: 14px;
+            color: var(--bi-gray);
+        }
+
+        .author-name {
+            color: var(--bi-blue);
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        
+        .author-name span {
+            color: var(--bi-black);
+            font-weight: 400;
+        }
+
+        .meta-data {
+            font-size: 13px;
+        }
+
+        /* Article Body Text */
+        .article-body {
+            font-family: var(--font-serif);
+            font-size: 19px;
+            line-height: 1.7;
+            color: var(--bi-text);
+        }
+
+        .article-body p {
+            margin-bottom: 24px;
+        }
+
+        /* Subheadings */
+        .article-body h2 {
+            font-family: var(--font-sans);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--bi-black);
+            margin-top: 48px;
+            margin-bottom: 16px;
+            line-height: 1.3;
+            letter-spacing: -0.3px;
+        }
+
+        .bold-intro {
+            font-family: var(--font-sans);
+            font-weight: 700;
+        }
+
+        /* Data Viz / Charts Styling */
+        .chart-container {
+            border: 1px solid var(--bi-border);
+            padding: 20px;
+            margin: 40px 0;
+            background-color: #fafafa;
+        }
+
+        .chart-title {
+            font-family: var(--font-sans);
             font-size: 16px;
             font-weight: 700;
-            color: #111;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
+            color: var(--bi-black);
         }
 
-        .card-desc {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 0;
+        .chart-subtitle {
+            font-family: var(--font-sans);
+            font-size: 13px;
+            color: var(--bi-gray);
+            margin-bottom: 20px;
         }
 
-        /* --- REVIEWS --- */
-        .review-box {
-            background: #F0F4F8;
-            padding: 20px;
-            border-left: 4px solid #2662EA;
-            margin-top: 40px;
+        .chart-svg {
+            width: 100%;
+            height: auto;
+            background-color: #ffffff;
+            border: 1px solid #eeeeee;
         }
-        .stars { color: #FFBD2E; font-size: 18px; margin-bottom: 5px; }
-        .review-text { font-style: italic; font-size: 16px; color: #444; margin-bottom: 10px; }
-        .reviewer { font-weight: 800; font-size: 13px; text-transform: uppercase; color: #111; }
 
+        .chart-caption {
+            font-family: var(--font-sans);
+            font-size: 12px;
+            color: #888888;
+            margin-top: 12px;
+            text-align: right;
+        }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid var(--bi-black);
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+            font-family: var(--font-sans);
+            color: var(--bi-gray);
+            font-size: 13px;
+        }
+
+        .footer-logo {
+            font-weight: 900;
+            font-size: 20px;
+            color: var(--bi-black);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--bi-black);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-links a:hover {
+            color: var(--bi-blue);
+        }
+
+        .copyright {
+            color: #888;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .headline {
+                font-size: 32px;
+            }
+            .subheadline {
+                font-size: 18px;
+            }
+            .article-body {
+                font-size: 18px;
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    
-    <!-- BRANDING -->
-    <header class="brand-header">
-        <span class="brand-logo">INSIDER</span>
-        <span class="brand-section">TECH</span>
+    <!-- Top Navigation -->
+    <header class="top-nav">
+        <div class="logo">BUSINESS INSIDER</div>
     </header>
 
-    <!-- HEADER -->
-    <h1>Aaradhya just completed the Physics deployment. Here is why the Founder (you) is the real asset.</h1>
-    <h2 class="subhead">The exam is shipped. The stress test is complete. An analysis of why your valuation is skyrocketing regardless of the physics variables.</h2>
-
-    <div class="meta">
-        <span>By Niv</span> // Feb 20, 2026, 4:05 PM
-    </div>
-
-    <!-- INTRO -->
-    <p class="intro-text">
-        <strong>Good afternoon.</strong> I shouldn’t be offering technical analysis on Physics since my understanding of "electricity" is limited to charging my phone. So this is just me passing along details of a new industry trend: recognizing that you are the standard, regardless of how the exam went.
-    </p>
-
-    <!-- CONTENT -->
-    <p>There is a concept in Silicon Valley called "shipping." It doesn't matter how messy the code was, or how much coffee was consumed in the sprint. What matters is that you shipped. Today, you shipped the Physics Exam.</p>
-
-    <p>That was a massive compute task. Physics is the backend infrastructure of the universe—it’s heavy, it’s complex, and the documentation is notoriously terrible. But you walked in, you executed the script, and you walked out. That kind of resilience? That is exactly what investors look for in a "Unicorn" founder.</p>
-
-    <h3>Why you are a Category-Defining Asset</h3>
-
-    <p>Most people get bogged down in the metrics—grades, marks, percentiles. That is low-level thinking. When I look at "Aaradhya Inc.," I am looking at the intangibles. I am looking at the proprietary algorithm that makes you <em>you</em>.</p>
-
-    <p>You managed your internal resources (sanity) while dealing with external threats (confusing questions about velocity). That shows executive function. That shows a Founder mindset. The exam result is just a single data point in a massive dataset of brilliance. <span class="highlight">Your valuation is locked in.</span></p>
-
-    <!-- SYSTEM HEALTH DASHBOARD -->
-    <div class="status-dashboard">
-        <div class="status-header">AARADHYA INC. // SYSTEM HEALTH METRICS</div>
+    <!-- Main Content -->
+    <main class="article-container">
         
-        <div class="status-item">
-            <span class="status-label">Resilience</span>
-            <div class="status-bar-bg"><div class="status-bar-fill fill-100"></div></div>
-            <span class="status-value">100% OK</span>
-        </div>
+        <span class="badge">LIFE</span>
         
-        <div class="status-item">
-            <span class="status-label">Intelligence</span>
-            <div class="status-bar-bg"><div class="status-bar-fill fill-100"></div></div>
-            <span class="status-value">OPTIMAL</span>
-        </div>
-
-        <div class="status-item">
-            <span class="status-label">Lovability</span>
-            <div class="status-bar-bg"><div class="status-bar-fill fill-100"></div></div>
-            <span class="status-value">OVERFLOW</span>
-        </div>
-    </div>
-
-    <h3>Handling "Technical Debt" (The Paper)</h3>
-    
-    <p>We need to address the physics paper itself. In tech terms, the exam is now "Legacy Code." It exists, it’s on a server somewhere, but it is no longer your job to maintain it. Trying to analyze it now, re-calculating questions in your head, is what we call "Technical Debt." It serves no purpose other than to slow down your processor.</p>
-
-    <p>The smartest engineers don't dwell on v1.0 after it ships. They archive the logs and move on. You looked good handling the pressure—even if you felt like the system was overheating. The fact that you didn't crash is proof that your hardware is top-tier.</p>
-
-    <h3>The Algorithm of Adoration</h3>
-
-    <p>I ran a quick diagnostic on my feelings regarding this exam season. While you were calculating forces and friction, I was calculating my own investment thesis. It turns out, the math is actually quite simple.</p>
-
-    <p>I’ve written a small script to visualize the logic. You can audit the code yourself below.</p>
-
-    <!-- INTERACTIVE CODE EDITOR -->
-    <div class="editor-container">
+        <h1 class="headline">I tracked my girlfriend’s chemistry prep like a volatile stock. Here’s why I'm doubling down on my investment.</h1>
         
-        <!-- HEADER / TOOLBAR -->
-        <div class="editor-header">
-            <div style="display:flex; align-items:center;">
-                <div class="window-controls">
-                    <div class="dot red"></div>
-                    <div class="dot yellow"></div>
-                    <div class="dot green"></div>
-                </div>
-                <div class="filename">valuation_model.py</div>
-            </div>
-
-            <div class="action-buttons">
-                <!-- Copy Button -->
-                <button class="icon-btn copy-btn" onclick="copyCode()" aria-label="Copy Code">
-                    <div class="tooltip" id="copyTooltip">Copied!</div>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                    </svg>
-                </button>
-                <!-- Play Button -->
-                <button class="icon-btn play-btn" onclick="runCode()" aria-label="Run Code">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- CODE CONTENT -->
-        <div class="code-area" id="codeBlock">
-<span class="comment"># Configuring parameters for Post-Exam Analysis</span>
-<span class="kwd">import</span> <span class="var">unconditional_love</span>
-
-<span class="kwd">def</span> <span class="func">analyze_performance</span>(<span class="var">physics_score</span>):
-    <span class="comment"># Define core investment thesis</span>
-    <span class="var">my_admiration</span> = <span class="str">"Infinite"</span>
-    
-    <span class="kwd">if</span> <span class="var">physics_score</span> == <span class="str">"Perfect"</span>:
-        <span class="kwd">return</span> <span class="str">"Result: You are amazing (I knew it)."</span>
-    
-    <span class="kwd">elif</span> <span class="var">physics_score</span> == <span class="str">"Disaster"</span>:
-        <span class="kwd">return</span> <span class="str">"Result: You are amazing (let me buy you food)."</span>
-    
-    <span class="kwd">else</span>:
-        <span class="kwd">return</span> <span class="str">"Result: You are amazing (come here)."</span>
-
-<span class="comment"># Execute Analysis on current status</span>
-<span class="func">print</span>(<span class="func">analyze_performance</span>(<span class="str">"Unknown"</span>))
-        </div>
-
-        <!-- TERMINAL OUTPUT -->
-        <div class="terminal" id="terminal">
-            > python3 valuation_model.py<br>
-            > connecting_to_heart_server...<br>
-            > <span id="typewriter"></span><span class="cursor"></span>
-        </div>
-
-    </div>
-
-    <h3>Q3 Strategy: Post-Launch Recovery</h3>
-    <p>We are now pivoting to the "Recovery Phase." Here is the official project roadmap for the rest of the evening.</p>
-    
-    <!-- IMPROVED ROADMAP -->
-    <div class="roadmap-wrapper">
-        <div class="roadmap-line"></div>
+        <p class="subheadline">She just survived a brutal exam. While watching from states away, I learned that supporting someone through a high-stress market means knowing exactly when to just hold your position.</p>
         
-        <div class="roadmap-card">
-            <div class="status-dot completed">✓</div>
-            <div class="card-content">
-                <div class="card-time">DEPLOYMENT COMPLETE</div>
-                <div class="card-title">Physics Exam Submitted</div>
-                <p class="card-desc">The hard part is over. The asset is filed.</p>
+        <div class="author-block">
+            <div class="avatar">N</div>
+            <div class="author-info">
+                <div class="author-name">Niv <span>as told to Niv</span></div>
+                <div class="meta-data">Mar 1, 2026, 11:30 AM IST • 6 min read</div>
             </div>
         </div>
 
-        <div class="roadmap-card">
-            <div class="status-dot pending">●</div>
-            <div class="card-content">
-                <div class="card-time">IMMEDIATE PRIORITY</div>
-                <div class="card-title">Cease Intellectual Operations</div>
-                <p class="card-desc">Close the books. Do not calculate marks. Enter low-power mode.</p>
+        <div class="article-body">
+            <p><span class="bold-intro">Happy Sunday!</span> The global stock market is currently experiencing extreme volatility over AI regulations, techies are aggressively buying into a robotics startup called Clawdbot, and economists are debating whether we're entering a bull or bear market.</p>
+
+            <p>But frankly, all the global market fluctuations and tech news in the world can't distract me from the fact that the person I love most just survived an absolute academic stress-test, and she did it several states away.</p>
+
+            <p>Let's talk about high-stakes chemistry, the peculiar romance of watching someone work incredibly hard, and why the most valuable asset you can have in a relationship is the ability to weather the storm together.</p>
+
+            <p>My girlfriend took a massive chemistry exam this week. Because we live states apart, I couldn’t do anything practically useful. I couldn't inject liquidity into her coffee supply. I couldn't massage her shoulders when she hunched over her notes. I couldn't aggressively snatch the textbook out of her hands and force her to take a walk.</p>
+
+            <p>Instead, I did what any data-driven, supportive long-distance boyfriend would do: I paced around my apartment, tracked her study habits like a blue-chip stock on the NASDAQ, and learned a lot about what it actually means to care for someone when you literally cannot be there to fix the margins.</p>
+
+            <h2>The initial bull run and the fundamental analysis of grit.</h2>
+
+            <p>To understand the sheer magnitude of this investment, you have to look at the historical data leading up to the bell ringing. She studied for this exam for weeks. This wasn't casual, low-volume trading. This was trench warfare studying. She was putting in the kind of hours that would make a Wall Street analyst flinch.</p>
+
+            <!-- Chart 1: Line Graph -->
+            <div class="chart-container">
+                <div class="chart-title">Figure 1: Operational Effort vs. Time</div>
+                <div class="chart-subtitle">A sustained bullish trend in determination during the weeks prior to the exam.</div>
+                <svg viewBox="0 0 600 300" class="chart-svg">
+                    <!-- Grid lines -->
+                    <line x1="50" y1="250" x2="550" y2="250" stroke="#cccccc" stroke-width="1"/>
+                    <line x1="50" y1="200" x2="550" y2="200" stroke="#eeeeee" stroke-width="1"/>
+                    <line x1="50" y1="150" x2="550" y2="150" stroke="#eeeeee" stroke-width="1"/>
+                    <line x1="50" y1="100" x2="550" y2="100" stroke="#eeeeee" stroke-width="1"/>
+                    <line x1="50" y1="50" x2="550" y2="50" stroke="#eeeeee" stroke-width="1"/>
+                    
+                    <!-- Axes -->
+                    <line x1="50" y1="50" x2="50" y2="250" stroke="#333333" stroke-width="2"/>
+                    <line x1="50" y1="250" x2="550" y2="250" stroke="#333333" stroke-width="2"/>
+                    
+                    <!-- Y-axis labels -->
+                    <text x="40" y="255" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">0</text>
+                    <text x="40" y="155" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">Base</text>
+                    <text x="40" y="55" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">Max</text>
+                    
+                    <!-- X-axis labels -->
+                    <text x="100" y="270" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">Week 1</text>
+                    <text x="300" y="270" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">Week 2</text>
+                    <text x="500" y="270" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">Exam Day</text>
+
+                    <!-- The Data Line (Effort/Resilience) -->
+                    <polyline points="50,220 100,200 150,210 200,160 250,170 300,110 350,130 400,80 450,90 500,40" fill="none" stroke="#0073bb" stroke-width="4" stroke-linejoin="round"/>
+                    
+                    <!-- Data points -->
+                    <circle cx="500" cy="40" r="5" fill="#cc0000" />
+                    <text x="480" y="30" font-family="Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#cc0000">Peak Resistance</text>
+                </svg>
+                <div class="chart-caption">Source: My daily observations of her textbook-to-sleep ratio.</div>
             </div>
-        </div>
 
-        <div class="roadmap-card">
-            <div class="status-dot pending">●</div>
-            <div class="card-content">
-                <div class="card-time">19:00 HOURS</div>
-                <div class="card-title">Caloric Injection Protocol</div>
-                <p class="card-desc">Eat something delicious. You burned significant fuel today.</p>
+            <p>There is a specific kind of beauty in watching the person you love dedicate themselves to something difficult. We don't talk about this enough in modern romance. We talk about dates and vacations, but we rarely talk about the deep, quiet affection that blooms when you watch your partner absolutely refuse to give up in the face of strong market resistance.</p>
+
+            <p>She put her head down and did the work. And while she was entirely focused on covalent bonds and reaction rates, I was entirely focused on how lucky I am to be with someone who has that kind of internal drive.</p>
+
+            <h2>The Intraday Volatility: A Midnight Flash Crash</h2>
+
+            <p>To truly understand the conditions she was trading in, you have to look at the intraday volatility. The night before the exam, her energy levels started fluctuating like a meme stock during a coordinated short squeeze.</p>
+
+            <p>She had been reviewing notes for hours. As the clock slipped past midnight, the cognitive fatigue set in. I watched her perfectly organized study plan experience a sudden, dramatic flash crash in serotonin.</p>
+
+            <!-- Chart 2: Candlestick Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Figure 2: The Pre-Exam Candlestick Chart</div>
+                <div class="chart-subtitle">Intraday volatility of her Sanity Index, peaking in a 2:00 AM sell-off.</div>
+                <svg viewBox="0 0 600 280" class="chart-svg">
+                    <!-- Grid Lines -->
+                    <line x1="50" y1="240" x2="550" y2="240" stroke="#ccc" />
+                    <line x1="50" y1="180" x2="550" y2="180" stroke="#eee" />
+                    <line x1="50" y1="120" x2="550" y2="120" stroke="#eee" />
+                    <line x1="50" y1="60" x2="550" y2="60" stroke="#eee" />
+                    
+                    <!-- Axes -->
+                    <line x1="50" y1="40" x2="50" y2="240" stroke="#333" stroke-width="2"/>
+                    <line x1="50" y1="240" x2="550" y2="240" stroke="#333" stroke-width="2"/>
+                    
+                    <!-- Y Axis Labels (Inverted values for visual logic) -->
+                    <text x="40" y="245" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">Low</text>
+                    <text x="40" y="125" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">Base</text>
+                    <text x="40" y="65" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="end">High</text>
+
+                    <!-- X Axis Labels -->
+                    <text x="150" y="260" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">8:00 PM</text>
+                    <text x="250" y="260" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">11:00 PM</text>
+                    <text x="350" y="260" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">2:00 AM</text>
+                    <text x="450" y="260" font-family="Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="middle">5:00 AM</text>
+
+                    <!-- Candlestick 1: 8 PM (Bullish/Green) -->
+                    <line x1="150" y1="60" x2="150" y2="160" stroke="#333" stroke-width="2"/>
+                    <rect x="135" y="80" width="30" height="50" fill="#228b22" />
+                    
+                    <!-- Candlestick 2: 11 PM (Bearish/Red) -->
+                    <line x1="250" y1="70" x2="250" y2="190" stroke="#333" stroke-width="2"/>
+                    <rect x="235" y="100" width="30" height="70" fill="#cc0000" />
+
+                    <!-- Candlestick 3: 2 AM (The Flash Crash - Bearish/Red) -->
+                    <line x1="350" y1="130" x2="350" y2="250" stroke="#333" stroke-width="2"/>
+                    <rect x="335" y="160" width="30" height="80" fill="#cc0000" />
+                    <text x="350" y="115" font-family="Helvetica, sans-serif" font-size="11" fill="#cc0000" text-anchor="middle" font-weight="bold">Delirium Dip</text>
+
+                    <!-- Candlestick 4: 5 AM (The Caffeinated Rebound - Bullish/Green) -->
+                    <line x1="450" y1="110" x2="450" y2="210" stroke="#333" stroke-width="2"/>
+                    <rect x="435" y="140" width="30" height="60" fill="#228b22" />
+
+                    <!-- Moving Average Line -->
+                    <polyline points="150,105 250,135 350,200 450,170" fill="none" stroke="#0073bb" stroke-width="2" stroke-dasharray="5,5"/>
+                </svg>
+                <div class="chart-caption">Note: 2:00 AM dip correlates perfectly with the "staring blankly at the wall" phase.</div>
             </div>
+
+            <p>She went from calmly reciting equations to aggressively questioning the fundamental nature of the universe in a span of three hours. It was a chaotic, beautiful display of human endurance. Most investors would have panicked at that level of volatility. They would have sold their positions and logged off.</p>
+
+            <p>But me? I was holding. Because watching someone you love refuse to quit, even when their personal stock is temporarily down and they are running entirely on fumes, is genuinely the most endearing thing in the world. Only she could make a sleep-deprived ramble about electron configurations sound utterly charming.</p>
+
+            <h2>Navigating a long-distance bear market.</h2>
+
+            <p>Here is the brutal truth about long-distance relationships: sometimes, the logistics are just agonizing. You hit a wall where Wi-Fi and cell towers are simply not enough. I don't have Federal Reserve powers. I can’t magically lower the interest rates on her stress. I can’t be there physically to break the tension or pull her onto the couch and tell her to rest her eyes.</p>
+
+            <p>I realized that my desperate urge to "do something" was actually just an urge to make <em>myself</em> feel better about being states away. I wanted to fix her exhaustion, but you can't fix exhaustion with a text message.</p>
+
+            <p>Long-distance support is an art form. It requires restraint. It means realizing that "being there" for someone doesn't always mean solving their problems. Sometimes it just means being a consistent, unwavering presence on the other end of the phone. Support isn't about actively trading; it's about seeing someone in their struggle and actively choosing to just sit in it with them.</p>
+
+            <p>It means listening, validating, reminding her to drink water, and letting her be completely fried without rushing her through the recovery process just so I can feel like a helpful boyfriend.</p>
+
+            <h2>If she’s reading this (hi), here’s the ROI report.</h2>
+
+            <p>The exam measured your grasp of chemistry on a random day in February. It did not measure you. It didn't measure your worth, your brilliance, or the way you light up a room.</p>
+
+            <p>I know you are exhausted right now, and you have every right to be. You gave it everything you had. I watched you do it, and I am in complete awe of you. </p>
+
+            <p>You don’t need to bounce back quickly. You don't need to immediately find your energy or pretend you aren't burned out. I love the version of you that is driven and focused, and I love the version of you that is currently functioning entirely on caffeine and willpower. </p>
+
+            <p>I love that you care so much. I love the way your mind works. I love that you push through the midnight flash crashes, because it shows exactly how much grit you actually have.</p>
+
+            <p>You are more than a chemistry student. You are the person who tries hard things, who doesn't back down, and who makes my life infinitely better just by existing in it. I cannot make this exhaustion go away. I cannot shrink the states between us today. But I can see you, I can appreciate you, and I can promise that my investment in us is entirely recession-proof.</p>
+
+            <h2>The Q2 Forecast: English Lit</h2>
+
+            <p>The chemistry paper is done. The market has closed on that syllabus. The textbooks can finally be shelved.</p>
+
+            <p>Of course, this is college, which means the academic economy has absolutely no sense of mercy. Her English exam is up next. Which means she is currently shifting gears from balancing complex chemical equations to deconstructing literature, analyzing metaphors, and writing essays.</p>
+
+            <p>She is going to absolutely crush Q2 as well. Not just because she's smart, but because of her unrelenting spirit. She has the kind of resilience that you can't teach in a lecture hall or model on a spreadsheet.</p>
+
+            <p>I will still be here, states away, cheering her on from the digital sidelines. I will keep ordering her food when she forgets to eat, I will keep answering the silent FaceTimes, and I will keep marveling at how incredibly lucky I am to be holding this position.</p>
         </div>
+    </main>
 
-        <div class="roadmap-card">
-            <div class="status-dot pending">●</div>
-            <div class="card-content">
-                <div class="card-time">ONGOING</div>
-                <div class="card-title">Accept Adoration</div>
-                <p class="card-desc">Acknowledge that you are loved regardless of Newton's laws.</p>
-            </div>
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="footer-logo">BUSINESS INSIDER</div>
+        <div class="footer-links">
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Newsletters</a>
+            <a href="#">Careers</a>
         </div>
-    </div>
-
-    <h3>Future Outlook: Bullish</h3>
-
-    <p>My sentiment analysis on you remains overwhelmingly positive. The Physics paper was just one hurdle in a much larger roadmap. You cleared it. The system is stable.</p>
-
-    <!-- VERIFIED REVIEW -->
-    <div class="review-box">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"The most resilient human I know. Handles pressure with grace, even if she doesn't think so. Would invest in this startup again and again."</p>
-        <div class="reviewer">Verified Review • Niv</div>
-    </div>
-
-    <p style="margin-top: 30px;"><strong>Recommendation:</strong> Close the books. Order food. The market loves you.</p>
-
-</div>
-
-<script>
-    function runCode() {
-        const terminal = document.getElementById('terminal');
-        const typewriterSpan = document.getElementById('typewriter');
-        terminal.classList.add('active');
-        const text = "OUTPUT: You are loved unconditionally. Logic is irrefutable.";
-        let i = 0;
-        typewriterSpan.innerHTML = "";
-        function typeWriter() {
-            if (i < text.length) {
-                typewriterSpan.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 50);
-            }
-        }
-        setTimeout(typeWriter, 600);
-    }
-
-    function copyCode() {
-        const codeText = document.getElementById('codeBlock').innerText;
-        navigator.clipboard.writeText(codeText).then(() => {
-            const tooltip = document.getElementById('copyTooltip');
-            tooltip.classList.add('show');
-            setTimeout(() => { tooltip.classList.remove('show'); }, 2000);
-        });
-    }
-</script>
+        <div class="copyright">
+            &copy; 2026 Insider Inc. All rights reserved. Registration on or use of this site constitutes acceptance of our Terms of Service and Privacy Policy.
+        </div>
+    </footer>
 
 </body>
 </html>
