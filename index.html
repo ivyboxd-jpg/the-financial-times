@@ -73,12 +73,8 @@
         }
 
         @keyframes ticker-scroll {
-            0% {
-                transform: translate3d(0, 0, 0);
-            }
-            100% {
-                transform: translate3d(-100%, 0, 0);
-            }
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
         }
 
         .ticker-item {
@@ -110,6 +106,7 @@
             display: inline-block;
             margin-bottom: 16px;
             letter-spacing: 0.5px;
+            cursor: default;
         }
 
         .headline {
@@ -291,14 +288,6 @@
             border: 1px solid #eeeeee;
         }
 
-        .chart-caption {
-            font-family: var(--font-sans);
-            font-size: 12px;
-            color: #888888;
-            margin-top: 12px;
-            text-align: right;
-        }
-
         /* Romantic Footer */
         .site-footer {
             border-top: 2px solid var(--bi-black);
@@ -333,15 +322,20 @@
             flex-wrap: wrap;
         }
 
-        .footer-links a {
+        .footer-links button {
+            background: none;
+            border: none;
             color: var(--bi-black);
-            text-decoration: none;
+            font-family: var(--font-sans);
+            font-size: 14px;
             font-weight: 600;
             border-bottom: 1px dotted var(--bi-gray);
             padding-bottom: 2px;
+            cursor: pointer;
+            transition: color 0.2s ease;
         }
 
-        .footer-links a:hover {
+        .footer-links button:hover {
             color: var(--bi-red);
             border-bottom-style: solid;
         }
@@ -352,6 +346,87 @@
             font-size: 12px;
         }
 
+        /* Modal / Pop-up Styling */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            margin: 10% auto;
+            padding: 40px;
+            border-radius: 4px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            font-family: var(--font-sans);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            border-top: 5px solid var(--bi-red);
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: 300;
+            color: #888;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: var(--bi-black);
+        }
+
+        .modal-header {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--bi-black);
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .modal-body {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--bi-text);
+        }
+
+        .modal-body p {
+            margin-bottom: 16px;
+        }
+        
+        .modal-body ul {
+            margin-bottom: 16px;
+            padding-left: 20px;
+        }
+        
+        .modal-body li {
+            margin-bottom: 8px;
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             .headline { font-size: 32px; }
@@ -359,6 +434,7 @@
             .article-body { font-size: 18px; }
             .pull-quote { font-size: 22px; }
             .footer-links { flex-direction: column; gap: 12px; }
+            .modal-content { margin: 20% auto; padding: 24px; }
         }
     </style>
 </head>
@@ -374,7 +450,7 @@
         <div class="ticker">
             <span class="ticker-item">$HER_SMILE <span class="ticker-up">▲ 850.21 (+14.4%)</span></span>
             <span class="ticker-item">$MY_HEART <span class="ticker-heart">♥ 999.99 (+MAX)</span></span>
-            <span class="ticker-item">$EXAM_STRESS <span class="ticker-down">▼ 0.00 (LIQUIDATED)</span></span>
+            <span class="ticker-item">$CHEM_STRESS <span class="ticker-down">▼ 0.00 (LIQUIDATED)</span></span>
             <span class="ticker-item">$GRIT <span class="ticker-up">▲ 450.00 (+45.0%)</span></span>
             <span class="ticker-item">$MISS_YOU <span class="ticker-up">▲ 1000.00 (+ALL TIME HIGH)</span></span>
             <span class="ticker-item">$ENG_LIT <span class="ticker-up">▲ 10.50 (NEW IPO)</span></span>
@@ -383,7 +459,7 @@
             <!-- Duplicate for seamless loop -->
             <span class="ticker-item">$HER_SMILE <span class="ticker-up">▲ 850.21 (+14.4%)</span></span>
             <span class="ticker-item">$MY_HEART <span class="ticker-heart">♥ 999.99 (+MAX)</span></span>
-            <span class="ticker-item">$EXAM_STRESS <span class="ticker-down">▼ 0.00 (LIQUIDATED)</span></span>
+            <span class="ticker-item">$CHEM_STRESS <span class="ticker-down">▼ 0.00 (LIQUIDATED)</span></span>
             <span class="ticker-item">$GRIT <span class="ticker-up">▲ 450.00 (+45.0%)</span></span>
             <span class="ticker-item">$MISS_YOU <span class="ticker-up">▲ 1000.00 (+ALL TIME HIGH)</span></span>
             <span class="ticker-item">$ENG_LIT <span class="ticker-up">▲ 10.50 (NEW IPO)</span></span>
@@ -395,7 +471,7 @@
     <!-- Main Content -->
     <main class="article-container">
         
-        <span class="badge">LIFE</span>
+        <span class="badge">MARKETS & RELATIONSHIPS</span>
         
         <h1 class="headline">I tracked my girlfriend's exam burnout like a volatile stock. Here is why the ROI on loving her is infinite.</h1>
         
@@ -511,16 +587,109 @@
         <div class="footer-tagline">"Invested in you, regardless of market conditions."</div>
         
         <div class="footer-links">
-            <a href="#">About Us (Just Me, Obsessed With You)</a>
-            <a href="#">Contact (Available 24/7)</a>
-            <a href="#">Terms of Adoration</a>
-            <a href="#">Inside Jokes Policy</a>
+            <button onclick="openModal('modal-about')">About Us (Just Me, Obsessed With You)</button>
+            <button onclick="openModal('modal-contact')">Contact (Available 24/7)</button>
+            <button onclick="openModal('modal-terms')">Terms of Adoration</button>
+            <button onclick="openModal('modal-jokes')">Inside Jokes Policy</button>
         </div>
         
         <div class="copyright">
             &copy; 2026. All rights reserved. No part of my heart may be reproduced, distributed, or transmitted in any form without your direct permission.
         </div>
     </footer>
+
+    <!-- Modals (Hidden by default) -->
+
+    <!-- About Us Modal -->
+    <div id="modal-about" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-about')">&times;</span>
+            <div class="modal-header">Corporate Overview</div>
+            <div class="modal-body">
+                <p><strong>Founded:</strong> The moment you first smiled at me.</p>
+                <p><strong>Mission Statement:</strong> To continuously invest time, energy, and terrible jokes into making your day slightly better, even from several states away.</p>
+                <p><strong>Core Competencies:</strong></p>
+                <ul>
+                    <li>Overthinking text messages before sending.</li>
+                    <li>Tracking your exam schedule like a Wall Street hedge fund manager.</li>
+                    <li>An unwavering, scientifically proven belief that you are the smartest and most beautiful person in any room.</li>
+                </ul>
+                <p><strong>Current Valuation:</strong> Absolutely priceless.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="modal-contact" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-contact')">&times;</span>
+            <div class="modal-header">Global Headquarters Support</div>
+            <div class="modal-body">
+                <p>Our dedicated support lines (my phone) are open 24 hours a day, 7 days a week, 365 days a year.</p>
+                <p><strong>Directory:</strong></p>
+                <ul>
+                    <li><em>For late-night study panic:</em> Call immediately. I will pick up.</li>
+                    <li><em>For rants about English Literature metaphors:</em> Text anytime. I will enthusiastically agree with you.</li>
+                    <li><em>For emergency food delivery requests:</em> Please provide exact cravings via FaceTime.</li>
+                </ul>
+                <p><strong>Service Level Agreement:</strong> Response time is guaranteed to be immediate, barring active Wi-Fi outages or deep sleep (even then, just call twice).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Adoration Modal -->
+    <div id="modal-terms" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-terms')">&times;</span>
+            <div class="modal-header">Terms of Adoration</div>
+            <div class="modal-body">
+                <p>By continuing to date me, you agree to the following legally binding clauses:</p>
+                <ul>
+                    <li><strong>Clause 1 (The Beauty Mandate):</strong> You must accept that you look gorgeous, even when running on zero sleep and wearing your comfiest sweatpants.</li>
+                    <li><strong>Clause 2 (The Brilliance Act):</strong> You are objectively brilliant. Any self-doubt regarding Chemistry or English Lit exams is hereby classified as market misinformation.</li>
+                    <li><strong>Clause 3 (The Distance Tax):</strong> I am legally obligated to miss you entirely too much until we finally close the geographic gap.</li>
+                    <li><strong>Clause 4 (No-Cancellation Policy):</strong> My investment in you is locked in permanently. No take-backs.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inside Jokes Policy Modal -->
+    <div id="modal-jokes" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-jokes')">&times;</span>
+            <div class="modal-header">Data Privacy & Inside Jokes</div>
+            <div class="modal-body">
+                <p>At <em>The Insider Truth</em>, we take the security of our inside jokes very seriously.</p>
+                <p>All proprietary shared humor, absolutely absurd late-night delirious voice notes, and FaceTime screenshots of you looking deeply unamused by my puns are classified as strictly confidential.</p>
+                <p><strong>Data Storage:</strong> Stored securely in my brain and backed up to my phone's "Favorites" album forever.</p>
+                <p><strong>Third-Party Sharing:</strong> Never. We are a closed ecosystem of our own weirdness, and frankly, I wouldn't trade it for the world.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Modals -->
+    <script>
+        // Open Modal
+        function openModal(id) {
+            document.getElementById(id).classList.add('show');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        // Close Modal
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('show');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close when clicking outside of the modal content
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        }
+    </script>
 
 </body>
 </html>
