@@ -3,483 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NVAA EQUITY | BLOOMBERG TERMINAL</title>
-    <style>
-        :root {
-            --bg-color: #000000;
-            --panel-bg: #111111;
-            --border: #333333;
-            --bloomberg-orange: #FF9500;
-            --text-secondary: #AAAAAA;
-            --positive: #00FF41; /* Terminal Green */
-            --negative: #FF0844; /* Terminal Red */
-            --flat: #FFB000;
-            --font-main: 'Courier New', 'Monaco', monospace; /* Strict Monospace */
-        }
+    <title>Nine Months of Knowing Someone Who Makes the World Feel Different - The Washington Post</title>
+    
+    <!-- IMPORTING FONTS TO MATCH WAPO STYLE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Playfair+Display:wght@700;900&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 
+    <style>
+        /* CSS Reset & Basics */
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--bloomberg-orange);
-            font-family: var(--font-main);
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            font-size: 13px;
+            background-color: #FFFFFF;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            color: #2a2a2a;
         }
 
-        /* --- TOP HEADER --- */
-        #terminal-header {
-            background: #000;
-            border-bottom: 2px solid var(--bloomberg-orange);
-            padding: 5px 10px;
-            display: flex;
-            justify-content: space-between;
-            white-space: nowrap;
-            font-weight: bold;
-        }
-
-        .ticker-tape {
-            overflow: hidden;
-            flex-grow: 1;
-            margin: 0 20px;
-            color: white;
-        }
-
-        /* --- LAYOUT GRID --- */
-        .grid-container {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr; /* Main, Sidebar, Sidebar */
-            grid-template-rows: 1.5fr 1fr 1fr;
-            gap: 2px;
-            background-color: var(--border);
-            height: 100%;
-            padding: 2px;
-        }
-
-        .window {
-            background-color: var(--bg-color);
-            padding: 8px;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* --- WINDOW STYLES --- */
-        .win-header {
-            background: #222;
-            color: var(--text-secondary);
-            padding: 2px 5px;
-            margin: -8px -8px 8px -8px;
-            border-bottom: 1px solid var(--border);
-            font-size: 11px;
-            display: flex;
-            justify-content: space-between;
-            text-transform: uppercase;
-        }
-
-        .win-header span.cmd {
-            color: var(--bloomberg-orange);
-            font-weight: bold;
-        }
-
-        /* --- TABLES --- */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-        }
-
-        th {
-            text-align: left;
-            color: var(--text-secondary);
-            border-bottom: 1px solid var(--border);
-            font-weight: normal;
-            padding-bottom: 4px;
-        }
-
-        td {
-            padding: 3px 0;
-        }
-
-        .text-right { text-align: right; }
-        .green { color: var(--positive); }
-        .red { color: var(--negative); }
-        .white { color: white; }
-        .amber { color: var(--bloomberg-orange); }
-
-        /* --- ASCII CHART --- */
-        .ascii-chart {
-            font-family: monospace;
-            white-space: pre;
-            line-height: 1.1;
-            color: var(--positive);
-            font-size: 10px;
-            overflow: hidden;
-            margin-top: 10px;
-        }
-
-        /* --- FOOTER --- */
-        .status-bar {
-            background: #222;
-            color: #888;
-            padding: 2px 10px;
-            font-size: 11px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* --- MODAL (RESEARCH) --- */
-        #research-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 999;
-            padding: 40px;
+        /* Typography Mapping */
+        :root {
+            --font-masthead: 'UnifrakturMaguntia', cursive; /* The "Gothic" Logo */
+            --font-headline: 'Playfair Display', serif;     /* Matches "Postoni" */
+            --font-sans: 'Libre Franklin', sans-serif;      /* Matches "Franklin Gothic" */
+            --font-body: 'Georgia', serif;                  /* Standard Body */
+            --wapo-blue: #0080C9;
         }
         
-        .modal-body {
-            border: 1px solid var(--bloomberg-orange);
-            padding: 30px;
-            max-width: 800px;
-            margin: 0 auto;
-            background: #050505;
-            color: #ddd;
-            height: 90%;
-            overflow-y: auto;
+        /* Header Structure */
+        header {
+            border-bottom: 1px solid #e1e1e1;
+            padding: 20px 20px;
+            text-align: center;
+            margin-bottom: 40px;
         }
 
-        .blink { animation: blinker 1s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0; } }
+        /* Removed Tagline */
 
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
-            .grid-container { display: flex; flex-direction: column; overflow-y: auto; }
-            .window { min-height: 250px; }
-            .ascii-chart { display: none; }
+        .logo {
+            font-family: var(--font-masthead);
+            font-size: 32px; /* Reduced size to fit one line */
+            color: #000;
+            line-height: 1;
+            letter-spacing: -0.5px;
+            white-space: nowrap; /* Forces one line */
+        }
+
+        /* Main Article Container */
+        article {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 20px 80px 20px;
+        }
+
+        /* Article Meta */
+        .section-label {
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 700;
+            color: #111;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-family: var(--font-headline);
+            font-size: 40px;
+            line-height: 1.1;
+            font-weight: 900; 
+            color: #111;
+            margin-bottom: 18px;
+            letter-spacing: -0.5px;
+        }
+
+        h2.subhead {
+            font-family: var(--font-headline); 
+            font-size: 20px;
+            line-height: 1.4;
+            color: #2a2a2a;
+            font-weight: 400;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .byline-block {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+            border-top: 1px solid #dcdcdc;
+            padding-top: 20px;
+        }
+
+        .author {
+            font-family: var(--font-sans);
+            font-size: 13px;
+            color: var(--wapo-blue);
+            font-weight: 700;
+            margin-bottom: 4px;
+            text-decoration: none;
+        }
+
+        .timestamp {
+            font-family: var(--font-sans);
+            font-size: 12px;
+            color: #666666;
+        }
+
+        /* Body Content */
+        .article-body {
+            font-family: var(--font-body);
+            font-size: 20px;
+            line-height: 1.8;
+            color: #111;
+        }
+
+        .article-body p {
+            margin-bottom: 30px;
+        }
+
+        /* Drop Cap */
+        .article-body p:first-of-type::first-letter {
+            float: left;
+            font-size: 88px;
+            line-height: 65px;
+            padding-top: 4px;
+            padding-right: 8px;
+            padding-left: 3px;
+            font-family: var(--font-headline);
+            font-weight: 700;
+            color: #000;
+        }
+
+        .section-break {
+            text-align: center;
+            margin: 45px 0;
+            color: #666;
+            font-size: 24px;
+            font-family: var(--font-sans);
+            letter-spacing: 8px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #e1e1e1;
+            margin-top: 60px;
+            font-family: var(--font-sans);
+            font-size: 12px;
+            color: #666;
+            font-weight: 700;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .logo { font-size: 28px; }
+            h1 { font-size: 32px; }
+            .article-body { font-size: 18px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- TOP HEADER -->
-    <div id="terminal-header">
-        <div class="amber">1> NVAA EQUITY</div>
-        <div class="ticker-tape">
-            NVAA 100,000 <span class="green">▲274.00</span> | 
-            LOVE_IDX 98.4 <span class="green">▲0.5%</span> | 
-            MISS_FUT <span class="red">▼(CRITICAL)</span> | 
-            DIST_SPOT 2,083 <span class="white">(FLAT)</span> | 
-            VN_VOL 800+ <span class="green">▲HIGH</span>
+    <header>
+        <!-- The Gothic Masthead, One Line, No Tagline -->
+        <div class="logo">The Washington Post</div>
+    </header>
+
+    <article>
+        <span class="section-label">Lifestyle</span>
+        <h1>Nine Months of Knowing Someone Who Makes the World Feel Different</h1>
+        <h2 class="subhead">She writes poetry, thinks deeply about small things, and somehow makes ordinary days feel less ordinary. Here's what happens when you meet someone who just makes sense.</h2>
+
+        <div class="byline-block">
+            <span class="author">By Niv</span>
+            <span class="timestamp">February 19, 2026 at 7:00 a.m. EST</span>
         </div>
-        <div id="clock">14:32:01</div>
-    </div>
 
-    <!-- MAIN GRID -->
-    <div class="grid-container">
-
-        <!-- PANEL 1: SECURITY DESCRIPTION & PRICING -->
-        <div class="window" style="grid-column: span 2;">
-            <div class="win-header">
-                <span>SECURITY DESCRIPTION</span>
-                <span class="cmd">DES &lt;GO&gt;</span>
-            </div>
+        <div class="article-body">
+            <p>There are people who pass through your life, and then there are people who change how you experience it. She's the second kind. Not in any dramatic, movie-scene way. Just in the quiet, accumulating way that matters more.</p>
             
-            <div style="display:flex; justify-content: space-between; margin-bottom: 10px;">
-                <div>
-                    <span style="font-size: 18px; font-weight: bold; color: white;">NIV-AARADHYA HOLDINGS (NVAA)</span><br>
-                    <span style="color: var(--text-secondary);">EXCHANGE: LOVE / SECTOR: LONG-DISTANCE / CURRENCY: EMOTION</span>
-                </div>
-                <div class="text-right">
-                    <span style="font-size: 24px;" class="green">100,000.00</span><br>
-                    <span class="green">+274.00 (+0.27%)</span>
-                </div>
-            </div>
+            <p>Nine months isn't that long, really. It's a school year. A season and then some. But it's been long enough to notice how someone affects the temperature of your days. How they make you think differently, pay attention to things you'd otherwise miss, become a slightly better version of yourself without them asking you to.</p>
 
-            <table>
-                <tr>
-                    <th>METRIC</th>
-                    <th>VALUE</th>
-                    <th>52W HIGH</th>
-                    <th>52W LOW</th>
-                    <th>STATUS</th>
-                </tr>
-                <tr>
-                    <td>OPEN (MAY 19)</td>
-                    <td class="white">0.00</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>IPO</td>
-                </tr>
-                <tr>
-                    <td>CURRENT</td>
-                    <td class="green">100,000</td>
-                    <td>100,000</td>
-                    <td>0</td>
-                    <td>ALL TIME HIGH</td>
-                </tr>
-                <tr>
-                    <td>YIELD (HAPPINESS)</td>
-                    <td class="green">INFINITE</td>
-                    <td>MAX</td>
-                    <td>HIGH</td>
-                    <td>OUTPERFORM</td>
-                </tr>
-                <tr>
-                    <td>VOLATILITY (MISSING)</td>
-                    <td class="red">HIGH</td>
-                    <td>EXTREME</td>
-                    <td>MOD</td>
-                    <td>RISK FACTOR</td>
-                </tr>
-                <tr>
-                    <td>LIQUIDITY (VN)</td>
-                    <td class="amber">800 UNITS</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>CAPACITY WARNING</td>
-                </tr>
-            </table>
+            <p>She's the kind of person who notices things. Small things, usually. The kinds of details most people would skip right over. She remembers conversations from weeks ago, brings up something you mentioned in passing like it actually mattered. Because to her, it did. That's just how she pays attention—fully, generously, like your words are worth holding onto.</p>
+
+            <div class="section-break">* * *</div>
+
+            <p>I think what I admire most is how she's entirely herself. Not in a loud way. She doesn't announce it. She just... is. She doesn't adjust who she is depending on who's watching. She's consistent. Steady. Real.</p>
+
+            <p>She writes poetry. Not because it's trendy or because anyone asked her to, but because that's how she processes the world. She turns feelings into language, observations into lines. It's the kind of thing you can't fake. Either you see the world that way or you don't. She does.</p>
+
+            <p>And when she's tired—really tired, the kind where your brain stops cooperating—she doesn't put on a show of being fine. She's just human about it. Incoherent sometimes. Honest always. There's something deeply reassuring about someone who doesn't feel the need to perform competence every single moment.</p>
+
+            <div class="section-break">* * *</div>
+
+            <p>What strikes me is her kindness. It's not the kind people put on for show. It's reflexive. Built in. She extends grace to people even when she's running on empty herself. She worries about others, checks in, remembers what's going on in their lives. It's the quiet kind of care that most people don't notice until it's gone.</p>
+
+            <p>Being around that level of genuine thoughtfulness does something to you. It makes you want to be better. Not because she's demanding it or judging you. Just because watching someone be that consistently decent makes your own shortcuts and impatience feel a little shabby. She raises the bar just by existing.</p>
+
+            <p>I've started paying more attention since knowing her. To how I talk to people. To what I notice. To how I show up. That's what happens when you spend time with someone like that—you absorb their standards, almost by accident.</p>
+
+            <div class="section-break">* * *</div>
+
+            <p>She handles difficulty with a kind of quiet strength I don't see very often. When things don't go the way she wanted, she doesn't fall apart. She feels it—she's human, she's disappointed—but she doesn't let it define her. She absorbs the hit, adjusts, keeps going.</p>
+
+            <p>There's something admirable about that. It's easy to be graceful when everything's going your way. It's much harder when you're tired and frustrated and nothing's cooperating. She manages both. That takes character.</p>
+
+            <div class="section-break">* * *</div>
+
+            <p>What I've learned in nine months is that some people just make life better by being in it. They don't have to do anything special. They just have to be themselves, and somehow that's enough to shift everything slightly.</p>
+
+            <p>She makes me think more carefully. She makes me notice things I'd otherwise miss. She makes ordinary conversations feel worthwhile. She makes me want to be kinder, more patient, more present. Not because she's asked for any of that. Just because that's the effect she has.</p>
+
+            <p>I appreciate that she's exactly who she is. That she writes poetry in a world that mostly doesn't. That she thinks deeply about things. That she's kind even when it costs her. That she's resilient without making a show of it. That she's real—flawed and funny and tired and brilliant and entirely, unmistakably herself.</p>
+
+            <div class="section-break">* * *</div>
+
+            <p>Nine months in, and I'm still learning her. Still noticing new things. The way her mind works, what makes her laugh, how she handles the weight of everything she carries. You don't finish knowing someone. You just keep discovering layers.</p>
+
+            <p>I look forward to the next thing she'll say that surprises me. The next time something makes her laugh in that specific way. The next poem she'll write. The next time I'll realize, again, how lucky I am that she exists and that she lets me know her.</p>
+
+            <p>Some people make the world feel smaller. She makes it feel bigger, more interesting, more worth paying attention to. That's rare. That's valuable. That's her.</p>
+
+            <p>She's probably writing something right now. Or thinking through a problem. Or being kind to someone who needs it. Whatever she's doing, I'm glad she's in the world doing it. I'm especially glad I get to know her while she does.</p>
         </div>
+    </article>
 
-        <!-- PANEL 2: MARKET DEPTH / ORDER BOOK -->
-        <div class="window">
-            <div class="win-header">
-                <span>MARKET DEPTH (LEVEL 2)</span>
-                <span class="cmd">MD &lt;GO&gt;</span>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>BID (NIV WANTS)</th>
-                        <th>SIZE</th>
-                        <th>ASK (AARADHYA DOES)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="green">HUG</td>
-                        <td>INF</td>
-                        <td class="red">STUDY</td>
-                    </tr>
-                    <tr>
-                        <td class="green">FACETIME</td>
-                        <td>24H</td>
-                        <td class="red">SLEEP</td>
-                    </tr>
-                    <tr>
-                        <td class="green">FUTURE</td>
-                        <td>100%</td>
-                        <td class="red">WAIT</td>
-                    </tr>
-                    <tr>
-                        <td class="green">VISIT</td>
-                        <td>ASAP</td>
-                        <td class="red">EXAMS</td>
-                    </tr>
-                    <tr>
-                        <td class="green">POEM</td>
-                        <td>1</td>
-                        <td class="red">WRITE</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div style="margin-top:10px; font-size: 10px; color: #666;">
-                SPREAD: 2,083KM (WIDE)<br>
-                MARKET MAKER: UNIVERSE
-            </div>
-        </div>
+    <footer>
+        Thanks for reading The Washington Post
+    </footer>
 
-        <!-- PANEL 3: TECHNICAL CHART -->
-        <div class="window" style="grid-column: span 2; grid-row: span 2;">
-            <div class="win-header">
-                <span>TECHNICAL ANALYSIS (9 MONTH)</span>
-                <span class="cmd">GP &lt;GO&gt;</span>
-            </div>
-            <!-- ASCII Chart Simulation -->
-            <div class="ascii-chart">
-PRICE
-100k |                                             ERROR: CHART_TOO_HIGH
-90k  |                                            _.-'
-80k  |                                        _.-'
-70k  |                                    _.-'      (POEM RALLY)
-60k  |                                _.-'            |
-50k  |                            _.-'               _.-'
-40k  |                        _.-'               _.-'
-30k  |             (CHEM EXAM)               _.-'
-20k  |         _.-'   |                  _.-'
-10k  |     _.-'       V              _.-'
-0    |____/___________|_____________|_________________________
-      MAY '25      AUG '25       NOV '25      FEB '26
-      
-VOLUME (MESSAGES)
-     |||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-     |||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-            </div>
-            <div style="position: absolute; bottom: 10px; right: 10px; font-size: 30px; opacity: 0.2; color: white; font-weight: bold;">
-                BULL RUN
-            </div>
-        </div>
-
-        <!-- PANEL 4: FUNDAMENTALS / ASSET ALLOCATION -->
-        <div class="window">
-            <div class="win-header">
-                <span>PORTFOLIO HOLDINGS</span>
-                <span class="cmd">PH &lt;GO&gt;</span>
-            </div>
-            <table>
-                <tr>
-                    <th>ASSET CLASS</th>
-                    <th class="text-right">% WGT</th>
-                    <th class="text-right">VAL</th>
-                </tr>
-                <tr>
-                    <td>TEXT MSGS</td>
-                    <td class="text-right">45.0%</td>
-                    <td class="text-right green">10k+</td>
-                </tr>
-                <tr>
-                    <td>VOICE NOTES</td>
-                    <td class="text-right">30.0%</td>
-                    <td class="text-right green">800</td>
-                </tr>
-                <tr>
-                    <td>INSIDE JOKES</td>
-                    <td class="text-right">15.0%</td>
-                    <td class="text-right green">HIGH</td>
-                </tr>
-                <tr>
-                    <td>MEMORIES</td>
-                    <td class="text-right">10.0%</td>
-                    <td class="text-right green">PERM</td>
-                </tr>
-            </table>
-            <br>
-            <div style="border-top: 1px solid #333; padding-top: 5px;">
-                RISK PROFILE: <span class="green">CONSERVATIVE</span><br>
-                (ONLY RISK IS DISTANCE)
-            </div>
-        </div>
-
-        <!-- PANEL 5: CORPORATE CALENDAR -->
-        <div class="window">
-            <div class="win-header">
-                <span>CORPORATE CALENDAR</span>
-                <span class="cmd">EVT &lt;GO&gt;</span>
-            </div>
-            <table>
-                <tr>
-                    <td class="amber">FEB 19</td>
-                    <td>9-MO DIVIDEND</td>
-                    <td class="green">PAYOUT</td>
-                </tr>
-                <tr>
-                    <td class="white">FEB 20</td>
-                    <td>POST-EXAM RALLY</td>
-                    <td class="white">EXP</td>
-                </tr>
-                <tr>
-                    <td class="text-secondary">MAY 19</td>
-                    <td>Q4 EARNINGS (1YR)</td>
-                    <td class="text-secondary">EST</td>
-                </tr>
-                <tr>
-                    <td class="text-secondary">TBD</td>
-                    <td>MERGER (REUNION)</td>
-                    <td class="text-secondary">PEND</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- PANEL 6: NEWS / FILINGS -->
-        <div class="window" style="grid-column: span 3;">
-            <div class="win-header">
-                <span>MATERIAL NEWS & FILINGS</span>
-                <span class="cmd">N &lt;GO&gt;</span>
-            </div>
-            <div style="overflow-y: auto;">
-                <div style="margin-bottom: 5px;">
-                    <span class="amber">14:32</span> <span class="white bold">NIV-AARADHYA (NVAA) DECLARES SPECIAL DIVIDEND OF LOVE</span>
-                </div>
-                <div style="margin-bottom: 5px;">
-                    <span class="amber">11:23</span> <span class="white">ANALYST UPGRADE: POETRY RECEIPT TRIGGERS 'STRONG BUY' RATING</span>
-                </div>
-                <div style="margin-bottom: 5px;">
-                    <span class="amber">09:15</span> <span class="white">REGULATORY: DISTANCE REMAINING AT 2,083KM. HEDGING STRATEGY ACTIVE.</span>
-                </div>
-                <div style="margin-bottom: 5px; cursor: pointer;" onclick="document.getElementById('research-modal').style.display='block'">
-                    <span class="green blink">>>></span> <span class="green" style="text-decoration: underline;">CLICK TO READ FULL EQUITY RESEARCH REPORT [PDF]</span>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- FOOTER STATUS -->
-    <div class="status-bar">
-        <div>CONNECTED: NIV_TERMINAL_01</div>
-        <div>LATENCY: 2,083km (HEDGED)</div>
-        <div>SESSION: 9 MONTHS</div>
-    </div>
-
-    <!-- RESEARCH MODAL -->
-    <div id="research-modal">
-        <div class="modal-body">
-            <div style="display:flex; justify-content:space-between; border-bottom: 2px solid var(--bloomberg-orange); margin-bottom: 20px;">
-                <h2>NIVI CAPITAL MARKETS</h2>
-                <h2>EQUITY RESEARCH</h2>
-            </div>
-            
-            <div style="font-family: 'Times New Roman', serif; font-size: 16px; line-height: 1.4; color: white;">
-                <p><strong>DATE:</strong> FEB 19, 2026</p>
-                <p><strong>SECURITY:</strong> NIV-AARADHYA HOLDINGS (Ticker: NVAA)</p>
-                <p><strong>RATING:</strong> STRONG BUY / OVERWEIGHT</p>
-                <p><strong>PRICE TARGET:</strong> INFINITE</p>
-                <br>
-                <h3>EXECUTIVE SUMMARY</h3>
-                <p>
-                    We are re-affirming our <strong>STRONG BUY</strong> rating on NVAA as the partnership reaches its 9-month maturity date. Fundamental analysis indicates that despite high transaction costs (Distance: 2,083km), the intrinsic value of the asset has compounded daily since the IPO on May 19, 2025.
-                </p>
-                
-                <h3>INVESTMENT THESIS</h3>
-                <p>
-                    1. <strong>Volume Growth:</strong> Voice note volume (800+) indicates high liquidity and strong communication fundamentals.
-                </p>
-                <p>
-                    2. <strong>Resilience:</strong> The security passed recent stress tests (Chemistry Exam volatility) with support levels holding firm.
-                </p>
-                <p>
-                    3. <strong>Future Outlook:</strong> We project a merger event (Reunion) in the upcoming fiscal quarters which will eliminate the distance spread entirely.
-                </p>
-
-                <h3>ANALYST COMMENTARY</h3>
-                <p>
-                    "She is the blue-chip investment of a lifetime. The returns are infinite. I am going long on this position forever." - <em>Chief Investment Officer (Niv)</em>
-                </p>
-
-                <br><br>
-                <button onclick="document.getElementById('research-modal').style.display='none'" style="background: var(--bloomberg-orange); border: none; padding: 10px; font-weight: bold; cursor: pointer;">CLOSE REPORT</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function updateClock() {
-            const now = new Date();
-            // Bloomberg format: HH:MM:SS
-            document.getElementById('clock').innerText = now.toLocaleTimeString('en-GB'); 
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-    </script>
 </body>
 </html>
