@@ -3,257 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkedIn Headers</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>LinkedIn Header - Human Stories</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --bg: #FFFDF9;       
             --text: #191919;     
             --text-dim: #555555;
             --accent: #FF4F00;
+            --accent-soft: #FFF0EB;
             --border: #E6E3DC;
         }
 
         body {
-            background-color: #333; /* Dark bg to see the headers clearly */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 50px;
-            padding: 50px;
             margin: 0;
+            padding: 0;
+            background-color: #1a1a1a; 
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* LinkedIn Standard Size: 1584 x 396 px */
-        .linkedin-header {
-            width: 1584px;
-            height: 396px;
+        /* 
+           Container set to maintain 4:1 aspect ratio and scale perfectly
+        */
+        .preview-wrapper {
+            width: 100%;
+            max-width: 1584px;
+            aspect-ratio: 4 / 1;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            container-type: inline-size; 
+        }
+
+        .header {
+            width: 100%;
+            height: 100%;
             background-color: var(--bg);
+            /* Soft, minimal warm glow coming from the top right */
+            background-image: radial-gradient(circle at 100% 0%, var(--accent-soft) 0%, transparent 55%);
             position: relative;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0 80px;
-            box-sizing: border-box;
-        }
-
-        /* --- DESIGN 1: The "Minimalist Statement" --- */
-        #header-1 {
-            align-items: flex-start;
-        }
-
-        #header-1 h1 {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: 80px;
-            color: var(--text);
-            margin: 0;
-            line-height: 1;
-            position: relative;
-            z-index: 1;
-        }
-
-        #header-1 .highlight {
-            color: var(--accent);
-            position: relative;
-        }
-
-        /* The Humane Underline */
-        #header-1 .underline-svg {
-            position: absolute;
-            bottom: -15px;
-            left: 0;
-            width: 100%;
-            height: 20px;
-            z-index: -1;
-            opacity: 0.8;
-        }
-
-        #header-1 p {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 28px;
-            color: var(--text-dim);
-            margin-top: 20px;
-            max-width: 800px;
-        }
-
-        #header-1 .logo-mark {
-            position: absolute;
-            top: 40px;
-            right: 40px;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: 32px;
-            color: var(--text);
-        }
-        #header-1 .logo-mark span { color: var(--accent); font-size: 40px; }
-
-        /* --- DESIGN 2: The "Bento/Maker" --- */
-        #header-2 {
             align-items: center;
-            text-align: center;
+            justify-content: flex-end; 
+            padding-right: 6%; 
         }
 
-        #header-2 .tags {
+        /* --- CONTENT (Right Side) --- */
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: left; 
+            width: 55%; 
+        }
+
+        /* Simple Skills List */
+        .simple-skills {
             display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        #header-2 .pill {
-            padding: 10px 25px;
-            border: 2px solid var(--border);
-            border-radius: 100px;
+            align-items: center;
+            gap: 1cqw; 
+            margin-bottom: 2cqw;
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
-            font-size: 18px;
-            color: var(--text);
+            font-size: 1.1cqw; 
+            color: var(--text-dim);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
         }
 
-        #header-2 h1 {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: 64px;
-            color: var(--text);
-            margin: 0;
+        .simple-skills .dot {
+            color: var(--border);
+            font-size: 1.5cqw;
+            line-height: 0;
         }
 
-        #header-2 .accent-dot {
+        .simple-skills .highlight-skill {
             color: var(--accent);
         }
 
-        /* Abstract shapes */
-        .shape-circle {
-            position: absolute;
-            right: -50px;
-            bottom: -50px;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border: 4px solid var(--accent);
-            opacity: 0.1;
-        }
-        .shape-line {
-            position: absolute;
-            left: 60px;
-            top: 60px;
-            width: 80px;
-            height: 8px;
-            background: #FFE0D1;
-            transform: rotate(-15deg);
-            border-radius: 4px;
-        }
-
-        /* --- DESIGN 3: The "Quirky Layout" (Left Aligned) --- */
-        #header-3 {
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        #header-3 .content-left {
-            max-width: 60%;
-        }
-
-        #header-3 h1 {
+        /* Main Heading */
+        h1 {
             font-family: 'Outfit', sans-serif;
             font-weight: 800;
-            font-size: 72px;
+            font-size: 4cqw; 
             color: var(--text);
-            margin: 0 0 15px 0;
-            line-height: 1.1;
-        }
-
-        #header-3 p {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 26px;
-            color: var(--text-dim);
             margin: 0;
+            line-height: 1.2;
         }
 
-        #header-3 .visual-right {
+        /* Imperfect Hand-Drawn Underline */
+        .highlight {
+            color: var(--accent);
             position: relative;
-            width: 300px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-block;
+            white-space: nowrap; /* Keeps the phrase on one line */
+        }
+        
+        .highlight::after {
+            content: '';
+            position: absolute;
+            left: -2%;
+            bottom: -0.1em;
+            width: 104%;
+            height: 0.35em;
+            /* SVG creates a dynamic, organic, hand-drawn "swoosh" effect */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 15' preserveAspectRatio='none'%3E%3Cpath d='M 3 12 Q 25 3 60 9 T 97 10' fill='none' stroke='%23FF4F00' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            z-index: -1;
         }
 
-        #header-3 .big-pill {
-            background: var(--text);
-            color: white;
-            font-family: 'Outfit', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            padding: 20px 50px;
-            border-radius: 100px;
-            transform: rotate(-5deg);
-            box-shadow: 10px 10px 0px var(--accent);
-        }
-
-        /* Label for you to know which is which */
-        .label {
-            color: white;
-            margin-bottom: 10px;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
     </style>
 </head>
 <body>
 
-    <!-- OPTION 1 -->
-    <div>
-        <div class="label">Option 1: Minimalist Statement</div>
-        <div class="linkedin-header" id="header-1">
-            <div class="logo-mark">niv<span>.</span></div>
-            <h1>
-                Aspiring <span class="highlight">Product Manager</span>
-                <!-- SVG Underline embedded -->
-                <svg class="underline-svg" viewBox="0 0 100 15" preserveAspectRatio="none">
-                    <path d="M2,8 C20,12 50,14 98,2" stroke="#FF4F00" stroke-width="4" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-                </svg>
-            </h1>
-            <p>Bridging the gap between data & design to build products that solve real problems.</p>
-        </div>
-    </div>
-
-    <!-- OPTION 2 -->
-    <div>
-        <div class="label">Option 2: The "Maker" (Bento Style)</div>
-        <div class="linkedin-header" id="header-2">
-            <div class="shape-circle"></div>
-            <div class="shape-line"></div>
+    <div class="preview-wrapper">
+        <div class="header">
             
-            <div class="tags">
-                <div class="pill">Strategy</div>
-                <div class="pill">Design</div>
-                <div class="pill">Data</div>
-            </div>
-            <h1>
-                Turning messy problems <br> 
-                into <span style="color: #FF4F00;">clean solutions</span><span class="accent-dot">.</span>
-            </h1>
-        </div>
-    </div>
+            <!-- Left side is completely empty for profile picture -->
 
-    <!-- OPTION 3 -->
-    <div>
-        <div class="label">Option 3: Quirky & Bold</div>
-        <div class="linkedin-header" id="header-3">
-            <div class="content-left">
-                <h1>Niv Chhasatia<span style="color:#FF4F00">.</span></h1>
-                <p>Bridging data & design to build products that work.</p>
+            <!-- Main Content (Right Side) -->
+            <div class="content">
+                
+                <!-- Simple Text Skills -->
+                <div class="simple-skills">
+                    <span>Strategy</span>
+                    <span class="dot">•</span>
+                    <span>Product</span>
+                    <span class="dot">•</span>
+                    <span class="highlight-skill">Data</span>
+                </div>
+                
+                <!-- Humane One-liner -->
+                <h1>
+                    Turning data points into <br>
+                    <span class="highlight">human stories.</span>
+                </h1>
+                
             </div>
-            <div class="visual-right">
-                <div class="big-pill">OPEN TO WORK</div>
-            </div>
+
         </div>
     </div>
 
