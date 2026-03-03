@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkedIn Header - Human Stories</title>
+    <title>LinkedIn Header - Export Ready</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -21,7 +21,8 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #1a1a1a; 
+            /* Changed to the cream background so the whole page matches the banner */
+            background-color: var(--bg); 
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -30,13 +31,13 @@
         }
 
         /* 
-           Container set to maintain 4:1 aspect ratio and scale perfectly
+           Container set to maintain 4:1 aspect ratio.
+           Removed the box-shadow so PDF/Image exports have perfectly clean edges.
         */
         .preview-wrapper {
             width: 100%;
             max-width: 1584px;
             aspect-ratio: 4 / 1;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             container-type: inline-size; 
         }
 
