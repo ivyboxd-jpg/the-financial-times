@@ -3,241 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Washington Post</title>
-    
-    <!-- IMPORTING FONTS TO MATCH WAPO STYLE -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Playfair+Display:wght@700;900&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
-
+    <title>LinkedIn Headers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Reset & Basics */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #FFFDF9;       
+            --text: #191919;     
+            --text-dim: #555555;
+            --accent: #FF4F00;
+            --border: #E6E3DC;
         }
 
         body {
-            background-color: #FFFFFF;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            color: #2a2a2a;
-        }
-
-        /* Typography Mapping */
-        :root {
-            --font-masthead: 'UnifrakturMaguntia', cursive; /* The "Gothic" Logo */
-            --font-headline: 'Playfair Display', serif;     /* Matches "Postoni" */
-            --font-sans: 'Libre Franklin', sans-serif;      /* Matches "Franklin Gothic" */
-            --font-body: 'Georgia', serif;                  /* Standard Body */
-            --wapo-blue: #0080C9;
-        }
-        
-        /* Header Structure */
-        header {
-            border-bottom: 1px solid #e1e1e1;
-            padding: 20px 20px;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        /* Removed Tagline */
-
-        .logo {
-            font-family: var(--font-masthead);
-            font-size: 32px; /* Reduced size to fit one line */
-            color: #000;
-            line-height: 1;
-            letter-spacing: -0.5px;
-            white-space: nowrap; /* Forces one line */
-        }
-
-        /* Main Article Container */
-        article {
-            max-width: 680px;
-            margin: 0 auto;
-            padding: 0 20px 80px 20px;
-        }
-
-        /* Article Meta */
-        .section-label {
-            font-family: var(--font-sans);
-            font-size: 11px;
-            font-weight: 700;
-            color: #111;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            display: block;
-            letter-spacing: 0.5px;
-        }
-
-        h1 {
-            font-family: var(--font-headline);
-            font-size: 40px;
-            line-height: 1.1;
-            font-weight: 900; 
-            color: #111;
-            margin-bottom: 18px;
-            letter-spacing: -0.5px;
-        }
-
-        h2.subhead {
-            font-family: var(--font-headline); 
-            font-size: 20px;
-            line-height: 1.4;
-            color: #2a2a2a;
-            font-weight: 400;
-            margin-bottom: 25px;
-            opacity: 0.9;
-        }
-
-        .byline-block {
+            background-color: #333; /* Dark bg to see the headers clearly */
             display: flex;
             flex-direction: column;
-            margin-bottom: 30px;
-            border-top: 1px solid #dcdcdc;
-            padding-top: 20px;
+            align-items: center;
+            gap: 50px;
+            padding: 50px;
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        .author {
-            font-family: var(--font-sans);
-            font-size: 13px;
-            color: var(--wapo-blue);
-            font-weight: 700;
-            margin-bottom: 4px;
-            text-decoration: none;
+        /* LinkedIn Standard Size: 1584 x 396 px */
+        .linkedin-header {
+            width: 1584px;
+            height: 396px;
+            background-color: var(--bg);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 80px;
+            box-sizing: border-box;
         }
 
-        .timestamp {
-            font-family: var(--font-sans);
-            font-size: 12px;
-            color: #666666;
+        /* --- DESIGN 1: The "Minimalist Statement" --- */
+        #header-1 {
+            align-items: flex-start;
         }
 
-        /* Body Content */
-        .article-body {
-            font-family: var(--font-body);
-            font-size: 20px;
-            line-height: 1.8;
-            color: #111;
+        #header-1 h1 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 80px;
+            color: var(--text);
+            margin: 0;
+            line-height: 1;
+            position: relative;
+            z-index: 1;
         }
 
-        .article-body p {
-            margin-bottom: 30px;
+        #header-1 .highlight {
+            color: var(--accent);
+            position: relative;
         }
 
-        /* Drop Cap */
-        .article-body p:first-of-type::first-letter {
-            float: left;
-            font-size: 88px;
-            line-height: 65px;
-            padding-top: 4px;
-            padding-right: 8px;
-            padding-left: 3px;
-            font-family: var(--font-headline);
-            font-weight: 700;
-            color: #000;
+        /* The Humane Underline */
+        #header-1 .underline-svg {
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            z-index: -1;
+            opacity: 0.8;
         }
 
-        .section-break {
+        #header-1 p {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 28px;
+            color: var(--text-dim);
+            margin-top: 20px;
+            max-width: 800px;
+        }
+
+        #header-1 .logo-mark {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 32px;
+            color: var(--text);
+        }
+        #header-1 .logo-mark span { color: var(--accent); font-size: 40px; }
+
+        /* --- DESIGN 2: The "Bento/Maker" --- */
+        #header-2 {
+            align-items: center;
             text-align: center;
-            margin: 45px 0;
-            color: #666;
-            font-size: 24px;
-            font-family: var(--font-sans);
-            letter-spacing: 8px;
         }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            border-top: 1px solid #e1e1e1;
-            margin-top: 60px;
-            font-family: var(--font-sans);
-            font-size: 12px;
-            color: #666;
+        #header-2 .tags {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        #header-2 .pill {
+            padding: 10px 25px;
+            border: 2px solid var(--border);
+            border-radius: 100px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
+            font-size: 18px;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        /* Mobile Optimization */
-        @media (max-width: 768px) {
-            .logo { font-size: 28px; }
-            h1 { font-size: 32px; }
-            .article-body { font-size: 18px; }
+        #header-2 h1 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 64px;
+            color: var(--text);
+            margin: 0;
+        }
+
+        #header-2 .accent-dot {
+            color: var(--accent);
+        }
+
+        /* Abstract shapes */
+        .shape-circle {
+            position: absolute;
+            right: -50px;
+            bottom: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid var(--accent);
+            opacity: 0.1;
+        }
+        .shape-line {
+            position: absolute;
+            left: 60px;
+            top: 60px;
+            width: 80px;
+            height: 8px;
+            background: #FFE0D1;
+            transform: rotate(-15deg);
+            border-radius: 4px;
+        }
+
+        /* --- DESIGN 3: The "Quirky Layout" (Left Aligned) --- */
+        #header-3 {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #header-3 .content-left {
+            max-width: 60%;
+        }
+
+        #header-3 h1 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 72px;
+            color: var(--text);
+            margin: 0 0 15px 0;
+            line-height: 1.1;
+        }
+
+        #header-3 p {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 26px;
+            color: var(--text-dim);
+            margin: 0;
+        }
+
+        #header-3 .visual-right {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #header-3 .big-pill {
+            background: var(--text);
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            padding: 20px 50px;
+            border-radius: 100px;
+            transform: rotate(-5deg);
+            box-shadow: 10px 10px 0px var(--accent);
+        }
+
+        /* Label for you to know which is which */
+        .label {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <!-- The Gothic Masthead, One Line, No Tagline -->
-        <div class="logo">The Washington Post</div>
-    </header>
-
-    <article>
-        <span class="section-label">Lifestyle</span>
-        <h1>Nine Months of Learning How Someone Thinks </h1>
-        <h2 class="subhead">On kindness that's reflexive and what happens when you meet someone who feels like the missing puzzle piece you've been searching for all along.</h2>
-
-        <div class="byline-block">
-            <span class="author">By Niv</span>
-            <span class="timestamp">March 2, 2026 at 8:00 a.m. IST</span>
+    <!-- OPTION 1 -->
+    <div>
+        <div class="label">Option 1: Minimalist Statement</div>
+        <div class="linkedin-header" id="header-1">
+            <div class="logo-mark">niv<span>.</span></div>
+            <h1>
+                Aspiring <span class="highlight">Product Manager</span>
+                <!-- SVG Underline embedded -->
+                <svg class="underline-svg" viewBox="0 0 100 15" preserveAspectRatio="none">
+                    <path d="M2,8 C20,12 50,14 98,2" stroke="#FF4F00" stroke-width="4" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+                </svg>
+            </h1>
+            <p>Bridging the gap between data & design to build products that solve real problems.</p>
         </div>
+    </div>
 
-        <div class="article-body">
-            <p>There are people who pass through your life, and then there are people who change how you experience it. She's the second kind. Not in any dramatic, film-scene way. Just in the accumulating way that matters more.</p>
+    <!-- OPTION 2 -->
+    <div>
+        <div class="label">Option 2: The "Maker" (Bento Style)</div>
+        <div class="linkedin-header" id="header-2">
+            <div class="shape-circle"></div>
+            <div class="shape-line"></div>
             
-            <p>Nine months isn't that long, really. A season and then some. But it's been long enough to notice how someone affects the temperature of your days. How they make you think differently, pay attention to things you'd otherwise miss, become a slightly better version of yourself without them asking you to.</p>
-
-            <p>She's the kind of person who notices things. Small things, usually. The details most people would skip right over. She remembers conversations from weeks ago, brings up something you mentioned in passing like it actually mattered. Because to her, it did. That's just how she pays attention—fully, generously, like your words are worth holding onto.</p>
-
-            <div class="section-break">* * *</div>
-
-            <p>I think what I admire most is how she's entirely herself. She doesn't announce it. She just... is. She doesn't adjust who she is depending on who's watching. She's consistent. Steady. Real.</p>
-
-            <p>She writes poetry because that's how she processes the world. She turns feelings into language, observations into lines. It's the thing you can't fake. Either you see the world that way or you don't. She does.</p>
-
-            <p>And when she's tired—really tired, she doesn't put on a show of being fine. She's just human about it. Incoherent sometimes. Honest always. There's something deeply reassuring about someone who doesn't feel the need to perform competence every single moment.</p>
-
-            <div class="section-break">* * *</div>
-
-            <p>What strikes me is her kindness. It's not for show. It's reflexive. Built in. She extends grace to people even when she's running on empty herself. She worries about others, checks in, remembers what's going on in their lives. It's something most people don't notice until it's gone.</p>
-
-            <p>Being around that level of genuine thoughtfulness does something to you. It makes you want to be better. Not because she's demanding it or judging you. It's just watching someone be that consistently decent makes your own shortcuts and impatience feel a little shabby. She raises the bar just by existing.</p>
-
-            <p>I've started paying more attention since knowing her. To how I talk to people. To what I notice. To how I show up. That's what happens when you spend time with someone like that—you absorb their standards, almost by accident.</p>
-
-            <div class="section-break">* * *</div>
-
-            <p>She handles difficulty with strength I don't see very often. When things don't go the way she wanted, she doesn't fall apart. She feels it—she's human, she's disappointed—but she doesn't let it define her. She absorbs the hit, adjusts, keeps going.</p>
-
-            <p>There's something very admirable about that. It's easy to be graceful when everything's going your way. It's much harder when you're tired and frustrated and nothing's cooperating. She manages both. That takes character.</p>
-
-            <div class="section-break">* * *</div>
-
-            <p>What I've learned in nine months is that some people just make life better by being in it. They don't have to do anything special. They just have to be themselves, and somehow that's enough to shift everything slightly.</p>
-
-            <p>She makes me think more carefully. She makes me notice things I'd otherwise miss. She makes ordinary conversations feel worthwhile. She makes me want to be kinder, more patient, more present. It's the effect she has. What can I say? She's extraordinary</p>
-
-            <p>I appreciate that she's exactly who she is. That she writes poems in a world that mostly doesn't. That she thinks deeply about things. That she's kind even when it costs her. That she's resilient without making a show of it. That she's real—flawed and funny and tired and brilliant and entirely, unmistakably herself.</p>
-
-            <div class="section-break">* * *</div>
-
-            <p>Nine months in, and I'm still learning her. Still noticing new things. The way her mind works, what makes her laugh, how she handles the weight of everything she carries. You don't finish knowing someone. You just keep discovering layers.</p>
-
-            <p>I look forward to the next thing she'll say that surprises me. The next time something makes her laugh in the way that makes me fall for her all over again. The next poem she'll write. The next time I'll realize, again, how lucky I am that she exists and that she lets me know her.</p>
-
-            <p>Some people make the world feel smaller. She makes it feel bigger, more interesting, more worth paying attention to. That's valuable. That's her.</p>
-
-            <p>To know her is to know the world.  Whatever she's doing, I'm glad she's in the world doing it. I'm especially glad I get to know her while she does.</p>
+            <div class="tags">
+                <div class="pill">Strategy</div>
+                <div class="pill">Design</div>
+                <div class="pill">Data</div>
+            </div>
+            <h1>
+                Turning messy problems <br> 
+                into <span style="color: #FF4F00;">clean solutions</span><span class="accent-dot">.</span>
+            </h1>
         </div>
-    </article>
+    </div>
 
-    <footer>
-        Thanks for reading The Washington Post. Happy 9 months. <3
-    </footer>
+    <!-- OPTION 3 -->
+    <div>
+        <div class="label">Option 3: Quirky & Bold</div>
+        <div class="linkedin-header" id="header-3">
+            <div class="content-left">
+                <h1>Niv Chhasatia<span style="color:#FF4F00">.</span></h1>
+                <p>Bridging data & design to build products that work.</p>
+            </div>
+            <div class="visual-right">
+                <div class="big-pill">OPEN TO WORK</div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
