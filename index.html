@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aaradhya's Art Gallery</title>
+    <title>Drafts of Heart | Aaradhya's Gallery</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,10 +18,10 @@
             --text-primary: #111111;
             --text-poem: #2A2A2A;
             --text-secondary: #777777;
-            --border: #EBEBEB;
+            --border: #E8E8E3;
             --divider: #DCDCDC;
-            --shadow-base: 0 4px 20px rgba(0,0,0,0.03);
-            --shadow-hover: 0 20px 40px rgba(0,0,0,0.08);
+            --shadow-base: 0 10px 30px rgba(0,0,0,0.02);
+            --shadow-hover: 0 30px 60px rgba(0,0,0,0.08);
             
             --overlay: rgba(253, 252, 248, 0.98);
             --lightbox-text: #111111;
@@ -39,8 +39,8 @@
             --text-secondary: #888888;
             --border: #1F1F21;
             --divider: #2A2A2C;
-            --shadow-base: 0 4px 20px rgba(0,0,0,0.4);
-            --shadow-hover: 0 20px 40px rgba(0,0,0,0.8);
+            --shadow-base: 0 10px 30px rgba(0,0,0,0.4);
+            --shadow-hover: 0 30px 60px rgba(0,0,0,0.8);
             
             --overlay: rgba(10, 10, 11, 0.98);
             --lightbox-text: #F4F4F4;
@@ -60,18 +60,25 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Reading Progress Bar */
+        /* Reading Progress Line */
         .progress-bar {
             position: fixed; top: 0; left: 0;
             height: 2px; background-color: var(--text-primary);
-            width: 0%; z-index: 10000; opacity: 0.6;
+            width: 0%; z-index: 10000; opacity: 0.3;
             transition: background-color var(--transition);
         }
 
-        /* Tactile Film Grain */
+        /* Cinematic Background Elements: Dust Canvas & Film Grain */
+        #dustCanvas {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 1;
+            transition: opacity var(--transition);
+        }
+
         .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 9999; opacity: var(--noise-opacity);
+            pointer-events: none; z-index: 2; opacity: var(--noise-opacity);
             background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
             transition: opacity var(--transition);
         }
@@ -79,7 +86,7 @@
         /* Custom Fluid Cursor */
         @media (pointer: fine) {
             body { cursor: none; }
-            a, button, .poem-card { cursor: none !important; }
+            a, button, .poem-card, .doh-logo { cursor: none !important; }
         }
         
         .custom-cursor {
@@ -93,46 +100,36 @@
             display: none;
         }
         .custom-cursor.hovering {
-            width: 40px; height: 40px;
+            width: 50px; height: 50px;
             background-color: rgba(255,255,255,0.8);
         }
 
         /* Typography */
-        h1, h2, .poem-content, .intro, .colophon {
+        h1, h2, .poem-content, .intro, .colophon, .doh-mark {
             font-family: 'Cormorant Garamond', Georgia, serif;
         }
 
-        /* Header / Hero Section */
-        header {
-            text-align: center; padding: 160px 20px 120px;
-            position: relative; max-width: 800px; margin: 0 auto;
+        /* NEW: High-End "DOH" Logo */
+        .doh-logo {
+            position: fixed; top: 40px; left: 40px;
+            z-index: 100; display: flex; align-items: center;
+            gap: 16px; text-decoration: none; color: var(--text-primary);
+            animation: fadeIn 1s ease forwards; opacity: 0; animation-delay: 1.2s;
         }
-
-        .header-divider {
-            width: 1px; height: 80px; background-color: var(--divider);
-            margin: 0 auto 40px;
-            animation: growDown 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            transform-origin: top;
+        .doh-mark {
+            font-size: 28px; font-weight: 400; letter-spacing: 4px;
+            transition: transform var(--fast-transition);
         }
-
-        h1 {
-            font-size: clamp(28px, 4vw, 48px); font-weight: 400;
-            letter-spacing: 8px; text-transform: uppercase;
-            margin-bottom: 24px; animation: fadeUp 1s ease forwards;
-            opacity: 0; animation-delay: 0.4s;
+        .doh-full {
+            font-family: 'Inter', sans-serif; font-size: 10px;
+            font-weight: 500; letter-spacing: 6px; text-transform: uppercase;
+            color: var(--text-secondary); opacity: 0;
+            max-width: 0; overflow: hidden; white-space: nowrap;
+            transform: translateX(-10px);
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
-
-        .subtitle {
-            font-size: 11px; font-weight: 500; color: var(--text-secondary);
-            letter-spacing: 4px; text-transform: uppercase; margin-bottom: 50px;
-            animation: fadeUp 1s ease forwards; opacity: 0; animation-delay: 0.6s;
-        }
-
-        .intro {
-            font-size: 24px; font-style: italic; color: var(--text-secondary);
-            font-weight: 300; line-height: 1.6;
-            animation: fadeIn 1.5s ease forwards; opacity: 0; animation-delay: 0.9s;
-        }
+        .doh-logo:hover .doh-mark { transform: translateX(4px); }
+        .doh-logo:hover .doh-full { opacity: 1; max-width: 200px; transform: translateX(0); }
 
         /* UI Controls (Top Right) */
         .controls-container {
@@ -149,7 +146,7 @@
             transition: transform var(--fast-transition), border-color var(--fast-transition);
         }
         .ui-btn:hover { transform: scale(1.05); border-color: var(--text-secondary); }
-        .ui-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .ui-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
         
         /* Theme Logic */
         body.day-mode .sun-icon { display: none; }
@@ -157,102 +154,142 @@
         body.night-mode .sun-icon { display: block; }
         body.night-mode .moon-icon { display: none; }
 
-        /* Audio Atmosphere Wave Animation */
-        .atmosphere-btn .bar {
-            transform-origin: bottom;
-            transition: transform 0.2s ease;
+        /* Pure Focus Mode Logic */
+        body.focus-mode .eye-open { display: none; }
+        body.focus-mode .eye-closed { display: block; }
+        body:not(.focus-mode) .eye-open { display: block; }
+        body:not(.focus-mode) .eye-closed { display: none; }
+        body.focus-mode .doh-logo, 
+        body.focus-mode header, 
+        body.focus-mode footer { opacity: 0; pointer-events: none; }
+        body.focus-mode #dustCanvas { opacity: 0.15; } /* Dim the dust motes slightly */
+        
+        body.focus-mode .poem-card {
+            background-color: transparent !important; border-color: transparent !important; box-shadow: none !important;
         }
-        .atmosphere-btn.playing .bar-1 { animation: wave 1s infinite alternate ease-in-out; }
-        .atmosphere-btn.playing .bar-2 { animation: wave 1.2s infinite alternate ease-in-out 0.2s; }
-        .atmosphere-btn.playing .bar-3 { animation: wave 0.8s infinite alternate ease-in-out 0.4s; }
+        body.focus-mode .poem-title, body.focus-mode .poem-tag, body.focus-mode .date { opacity: 0; }
+        body.focus-mode .poem-content { transform: scale(1.05); transition: transform var(--transition); }
 
-        @keyframes wave {
-            0% { transform: scaleY(0.3); }
-            100% { transform: scaleY(1); }
+        /* Header / Hero Section */
+        header {
+            text-align: center; padding: 180px 20px 140px;
+            position: relative; max-width: 800px; margin: 0 auto;
+            transition: opacity var(--transition); z-index: 10;
         }
 
-        /* Main Gallery Grid */
+        .header-divider {
+            width: 1px; height: 80px; background-color: var(--divider);
+            margin: 0 auto 40px;
+            animation: growDown 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            transform-origin: top;
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 48px); font-weight: 400;
+            letter-spacing: 10px; text-transform: uppercase;
+            margin-bottom: 24px; animation: fadeUp 1s ease forwards;
+            opacity: 0; animation-delay: 0.4s;
+        }
+
+        .subtitle {
+            font-size: 11px; font-weight: 500; color: var(--text-secondary);
+            letter-spacing: 4px; text-transform: uppercase; margin-bottom: 50px;
+            animation: fadeUp 1s ease forwards; opacity: 0; animation-delay: 0.6s;
+        }
+
+        .intro {
+            font-size: 24px; font-style: italic; color: var(--text-secondary);
+            font-weight: 300; line-height: 1.6;
+            animation: fadeIn 1.5s ease forwards; opacity: 0; animation-delay: 0.9s;
+        }
+
+        /* Bespoke Asymmetrical Grid Layout */
         .gallery {
-            display: grid; max-width: 1400px; margin: 0 auto;
-            padding: 0 60px 140px; gap: 60px;
-            grid-template-columns: repeat(3, 1fr); transition: var(--transition);
+            display: grid; grid-template-columns: repeat(12, 1fr); 
+            gap: 40px; max-width: 1400px; margin: 0 auto;
+            padding: 0 60px 160px; transition: opacity var(--transition);
+            z-index: 10; position: relative;
         }
 
-        /* Spotlight Focus Mode */
-        @media (hover: hover) {
-            .gallery:hover .poem-card {
-                opacity: 0.25; filter: grayscale(100%) blur(2px); transform: scale(0.98);
-            }
-            .gallery .poem-card:hover {
-                opacity: 1; filter: grayscale(0%) blur(0px);
-                transform: translateY(-8px) scale(1.02);
-                box-shadow: var(--shadow-hover); border-color: var(--text-secondary); z-index: 10;
-            }
-        }
+        /* Exactly 10 Items Staggered */
+        .poem-card:nth-child(1) { grid-column: 2 / 7; margin-top: 0; }
+        .poem-card:nth-child(2) { grid-column: 8 / 13; margin-top: 140px; }
+        .poem-card:nth-child(3) { grid-column: 3 / 8; margin-top: 60px; } 
+        .poem-card:nth-child(4) { grid-column: 8 / 12; margin-top: -80px; }
+        .poem-card:nth-child(5) { grid-column: 2 / 6; margin-top: 100px; }
+        .poem-card:nth-child(6) { grid-column: 7 / 11; margin-top: 40px; } 
+        .poem-card:nth-child(7) { grid-column: 1 / 6; margin-top: 60px; }
+        .poem-card:nth-child(8) { grid-column: 8 / 13; margin-top: -60px; } 
+        .poem-card:nth-child(9) { grid-column: 3 / 8; margin-top: 120px; }
+        .poem-card:nth-child(10) { grid-column: 7 / 12; margin-top: 40px; } 
 
+        /* Card Architecture */
         .poem-card {
             background-color: var(--card); border: 1px solid var(--border);
-            padding: 56px 40px; display: flex; flex-direction: column;
-            transition: opacity var(--transition), transform var(--transition), filter var(--transition), box-shadow var(--transition), border-color var(--transition), background-color var(--transition);
+            padding: 64px 48px; display: flex; flex-direction: column;
             opacity: 0; transform: translateY(40px); position: relative;
+            box-shadow: var(--shadow-base);
+            transform-style: preserve-3d;
+            will-change: transform, box-shadow;
+            transition: opacity var(--transition), background-color var(--transition), border-color var(--transition), box-shadow 0.2s ease, transform 0.2s ease;
         }
+        
         .poem-card.visible { animation: fadeUpCard 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .poem-card:hover { box-shadow: var(--shadow-hover); border-color: var(--text-secondary); z-index: 20; }
 
         .card-inner {
             flex-grow: 1; display: flex; flex-direction: column;
             align-items: center; justify-content: center;
+            transform: translateZ(30px);
         }
 
         .poem-title {
             font-size: 22px; font-weight: 500; font-style: italic;
-            color: var(--text-primary); margin-bottom: 24px; text-align: center;
+            color: var(--text-primary); margin-bottom: 32px; text-align: center;
             text-transform: lowercase; letter-spacing: 1px;
+            transition: opacity var(--transition);
         }
 
         .poem-content {
-            font-size: 18px; line-height: 2;
-            color: var(--text-poem); text-align: center; white-space: pre-line;
+            font-size: 17px; line-height: 2.1; color: var(--text-poem);
+            text-align: center; white-space: pre-line;
             max-width: 450px; margin: 0 auto;
         }
 
         .poem-tag {
             font-family: 'Inter', sans-serif; font-size: 11px;
-            color: var(--text-secondary); margin-top: 24px;
-            opacity: 0.6; text-align: center;
+            color: var(--text-secondary); margin-top: 32px;
+            opacity: 0.5; text-align: center; transition: opacity var(--transition);
         }
 
         .poem-image-container {
-            width: 100%; display: flex; justify-content: center; align-items: center;
-            margin-bottom: 20px;
+            width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 20px;
         }
         .poem-image {
             width: 100%; height: auto; max-height: 500px;
             object-fit: contain; opacity: 0; transition: opacity 1s ease;
-            filter: contrast(1.05);
+            filter: contrast(1.05) grayscale(10%);
         }
         .poem-image.loaded { opacity: 1; }
 
         .date {
             font-size: 11px; font-weight: 400; color: var(--text-secondary);
-            margin-top: 40px; text-align: center; letter-spacing: 2px;
-            text-transform: uppercase; width: 100%;
+            margin-top: 48px; text-align: center; letter-spacing: 2px;
+            text-transform: uppercase; width: 100%; transition: opacity var(--transition);
         }
 
-        /* Editorial Footer & Colophon */
+        /* Editorial Footer */
         footer {
             padding: 0 20px 100px; text-align: center;
             display: flex; flex-direction: column; align-items: center;
+            transition: opacity var(--transition); z-index: 10; position: relative;
         }
-        .footer-divider {
-            width: 1px; height: 60px; background-color: var(--divider); margin-bottom: 50px;
-        }
+        .footer-divider { width: 1px; height: 60px; background-color: var(--divider); margin-bottom: 50px; }
         .colophon {
             max-width: 400px; font-size: 15px; font-style: italic; color: var(--text-secondary);
             line-height: 1.8; margin-bottom: 40px;
         }
-        .copyright {
-            font-size: 10px; color: var(--text-secondary); letter-spacing: 2px; text-transform: uppercase;
-        }
+        .copyright { font-size: 10px; color: var(--text-secondary); letter-spacing: 2px; text-transform: uppercase; }
 
         /* Minimal Lightbox */
         .lightbox {
@@ -309,21 +346,30 @@
         /* Animations */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeUpCard { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeUpCard { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes growDown { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
-        /* Responsive */
+        /* Responsive Breakpoints */
         @media (max-width: 1100px) {
-            .gallery { grid-template-columns: repeat(2, 1fr); padding: 0 40px 100px; gap: 40px; }
+            .gallery { grid-template-columns: repeat(2, 1fr); gap: 40px; padding: 0 40px 100px; }
+            .poem-card:nth-child(n) { grid-column: span 1; margin-top: 0; }
+            .poem-card:nth-child(2n) { margin-top: 80px; } 
         }
         @media (max-width: 767px) {
-            .gallery { grid-template-columns: 1fr; padding: 0 20px 80px; }
+            .gallery { grid-template-columns: 1fr; padding: 0 20px 80px; gap: 40px; }
+            .poem-card:nth-child(n) { grid-column: span 1; margin-top: 0; }
+            .poem-card { padding: 40px 24px; }
+            .doh-logo { top: 20px; left: 20px; }
+            .doh-mark { font-size: 24px; }
+            .doh-full { display: none; } /* Hide full name on small mobile */
             .controls-container { top: 20px; right: 20px; }
             .ui-btn { width: 40px; height: 40px; }
             .lightbox-nav { padding: 0 10px; }
             .lightbox-close { top: 20px; right: 20px; }
             .lightbox .poem-title { font-size: 24px; }
             .lightbox .poem-content { font-size: 18px; line-height: 2; }
+            header { padding: 120px 20px 80px; }
+            h1 { letter-spacing: 6px; }
         }
     </style>
 </head>
@@ -332,30 +378,42 @@
     <!-- Progress Bar -->
     <div class="progress-bar" id="progressBar"></div>
 
-    <!-- Film Grain -->
+    <!-- Niche Feature: Ambient Cinematic Dust Motes -->
+    <canvas id="dustCanvas"></canvas>
+
+    <!-- Film Grain Overlay -->
     <div class="noise-overlay"></div>
 
     <!-- Custom Cursor -->
     <div class="custom-cursor" id="customCursor"></div>
 
+    <!-- DOH Logo -->
+    <a href="#" class="doh-logo" aria-label="Back to top">
+        <span class="doh-mark">DOH</span>
+        <span class="doh-full">Drafts of Heart</span>
+    </a>
+
     <!-- Top Controls -->
     <div class="controls-container">
         
-        <!-- NEW Niche Feature: Atmosphere/Soundscape Generator -->
-        <button class="ui-btn atmosphere-btn" id="atmosphereBtn" aria-label="Toggle Atmosphere Soundscape">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-                <rect class="bar bar-1" x="5" y="8" width="2" height="8" rx="1" />
-                <rect class="bar bar-2" x="11" y="4" width="2" height="16" rx="1" />
-                <rect class="bar bar-3" x="17" y="10" width="2" height="4" rx="1" />
+        <!-- Focus/Cinematic Mode Toggle -->
+        <button class="ui-btn focus-btn" id="focusBtn" aria-label="Toggle Focus Mode">
+            <svg class="eye-open" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <svg class="eye-closed" viewBox="0 0 24 24">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
             </svg>
         </button>
 
         <!-- Theme Toggle -->
         <button class="ui-btn theme-toggle" id="themeToggle" aria-label="Toggle Theme">
-            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="moon-icon" viewBox="0 0 24 24">
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
-            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="sun-icon" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="5"></circle>
                 <line x1="12" y1="1" x2="12" y2="3"></line>
                 <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -385,7 +443,7 @@
             Typeset in Cormorant Garamond.<br>
             A curated exhibition of 10 pieces, designed to be read slowly.
         </p>
-        <p class="copyright">© 2026 Aaradhya. All rights reserved.</p>
+        <p class="copyright">© 2026 Drafts of Heart. All rights reserved.</p>
     </footer>
 
     <!-- Lightbox -->
@@ -420,11 +478,60 @@
             const addHover = () => cursor.classList.add('hovering');
             const removeHover = () => cursor.classList.remove('hovering');
             
-            document.querySelectorAll('button').forEach(el => {
+            document.querySelectorAll('button, a').forEach(el => {
                 el.addEventListener('mouseenter', addHover);
                 el.addEventListener('mouseleave', removeHover);
             });
         }
+
+        // --- AMBIENT DUST MOTES (Canvas Particles) ---
+        const canvas = document.getElementById('dustCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles =[];
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.radius = Math.random() * 1.5 + 0.5;
+                this.vx = (Math.random() - 0.5) * 0.2;
+                this.vy = Math.random() * -0.3 - 0.1; // Float upwards
+                this.alpha = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            }
+            draw() {
+                const isNight = document.body.classList.contains('night-mode');
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = isNight ? `rgba(255, 255, 255, ${this.alpha * 0.6})` : `rgba(0, 0, 0, ${this.alpha * 0.3})`;
+                ctx.fill();
+            }
+        }
+
+        // Create 40 particles
+        for (let i = 0; i < 40; i++) particles.push(new Particle());
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
 
         // --- SCROLL PROGRESS BAR ---
         window.addEventListener('scroll', () => {
@@ -433,59 +540,10 @@
             document.getElementById("progressBar").style.width = (winScroll / height) * 100 + "%";
         });
 
-        // --- NICHE FEATURE: AMBIENT SOUNDSCAPE (Web Audio API) ---
-        // Generates a "distant ocean / muffled rain" sound using pure math (no audio files needed)
-        let audioCtx, brownNoise, filter, gainNode;
-        let isAudioPlaying = false;
-        const atmBtn = document.getElementById('atmosphereBtn');
-
-        atmBtn.addEventListener('click', () => {
-            if(!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                
-                // Create Brown Noise (sounds like distant ocean/rain)
-                const bufferSize = audioCtx.sampleRate * 2; 
-                const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-                const output = noiseBuffer.getChannelData(0);
-                let lastOut = 0;
-                for (let i = 0; i < bufferSize; i++) {
-                    const white = Math.random() * 2 - 1;
-                    output[i] = (lastOut + (0.02 * white)) / 1.02;
-                    lastOut = output[i];
-                    output[i] *= 3.5; // Gain compensation
-                }
-                
-                brownNoise = audioCtx.createBufferSource();
-                brownNoise.buffer = noiseBuffer;
-                brownNoise.loop = true;
-                
-                // Filter to make it sound muffled and warm
-                filter = audioCtx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.value = 350; // Deep cutoff for that "rain outside the window" feel
-                
-                gainNode = audioCtx.createGain();
-                gainNode.gain.value = 0;
-                
-                brownNoise.connect(filter);
-                filter.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                brownNoise.start();
-            }
-            
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-            
-            if(!isAudioPlaying) {
-                // Fade in beautifully
-                gainNode.gain.setTargetAtTime(0.6, audioCtx.currentTime, 2);
-                atmBtn.classList.add('playing');
-                isAudioPlaying = true;
-            } else {
-                // Fade out seamlessly
-                gainNode.gain.setTargetAtTime(0, audioCtx.currentTime, 1);
-                atmBtn.classList.remove('playing');
-                isAudioPlaying = false;
-            }
+        // --- FOCUS MODE TOGGLE ---
+        const focusBtn = document.getElementById('focusBtn');
+        focusBtn.addEventListener('click', () => {
+            document.body.classList.toggle('focus-mode');
         });
 
         // --- POEM DATA (Exactly 10 Slots) ---
@@ -507,7 +565,7 @@
             // SLOT 3: SCANNED IMAGE
             { 
                 type: "image", 
-                image: "https://placehold.co/600x800/e8e8e8/888888?text=Placeholder+Image\n\n(Replace+Link+in+Code)", 
+                image: "https://placehold.co/600x800/e8e8e3/888888?text=Placeholder+Image\n\n(Replace+Link+in+Code)", 
                 date: "July 2025" 
             },
             { 
@@ -527,7 +585,7 @@
             // SLOT 6: SCANNED IMAGE
             { 
                 type: "image", 
-                image: "https://placehold.co/700x500/e8e8e8/888888?text=Placeholder+Image\n\n(Replace+Link+in+Code)", 
+                image: "https://placehold.co/700x500/e8e8e3/888888?text=Placeholder+Image\n\n(Replace+Link+in+Code)", 
                 date: "October 2025" 
             },
             { 
@@ -540,7 +598,7 @@
             // SLOT 8: SCANNED IMAGE
             { 
                 type: "image", 
-                image: "https://placehold.co/600x900/e8e8e8/888888?text=Placeholder+Image\n\n(Replace+Link+in+Code)", 
+                image: "https://placehold.co/600x900/e8e8e3/888888?text=Placeholder+Image\n\n(Replace+Link+in+Code)", 
                 date: "December 2025" 
             },
             { 
@@ -553,30 +611,30 @@
             // SLOT 10: SCANNED IMAGE
             { 
                 type: "image", 
-                image: "https://placehold.co/600x800/e8e8e8/888888?text=Placeholder+Image\n\n(Replace+Link+in+Code)", 
+                image: "https://placehold.co/600x800/e8e8e3/888888?text=Placeholder+Image\n\n(Replace+Link+in+Code)", 
                 date: "February 2026" 
             }
         ];
 
         // --- THEME MANAGEMENT ---
         const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
         
         if (localStorage.getItem('aaradhyaTheme') === 'night') {
-            body.classList.remove('day-mode'); body.classList.add('night-mode');
+            document.body.classList.remove('day-mode'); 
+            document.body.classList.add('night-mode');
         }
 
         themeToggle.addEventListener('click', () => {
-            if (body.classList.contains('night-mode')) {
-                body.classList.replace('night-mode', 'day-mode');
+            if (document.body.classList.contains('night-mode')) {
+                document.body.classList.replace('night-mode', 'day-mode');
                 localStorage.setItem('aaradhyaTheme', 'day');
             } else {
-                body.classList.replace('day-mode', 'night-mode');
+                document.body.classList.replace('day-mode', 'night-mode');
                 localStorage.setItem('aaradhyaTheme', 'night');
             }
         });
 
-        // --- RENDER GALLERY ---
+        // --- RENDER GALLERY & 3D TILT ---
         const galleryContainer = document.getElementById('gallery');
 
         function renderGallery() {
@@ -596,9 +654,28 @@
                 innerHTML += `</div><time class="date">${poem.date}</time>`;
                 article.innerHTML = innerHTML;
 
+                // 3D Tilt Effect Physics
                 if (isFinePointer) {
-                    article.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-                    article.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+                    article.addEventListener('mousemove', (e) => {
+                        if (document.body.classList.contains('focus-mode')) return;
+                        
+                        const rect = article.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        const rotateX = ((y - centerY) / centerY) * -5;
+                        const rotateY = ((x - centerX) / centerX) * 5;
+
+                        article.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                        cursor.classList.add('hovering');
+                    });
+
+                    article.addEventListener('mouseleave', () => {
+                        article.style.transform = ''; 
+                        cursor.classList.remove('hovering');
+                    });
                 }
 
                 article.addEventListener('click', () => openLightbox(index));
@@ -611,8 +688,6 @@
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const index = Array.from(galleryContainer.children).indexOf(entry.target);
-                    entry.target.style.animationDelay = `${(index % 3) * 0.15}s`;
                     entry.target.classList.add('visible');
                     observer.unobserve(entry.target);
                 }
@@ -666,7 +741,7 @@
             btnPrev.style.opacity = currentIndex === 0 ? '0' : '0.5';
             btnPrev.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
             btnNext.style.opacity = currentIndex === poems.length - 1 ? '0' : '0.5';
-            btnNext.style.pointerEvents = currentIndex === poems.length - 1 ? 'none' : 'auto';
+            btnNext.style.pointer,Events = currentIndex === poems.length - 1 ? 'none' : 'auto';
         }
 
         btnClose.addEventListener('click', closeLightbox);
