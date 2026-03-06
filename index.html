@@ -8,12 +8,11 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     
     <style>
         /* CSS Variables & Editorial Theming */
         :root {
-            /* Day Mode (Luxurious Ivory/Paper) */
             --bg: #FDFCF8;
             --card: #FFFFFF;
             --text-primary: #111111;
@@ -22,19 +21,17 @@
             --border: #EBEBEB;
             --divider: #DCDCDC;
             --shadow-base: 0 4px 20px rgba(0,0,0,0.03);
-            --shadow-hover: 0 12px 36px rgba(0,0,0,0.08);
+            --shadow-hover: 0 20px 40px rgba(0,0,0,0.08);
             
-            /* Lightbox */
-            --overlay: rgba(253, 252, 248, 0.96);
+            --overlay: rgba(253, 252, 248, 0.98);
             --lightbox-text: #111111;
+            --noise-opacity: 0.04;
             
-            /* Shared */
-            --transition: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            --fast-transition: 0.3s ease;
+            --transition: 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            --fast-transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         body.night-mode {
-            /* Night Mode (Deep Obsidian) */
             --bg: #0A0A0B;
             --card: #121213;
             --text-primary: #F4F4F4;
@@ -43,490 +40,321 @@
             --border: #1F1F21;
             --divider: #2A2A2C;
             --shadow-base: 0 4px 20px rgba(0,0,0,0.4);
-            --shadow-hover: 0 12px 36px rgba(0,0,0,0.7);
+            --shadow-hover: 0 20px 40px rgba(0,0,0,0.8);
             
-            /* Lightbox */
             --overlay: rgba(10, 10, 11, 0.98);
             --lightbox-text: #F4F4F4;
+            --noise-opacity: 0.025;
         }
 
         /* Global Resets & Base */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg);
             color: var(--text-primary);
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Inter', sans-serif;
             transition: background-color var(--transition), color var(--transition);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* Reading Progress Bar */
+        .progress-bar {
+            position: fixed; top: 0; left: 0;
+            height: 2px; background-color: var(--text-primary);
+            width: 0%; z-index: 10000; opacity: 0.6;
+            transition: background-color var(--transition);
+        }
+
+        /* Tactile Film Grain */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9999; opacity: var(--noise-opacity);
+            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+            transition: opacity var(--transition);
+        }
+
+        /* Custom Fluid Cursor */
+        @media (pointer: fine) {
+            body { cursor: none; }
+            a, button, .poem-card { cursor: none !important; }
+        }
+        
+        .custom-cursor {
+            position: fixed; top: 0; left: 0;
+            width: 12px; height: 12px;
+            background-color: #FFF; border-radius: 50%;
+            pointer-events: none; z-index: 10001;
+            mix-blend-mode: difference;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+            display: none;
+        }
+        .custom-cursor.hovering {
+            width: 40px; height: 40px;
+            background-color: rgba(255,255,255,0.8);
+        }
+
         /* Typography */
-        h1, h2, .poem-content, .intro {
+        h1, h2, .poem-content, .intro, .colophon {
             font-family: 'Cormorant Garamond', Georgia, serif;
         }
 
         /* Header / Hero Section */
         header {
-            text-align: center;
-            padding: 140px 20px 100px;
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
+            text-align: center; padding: 160px 20px 120px;
+            position: relative; max-width: 800px; margin: 0 auto;
         }
 
         .header-divider {
-            width: 1px;
-            height: 60px;
-            background-color: var(--divider);
+            width: 1px; height: 80px; background-color: var(--divider);
             margin: 0 auto 40px;
-            animation: growDown 1s ease forwards;
+            animation: growDown 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
             transform-origin: top;
-            transition: background-color var(--transition);
         }
 
         h1 {
-            font-size: clamp(28px, 4vw, 44px);
-            font-weight: 400;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            margin-bottom: 24px;
-            color: var(--text-primary);
-            animation: fadeUp 1s ease forwards;
-            opacity: 0;
-            animation-delay: 0.3s;
+            font-size: clamp(28px, 4vw, 48px); font-weight: 400;
+            letter-spacing: 8px; text-transform: uppercase;
+            margin-bottom: 24px; animation: fadeUp 1s ease forwards;
+            opacity: 0; animation-delay: 0.4s;
         }
 
         .subtitle {
-            font-size: 11px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 40px;
-            animation: fadeUp 1s ease forwards;
-            animation-delay: 0.5s;
-            opacity: 0;
+            font-size: 11px; font-weight: 500; color: var(--text-secondary);
+            letter-spacing: 4px; text-transform: uppercase; margin-bottom: 50px;
+            animation: fadeUp 1s ease forwards; opacity: 0; animation-delay: 0.6s;
         }
 
         .intro {
-            font-size: 22px;
-            font-style: italic;
-            color: var(--text-secondary);
-            font-weight: 300;
-            line-height: 1.6;
-            animation: fadeIn 1.5s ease forwards;
-            animation-delay: 0.8s;
-            opacity: 0;
+            font-size: 24px; font-style: italic; color: var(--text-secondary);
+            font-weight: 300; line-height: 1.6;
+            animation: fadeIn 1.5s ease forwards; opacity: 0; animation-delay: 0.9s;
         }
 
-        /* Minimalist Theme Toggle */
-        .theme-toggle-container {
-            position: fixed;
-            top: 40px;
-            right: 40px;
-            z-index: 100;
-            animation: fadeIn 1s ease forwards;
-            opacity: 0;
-            animation-delay: 1s;
+        /* UI Controls (Top Right) */
+        .controls-container {
+            position: fixed; top: 40px; right: 40px;
+            z-index: 100; display: flex; gap: 12px;
+            animation: fadeIn 1s ease forwards; opacity: 0; animation-delay: 1.2s;
         }
 
-        .theme-toggle {
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-primary);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            transition: all var(--fast-transition);
+        .ui-btn {
+            background: transparent; border: 1px solid var(--border);
+            border-radius: 50%; width: 48px; height: 48px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-primary); backdrop-filter: blur(8px);
+            transition: transform var(--fast-transition), border-color var(--fast-transition);
         }
-
-        .theme-toggle:hover {
-            transform: scale(1.05);
-            border-color: var(--text-secondary);
-        }
-
-        .theme-toggle svg {
-            width: 20px;
-            height: 20px;
-            transition: transform 0.5s ease;
-        }
-
-        .theme-toggle:hover svg {
-            transform: rotate(15deg);
-        }
-
-        /* Toggle Logic: Show/Hide based on theme */
+        .ui-btn:hover { transform: scale(1.05); border-color: var(--text-secondary); }
+        .ui-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        
+        /* Theme Logic */
         body.day-mode .sun-icon { display: none; }
         body.day-mode .moon-icon { display: block; }
-        
         body.night-mode .sun-icon { display: block; }
         body.night-mode .moon-icon { display: none; }
 
+        /* Audio Atmosphere Wave Animation */
+        .atmosphere-btn .bar {
+            transform-origin: bottom;
+            transition: transform 0.2s ease;
+        }
+        .atmosphere-btn.playing .bar-1 { animation: wave 1s infinite alternate ease-in-out; }
+        .atmosphere-btn.playing .bar-2 { animation: wave 1.2s infinite alternate ease-in-out 0.2s; }
+        .atmosphere-btn.playing .bar-3 { animation: wave 0.8s infinite alternate ease-in-out 0.4s; }
+
+        @keyframes wave {
+            0% { transform: scaleY(0.3); }
+            100% { transform: scaleY(1); }
+        }
+
         /* Main Gallery Grid */
         .gallery {
-            display: grid;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 60px 120px;
-            gap: 60px;
-            grid-template-columns: repeat(3, 1fr);
+            display: grid; max-width: 1400px; margin: 0 auto;
+            padding: 0 60px 140px; gap: 60px;
+            grid-template-columns: repeat(3, 1fr); transition: var(--transition);
         }
 
-        @media (max-width: 1100px) {
-            .gallery {
-                grid-template-columns: repeat(2, 1fr);
-                padding: 0 40px 100px;
-                gap: 40px;
+        /* Spotlight Focus Mode */
+        @media (hover: hover) {
+            .gallery:hover .poem-card {
+                opacity: 0.25; filter: grayscale(100%) blur(2px); transform: scale(0.98);
             }
-        }
-
-        @media (max-width: 767px) {
-            .gallery {
-                grid-template-columns: 1fr;
-                padding: 0 20px 80px;
-                gap: 30px;
-            }
-            .theme-toggle-container {
-                top: 20px;
-                right: 20px;
-            }
-            .theme-toggle {
-                width: 40px;
-                height: 40px;
-                background: var(--bg);
+            .gallery .poem-card:hover {
+                opacity: 1; filter: grayscale(0%) blur(0px);
+                transform: translateY(-8px) scale(1.02);
+                box-shadow: var(--shadow-hover); border-color: var(--text-secondary); z-index: 10;
             }
         }
 
-        /* Poem Cards - Editorial Design */
         .poem-card {
-            background-color: var(--card);
-            border: 1px solid var(--border);
-            padding: 48px 32px;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            transition: transform var(--transition), box-shadow var(--transition), background-color var(--transition), border-color var(--transition);
-            opacity: 0;
-            transform: translateY(30px);
-            position: relative;
+            background-color: var(--card); border: 1px solid var(--border);
+            padding: 56px 40px; display: flex; flex-direction: column;
+            transition: opacity var(--transition), transform var(--transition), filter var(--transition), box-shadow var(--transition), border-color var(--transition), background-color var(--transition);
+            opacity: 0; transform: translateY(40px); position: relative;
         }
-
-        .poem-card.visible {
-            animation: fadeUpCard 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
-
-        .poem-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--text-secondary);
-        }
+        .poem-card.visible { animation: fadeUpCard 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
 
         .card-inner {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            flex-grow: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
         }
 
-        /* Text Poems */
         .poem-title {
-            font-size: 24px;
-            font-weight: 500;
-            font-style: italic;
-            color: var(--text-primary);
-            margin-bottom: 30px;
-            text-align: center;
-            transition: color var(--transition);
+            font-size: 22px; font-weight: 500; font-style: italic;
+            color: var(--text-primary); margin-bottom: 24px; text-align: center;
+            text-transform: lowercase; letter-spacing: 1px;
         }
 
         .poem-content {
-            font-size: 18px;
-            line-height: 1.9;
-            color: var(--text-poem);
-            text-align: center;
-            white-space: pre-line;
-            max-width: 400px;
-            margin: 0 auto;
-            transition: color var(--transition);
+            font-size: 18px; line-height: 2;
+            color: var(--text-poem); text-align: center; white-space: pre-line;
+            max-width: 450px; margin: 0 auto;
         }
 
-        /* Image Poems */
+        .poem-tag {
+            font-family: 'Inter', sans-serif; font-size: 11px;
+            color: var(--text-secondary); margin-top: 24px;
+            opacity: 0.6; text-align: center;
+        }
+
         .poem-image-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: transparent;
-            overflow: hidden;
+            width: 100%; display: flex; justify-content: center; align-items: center;
             margin-bottom: 20px;
         }
-
         .poem-image {
-            width: 100%;
-            height: auto;
-            max-height: 500px;
-            object-fit: contain;
-            display: block;
-            opacity: 0;
-            transition: opacity 1s ease;
-            filter: grayscale(20%) contrast(1.1); /* Subtle artistic filter */
+            width: 100%; height: auto; max-height: 500px;
+            object-fit: contain; opacity: 0; transition: opacity 1s ease;
+            filter: contrast(1.05);
         }
-        
-        .poem-image.loaded {
-            opacity: 1;
-        }
+        .poem-image.loaded { opacity: 1; }
 
-        /* Card Dates */
         .date {
-            font-size: 11px;
-            font-weight: 400;
-            color: var(--text-secondary);
-            margin-top: 40px;
-            text-align: center;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: color var(--transition);
-            width: 100%;
+            font-size: 11px; font-weight: 400; color: var(--text-secondary);
+            margin-top: 40px; text-align: center; letter-spacing: 2px;
+            text-transform: uppercase; width: 100%;
         }
 
-        /* Refined Footer */
+        /* Editorial Footer & Colophon */
         footer {
-            padding: 0 20px 80px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 0 20px 100px; text-align: center;
+            display: flex; flex-direction: column; align-items: center;
         }
-
         .footer-divider {
-            width: 40px;
-            height: 1px;
-            background-color: var(--divider);
-            margin-bottom: 40px;
-            transition: background-color var(--transition);
+            width: 1px; height: 60px; background-color: var(--divider); margin-bottom: 50px;
         }
-
-        .counter {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 20px;
-            font-style: italic;
-            color: var(--text-primary);
-            margin-bottom: 12px;
+        .colophon {
+            max-width: 400px; font-size: 15px; font-style: italic; color: var(--text-secondary);
+            line-height: 1.8; margin-bottom: 40px;
         }
-
         .copyright {
-            font-size: 11px;
-            color: var(--text-secondary);
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            font-size: 10px; color: var(--text-secondary); letter-spacing: 2px; text-transform: uppercase;
         }
 
         /* Minimal Lightbox */
         .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: var(--overlay);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity var(--fast-transition), visibility var(--fast-transition), background-color var(--transition);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            z-index: 9000; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden;
+            transition: opacity var(--fast-transition), visibility var(--fast-transition);
         }
-
-        .lightbox.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .lightbox.active { opacity: 1; visibility: visible; }
 
         .lightbox-close {
-            position: absolute;
-            top: 40px;
-            right: 40px;
-            background: none;
-            border: none;
-            color: var(--lightbox-text);
-            font-size: 32px;
-            font-weight: 300;
-            cursor: pointer;
-            z-index: 1001;
-            transition: transform var(--fast-transition), opacity var(--fast-transition);
-            opacity: 0.5;
+            position: absolute; top: 40px; right: 40px;
+            background: none; border: none; color: var(--lightbox-text);
+            font-size: 28px; font-weight: 300; z-index: 9001;
+            opacity: 0.5; transition: opacity var(--fast-transition), transform var(--fast-transition);
         }
-
-        .lightbox-close:hover {
-            transform: scale(1.1);
-            opacity: 1;
-        }
+        .lightbox-close:hover { opacity: 1; transform: scale(1.1) rotate(90deg); }
 
         .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 40px;
-            pointer-events: none;
-            z-index: 1001;
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 100%; display: flex; justify-content: space-between;
+            padding: 0 60px; pointer-events: none; z-index: 9001;
         }
-
         .nav-btn {
-            background: none;
-            border: none;
-            color: var(--lightbox-text);
-            font-size: 24px;
-            cursor: pointer;
-            pointer-events: auto;
-            opacity: 0.3;
-            transition: opacity var(--fast-transition), transform var(--fast-transition);
+            background: none; border: none; color: var(--lightbox-text);
+            font-size: 32px; font-weight: 300; pointer-events: auto;
+            opacity: 0.2; transition: opacity var(--fast-transition), transform var(--fast-transition);
             padding: 20px;
         }
-
-        .nav-btn:hover {
-            opacity: 1;
-            transform: scale(1.1);
-        }
+        .nav-btn:hover { opacity: 1; transform: scale(1.1); }
 
         .lightbox-content-wrapper {
-            position: relative;
-            width: 90vw;
-            height: 85vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transform: scale(0.98);
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative; width: 90vw; height: 85vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transform: scale(0.96); transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
-
-        .lightbox.active .lightbox-content-wrapper {
-            transform: scale(1);
-        }
+        .lightbox.active .lightbox-content-wrapper { transform: scale(1); }
 
         .lightbox .lb-text-container {
-            max-width: 600px;
-            max-height: 75vh;
-            overflow-y: auto;
-            padding: 40px;
-            scrollbar-width: none;
-            text-align: center;
+            max-width: 700px; max-height: 75vh; overflow-y: auto;
+            padding: 40px; text-align: center; scrollbar-width: none;
         }
-        
         .lightbox .lb-text-container::-webkit-scrollbar { display: none; }
 
-        .lightbox .poem-title {
-            color: var(--lightbox-text);
-            font-size: 36px;
-            margin-bottom: 40px;
-        }
-
-        .lightbox .poem-content {
-            color: var(--lightbox-text);
-            font-size: 24px;
-            line-height: 2;
-        }
-
-        .lightbox .lb-image {
-            max-width: 100vw;
-            max-height: 80vh;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            box-shadow: var(--shadow-hover);
-        }
-
-        .lightbox .date {
-            color: var(--lightbox-text);
-            font-size: 12px;
-            opacity: 0.5;
-            margin-top: 40px;
-            flex-shrink: 0;
-        }
-
-        /* Loading Spinner */
-        .spinner {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 1px solid rgba(0,0,0,0.1);
-            border-top-color: var(--text-secondary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        body.night-mode .spinner {
-            border-color: rgba(255,255,255,0.1);
-            border-top-color: var(--text-secondary);
-        }
+        .lightbox .poem-title { font-size: 32px; margin-bottom: 40px; color: var(--lightbox-text); text-transform: lowercase; }
+        .lightbox .poem-content { font-size: 24px; line-height: 2.2; color: var(--lightbox-text); }
+        .lightbox .poem-tag { color: var(--lightbox-text); font-size: 14px; opacity: 0.5; margin-top: 30px; }
+        .lightbox .lb-image { max-width: 100vw; max-height: 80vh; object-fit: contain; box-shadow: var(--shadow-hover); }
+        .lightbox .date { color: var(--lightbox-text); font-size: 12px; opacity: 0.3; margin-top: 50px; flex-shrink: 0; }
 
         /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeUpCard { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes growDown { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .gallery { grid-template-columns: repeat(2, 1fr); padding: 0 40px 100px; gap: 40px; }
         }
-
-        @keyframes fadeUpCard {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes growDown {
-            from { transform: scaleY(0); }
-            to { transform: scaleY(1); }
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive Lightbox */
         @media (max-width: 767px) {
+            .gallery { grid-template-columns: 1fr; padding: 0 20px 80px; }
+            .controls-container { top: 20px; right: 20px; }
+            .ui-btn { width: 40px; height: 40px; }
             .lightbox-nav { padding: 0 10px; }
             .lightbox-close { top: 20px; right: 20px; }
-            .lightbox .poem-title { font-size: 28px; }
-            .lightbox .poem-content { font-size: 18px; line-height: 1.8; }
-            .lightbox .lb-text-container { padding: 20px; }
-            h1 { letter-spacing: 4px; }
+            .lightbox .poem-title { font-size: 24px; }
+            .lightbox .poem-content { font-size: 18px; line-height: 2; }
         }
     </style>
 </head>
 <body class="day-mode">
 
-    <!-- Minimalist Toggle -->
-    <div class="theme-toggle-container">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
-            <!-- Moon Icon (Shows in Day Mode) -->
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Film Grain -->
+    <div class="noise-overlay"></div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="customCursor"></div>
+
+    <!-- Top Controls -->
+    <div class="controls-container">
+        
+        <!-- NEW Niche Feature: Atmosphere/Soundscape Generator -->
+        <button class="ui-btn atmosphere-btn" id="atmosphereBtn" aria-label="Toggle Atmosphere Soundscape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                <rect class="bar bar-1" x="5" y="8" width="2" height="8" rx="1" />
+                <rect class="bar bar-2" x="11" y="4" width="2" height="16" rx="1" />
+                <rect class="bar bar-3" x="17" y="10" width="2" height="4" rx="1" />
+            </svg>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button class="ui-btn theme-toggle" id="themeToggle" aria-label="Toggle Theme">
             <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
-            <!-- Sun Icon (Shows in Night Mode) -->
             <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="5"></circle>
                 <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -535,140 +363,198 @@
                 <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
                 <line x1="1" y1="12" x2="3" y2="12"></line>
                 <line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
         </button>
     </div>
 
-    <!-- Hero Section -->
     <header>
         <div class="header-divider"></div>
-        <h1>Aaradhya's Art Gallery</h1>
-        <p class="subtitle">May 2025 — Present</p>
-        <p class="intro">A curated collection of poetic thoughts and moments,<br>beautifully preserved in time.</p>
+        <h1>Aaradhya's Gallery</h1>
+        <p class="subtitle">An ongoing collection</p>
+        <p class="intro">Fragments of time, shaped into words and preserved in quiet spaces.</p>
     </header>
 
-    <!-- Gallery Grid -->
     <main class="gallery" id="gallery" role="region" aria-label="Poetry Gallery">
         <!-- Cards injected via JavaScript -->
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-divider"></div>
-        <p class="counter">14 Curated Pieces</p>
+        <p class="colophon">
+            "Poetry is the clear expression of mixed feelings."<br><br>
+            Typeset in Cormorant Garamond.<br>
+            A curated exhibition of 10 pieces, designed to be read slowly.
+        </p>
         <p class="copyright">© 2026 Aaradhya. All rights reserved.</p>
     </footer>
 
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Poem Viewer">
         <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">✕</button>
-        
         <nav class="lightbox-nav">
             <button class="nav-btn prev" id="lightboxPrev" aria-label="Previous poem">←</button>
             <button class="nav-btn next" id="lightboxNext" aria-label="Next poem">→</button>
         </nav>
-
-        <div class="lightbox-content-wrapper" id="lightboxContent">
-            <!-- Content injected dynamically -->
-        </div>
+        <div class="lightbox-content-wrapper" id="lightboxContent"></div>
     </div>
 
     <script>
-        // Data Structure: 14 Poems
+        // --- CUSTOM FLUID CURSOR ---
+        const cursor = document.getElementById('customCursor');
+        const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+
+        if (isFinePointer) {
+            cursor.style.display = 'block';
+            let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+
+            document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+
+            function animateCursor() {
+                cursorX += (mouseX - cursorX) * 0.15; 
+                cursorY += (mouseY - cursorY) * 0.15;
+                cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+                requestAnimationFrame(animateCursor);
+            }
+            requestAnimationFrame(animateCursor);
+
+            const addHover = () => cursor.classList.add('hovering');
+            const removeHover = () => cursor.classList.remove('hovering');
+            
+            document.querySelectorAll('button').forEach(el => {
+                el.addEventListener('mouseenter', addHover);
+                el.addEventListener('mouseleave', removeHover);
+            });
+        }
+
+        // --- SCROLL PROGRESS BAR ---
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById("progressBar").style.width = (winScroll / height) * 100 + "%";
+        });
+
+        // --- NICHE FEATURE: AMBIENT SOUNDSCAPE (Web Audio API) ---
+        // Generates a "distant ocean / muffled rain" sound using pure math (no audio files needed)
+        let audioCtx, brownNoise, filter, gainNode;
+        let isAudioPlaying = false;
+        const atmBtn = document.getElementById('atmosphereBtn');
+
+        atmBtn.addEventListener('click', () => {
+            if(!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Create Brown Noise (sounds like distant ocean/rain)
+                const bufferSize = audioCtx.sampleRate * 2; 
+                const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const output = noiseBuffer.getChannelData(0);
+                let lastOut = 0;
+                for (let i = 0; i < bufferSize; i++) {
+                    const white = Math.random() * 2 - 1;
+                    output[i] = (lastOut + (0.02 * white)) / 1.02;
+                    lastOut = output[i];
+                    output[i] *= 3.5; // Gain compensation
+                }
+                
+                brownNoise = audioCtx.createBufferSource();
+                brownNoise.buffer = noiseBuffer;
+                brownNoise.loop = true;
+                
+                // Filter to make it sound muffled and warm
+                filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 350; // Deep cutoff for that "rain outside the window" feel
+                
+                gainNode = audioCtx.createGain();
+                gainNode.gain.value = 0;
+                
+                brownNoise.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                brownNoise.start();
+            }
+            
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            
+            if(!isAudioPlaying) {
+                // Fade in beautifully
+                gainNode.gain.setTargetAtTime(0.6, audioCtx.currentTime, 2);
+                atmBtn.classList.add('playing');
+                isAudioPlaying = true;
+            } else {
+                // Fade out seamlessly
+                gainNode.gain.setTargetAtTime(0, audioCtx.currentTime, 1);
+                atmBtn.classList.remove('playing');
+                isAudioPlaying = false;
+            }
+        });
+
+        // --- POEM DATA (Exactly 10 Slots) ---
         const poems =[
-            {
-                id: 1,
-                type: "text",
-                title: "Whispers of Spring",
-                content: "The morning light breaks,\nSoft and golden through the glass,\nA quiet awakening.\n\nShadows stretch and fade,\nLeaving only the warmth of the sun,\nAnd the promise of today.",
-                date: "May 23, 2025"
+            { 
+                type: "text", 
+                title: "please don't read this, i'll cry", 
+                content: "and i cry anywhere between shot glasses to oceans and let no tears fall because you can't mourn something you never quite knew.\n\ni can't justify the germinating grief if you can't see the love that once grew; and it's fine, regardless of if you validate it or not - it was there, it once bloomed.\n\ni'm satisfied with the existence of what once was, i'm past dwelling on thoughts of 'what could've been'. it's a sweet thought, i won't deny but it's better left off as a yearning poem on the screen.\n\nyou and i were a fever dream.", 
+                tag: "@draftsofheart",
+                date: "May 2025" 
             },
-            {
-                id: 2,
-                type: "text",
-                title: "Untitled",
-                content: "Silence is not empty.\nIt is full of answers we have yet to hear.\n\nListen closely to the wind,\nIt carries the secrets of the earth.",
-                date: "June 2, 2025"
+            { 
+                type: "text", 
+                title: "how to lose a guy in ten days", 
+                content: "dip your head in cold water and numb the pain. try everything in your might to remove the stain of 'i can't be loved by the most loving man.' then mourn the ruins of a never risen clan.\n\ntell him how nectar would never suffice for the sweet lies he filled you with. how you were so close to having everything but you were left with nothing. love him to lie about how you don't and miss him to tell him how you won't.\n\nbe the bolter, pick your bags and just run because you could never belong to someone. write his name on your notebook till the butterflies in your stomach turn a little sad.\n\nremind yourself that you can't lose someone you never had.", 
+                tag: "@draftsofheart",
+                date: "June 2025" 
             },
-            {
-                id: 3,
-                type: "text",
-                title: "Ocean's Breath",
-                content: "Waves crash, recede, return.\nA rhythm older than time itself.\n\nI stand at the edge,\nSmall, insignificant, yet whole.",
-                date: "June 19, 2025"
+            // SLOT 3: SCANNED IMAGE
+            { 
+                type: "image", 
+                image: "https://placehold.co/600x800/e8e8e8/888888?text=Placeholder+Image\n\n(Replace+Link+in+Code)", 
+                date: "July 2025" 
             },
-            {
-                id: 4,
-                type: "text",
-                title: "Midnight Thoughts",
-                content: "The stars do not ask for attention,\nYet they command the sky.\n\nWe strive so hard to be seen,\nWhen simply being is enough.",
-                date: "July 5, 2025"
+            { 
+                type: "text", 
+                title: "i drive my car with heart shaped glasses", 
+                content: "and i see everything sort of fluorescent. it's a drug effect, i can't deny. the traffic lights are so distant. they blur into one and in my peripheral vision, i can see us dancing on some jazz music you used to listen.\n\nthe rear view mirror holds every memory of us. it haunts like a feverish dream. the traffic lights now buzz a bright red and life isn't as unstoppable as it once seemed.\n\ni press the clutch and the brakes but the car doesn't stop. because the signal's haywired and my mind is jammed and it blinks all - yellow and red and green. \n\ndo i halt? do i go? i do not know.", 
+                tag: "@draftsofheart",
+                date: "August 2025" 
             },
-            {
-                id: 5,
-                type: "text",
-                title: "Rain on Glass",
-                content: "Tears from the clouds,\nWashing the world clean.\n\nEach drop a story,\nFalling gracefully to the ground.",
-                date: "July 24, 2025"
+            { 
+                type: "text", 
+                title: "the sky / fly high", 
+                content: "the sky has been really pretty since you decided to adorn it. i'll be honest, i'll be selfish. i think i prefer stormy skies, dark and grey and sullen at times if it meant i'd have your starry eyes to guide us through.\n\ni'll sit through the rains and i'll sit through the sunny days and i'll wonder how different things could've ended. how they could've never ended at all.\n\ni never replied to your last call.\n\nthe world has been really quiet since we lost you. you painted yourself the same shade as the infinite sky. your favourite, poet blue.\n\nwe miss you.", 
+                tag: "",
+                date: "September 2025" 
             },
-            {
-                id: 6,
-                type: "image",
-                image: "https://placehold.co/600x800/e6e6e6/666666?text=Scanned+Poem\n\n(August+8)",
-                date: "August 8, 2025"
+            // SLOT 6: SCANNED IMAGE
+            { 
+                type: "image", 
+                image: "https://placehold.co/700x500/e8e8e8/888888?text=Placeholder+Image\n\n(Replace+Link+in+Code)", 
+                date: "October 2025" 
             },
-            {
-                id: 7,
-                type: "image",
-                image: "https://placehold.co/700x500/e6e6e6/666666?text=Scanned+Poem\n\n(August+29)",
-                date: "August 29, 2025"
+            { 
+                type: "text", 
+                title: "i've been swept out by ocean waves,", 
+                content: "not as much as i've been swept out by you, but i have.\n\nI'm paddling along these waters infinite, it's a mixture of something happy and sad. i have a destination, a will and a never ending path. i've been swept out by many things, not as much as i've been swept out by you, but i have. \n\nif had drowned half as much in the blue than the blues, i would be swept out by ocean waves more than ive been swept off by you.", 
+                tag: "@draftsofheart & @afilmblur",
+                date: "November 2025" 
             },
-            {
-                id: 8,
-                type: "image",
-                image: "https://placehold.co/600x900/e6e6e6/666666?text=Scanned+Poem\n\n(September+15)",
-                date: "September 15, 2025"
+            // SLOT 8: SCANNED IMAGE
+            { 
+                type: "image", 
+                image: "https://placehold.co/600x900/e8e8e8/888888?text=Placeholder+Image\n\n(Replace+Link+in+Code)", 
+                date: "December 2025" 
             },
-            {
-                id: 9,
-                type: "text",
-                title: "Autumn Leaves",
-                content: "A beautiful letting go.\nColors of fire before the frost.\n\nNature teaches us how to yield,\nHow to release with grace.",
-                date: "October 3, 2025"
+            { 
+                type: "text", 
+                title: "if the world was ending, you'd come over, right?", 
+                content: "<i>[you have reached the love of your life, leave a voice message]</i>\n\nhi baby. don't be scared of the news headlines. i promise that the last thing on brain won't be the flames. they will be the memories of us.\n\nit's a strange thing, this love. it asks so little of us and gives back so much. the only thing you've ever asked of me is a smile. so i want you to know that i'm smiling through this message to you, alright? \n\ni'm so glad i have you to call when things go south. to have the privilege to know you and kiss your stupid mouth. you're the mint to my chocolate. i'm going to give you a kiss in case the world doesn't end tonight.\n\ntheir war planes can't take me away from you. these hurricanes, these man made storms, they've got nothing on the both of us. ive stitched together very syllabe you've spoken to me it spells, \"p e a c e.\"\n\nit'll be alright. the earth can burn tonight, as long as you're in my sight.", 
+                tag: "@draftsofheart",
+                date: "January 2026" 
             },
-            {
-                id: 10,
-                type: "text",
-                title: "Untitled",
-                content: "Between the ticking of the clock,\nLives a space infinite and still.\n\nFind it.\nDwell within it.",
-                date: "October 27, 2025"
-            },
-            {
-                id: 11,
-                type: "text",
-                title: "Winter's Approach",
-                content: "The air turns sharp,\nA cold clarity settles in.\n\nThe world prepares to sleep,\nTo dream beneath the snow.",
-                date: "November 18, 2025"
-            },
-            {
-                id: 12,
-                type: "image",
-                image: "https://placehold.co/600x800/e6e6e6/666666?text=Scanned+Poem\n\n(December+9)",
-                date: "December 9, 2025"
-            },
-            {
-                id: 13,
-                type: "image",
-                image: "https://placehold.co/800x800/e6e6e6/666666?text=Scanned+Poem\n\n(January+21)",
-                date: "January 21, 2026"
-            },
-            {
-                id: 14,
-                type: "image",
-                image: "https://placehold.co/600x750/e6e6e6/666666?text=Scanned+Poem\n\n(February+8)",
-                date: "February 8, 2026"
+            // SLOT 10: SCANNED IMAGE
+            { 
+                type: "image", 
+                image: "https://placehold.co/600x800/e8e8e8/888888?text=Placeholder+Image\n\n(Replace+Link+in+Code)", 
+                date: "February 2026" 
             }
         ];
 
@@ -676,21 +562,16 @@
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         
-        // Check local storage for theme preference
-        const savedTheme = localStorage.getItem('aaradhyaTheme');
-        if (savedTheme === 'night') {
-            body.classList.remove('day-mode');
-            body.classList.add('night-mode');
+        if (localStorage.getItem('aaradhyaTheme') === 'night') {
+            body.classList.remove('day-mode'); body.classList.add('night-mode');
         }
 
         themeToggle.addEventListener('click', () => {
             if (body.classList.contains('night-mode')) {
-                body.classList.remove('night-mode');
-                body.classList.add('day-mode');
+                body.classList.replace('night-mode', 'day-mode');
                 localStorage.setItem('aaradhyaTheme', 'day');
             } else {
-                body.classList.remove('day-mode');
-                body.classList.add('night-mode');
+                body.classList.replace('day-mode', 'night-mode');
                 localStorage.setItem('aaradhyaTheme', 'night');
             }
         });
@@ -702,65 +583,43 @@
             poems.forEach((poem, index) => {
                 const article = document.createElement('article');
                 article.className = `poem-card`;
-                article.setAttribute('data-index', index);
                 article.setAttribute('tabindex', '0');
-                article.setAttribute('role', 'button');
-                article.setAttribute('aria-label', `View poem dated ${poem.date}`);
-
+                
                 let innerHTML = `<div class="card-inner">`;
-
                 if (poem.type === 'text') {
-                    innerHTML += `
-                        ${poem.title && poem.title !== "Untitled" ? `<h2 class="poem-title">${poem.title}</h2>` : ''}
-                        <div class="poem-content">${poem.content}</div>
-                    `;
-                } else if (poem.type === 'image') {
-                    innerHTML += `
-                        <div class="poem-image-container">
-                            <div class="spinner"></div>
-                            <img class="poem-image" src="${poem.image}" alt="Scanned poem dated ${poem.date}" loading="lazy" onload="this.classList.add('loaded'); this.previousElementSibling.style.display='none';">
-                        </div>
-                    `;
+                    innerHTML += `${poem.title ? `<h2 class="poem-title">${poem.title}</h2>` : ''}
+                                  <div class="poem-content">${poem.content}</div>
+                                  ${poem.tag ? `<p class="poem-tag">${poem.tag}</p>` : ''}`;
+                } else {
+                    innerHTML += `<div class="poem-image-container"><img class="poem-image" src="${poem.image}" alt="Scanned poem" loading="lazy" onload="this.classList.add('loaded');"></div>`;
                 }
-
                 innerHTML += `</div><time class="date">${poem.date}</time>`;
                 article.innerHTML = innerHTML;
 
-                article.addEventListener('click', () => openLightbox(index));
-                article.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') openLightbox(index);
-                });
+                if (isFinePointer) {
+                    article.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+                    article.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+                }
 
+                article.addEventListener('click', () => openLightbox(index));
                 galleryContainer.appendChild(article);
             });
         }
-
         renderGallery();
 
         // --- SCROLL ANIMATION ---
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.15
-        };
-
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const index = Array.from(galleryContainer.children).indexOf(entry.target);
-                    // Slight delay cascade for visual elegance
-                    const delay = index < 6 ? (index % 3) * 0.15 : 0; 
-                    
-                    entry.target.style.animationDelay = `${delay}s`;
+                    entry.target.style.animationDelay = `${(index % 3) * 0.15}s`;
                     entry.target.classList.add('visible');
                     observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.poem-card').forEach(card => {
-            observer.observe(card);
-        });
+        document.querySelectorAll('.poem-card').forEach(c => observer.observe(c));
 
         // --- LIGHTBOX LOGIC ---
         const lightbox = document.getElementById('lightbox');
@@ -768,7 +627,6 @@
         const btnClose = document.getElementById('lightboxClose');
         const btnPrev = document.getElementById('lightboxPrev');
         const btnNext = document.getElementById('lightboxNext');
-        
         let currentIndex = 0;
 
         function openLightbox(index) {
@@ -776,14 +634,11 @@
             updateLightboxContent();
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden'; 
-            btnClose.focus(); 
         }
 
         function closeLightbox() {
             lightbox.classList.remove('active');
             document.body.style.overflow = '';
-            const cards = document.querySelectorAll('.poem-card');
-            if(cards[currentIndex]) cards[currentIndex].focus();
         }
 
         function updateLightboxContent() {
@@ -791,65 +646,40 @@
             let contentHTML = '';
 
             if (poem.type === 'text') {
-                contentHTML = `
-                    <div class="lb-text-container">
-                        ${poem.title && poem.title !== "Untitled" ? `<h2 class="poem-title">${poem.title}</h2>` : ''}
-                        <div class="poem-content">${poem.content}</div>
-                    </div>
-                `;
-            } else if (poem.type === 'image') {
-                contentHTML = `
-                    <img class="lb-image" src="${poem.image}" alt="Scanned poem dated ${poem.date}">
-                `;
+                contentHTML = `<div class="lb-text-container">
+                    ${poem.title ? `<h2 class="poem-title">${poem.title}</h2>` : ''}
+                    <div class="poem-content">${poem.content}</div>
+                    ${poem.tag ? `<p class="poem-tag">${poem.tag}</p>` : ''}
+                </div>`;
+            } else {
+                contentHTML = `<img class="lb-image" src="${poem.image}">`;
             }
-
+            
             contentHTML += `<time class="date">${poem.date}</time>`;
             
-            // Fade effect for smooth transitions
             lightboxContent.style.opacity = '0';
             setTimeout(() => {
                 lightboxContent.innerHTML = contentHTML;
                 lightboxContent.style.opacity = '1';
-            }, 150);
+            }, 200);
 
-            // Update Nav Arrows
             btnPrev.style.opacity = currentIndex === 0 ? '0' : '0.5';
             btnPrev.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
-            
             btnNext.style.opacity = currentIndex === poems.length - 1 ? '0' : '0.5';
             btnNext.style.pointerEvents = currentIndex === poems.length - 1 ? 'none' : 'auto';
         }
 
-        function nextPoem() {
-            if (currentIndex < poems.length - 1) {
-                currentIndex++;
-                updateLightboxContent();
-            }
-        }
-
-        function prevPoem() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateLightboxContent();
-            }
-        }
-
-        // Listeners
         btnClose.addEventListener('click', closeLightbox);
-        btnNext.addEventListener('click', (e) => { e.stopPropagation(); nextPoem(); });
-        btnPrev.addEventListener('click', (e) => { e.stopPropagation(); prevPoem(); });
-        
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox || e.target === lightboxContent) closeLightbox();
-        });
+        btnNext.addEventListener('click', (e) => { e.stopPropagation(); if(currentIndex < poems.length - 1) { currentIndex++; updateLightboxContent(); }});
+        btnPrev.addEventListener('click', (e) => { e.stopPropagation(); if(currentIndex > 0) { currentIndex--; updateLightboxContent(); }});
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox || e.target === lightboxContent) closeLightbox(); });
 
         document.addEventListener('keydown', (e) => {
             if (!lightbox.classList.contains('active')) return;
             if (e.key === 'Escape') closeLightbox();
-            else if (e.key === 'ArrowRight') nextPoem();
-            else if (e.key === 'ArrowLeft') prevPoem();
+            else if (e.key === 'ArrowRight' && currentIndex < poems.length - 1) { currentIndex++; updateLightboxContent(); }
+            else if (e.key === 'ArrowLeft' && currentIndex > 0) { currentIndex--; updateLightboxContent(); }
         });
-
     </script>
 </body>
 </html>
