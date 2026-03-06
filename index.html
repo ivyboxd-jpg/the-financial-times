@@ -23,6 +23,9 @@
             --shadow-base: 0 10px 30px rgba(0,0,0,0.02);
             --shadow-hover: 0 30px 60px rgba(0,0,0,0.08);
             
+            --dock-bg: rgba(253, 252, 248, 0.75);
+            --dock-border: rgba(0, 0, 0, 0.06);
+            
             --overlay: rgba(253, 252, 248, 0.98);
             --lightbox-text: #111111;
             --noise-opacity: 0.04;
@@ -41,6 +44,9 @@
             --divider: #2A2A2C;
             --shadow-base: 0 10px 30px rgba(0,0,0,0.4);
             --shadow-hover: 0 30px 60px rgba(0,0,0,0.8);
+            
+            --dock-bg: rgba(10, 10, 11, 0.75);
+            --dock-border: rgba(255, 255, 255, 0.08);
             
             --overlay: rgba(10, 10, 11, 0.98);
             --lightbox-text: #F4F4F4;
@@ -86,7 +92,7 @@
         /* Custom Fluid Cursor */
         @media (pointer: fine) {
             body { cursor: none; }
-            a, button, .poem-card, .doh-logo { cursor: none !important; }
+            a, button, .poem-card, .secret-content { cursor: none !important; }
         }
         
         .custom-cursor {
@@ -103,76 +109,85 @@
             width: 50px; height: 50px;
             background-color: rgba(255,255,255,0.8);
         }
+        .custom-cursor.revealing {
+            width: 80px; height: 80px;
+            background-color: transparent;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
 
         /* Typography */
-        h1, h2, .poem-content, .intro, .colophon, .doh-mark {
+        h1, h2, .poem-content, .intro, .colophon, .doh-mark, .secret-content {
             font-family: 'Cormorant Garamond', Georgia, serif;
         }
 
-        /* NEW: High-End "DOH" Logo */
+        /* Unified Navigation Dock (Glass Pill) */
+        .glass-dock {
+            position: fixed; top: 40px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 100; display: flex; align-items: center; justify-content: space-between;
+            background: var(--dock-bg);
+            border: 1px solid var(--dock-border);
+            border-radius: 100px;
+            padding: 8px 12px 8px 24px;
+            gap: 40px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            animation: fadeInDown 1s ease forwards; opacity: 0; animation-delay: 1.2s;
+            transition: opacity var(--transition), background-color var(--transition), border-color var(--transition);
+        }
+
         .doh-logo {
-            position: fixed; top: 40px; left: 40px;
-            z-index: 100; display: flex; align-items: center;
-            gap: 16px; text-decoration: none; color: var(--text-primary);
-            animation: fadeIn 1s ease forwards; opacity: 0; animation-delay: 1.2s;
+            display: flex; align-items: center; gap: 12px;
+            text-decoration: none; color: var(--text-primary);
         }
         .doh-mark {
-            font-size: 28px; font-weight: 400; letter-spacing: 4px;
-            transition: transform var(--fast-transition);
+            font-size: 20px; font-weight: 500; letter-spacing: 3px;
         }
         .doh-full {
             font-family: 'Inter', sans-serif; font-size: 10px;
-            font-weight: 500; letter-spacing: 6px; text-transform: uppercase;
+            font-weight: 500; letter-spacing: 4px; text-transform: uppercase;
             color: var(--text-secondary); opacity: 0;
             max-width: 0; overflow: hidden; white-space: nowrap;
-            transform: translateX(-10px);
             transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .doh-logo:hover .doh-mark { transform: translateX(4px); }
-        .doh-logo:hover .doh-full { opacity: 1; max-width: 200px; transform: translateX(0); }
+        .glass-dock:hover .doh-full { opacity: 1; max-width: 150px; }
 
-        /* UI Controls (Top Right) */
-        .controls-container {
-            position: fixed; top: 40px; right: 40px;
-            z-index: 100; display: flex; gap: 12px;
-            animation: fadeIn 1s ease forwards; opacity: 0; animation-delay: 1.2s;
-        }
+        .dock-actions { display: flex; gap: 8px; }
 
         .ui-btn {
-            background: transparent; border: 1px solid var(--border);
-            border-radius: 50%; width: 48px; height: 48px;
+            background: transparent; border: none;
+            border-radius: 50%; width: 40px; height: 40px;
             display: flex; align-items: center; justify-content: center;
-            color: var(--text-primary); backdrop-filter: blur(8px);
-            transition: transform var(--fast-transition), border-color var(--fast-transition);
+            color: var(--text-secondary);
+            transition: color var(--fast-transition), transform var(--fast-transition), background-color var(--fast-transition);
         }
-        .ui-btn:hover { transform: scale(1.05); border-color: var(--text-secondary); }
+        .ui-btn:hover { color: var(--text-primary); background-color: var(--dock-border); transform: scale(1.05); }
         .ui-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
         
-        /* Theme Logic */
+        /* Theme & Focus Logic */
         body.day-mode .sun-icon { display: none; }
         body.day-mode .moon-icon { display: block; }
         body.night-mode .sun-icon { display: block; }
         body.night-mode .moon-icon { display: none; }
 
-        /* Pure Focus Mode Logic */
         body.focus-mode .eye-open { display: none; }
         body.focus-mode .eye-closed { display: block; }
         body:not(.focus-mode) .eye-open { display: block; }
         body:not(.focus-mode) .eye-closed { display: none; }
-        body.focus-mode .doh-logo, 
-        body.focus-mode header, 
-        body.focus-mode footer { opacity: 0; pointer-events: none; }
-        body.focus-mode #dustCanvas { opacity: 0.15; } /* Dim the dust motes slightly */
         
-        body.focus-mode .poem-card {
-            background-color: transparent !important; border-color: transparent !important; box-shadow: none !important;
-        }
+        /* Hide dock entirely on focus mode except for hover */
+        body.focus-mode .glass-dock { opacity: 0.1; }
+        body.focus-mode .glass-dock:hover { opacity: 1; }
+        body.focus-mode header, body.focus-mode footer, body.focus-mode .secret-section { opacity: 0; pointer-events: none; }
+        body.focus-mode #dustCanvas { opacity: 0.15; }
+        body.focus-mode .poem-card { background-color: transparent !important; border-color: transparent !important; box-shadow: none !important; }
         body.focus-mode .poem-title, body.focus-mode .poem-tag, body.focus-mode .date { opacity: 0; }
         body.focus-mode .poem-content { transform: scale(1.05); transition: transform var(--transition); }
 
         /* Header / Hero Section */
         header {
-            text-align: center; padding: 180px 20px 140px;
+            text-align: center; padding: 180px 20px 100px;
             position: relative; max-width: 800px; margin: 0 auto;
             transition: opacity var(--transition); z-index: 10;
         }
@@ -185,8 +200,8 @@
         }
 
         h1 {
-            font-size: clamp(28px, 4vw, 48px); font-weight: 400;
-            letter-spacing: 10px; text-transform: uppercase;
+            font-size: clamp(28px, 4vw, 44px); font-weight: 400;
+            letter-spacing: 12px; text-transform: uppercase;
             margin-bottom: 24px; animation: fadeUp 1s ease forwards;
             opacity: 0; animation-delay: 0.4s;
         }
@@ -198,35 +213,26 @@
         }
 
         .intro {
-            font-size: 24px; font-style: italic; color: var(--text-secondary);
+            font-size: 22px; font-style: italic; color: var(--text-secondary);
             font-weight: 300; line-height: 1.6;
             animation: fadeIn 1.5s ease forwards; opacity: 0; animation-delay: 0.9s;
         }
 
-        /* Bespoke Asymmetrical Grid Layout */
+        /* 2-Column High-End Layout for White Space */
         .gallery {
-            display: grid; grid-template-columns: repeat(12, 1fr); 
-            gap: 40px; max-width: 1400px; margin: 0 auto;
-            padding: 0 60px 160px; transition: opacity var(--transition);
+            display: grid; grid-template-columns: repeat(2, 1fr); 
+            gap: 120px 80px; max-width: 1000px; margin: 0 auto;
+            padding: 0 40px 160px; transition: opacity var(--transition);
             z-index: 10; position: relative;
         }
 
-        /* Exactly 10 Items Staggered */
-        .poem-card:nth-child(1) { grid-column: 2 / 7; margin-top: 0; }
-        .poem-card:nth-child(2) { grid-column: 8 / 13; margin-top: 140px; }
-        .poem-card:nth-child(3) { grid-column: 3 / 8; margin-top: 60px; } 
-        .poem-card:nth-child(4) { grid-column: 8 / 12; margin-top: -80px; }
-        .poem-card:nth-child(5) { grid-column: 2 / 6; margin-top: 100px; }
-        .poem-card:nth-child(6) { grid-column: 7 / 11; margin-top: 40px; } 
-        .poem-card:nth-child(7) { grid-column: 1 / 6; margin-top: 60px; }
-        .poem-card:nth-child(8) { grid-column: 8 / 13; margin-top: -60px; } 
-        .poem-card:nth-child(9) { grid-column: 3 / 8; margin-top: 120px; }
-        .poem-card:nth-child(10) { grid-column: 7 / 12; margin-top: 40px; } 
+        /* Stagger the right column downward */
+        .poem-card:nth-child(even) { margin-top: 140px; margin-bottom: -140px; }
 
-        /* Card Architecture */
+        /* Card Architecture - Smaller, more delicate */
         .poem-card {
             background-color: var(--card); border: 1px solid var(--border);
-            padding: 64px 48px; display: flex; flex-direction: column;
+            padding: 56px 40px; display: flex; flex-direction: column;
             opacity: 0; transform: translateY(40px); position: relative;
             box-shadow: var(--shadow-base);
             transform-style: preserve-3d;
@@ -244,20 +250,20 @@
         }
 
         .poem-title {
-            font-size: 22px; font-weight: 500; font-style: italic;
+            font-size: 20px; font-weight: 500; font-style: italic;
             color: var(--text-primary); margin-bottom: 32px; text-align: center;
             text-transform: lowercase; letter-spacing: 1px;
             transition: opacity var(--transition);
         }
 
         .poem-content {
-            font-size: 17px; line-height: 2.1; color: var(--text-poem);
+            font-size: 16px; line-height: 2.2; color: var(--text-poem);
             text-align: center; white-space: pre-line;
-            max-width: 450px; margin: 0 auto;
+            max-width: 380px; margin: 0 auto; /* Keeps text narrow and poetic */
         }
 
         .poem-tag {
-            font-family: 'Inter', sans-serif; font-size: 11px;
+            font-family: 'Inter', sans-serif; font-size: 10px;
             color: var(--text-secondary); margin-top: 32px;
             opacity: 0.5; text-align: center; transition: opacity var(--transition);
         }
@@ -266,27 +272,52 @@
             width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 20px;
         }
         .poem-image {
-            width: 100%; height: auto; max-height: 500px;
+            width: 100%; height: auto; max-height: 450px;
             object-fit: contain; opacity: 0; transition: opacity 1s ease;
             filter: contrast(1.05) grayscale(10%);
         }
         .poem-image.loaded { opacity: 1; }
 
         .date {
-            font-size: 11px; font-weight: 400; color: var(--text-secondary);
+            font-size: 10px; font-weight: 400; color: var(--text-secondary);
             margin-top: 48px; text-align: center; letter-spacing: 2px;
             text-transform: uppercase; width: 100%; transition: opacity var(--transition);
         }
 
+        /* NEW NICHE SECTION: The Hidden Unsent Draft */
+        .secret-section {
+            max-width: 600px; margin: 100px auto 140px; padding: 0 40px;
+            text-align: center; position: relative; z-index: 10;
+            transition: opacity var(--transition);
+        }
+        .secret-divider {
+            width: 40px; height: 1px; background-color: var(--divider);
+            margin: 0 auto 40px; transition: background-color var(--transition);
+        }
+        .secret-label {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 3px;
+            color: var(--text-secondary); margin-bottom: 32px; opacity: 0.6;
+        }
+        .secret-content {
+            font-size: 22px; font-style: italic; color: var(--text-primary);
+            line-height: 1.8; filter: blur(10px); opacity: 0.2;
+            transition: filter 1s ease, opacity 1s ease;
+            cursor: crosshair; user-select: none;
+        }
+        /* Reveal on hover */
+        .secret-content:hover, .secret-content:active {
+            filter: blur(0px); opacity: 1;
+        }
+
         /* Editorial Footer */
         footer {
-            padding: 0 20px 100px; text-align: center;
+            padding: 0 20px 80px; text-align: center;
             display: flex; flex-direction: column; align-items: center;
             transition: opacity var(--transition); z-index: 10; position: relative;
         }
         .footer-divider { width: 1px; height: 60px; background-color: var(--divider); margin-bottom: 50px; }
         .colophon {
-            max-width: 400px; font-size: 15px; font-style: italic; color: var(--text-secondary);
+            max-width: 400px; font-size: 14px; font-style: italic; color: var(--text-secondary);
             line-height: 1.8; margin-bottom: 40px;
         }
         .copyright { font-size: 10px; color: var(--text-secondary); letter-spacing: 2px; text-transform: uppercase; }
@@ -332,44 +363,43 @@
         .lightbox.active .lightbox-content-wrapper { transform: scale(1); }
 
         .lightbox .lb-text-container {
-            max-width: 700px; max-height: 75vh; overflow-y: auto;
+            max-width: 600px; max-height: 75vh; overflow-y: auto;
             padding: 40px; text-align: center; scrollbar-width: none;
         }
         .lightbox .lb-text-container::-webkit-scrollbar { display: none; }
 
-        .lightbox .poem-title { font-size: 32px; margin-bottom: 40px; color: var(--lightbox-text); text-transform: lowercase; }
-        .lightbox .poem-content { font-size: 24px; line-height: 2.2; color: var(--lightbox-text); }
-        .lightbox .poem-tag { color: var(--lightbox-text); font-size: 14px; opacity: 0.5; margin-top: 30px; }
+        .lightbox .poem-title { font-size: 28px; margin-bottom: 40px; color: var(--lightbox-text); text-transform: lowercase; }
+        .lightbox .poem-content { font-size: 20px; line-height: 2.2; color: var(--lightbox-text); }
+        .lightbox .poem-tag { color: var(--lightbox-text); font-size: 12px; opacity: 0.5; margin-top: 30px; }
         .lightbox .lb-image { max-width: 100vw; max-height: 80vh; object-fit: contain; box-shadow: var(--shadow-hover); }
-        .lightbox .date { color: var(--lightbox-text); font-size: 12px; opacity: 0.3; margin-top: 50px; flex-shrink: 0; }
+        .lightbox .date { color: var(--lightbox-text); font-size: 11px; opacity: 0.3; margin-top: 50px; flex-shrink: 0; }
 
         /* Animations */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translate(-50%, -20px); } to { opacity: 1; transform: translate(-50%, 0); } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeUpCard { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes growDown { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
         /* Responsive Breakpoints */
-        @media (max-width: 1100px) {
-            .gallery { grid-template-columns: repeat(2, 1fr); gap: 40px; padding: 0 40px 100px; }
-            .poem-card:nth-child(n) { grid-column: span 1; margin-top: 0; }
-            .poem-card:nth-child(2n) { margin-top: 80px; } 
+        @media (max-width: 900px) {
+            .gallery { gap: 80px 40px; padding: 0 40px 100px; }
+            .poem-card:nth-child(even) { margin-top: 80px; margin-bottom: -80px; }
         }
         @media (max-width: 767px) {
             .gallery { grid-template-columns: 1fr; padding: 0 20px 80px; gap: 40px; }
-            .poem-card:nth-child(n) { grid-column: span 1; margin-top: 0; }
+            .poem-card:nth-child(even) { margin-top: 0; margin-bottom: 0; } /* Remove stagger on mobile */
             .poem-card { padding: 40px 24px; }
-            .doh-logo { top: 20px; left: 20px; }
-            .doh-mark { font-size: 24px; }
-            .doh-full { display: none; } /* Hide full name on small mobile */
-            .controls-container { top: 20px; right: 20px; }
-            .ui-btn { width: 40px; height: 40px; }
+            .glass-dock { width: calc(100% - 40px); top: 20px; padding: 8px 8px 8px 20px; gap: 20px; }
+            .doh-mark { font-size: 18px; }
+            .doh-full { display: none; } /* Hide full name on mobile to save space */
             .lightbox-nav { padding: 0 10px; }
             .lightbox-close { top: 20px; right: 20px; }
             .lightbox .poem-title { font-size: 24px; }
             .lightbox .poem-content { font-size: 18px; line-height: 2; }
-            header { padding: 120px 20px 80px; }
+            header { padding: 140px 20px 80px; }
             h1 { letter-spacing: 6px; }
+            .secret-content { font-size: 18px; filter: blur(6px); } /* Easier to reveal on mobile */
         }
     </style>
 </head>
@@ -378,7 +408,7 @@
     <!-- Progress Bar -->
     <div class="progress-bar" id="progressBar"></div>
 
-    <!-- Niche Feature: Ambient Cinematic Dust Motes -->
+    <!-- Cinematic Dust Motes -->
     <canvas id="dustCanvas"></canvas>
 
     <!-- Film Grain Overlay -->
@@ -387,43 +417,41 @@
     <!-- Custom Cursor -->
     <div class="custom-cursor" id="customCursor"></div>
 
-    <!-- DOH Logo -->
-    <a href="#" class="doh-logo" aria-label="Back to top">
-        <span class="doh-mark">DOH</span>
-        <span class="doh-full">Drafts of Heart</span>
-    </a>
-
-    <!-- Top Controls -->
-    <div class="controls-container">
-        
-        <!-- Focus/Cinematic Mode Toggle -->
-        <button class="ui-btn focus-btn" id="focusBtn" aria-label="Toggle Focus Mode">
-            <svg class="eye-open" viewBox="0 0 24 24">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-            </svg>
-            <svg class="eye-closed" viewBox="0 0 24 24">
-                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                <line x1="1" y1="1" x2="23" y2="23"></line>
-            </svg>
-        </button>
-
-        <!-- Theme Toggle -->
-        <button class="ui-btn theme-toggle" id="themeToggle" aria-label="Toggle Theme">
-            <svg class="moon-icon" viewBox="0 0 24 24">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-            <svg class="sun-icon" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="12" x2="23" y2="12"></line>
-            </svg>
-        </button>
-    </div>
+    <!-- Unified Glass Dock Navbar -->
+    <nav class="glass-dock" id="glassDock">
+        <a href="#" class="doh-logo" aria-label="Back to top">
+            <span class="doh-mark">DOH</span>
+            <span class="doh-full">Drafts of Heart</span>
+        </a>
+        <div class="dock-actions">
+            <!-- Focus Mode Toggle -->
+            <button class="ui-btn focus-btn" id="focusBtn" aria-label="Toggle Focus Mode">
+                <svg class="eye-open" viewBox="0 0 24 24">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <svg class="eye-closed" viewBox="0 0 24 24">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+            </button>
+            <!-- Theme Toggle -->
+            <button class="ui-btn theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+                <svg class="moon-icon" viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <svg class="sun-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
 
     <header>
         <div class="header-divider"></div>
@@ -435,6 +463,17 @@
     <main class="gallery" id="gallery" role="region" aria-label="Poetry Gallery">
         <!-- Cards injected via JavaScript -->
     </main>
+
+    <!-- NEW NICHE SECTION: Hidden Draft -->
+    <section class="secret-section">
+        <div class="secret-divider"></div>
+        <p class="secret-label">An Unsent Draft</p>
+        <p class="secret-content">
+            "and if you look closely enough,<br>
+            you will realize that all these drafts<br>
+            were just unsent letters to you."
+        </p>
+    </section>
 
     <footer>
         <div class="footer-divider"></div>
@@ -477,11 +516,17 @@
 
             const addHover = () => cursor.classList.add('hovering');
             const removeHover = () => cursor.classList.remove('hovering');
+            const addReveal = () => cursor.classList.add('revealing');
+            const removeReveal = () => cursor.classList.remove('revealing');
             
             document.querySelectorAll('button, a').forEach(el => {
                 el.addEventListener('mouseenter', addHover);
                 el.addEventListener('mouseleave', removeHover);
             });
+
+            // Special cursor state for the secret section
+            document.querySelector('.secret-content').addEventListener('mouseenter', addReveal);
+            document.querySelector('.secret-content').addEventListener('mouseleave', removeReveal);
         }
 
         // --- AMBIENT DUST MOTES (Canvas Particles) ---
@@ -523,7 +568,6 @@
             }
         }
 
-        // Create 40 particles
         for (let i = 0; i < 40; i++) particles.push(new Particle());
 
         function animateParticles() {
@@ -741,7 +785,7 @@
             btnPrev.style.opacity = currentIndex === 0 ? '0' : '0.5';
             btnPrev.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
             btnNext.style.opacity = currentIndex === poems.length - 1 ? '0' : '0.5';
-            btnNext.style.pointer,Events = currentIndex === poems.length - 1 ? 'none' : 'auto';
+            btnNext.style.pointerEvents = currentIndex === poems.length - 1 ? 'none' : 'auto';
         }
 
         btnClose.addEventListener('click', closeLightbox);
