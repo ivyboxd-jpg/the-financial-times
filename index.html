@@ -3,801 +3,659 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aaradhya's Gallery</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    
+    <title>The Day Before | The New York Times</title>
     <style>
-        /* CSS Variables & Editorial Theming */
+        /* CSS Variables */
+        @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
+        
         :root {
-            --bg: #FDFCF8;
-            --card: #FFFFFF;
-            --text-primary: #111111;
-            --text-poem: #2A2A2A;
-            --text-secondary: #777777;
-            --border: #E8E8E3;
-            --divider: #DCDCDC;
-            --shadow-base: 0 10px 30px rgba(0,0,0,0.02);
-            --shadow-hover: 0 30px 60px rgba(0,0,0,0.08);
+            --nyt-black: #121212;
+            --nyt-red: #D0021B;
+            --nyt-blue: #326891;
+            --nyt-gray: #555555;
+            --nyt-light-gray: #e2e2e2;
+            --bg-color: #ffffff;
             
-            --dock-bg: rgba(253, 252, 248, 0.75);
-            --dock-border: rgba(0, 0, 0, 0.06);
+            /* Wordle Colors */
+            --wordle-empty-border: #d3d6da;
+            --wordle-green: #6aaa64;
             
-            --overlay: rgba(253, 252, 248, 0.98);
-            --lightbox-text: #111111;
-            --noise-opacity: 0.04;
-            
-            --transition: 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-            --fast-transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            /* Connections Colors */
+            --conn-bg: #f4f4f4;
+            --conn-selected: #5a594e;
+            --conn-yellow: #f9df6d;
+            --conn-green: #a0c35a;
+            --conn-blue: #b0c4ef;
+            --conn-purple: #ba81c5;
+
+            --font-serif: "Cheltenham", Georgia, serif;
+            --font-sans: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+            --font-gothic: 'UnifrakturMaguntia', "Old English Text MT", blackletter, serif;
         }
 
-        body.night-mode {
-            --bg: #0A0A0B;
-            --card: #121213;
-            --text-primary: #F4F4F4;
-            --text-poem: #E0E0E0;
-            --text-secondary: #888888;
-            --border: #1F1F21;
-            --divider: #2A2A2C;
-            --shadow-base: 0 10px 30px rgba(0,0,0,0.4);
-            --shadow-hover: 0 30px 60px rgba(0,0,0,0.8);
-            
-            --dock-bg: rgba(10, 10, 11, 0.75);
-            --dock-border: rgba(255, 255, 255, 0.08);
-            
-            --overlay: rgba(10, 10, 11, 0.98);
-            --lightbox-text: #F4F4F4;
-            --noise-opacity: 0.025;
-        }
-
-        /* Global Resets & Base */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            transition: background-color var(--transition), color var(--transition);
-            overflow-x: hidden;
+        /* Global Reset & Base Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            font-family: var(--font-serif);
+            color: var(--nyt-black);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Reading Progress Line */
-        .progress-bar {
-            position: fixed; top: 0; left: 0;
-            height: 2px; background-color: var(--text-primary);
-            width: 0%; z-index: 10000; opacity: 0.3;
-            transition: background-color var(--transition);
-        }
-
-        /* Cinematic Background Elements: Dust Canvas & Film Grain */
-        #dustCanvas {
-            position: fixed; top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 1;
-            transition: opacity var(--transition);
-        }
-
-        .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 2; opacity: var(--noise-opacity);
-            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
-            transition: opacity var(--transition);
-        }
-
-        /* Custom Fluid Cursor */
-        @media (pointer: fine) {
-            body { cursor: none; }
-            a, button, .poem-card, .secret-content { cursor: none !important; }
+        /* NYT Header */
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px 20px;
+            font-family: var(--font-sans);
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--nyt-black);
+            border-bottom: 1px solid var(--nyt-light-gray);
+            flex-wrap: wrap;
         }
         
-        .custom-cursor {
-            position: fixed; top: 0; left: 0;
-            width: 12px; height: 12px;
-            background-color: #FFF; border-radius: 50%;
-            pointer-events: none; z-index: 10001;
-            mix-blend-mode: difference;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
-            display: none;
-        }
-        .custom-cursor.hovering {
-            width: 50px; height: 50px;
-            background-color: rgba(255,255,255,0.8);
-        }
-        .custom-cursor.revealing {
-            width: 80px; height: 80px;
-            background-color: transparent;
-            border: 1px solid rgba(255,255,255,0.5);
+        .top-nav a { text-decoration: none; color: var(--nyt-black); cursor: pointer; }
+        .top-nav a:hover { text-decoration: underline; }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Typography */
-        h1, h2, .poem-content, .intro, .colophon, .doh-mark, .secret-content {
-            font-family: 'Cormorant Garamond', Georgia, serif;
+        /* Reduced font size for the masthead */
+        .masthead {
+            font-family: var(--font-gothic);
+            font-size: 42px; 
+            font-weight: normal;
+            text-align: center;
+            color: #000000;
+            margin: 0;
+            line-height: 1;
+            white-space: nowrap;
         }
 
-        /* Unified Navigation Dock (Glass Pill) */
-        .glass-dock {
-            position: fixed; top: 40px; left: 50%;
-            transform: translateX(-50%);
-            z-index: 100; display: flex; align-items: center; justify-content: space-between;
-            background: var(--dock-bg);
-            border: 1px solid var(--dock-border);
-            border-radius: 100px;
-            padding: 8px 12px 8px 24px;
-            gap: 40px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            animation: fadeInDown 1s ease forwards; opacity: 0; animation-delay: 1.2s;
-            transition: opacity var(--transition), background-color var(--transition), border-color var(--transition);
+        .date-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--nyt-black);
+            border-bottom: 2px solid var(--nyt-black);
+            padding: 5px 0;
+            margin-top: 15px;
+            font-family: var(--font-sans);
+            font-size: 12px;
+            color: var(--nyt-black);
         }
 
-        .doh-logo {
-            display: flex; align-items: center; gap: 12px;
-            text-decoration: none; color: var(--text-primary);
-        }
-        .doh-mark {
-            font-size: 20px; font-weight: 500; letter-spacing: 3px;
-        }
-        .doh-full {
-            font-family: 'Inter', sans-serif; font-size: 10px;
-            font-weight: 500; letter-spacing: 4px; text-transform: uppercase;
-            color: var(--text-secondary); opacity: 0;
-            max-width: 0; overflow: hidden; white-space: nowrap;
-            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .glass-dock:hover .doh-full { opacity: 1; max-width: 150px; }
+        .date-bar-left, .date-bar-right { flex: 1; }
+        .date-bar-right { text-align: right; }
+        .date-bar-center { font-weight: bold; text-transform: uppercase; text-align: center; }
 
-        .dock-actions { display: flex; gap: 8px; }
-
-        .ui-btn {
-            background: transparent; border: none;
-            border-radius: 50%; width: 40px; height: 40px;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--text-secondary);
-            transition: color var(--fast-transition), transform var(--fast-transition), background-color var(--fast-transition);
-        }
-        .ui-btn:hover { color: var(--text-primary); background-color: var(--dock-border); transform: scale(1.05); }
-        .ui-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-        
-        /* Theme & Focus Logic */
-        body.day-mode .sun-icon { display: none; }
-        body.day-mode .moon-icon { display: block; }
-        body.night-mode .sun-icon { display: block; }
-        body.night-mode .moon-icon { display: none; }
-
-        body.focus-mode .eye-open { display: none; }
-        body.focus-mode .eye-closed { display: block; }
-        body:not(.focus-mode) .eye-open { display: block; }
-        body:not(.focus-mode) .eye-closed { display: none; }
-        
-        /* Hide dock entirely on focus mode except for hover */
-        body.focus-mode .glass-dock { opacity: 0.1; }
-        body.focus-mode .glass-dock:hover { opacity: 1; }
-        body.focus-mode header, body.focus-mode footer, body.focus-mode .secret-section { opacity: 0; pointer-events: none; }
-        body.focus-mode #dustCanvas { opacity: 0.15; }
-        body.focus-mode .poem-card { background-color: transparent !important; border-color: transparent !important; box-shadow: none !important; }
-        body.focus-mode .poem-title, body.focus-mode .poem-tag, body.focus-mode .date { opacity: 0; }
-        body.focus-mode .poem-content { transform: scale(1.05); transition: transform var(--transition); }
-
-        /* Header / Hero Section */
-        header {
-            text-align: center; padding: 180px 20px 100px;
-            position: relative; max-width: 800px; margin: 0 auto;
-            transition: opacity var(--transition); z-index: 10;
+        /* Article Layout */
+        .article-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            box-sizing: border-box;
         }
 
-        .header-divider {
-            width: 1px; height: 80px; background-color: var(--divider);
-            margin: 0 auto 40px;
-            animation: growDown 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            transform-origin: top;
+        .section-label {
+            color: var(--nyt-red);
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            font-family: var(--font-sans);
         }
 
-        h1 {
-            font-size: clamp(28px, 4vw, 44px); font-weight: 400;
-            letter-spacing: 12px; text-transform: uppercase;
-            margin-bottom: 24px; animation: fadeUp 1s ease forwards;
-            opacity: 0; animation-delay: 0.4s;
+        .headline {
+            font-size: 44px;
+            font-weight: bold;
+            font-style: italic;
+            line-height: 1.15;
+            margin: 0 0 16px 0;
+            color: var(--nyt-black);
+            letter-spacing: -0.5px;
         }
 
-        .subtitle {
-            font-size: 11px; font-weight: 500; color: var(--text-secondary);
-            letter-spacing: 4px; text-transform: uppercase; margin-bottom: 50px;
-            animation: fadeUp 1s ease forwards; opacity: 0; animation-delay: 0.6s;
+        .subheadline {
+            font-size: 20px;
+            font-weight: normal;
+            color: var(--nyt-gray);
+            line-height: 1.4;
+            margin: 0 0 25px 0;
         }
 
-        .intro {
-            font-size: 22px; font-style: italic; color: var(--text-secondary);
-            font-weight: 300; line-height: 1.6;
-            animation: fadeIn 1.5s ease forwards; opacity: 0; animation-delay: 0.9s;
+        .article-meta {
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--nyt-light-gray);
+            margin-bottom: 30px;
         }
 
-        /* 2-Column High-End Layout for White Space */
-        .gallery {
-            display: grid; grid-template-columns: repeat(2, 1fr); 
-            gap: 120px 80px; max-width: 1000px; margin: 0 auto;
-            padding: 0 40px 160px; transition: opacity var(--transition);
-            z-index: 10; position: relative;
+        .byline {
+            font-size: 15px;
+            color: var(--nyt-black);
+            font-weight: bold;
+            margin: 0 0 3px 0;
+            font-family: var(--font-sans);
         }
-
-        /* Stagger the right column downward */
-        .poem-card:nth-child(even) { margin-top: 140px; margin-bottom: -140px; }
-
-        /* Card Architecture - Smaller, more delicate */
-        .poem-card {
-            background-color: var(--card); border: 1px solid var(--border);
-            padding: 56px 40px; display: flex; flex-direction: column;
-            opacity: 0; transform: translateY(40px); position: relative;
-            box-shadow: var(--shadow-base);
-            transform-style: preserve-3d;
-            will-change: transform, box-shadow;
-            transition: opacity var(--transition), background-color var(--transition), border-color var(--transition), box-shadow 0.2s ease, transform 0.2s ease;
-        }
-        
-        .poem-card.visible { animation: fadeUpCard 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-        .poem-card:hover { box-shadow: var(--shadow-hover); border-color: var(--text-secondary); z-index: 20; }
-
-        .card-inner {
-            flex-grow: 1; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            transform: translateZ(30px);
-        }
-
-        .poem-title {
-            font-size: 20px; font-weight: 500; font-style: italic;
-            color: var(--text-primary); margin-bottom: 32px; text-align: center;
-            text-transform: lowercase; letter-spacing: 1px;
-            transition: opacity var(--transition);
-        }
-
-        .poem-content {
-            font-size: 16px; line-height: 2.2; color: var(--text-poem);
-            text-align: center; white-space: pre-line;
-            max-width: 380px; margin: 0 auto; /* Keeps text narrow and poetic */
-        }
-
-        .poem-tag {
-            font-family: 'Inter', sans-serif; font-size: 10px;
-            color: var(--text-secondary); margin-top: 32px;
-            opacity: 0.5; text-align: center; transition: opacity var(--transition);
-        }
-
-        .poem-image-container {
-            width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 20px;
-        }
-        .poem-image {
-            width: 100%; height: auto; max-height: 450px;
-            object-fit: contain; opacity: 0; transition: opacity 1s ease;
-            filter: contrast(1.05) grayscale(10%);
-        }
-        .poem-image.loaded { opacity: 1; }
 
         .date {
-            font-size: 10px; font-weight: 400; color: var(--text-secondary);
-            margin-top: 48px; text-align: center; letter-spacing: 2px;
-            text-transform: uppercase; width: 100%; transition: opacity var(--transition);
+            font-size: 13px;
+            color: var(--nyt-gray);
+            margin: 0;
+            font-family: var(--font-sans);
         }
 
-        /* NEW NICHE SECTION: The Hidden Unsent Draft */
-        .secret-section {
-            max-width: 600px; margin: 100px auto 140px; padding: 0 40px;
-            text-align: center; position: relative; z-index: 10;
-            transition: opacity var(--transition);
-        }
-        .secret-divider {
-            width: 40px; height: 1px; background-color: var(--divider);
-            margin: 0 auto 40px; transition: background-color var(--transition);
-        }
-        .secret-label {
-            font-size: 10px; text-transform: uppercase; letter-spacing: 3px;
-            color: var(--text-secondary); margin-bottom: 32px; opacity: 0.6;
-        }
-        .secret-content {
-            font-size: 22px; font-style: italic; color: var(--text-primary);
-            line-height: 1.8; filter: blur(10px); opacity: 0.2;
-            transition: filter 1s ease, opacity 1s ease;
-            cursor: crosshair; user-select: none;
-        }
-        /* Reveal on hover */
-        .secret-content:hover, .secret-content:active {
-            filter: blur(0px); opacity: 1;
+        /* Typography & Body */
+        .article-body p {
+            font-size: 20px;
+            line-height: 1.65;
+            margin: 0 0 1.5em 0;
+            color: var(--nyt-black);
         }
 
-        /* Editorial Footer */
-        footer {
-            padding: 0 20px 80px; text-align: center;
-            display: flex; flex-direction: column; align-items: center;
-            transition: opacity var(--transition); z-index: 10; position: relative;
+        .article-body p:first-of-type::first-letter {
+            float: left;
+            font-size: 80px;
+            line-height: 60px;
+            padding-top: 4px;
+            padding-right: 8px;
+            padding-left: 3px;
+            font-family: var(--font-gothic);
         }
-        .footer-divider { width: 1px; height: 60px; background-color: var(--divider); margin-bottom: 50px; }
-        .colophon {
-            max-width: 400px; font-size: 14px; font-style: italic; color: var(--text-secondary);
-            line-height: 1.8; margin-bottom: 40px;
-        }
-        .copyright { font-size: 10px; color: var(--text-secondary); letter-spacing: 2px; text-transform: uppercase; }
 
-        /* Minimal Lightbox */
-        .lightbox {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: var(--overlay);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            z-index: 9000; display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden;
-            transition: opacity var(--fast-transition), visibility var(--fast-transition);
+        /* -----------------------------------
+           GAME 1: CONNECTIONS 
+           ----------------------------------- */
+        .connections-wrapper {
+            margin: 50px 0;
+            padding: 30px 20px;
+            background-color: #ffffff;
+            border: 1px solid var(--nyt-light-gray);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            text-align: center;
         }
-        .lightbox.active { opacity: 1; visibility: visible; }
 
-        .lightbox-close {
-            position: absolute; top: 40px; right: 40px;
-            background: none; border: none; color: var(--lightbox-text);
-            font-size: 28px; font-weight: 300; z-index: 9001;
-            opacity: 0.5; transition: opacity var(--fast-transition), transform var(--fast-transition);
+        .connections-header {
+            font-family: var(--font-sans);
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 5px;
         }
-        .lightbox-close:hover { opacity: 1; transform: scale(1.1) rotate(90deg); }
-
-        .lightbox-nav {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            width: 100%; display: flex; justify-content: space-between;
-            padding: 0 60px; pointer-events: none; z-index: 9001;
+        
+        .connections-sub {
+            font-family: var(--font-sans);
+            font-size: 14px;
+            color: var(--nyt-gray);
+            margin-bottom: 20px;
         }
-        .nav-btn {
-            background: none; border: none; color: var(--lightbox-text);
-            font-size: 32px; font-weight: 300; pointer-events: auto;
-            opacity: 0.2; transition: opacity var(--fast-transition), transform var(--fast-transition);
-            padding: 20px;
+
+        .connections-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
         }
-        .nav-btn:hover { opacity: 1; transform: scale(1.1); }
 
-        .lightbox-content-wrapper {
-            position: relative; width: 90vw; height: 85vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transform: scale(0.96); transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        .conn-tile {
+            background-color: var(--conn-bg);
+            color: #000;
+            font-family: var(--font-sans);
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            user-select: none;
         }
-        .lightbox.active .lightbox-content-wrapper { transform: scale(1); }
 
-        .lightbox .lb-text-container {
-            max-width: 600px; max-height: 75vh; overflow-y: auto;
-            padding: 40px; text-align: center; scrollbar-width: none;
+        .conn-tile.selected {
+            background-color: var(--conn-selected);
+            color: #ffffff;
+            transform: scale(0.95);
         }
-        .lightbox .lb-text-container::-webkit-scrollbar { display: none; }
 
-        .lightbox .poem-title { font-size: 28px; margin-bottom: 40px; color: var(--lightbox-text); text-transform: lowercase; }
-        .lightbox .poem-content { font-size: 20px; line-height: 2.2; color: var(--lightbox-text); }
-        .lightbox .poem-tag { color: var(--lightbox-text); font-size: 12px; opacity: 0.5; margin-top: 30px; }
-        .lightbox .lb-image { max-width: 100vw; max-height: 80vh; object-fit: contain; box-shadow: var(--shadow-hover); }
-        .lightbox .date { color: var(--lightbox-text); font-size: 11px; opacity: 0.3; margin-top: 50px; flex-shrink: 0; }
-
-        /* Animations */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeInDown { from { opacity: 0; transform: translate(-50%, -20px); } to { opacity: 1; transform: translate(-50%, 0); } }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeUpCard { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes growDown { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-
-        /* Responsive Breakpoints */
-        @media (max-width: 900px) {
-            .gallery { gap: 80px 40px; padding: 0 40px 100px; }
-            .poem-card:nth-child(even) { margin-top: 80px; margin-bottom: -80px; }
+        .conn-solved-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 8px;
         }
-        @media (max-width: 767px) {
-            .gallery { grid-template-columns: 1fr; padding: 0 20px 80px; gap: 40px; }
-            .poem-card:nth-child(even) { margin-top: 0; margin-bottom: 0; } /* Remove stagger on mobile */
-            .poem-card { padding: 40px 24px; }
-            .glass-dock { width: calc(100% - 40px); top: 20px; padding: 8px 8px 8px 20px; gap: 20px; }
-            .doh-mark { font-size: 18px; }
-            .doh-full { display: none; } /* Hide full name on mobile to save space */
-            .lightbox-nav { padding: 0 10px; }
-            .lightbox-close { top: 20px; right: 20px; }
-            .lightbox .poem-title { font-size: 24px; }
-            .lightbox .poem-content { font-size: 18px; line-height: 2; }
-            header { padding: 140px 20px 80px; }
-            h1 { letter-spacing: 6px; }
-            .secret-content { font-size: 18px; filter: blur(6px); } /* Easier to reveal on mobile */
+
+        .conn-solved-row {
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+            font-family: var(--font-sans);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .conn-solved-row .conn-name {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .conn-solved-row .conn-words {
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .cat-yellow { background-color: var(--conn-yellow); }
+        .cat-green { background-color: var(--conn-green); }
+        .cat-blue { background-color: var(--conn-blue); }
+        .cat-purple { background-color: var(--conn-purple); color: #fff; }
+
+        .play-conn-btn {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .play-conn-btn:hover { background-color: #333; }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* -----------------------------------
+           GAME 2: LOVDLE (OVERLAY) 
+           ----------------------------------- */
+        .trigger-container {
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .lovdle-link {
+            color: var(--nyt-blue);
+            font-family: var(--font-serif);
+            font-size: 18px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-bottom: 1px solid var(--nyt-blue);
+            padding-bottom: 2px;
+            transition: opacity 0.2s;
+        }
+
+        .lovdle-link:hover { opacity: 0.7; }
+
+        .lovdle-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(18, 18, 18, 0.98); /* Deep NYT dark */
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .lovdle-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .lovdle-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: #fff;
+            font-family: var(--font-sans);
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .lovdle-title {
+            color: #fff;
+            font-family: var(--font-gothic);
+            font-size: 32px;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        .lovdle-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .wordle-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .tile {
+            width: 58px;
+            height: 58px;
+            border: 2px solid #3a3a3c;
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-sans);
+            font-weight: bold;
+            font-size: 32px;
+            text-transform: uppercase;
+            color: transparent; 
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        /* Tile flip animation for the dark modal */
+        @keyframes flipTileDark {
+            0% {
+                transform: rotateX(0deg);
+                background-color: transparent;
+                border-color: #3a3a3c;
+                color: transparent;
+            }
+            49.9% {
+                transform: rotateX(90deg);
+                background-color: transparent;
+                border-color: #3a3a3c;
+                color: transparent;
+            }
+            50% {
+                transform: rotateX(90deg);
+                background-color: var(--wordle-green);
+                border-color: var(--wordle-green);
+                color: #ffffff;
+            }
+            100% {
+                transform: rotateX(0deg);
+                background-color: var(--wordle-green);
+                border-color: var(--wordle-green);
+                color: #ffffff;
+            }
+        }
+
+        .tile.reveal {
+            animation: flipTileDark 0.6s ease forwards;
+        }
+
+        .site-footer {
+            border-top: 1px solid var(--nyt-light-gray);
+            padding: 30px 20px;
+            text-align: center;
+            font-family: var(--font-sans);
+            font-size: 12px;
+            color: var(--nyt-gray);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            .masthead { font-size: 36px; }
+            .headline { font-size: 34px; }
+            .article-body p { font-size: 18px; }
+            .date-bar { flex-direction: column; align-items: center; gap: 5px; }
+            .top-nav { display: none; }
+            .conn-tile { font-size: 11px; }
+            .tile { width: 48px; height: 48px; font-size: 26px; }
+            .lovdle-title { font-size: 24px; }
+        }
+        @media (max-width: 400px) {
+            .conn-tile { font-size: 9px; }
+            .tile { width: 42px; height: 42px; font-size: 24px; gap: 4px; }
         }
     </style>
 </head>
-<body class="day-mode">
+<body>
 
-    <!-- Progress Bar -->
-    <div class="progress-bar" id="progressBar"></div>
-
-    <!-- Cinematic Dust Motes -->
-    <canvas id="dustCanvas"></canvas>
-
-    <!-- Film Grain Overlay -->
-    <div class="noise-overlay"></div>
-
-    <!-- Custom Cursor -->
-    <div class="custom-cursor" id="customCursor"></div>
-
-    <!-- Unified Glass Dock Navbar -->
-    <nav class="glass-dock" id="glassDock">
-        <a href="#" class="doh-logo" aria-label="Back to top">
-            <span class="doh-mark">DOH</span>
-            <span class="doh-full">Drafts of Heart</span>
-        </a>
-        <div class="dock-actions">
-            <!-- Focus Mode Toggle -->
-            <button class="ui-btn focus-btn" id="focusBtn" aria-label="Toggle Focus Mode">
-                <svg class="eye-open" viewBox="0 0 24 24">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                </svg>
-                <svg class="eye-closed" viewBox="0 0 24 24">
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                    <line x1="1" y1="1" x2="23" y2="23"></line>
-                </svg>
-            </button>
-            <!-- Theme Toggle -->
-            <button class="ui-btn theme-toggle" id="themeToggle" aria-label="Toggle Theme">
-                <svg class="moon-icon" viewBox="0 0 24 24">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
-                <svg class="sun-icon" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                </svg>
-            </button>
-        </div>
+    <!-- Mock NYT Navigation -->
+    <nav class="top-nav">
+        <a>World</a> <a>U.S.</a> <a>Politics</a> <a>N.Y.</a> <a>Business</a> 
+        <a>Opinion</a> <a>Tech</a> <a>Science</a> <a>Health</a> <a>Sports</a> 
+        <a>Arts</a> <a>Books</a> <a>Style</a> <a>Food</a> <a>Travel</a>
     </nav>
 
-    <header>
-        <div class="header-divider"></div>
-        <h1>Aaradhya's Gallery</h1>
-        <p class="subtitle">An ongoing collection</p>
-        
+    <header class="header-container">
+        <h1 class="masthead">The New York Times</h1>
+        <div class="date-bar">
+            <div class="date-bar-left">Wednesday, March 11, 2026</div>
+            <div class="date-bar-center">Today's Paper</div>
+            <div class="date-bar-right">New York Edition</div>
+        </div>
     </header>
 
-    <main class="gallery" id="gallery" role="region" aria-label="Poetry Gallery">
-        <!-- Cards injected via JavaScript -->
+    <main class="article-container">
+        <div class="section-label">Opinion</div>
+        <h1 class="headline">The Timezone Difference</h1>
+        <h2 class="subheadline">On exams, stupid distances, and why I’m politely asking you to stop stressing so much.</h2>
+        
+        <div class="article-meta">
+            <div class="byline">By Niv</div>
+            <div class="date">March 11, 2026</div>
+        </div>
+        
+        <div class="article-body">
+            <p>I am looking at you right now through a screen, and I’m just going to say it: you are an absolute menace when you’re in the zone. You’ve got that deeply unserious, hyper-focused crease between your eyebrows. You are currently surrounded by an ungodly amount of paper, highlighters that have definitely seen better days, and a cup of something you made two hours ago and promptly abandoned for the sake of English literature.</p>
+
+            <p>It’s highly distracting, honestly. You sitting there, wrapped up in the gravity of tomorrow’s exam, completely unaware of how incredibly gorgeous you look when you’re quietly strategizing. I am sitting here, a whole timezone away, fighting the very strong, very irresponsible urge to book a flight immediately just so I can steal all your pens and force you to pay attention to me instead.</p>
+
+            <p>But I am exercising superhuman restraint, because I know what tomorrow is.</p>
+
+            <p>Tomorrow is the English exam. Three hours of sitting at a wobbly desk, trying to convince some terribly underpaid examiner that you deeply, spiritually resonate with the metaphor of a tree. I know how your mind works. And because I know you, I know exactly what kind of mental gymnastics are happening behind those pretty eyes right now. You’re not just studying. You are meticulously plotting an academic revenge arc.</p>
+
+            <p>The last three exams were, for lack of a better word, profoundly rude. You walked out of those halls knowing exactly what you were capable of, only for the paper to stubbornly refuse to cooperate. And because you are you—fierce, stubbornly brilliant, and maybe just a tiny bit competitive—you’ve decided that tomorrow is where you even the score. You’ve decided you need to absolutely annihilate this English paper to "make up" for the others.</p>
+
+            <p>Can we just pause for a second and appreciate how incredibly hot it is that you care this much? Seriously. The sheer force of your willpower is terrifying in the best way possible. But my god, Aaradhya, can we also acknowledge how wildly unnecessary it is for you to carry this much stress on your shoulders?</p>
+
+            <p>Long distance is hard enough without the CBSE catching strays and stressing out my girl. Before I give you my incredibly biased, entirely unsolicited advice for tomorrow, I actually hacked the NYT games section just to prove a point. Play this first.</p>
+
+            <!-- CONNECTIONS GAME -->
+            <div class="connections-wrapper">
+                <div class="connections-header">Connections</div>
+                <div class="connections-sub">Aaradhya Edition • Group words that share a common thread.</div>
+                
+                <div class="conn-solved-container" id="connSolvedContainer"></div>
+                
+                <div class="connections-grid" id="connGrid">
+                    <!-- Shuffled Tiles -->
+                    <div class="conn-tile" data-group="yellow">LAUGH</div>
+                    <div class="conn-tile" data-group="green">CLOCKS</div>
+                    <div class="conn-tile" data-group="blue">GENIUS</div>
+                    <div class="conn-tile" data-group="purple">MINE</div>
+                    <div class="conn-tile" data-group="green">WI-FI</div>
+                    <div class="conn-tile" data-group="yellow">EYES</div>
+                    <div class="conn-tile" data-group="purple">PRETTY</div>
+                    <div class="conn-tile" data-group="blue">FOCUS</div>
+                    <div class="conn-tile" data-group="blue">COFFEE</div>
+                    <div class="conn-tile" data-group="purple">PERFECT</div>
+                    <div class="conn-tile" data-group="yellow">VOICE</div>
+                    <div class="conn-tile" data-group="green">MILES</div>
+                    <div class="conn-tile" data-group="yellow">HUGS</div>
+                    <div class="conn-tile" data-group="green">SCREENS</div>
+                    <div class="conn-tile" data-group="blue">BRAIN</div>
+                    <div class="conn-tile" data-group="purple">GORGEOUS</div>
+                </div>
+
+                <button class="play-conn-btn" id="playConnBtn">Auto-Solve &rarr;</button>
+            </div>
+
+            <p>See? That’s what actually matters. You’re sitting there keeping quiet when I know your brain is running at a hundred miles an hour, cataloging themes and character sketches and poetic devices. You’re treating tomorrow like it’s a trial by fire. Like if you don’t walk out with full marks, the universe is going to send you a strongly worded email of disappointment.</p>
+
+            <p>I need you to listen to me, across all these miles and all these stupid timezones: you don’t owe this exam a damn thing.</p>
+
+            <p>You don't owe it a perfect score. You don't owe it a comeback story. The syllabus is just an artificial construct, and frankly, I think it’s just intimidated by you. Think about how absurd it is to take someone like you—someone who is naturally witty, who notices the tiniest, most beautiful details about the world, who makes me feel like the luckiest person alive—and ask you to flatten all that vibrant intelligence into bullet points.</p>
+
+            <p>I wish you could see yourself the way I see you. If there were an exam on how deeply you care about the people in your life, you would break the grading curve. If they handed out marks for the way your laugh completely changes the energy in a room, or the way you fiercely defend your opinions, they’d run out of paper.</p>
+
+            <p>I’m telling you this because I want to interrupt that little voice in your head right now. The one that’s telling you that everything hinges on tomorrow. That voice is a liar. You are fiercely intelligent. You have put in the work. The knowledge is in there, tucked behind the stress, waiting to be used. You are going to sit down tomorrow, and you are going to handle it, just like you handle everything else—with absolute grace.</p>
+
+            <p>But even if you don't? Even if the paper is weird, or you forget a quote? It changes literally nothing. I will still be right here, entirely obsessed with you. I will still think you are the most fascinating, beautiful, brilliant girl to ever walk the earth. You are going places that no mark sheet could ever map out, and I am just ridiculously happy I get a front-row seat to watch you do it.</p>
+
+            <p>So here is my official advice for the rest of your Tuesday: finish the chapter you’re on. Highlight whatever needs highlighting. And then, please, close the book. Step away from the desk. Let your brain breathe.</p>
+
+            <p>You have absolutely nothing to prove tomorrow. You are already enough. Take a deep breath, gorgeous. You’ve got this. And even when you feel like you don't, I’ve got you.</p>
+
+            <div class="trigger-container">
+                <a class="lovdle-link" id="lovdleTrigger">One Last Thing &rarr;</a>
+            </div>
+        </div>
     </main>
 
-    <!-- NEW NICHE SECTION: Hidden Draft -->
-    <section class="secret-section">
-        <div class="secret-divider"></div>
-        <p class="secret-label">Note From The Lover</p>
-        <p class="secret-content">
-            with all my love and heart,<br>
-            
-            niv
-        </p>
-    </section>
-
-    <footer>
-        <div class="footer-divider"></div>
-        <p class="colophon">
-            
-            Typeset in Cormorant Garamond.<br>
-            A curated exhibition of 10 pieces, designed to be read slowly.
-        </p>
-        <p class="copyright">© 2026 Drafts of Heart. All rights reserved.</p>
+    <footer class="site-footer">
+        &copy; 2026 The New York Times Company. All rights reserved.
     </footer>
 
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Poem Viewer">
-        <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">✕</button>
-        <nav class="lightbox-nav">
-            <button class="nav-btn prev" id="lightboxPrev" aria-label="Previous poem">←</button>
-            <button class="nav-btn next" id="lightboxNext" aria-label="Next poem">→</button>
-        </nav>
-        <div class="lightbox-content-wrapper" id="lightboxContent"></div>
+    <!-- FULL SCREEN LOVDLE OVERLAY -->
+    <div class="lovdle-overlay" id="lovdleOverlay">
+        <button class="lovdle-close" id="lovdleClose">&times;</button>
+        <div class="lovdle-title">Wordle: Aaradhya Edition</div>
+        <div class="lovdle-grid" id="lovdleGrid">
+            <!-- Row 1: I (1 letter) -->
+            <div class="wordle-row">
+                <div class="tile" data-letter="I">I</div>
+            </div>
+            <!-- Row 2: L O V E (4 letters) -->
+            <div class="wordle-row">
+                <div class="tile" data-letter="L">L</div>
+                <div class="tile" data-letter="O">O</div>
+                <div class="tile" data-letter="V">V</div>
+                <div class="tile" data-letter="E">E</div>
+            </div>
+            <!-- Row 3: Y O U (3 letters) -->
+            <div class="wordle-row">
+                <div class="tile" data-letter="Y">Y</div>
+                <div class="tile" data-letter="O">O</div>
+                <div class="tile" data-letter="U">U</div>
+            </div>
+            <!-- Row 4: S O (2 letters) -->
+            <div class="wordle-row">
+                <div class="tile" data-letter="S">S</div>
+                <div class="tile" data-letter="O">O</div>
+            </div>
+            <!-- Row 5: M U C H (4 letters) -->
+            <div class="wordle-row">
+                <div class="tile" data-letter="M">M</div>
+                <div class="tile" data-letter="U">U</div>
+                <div class="tile" data-letter="C">C</div>
+                <div class="tile" data-letter="H">H</div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // --- CUSTOM FLUID CURSOR ---
-        const cursor = document.getElementById('customCursor');
-        const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+        // --- Helper for waiting ---
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-        if (isFinePointer) {
-            cursor.style.display = 'block';
-            let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+        // --- GAME 1: CONNECTIONS LOGIC ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const playConnBtn = document.getElementById('playConnBtn');
+            const connGrid = document.getElementById('connGrid');
+            const solvedContainer = document.getElementById('connSolvedContainer');
 
-            document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+            const categories =[
+                { color: 'yellow', class: 'cat-yellow', name: 'THINGS I MISS RIGHT NOW', words: 'LAUGH, EYES, VOICE, HUGS' },
+                { color: 'green', class: 'cat-green', name: 'LONG DISTANCE VILLAINS', words: 'MILES, WI-FI, CLOCKS, SCREENS' },
+                { color: 'blue', class: 'cat-blue', name: 'YOUR EXAM ARSENAL', words: 'BRAIN, FOCUS, COFFEE, GENIUS' },
+                { color: 'purple', class: 'cat-purple', name: 'WHAT YOU ARE TO ME', words: 'MINE, PRETTY, PERFECT, GORGEOUS' }
+            ];
 
-            function animateCursor() {
-                cursorX += (mouseX - cursorX) * 0.15; 
-                cursorY += (mouseY - cursorY) * 0.15;
-                cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
-                requestAnimationFrame(animateCursor);
-            }
-            requestAnimationFrame(animateCursor);
+            playConnBtn.addEventListener('click', async () => {
+                playConnBtn.style.display = 'none';
 
-            const addHover = () => cursor.classList.add('hovering');
-            const removeHover = () => cursor.classList.remove('hovering');
-            const addReveal = () => cursor.classList.add('revealing');
-            const removeReveal = () => cursor.classList.remove('revealing');
-            
-            document.querySelectorAll('button, a').forEach(el => {
-                el.addEventListener('mouseenter', addHover);
-                el.addEventListener('mouseleave', removeHover);
-            });
+                for (let i = 0; i < categories.length; i++) {
+                    const group = categories[i];
+                    const tiles = document.querySelectorAll(`.conn-tile[data-group="${group.color}"]`);
 
-            // Special cursor state for the secret section
-            document.querySelector('.secret-content').addEventListener('mouseenter', addReveal);
-            document.querySelector('.secret-content').addEventListener('mouseleave', removeReveal);
-        }
+                    // Highlight one by one
+                    for (let j = 0; j < tiles.length; j++) {
+                        tiles[j].classList.add('selected');
+                        await sleep(300);
+                    }
+                    
+                    // Pause to show the matched 4
+                    await sleep(600);
 
-        // --- AMBIENT DUST MOTES (Canvas Particles) ---
-        const canvas = document.getElementById('dustCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles =[];
-        
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+                    // Hide the individual tiles
+                    tiles.forEach(t => t.style.display = 'none');
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.radius = Math.random() * 1.5 + 0.5;
-                this.vx = (Math.random() - 0.5) * 0.2;
-                this.vy = Math.random() * -0.3 - 0.1; // Float upwards
-                this.alpha = Math.random() * 0.5 + 0.1;
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.y < 0) {
-                    this.y = canvas.height;
-                    this.x = Math.random() * canvas.width;
+                    // Create the solved row and append above the grid
+                    const solvedRow = document.createElement('div');
+                    solvedRow.className = `conn-solved-row ${group.class}`;
+                    solvedRow.innerHTML = `
+                        <div class="conn-name">${group.name}</div>
+                        <div class="conn-words">${group.words}</div>
+                    `;
+                    solvedContainer.appendChild(solvedRow);
+
+                    // Wait a bit before starting next category
+                    await sleep(500);
                 }
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-            }
-            draw() {
-                const isNight = document.body.classList.contains('night-mode');
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = isNight ? `rgba(255, 255, 255, ${this.alpha * 0.6})` : `rgba(0, 0, 0, ${this.alpha * 0.3})`;
-                ctx.fill();
-            }
-        }
-
-        for (let i = 0; i < 40; i++) particles.push(new Particle());
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
-
-        // --- SCROLL PROGRESS BAR ---
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById("progressBar").style.width = (winScroll / height) * 100 + "%";
-        });
-
-        // --- FOCUS MODE TOGGLE ---
-        const focusBtn = document.getElementById('focusBtn');
-        focusBtn.addEventListener('click', () => {
-            document.body.classList.toggle('focus-mode');
-        });
-
-        // --- POEM DATA (Exactly 10 Slots) ---
-        const poems =[
-            { 
-                type: "text", 
-                title: "please don't read this, i'll cry", 
-                content: "and i cry anywhere between shot glasses to oceans and let no tears fall because you can't mourn something you never quite knew.\n\ni can't justify the germinating grief if you can't see the love that once grew; and it's fine, regardless of if you validate it or not - it was there, it once bloomed.\n\ni'm satisfied with the existence of what once was, i'm past dwelling on thoughts of 'what could've been'. it's a sweet thought, i won't deny but it's better left off as a yearning poem on the screen.\n\nyou and i were a fever dream.", 
-                tag: "@draftsofheart",
-                date: "July 2024" 
-            },
-            { 
-                type: "text", 
-                title: "how to lose a guy in ten days", 
-                content: "dip your head in cold water and numb the pain. try everything in your might to remove the stain of 'i can't be loved by the most loving man.' then mourn the ruins of a never risen clan.\n\ntell him how nectar would never suffice for the sweet lies he filled you with. how you were so close to having everything but you were left with nothing. love him to lie about how you don't and miss him to tell him how you won't.\n\nbe the bolter, pick your bags and just run because you could never belong to someone. write his name on your notebook till the butterflies in your stomach turn a little sad.\n\nremind yourself that you can't lose someone you never had.", 
-                tag: "@draftsofheart",
-                date: "December 2024" 
-            },
-            // SLOT 3: SCANNED IMAGE
-            { 
-                type: "image", 
-                image: "https://i.postimg.cc/gkZJNj9p/9C3A4EE4-4574-4376-86D3-9430CF93C8D8.jpg", 
-                date: "August 2025" 
-            },
-            { 
-                type: "text", 
-                title: "i drive my car with heart shaped glasses", 
-                content: "and i see everything sort of fluorescent. it's a drug effect, i can't deny. the traffic lights are so distant. they blur into one and in my peripheral vision, i can see us dancing on some jazz music you used to listen.\n\nthe rear view mirror holds every memory of us. it haunts like a feverish dream. the traffic lights now buzz a bright red and life isn't as unstoppable as it once seemed.\n\ni press the clutch and the brakes but the car doesn't stop. because the signal's haywired and my mind is jammed and it blinks all - yellow and red and green. \n\ndo i halt? do i go? i do not know.", 
-                tag: "@draftsofheart",
-                date: "April 2025" 
-            },
-            { 
-                type: "text", 
-                title: "the sky / fly high", 
-                content: "the sky has been really pretty since you decided to adorn it. i'll be honest, i'll be selfish. i think i prefer stormy skies, dark and grey and sullen at times if it meant i'd have your starry eyes to guide us through.\n\ni'll sit through the rains and i'll sit through the sunny days and i'll wonder how different things could've ended. how they could've never ended at all.\n\ni never replied to your last call.\n\nthe world has been really quiet since we lost you. you painted yourself the same shade as the infinite sky. your favourite, poet blue.\n\nwe miss you.", 
-                tag: "",
-                date: "July 2025" 
-            },
-            // SLOT 6: SCANNED IMAGE
-            { 
-                type: "image", 
-                image: "https://i.postimg.cc/sDmhp15Z/IMG-9138.jpg", 
-                date: "June 2025" 
-            },
-            { 
-                type: "text", 
-                title: "i've been swept out by ocean waves,", 
-                content: "not as much as i've been swept out by you, but i have.\n\nI'm paddling along these waters infinite, it's a mixture of something happy and sad. i have a destination, a will and a never ending path. i've been swept out by many things, not as much as i've been swept out by you, but i have. \n\nif had drowned half as much in the blue than the blues, i would be swept out by ocean waves more than ive been swept off by you.", 
-                tag: "@draftsofheart & @afilmblur",
-                date: "November 2025" 
-            },
-            // SLOT 8: SCANNED IMAGE
-            { 
-                type: "image", 
-                image: "https://i.postimg.cc/Qx2RJxs9/IMG-9135.jpg", 
-                date: "July 2025" 
-            },
-            { 
-                type: "text", 
-                title: "if the world was ending, you'd come over, right?", 
-                content: "<i>[you have reached the love of your life, leave a voice message]</i>\n\nhi baby. don't be scared of the news headlines. i promise that the last thing on brain won't be the flames. they will be the memories of us.\n\nit's a strange thing, this love. it asks so little of us and gives back so much. the only thing you've ever asked of me is a smile. so i want you to know that i'm smiling through this message to you, alright? \n\ni'm so glad i have you to call when things go south. to have the privilege to know you and kiss your stupid mouth. you're the mint to my chocolate. i'm going to give you a kiss in case the world doesn't end tonight.\n\ntheir war planes can't take me away from you. these hurricanes, these man made storms, they've got nothing on the both of us. ive stitched together very syllabe you've spoken to me it spells, \"p e a c e.\"\n\nit'll be alright. the earth can burn tonight, as long as you're in my sight.", 
-                tag: "@draftsofheart",
-                date: "January 2026" 
-            },
-            // SLOT 10: SCANNED IMAGE
-            { 
-                type: "image", 
-                image: "https://i.postimg.cc/m27GqFmh/IMG-9129.jpg", 
-                date: "July 2024" 
-            }
-        ];
-
-        // --- THEME MANAGEMENT ---
-        const themeToggle = document.getElementById('themeToggle');
-        
-        if (localStorage.getItem('aaradhyaTheme') === 'night') {
-            document.body.classList.remove('day-mode'); 
-            document.body.classList.add('night-mode');
-        }
-
-        themeToggle.addEventListener('click', () => {
-            if (document.body.classList.contains('night-mode')) {
-                document.body.classList.replace('night-mode', 'day-mode');
-                localStorage.setItem('aaradhyaTheme', 'day');
-            } else {
-                document.body.classList.replace('day-mode', 'night-mode');
-                localStorage.setItem('aaradhyaTheme', 'night');
-            }
-        });
-
-        // --- RENDER GALLERY & 3D TILT ---
-        const galleryContainer = document.getElementById('gallery');
-
-        function renderGallery() {
-            poems.forEach((poem, index) => {
-                const article = document.createElement('article');
-                article.className = `poem-card`;
-                article.setAttribute('tabindex', '0');
                 
-                let innerHTML = `<div class="card-inner">`;
-                if (poem.type === 'text') {
-                    innerHTML += `${poem.title ? `<h2 class="poem-title">${poem.title}</h2>` : ''}
-                                  <div class="poem-content">${poem.content}</div>
-                                  ${poem.tag ? `<p class="poem-tag">${poem.tag}</p>` : ''}`;
-                } else {
-                    innerHTML += `<div class="poem-image-container"><img class="poem-image" src="${poem.image}" alt="Scanned poem" loading="lazy" onload="this.classList.add('loaded');"></div>`;
-                }
-                innerHTML += `</div><time class="date">${poem.date}</time>`;
-                article.innerHTML = innerHTML;
+                // Remove empty grid container at the end
+                connGrid.style.display = 'none';
+            });
+        });
 
-                // 3D Tilt Effect Physics
-                if (isFinePointer) {
-                    article.addEventListener('mousemove', (e) => {
-                        if (document.body.classList.contains('focus-mode')) return;
-                        
-                        const rect = article.getBoundingClientRect();
-                        const x = e.clientX - rect.left;
-                        const y = e.clientY - rect.top;
-                        
-                        const centerX = rect.width / 2;
-                        const centerY = rect.height / 2;
-                        const rotateX = ((y - centerY) / centerY) * -5;
-                        const rotateY = ((x - centerX) / centerX) * 5;
 
-                        article.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                        cursor.classList.add('hovering');
-                    });
+        // --- GAME 2: LOVDLE (OVERLAY) LOGIC ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const trigger = document.getElementById("lovdleTrigger");
+            const overlay = document.getElementById("lovdleOverlay");
+            const closeBtn = document.getElementById("lovdleClose");
+            const tiles = document.querySelectorAll(".lovdle-grid .tile");
+            let hasPlayed = false;
 
-                    article.addEventListener('mouseleave', () => {
-                        article.style.transform = ''; 
-                        cursor.classList.remove('hovering');
+            trigger.addEventListener("click", (e) => {
+                e.preventDefault();
+                overlay.classList.add("active");
+                
+                // Prevent scrolling on background
+                document.body.style.overflow = "hidden";
+
+                if (!hasPlayed) {
+                    hasPlayed = true;
+                    let delay = 600; // Wait for overlay to fade in
+                    
+                    tiles.forEach((tile) => {
+                        setTimeout(() => {
+                            tile.classList.add("reveal");
+                        }, delay);
+                        delay += 120; // Stagger effect
                     });
                 }
-
-                article.addEventListener('click', () => openLightbox(index));
-                galleryContainer.appendChild(article);
             });
-        }
-        renderGallery();
 
-        // --- SCROLL ANIMATION ---
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
+            closeBtn.addEventListener("click", () => {
+                overlay.classList.remove("active");
+                document.body.style.overflow = "auto";
             });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.poem-card').forEach(c => observer.observe(c));
-
-        // --- LIGHTBOX LOGIC ---
-        const lightbox = document.getElementById('lightbox');
-        const lightboxContent = document.getElementById('lightboxContent');
-        const btnClose = document.getElementById('lightboxClose');
-        const btnPrev = document.getElementById('lightboxPrev');
-        const btnNext = document.getElementById('lightboxNext');
-        let currentIndex = 0;
-
-        function openLightbox(index) {
-            currentIndex = index;
-            updateLightboxContent();
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden'; 
-        }
-
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function updateLightboxContent() {
-            const poem = poems[currentIndex];
-            let contentHTML = '';
-
-            if (poem.type === 'text') {
-                contentHTML = `<div class="lb-text-container">
-                    ${poem.title ? `<h2 class="poem-title">${poem.title}</h2>` : ''}
-                    <div class="poem-content">${poem.content}</div>
-                    ${poem.tag ? `<p class="poem-tag">${poem.tag}</p>` : ''}
-                </div>`;
-            } else {
-                contentHTML = `<img class="lb-image" src="${poem.image}">`;
-            }
-            
-            contentHTML += `<time class="date">${poem.date}</time>`;
-            
-            lightboxContent.style.opacity = '0';
-            setTimeout(() => {
-                lightboxContent.innerHTML = contentHTML;
-                lightboxContent.style.opacity = '1';
-            }, 200);
-
-            btnPrev.style.opacity = currentIndex === 0 ? '0' : '0.5';
-            btnPrev.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
-            btnNext.style.opacity = currentIndex === poems.length - 1 ? '0' : '0.5';
-            btnNext.style.pointerEvents = currentIndex === poems.length - 1 ? 'none' : 'auto';
-        }
-
-        btnClose.addEventListener('click', closeLightbox);
-        btnNext.addEventListener('click', (e) => { e.stopPropagation(); if(currentIndex < poems.length - 1) { currentIndex++; updateLightboxContent(); }});
-        btnPrev.addEventListener('click', (e) => { e.stopPropagation(); if(currentIndex > 0) { currentIndex--; updateLightboxContent(); }});
-        lightbox.addEventListener('click', (e) => { if (e.target === lightbox || e.target === lightboxContent) closeLightbox(); });
-
-        document.addEventListener('keydown', (e) => {
-            if (!lightbox.classList.contains('active')) return;
-            if (e.key === 'Escape') closeLightbox();
-            else if (e.key === 'ArrowRight' && currentIndex < poems.length - 1) { currentIndex++; updateLightboxContent(); }
-            else if (e.key === 'ArrowLeft' && currentIndex > 0) { currentIndex--; updateLightboxContent(); }
         });
     </script>
 </body>
