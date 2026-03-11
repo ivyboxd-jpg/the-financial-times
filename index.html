@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Day Before | The New York Times</title>
+    <title>The Geography of Missing You | The New York Times</title>
     <style>
         /* CSS Variables */
         @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
@@ -174,10 +174,26 @@
             font-family: var(--font-gothic);
         }
 
+        /* Generic Play Button */
+        .play-btn {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 15px;
+        }
+        .play-btn:hover { background-color: #333; }
+
         /* -----------------------------------
-           GAME 1: CONNECTIONS 
+           GAME 1: THE MINI CROSSWORD
            ----------------------------------- */
-        .connections-wrapper {
+        .game-wrapper {
             margin: 50px 0;
             padding: 30px 20px;
             background-color: #ffffff;
@@ -187,20 +203,80 @@
             text-align: center;
         }
 
-        .connections-header {
+        .game-header {
             font-family: var(--font-sans);
             font-weight: bold;
             font-size: 24px;
             margin-bottom: 5px;
         }
         
-        .connections-sub {
+        .game-sub {
             font-family: var(--font-sans);
             font-size: 14px;
             color: var(--nyt-gray);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
+        .mini-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            width: 240px;
+            height: 240px;
+            margin: 0 auto 25px;
+            border: 2px solid #000;
+            background-color: #000;
+            gap: 2px;
+        }
+
+        .mini-cell {
+            background-color: #fff;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-sans);
+            font-weight: bold;
+            font-size: 32px;
+            text-transform: uppercase;
+        }
+
+        .mini-num {
+            position: absolute;
+            top: 3px;
+            left: 4px;
+            font-size: 11px;
+            font-weight: normal;
+            line-height: 1;
+        }
+
+        .mini-val {
+            color: transparent;
+            transition: color 0.1s;
+        }
+        
+        .mini-val.solved {
+            color: var(--nyt-blue);
+            animation: popText 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .mini-clues {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            text-align: left;
+            font-family: var(--font-sans);
+            font-size: 14px;
+            border-top: 1px solid var(--nyt-light-gray);
+            padding-top: 20px;
+        }
+
+        .mini-clues h4 { margin: 0 0 10px 0; text-transform: uppercase; font-size: 13px; color: #000; }
+        .mini-clues p { margin: 0 0 8px 0; line-height: 1.4; color: var(--nyt-black); }
+        .mini-clues p strong { color: #000; }
+
+        /* -----------------------------------
+           GAME 2: CONNECTIONS 
+           ----------------------------------- */
         .connections-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -222,6 +298,8 @@
             border-radius: 6px;
             transition: all 0.3s ease;
             user-select: none;
+            padding: 4px;
+            text-align: center;
         }
 
         .conn-tile.selected {
@@ -262,27 +340,18 @@
         .cat-blue { background-color: var(--conn-blue); }
         .cat-purple { background-color: var(--conn-purple); color: #fff; }
 
-        .play-conn-btn {
-            background-color: #000;
-            color: #fff;
-            border: none;
-            border-radius: 20px;
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: bold;
-            font-family: var(--font-sans);
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .play-conn-btn:hover { background-color: #333; }
-
         @keyframes popIn {
             0% { transform: scale(0.8); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
+        @keyframes popText {
+            0% { transform: scale(0.5); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
 
         /* -----------------------------------
-           GAME 2: LOVDLE (OVERLAY) 
+           GAME 3: LOVDLE (OVERLAY) 
            ----------------------------------- */
         .trigger-container {
             text-align: center;
@@ -309,7 +378,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(18, 18, 18, 0.98); /* Deep NYT dark */
+            background-color: rgba(18, 18, 18, 0.98);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -331,7 +400,7 @@
             right: 30px;
             color: #fff;
             font-family: var(--font-sans);
-            font-size: 24px;
+            font-size: 32px;
             cursor: pointer;
             background: none;
             border: none;
@@ -340,27 +409,27 @@
         .lovdle-title {
             color: #fff;
             font-family: var(--font-gothic);
-            font-size: 32px;
-            margin-bottom: 40px;
+            font-size: 36px;
+            margin-bottom: 50px;
             letter-spacing: 1px;
         }
 
         .lovdle-grid {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
             align-items: center;
         }
 
         .wordle-row {
             display: flex;
-            gap: 8px;
+            gap: 12px;
             justify-content: center;
         }
 
         .tile {
-            width: 58px;
-            height: 58px;
+            width: 62px;
+            height: 62px;
             border: 2px solid #3a3a3c;
             background-color: transparent;
             display: flex;
@@ -368,44 +437,21 @@
             align-items: center;
             font-family: var(--font-sans);
             font-weight: bold;
-            font-size: 32px;
+            font-size: 36px;
             text-transform: uppercase;
             color: transparent; 
             box-sizing: border-box;
             user-select: none;
         }
 
-        /* Tile flip animation for the dark modal */
         @keyframes flipTileDark {
-            0% {
-                transform: rotateX(0deg);
-                background-color: transparent;
-                border-color: #3a3a3c;
-                color: transparent;
-            }
-            49.9% {
-                transform: rotateX(90deg);
-                background-color: transparent;
-                border-color: #3a3a3c;
-                color: transparent;
-            }
-            50% {
-                transform: rotateX(90deg);
-                background-color: var(--wordle-green);
-                border-color: var(--wordle-green);
-                color: #ffffff;
-            }
-            100% {
-                transform: rotateX(0deg);
-                background-color: var(--wordle-green);
-                border-color: var(--wordle-green);
-                color: #ffffff;
-            }
+            0% { transform: rotateX(0deg); background-color: transparent; border-color: #3a3a3c; color: transparent; }
+            49.9% { transform: rotateX(90deg); background-color: transparent; border-color: #3a3a3c; color: transparent; }
+            50% { transform: rotateX(90deg); background-color: var(--wordle-green); border-color: var(--wordle-green); color: #ffffff; }
+            100% { transform: rotateX(0deg); background-color: var(--wordle-green); border-color: var(--wordle-green); color: #ffffff; }
         }
 
-        .tile.reveal {
-            animation: flipTileDark 0.6s ease forwards;
-        }
+        .tile.reveal { animation: flipTileDark 0.6s ease forwards; }
 
         .site-footer {
             border-top: 1px solid var(--nyt-light-gray);
@@ -423,13 +469,16 @@
             .article-body p { font-size: 18px; }
             .date-bar { flex-direction: column; align-items: center; gap: 5px; }
             .top-nav { display: none; }
+            .mini-clues { grid-template-columns: 1fr; gap: 10px; }
             .conn-tile { font-size: 11px; }
-            .tile { width: 48px; height: 48px; font-size: 26px; }
-            .lovdle-title { font-size: 24px; }
+            .tile { width: 50px; height: 50px; font-size: 28px; }
+            .lovdle-title { font-size: 28px; margin-bottom: 30px;}
         }
         @media (max-width: 400px) {
-            .conn-tile { font-size: 9px; }
-            .tile { width: 42px; height: 42px; font-size: 24px; gap: 4px; }
+            .mini-board { width: 200px; height: 200px; }
+            .mini-cell { font-size: 24px; }
+            .conn-tile { font-size: 9px; padding: 2px; }
+            .tile { width: 42px; height: 42px; font-size: 24px; gap: 6px; }
         }
     </style>
 </head>
@@ -453,8 +502,8 @@
 
     <main class="article-container">
         <div class="section-label">Opinion</div>
-        <h1 class="headline">The Timezone Difference</h1>
-        <h2 class="subheadline">On exams, stupid distances, and why I’m politely asking you to stop stressing so much.</h2>
+        <h1 class="headline">The Geography of Missing You</h1>
+        <h2 class="subheadline">On exams, state lines, and why I’m politely asking you to drop the highlighter.</h2>
         
         <div class="article-meta">
             <div class="byline">By Niv</div>
@@ -464,7 +513,7 @@
         <div class="article-body">
             <p>I am looking at you right now through a screen, and I’m just going to say it: you are an absolute menace when you’re in the zone. You’ve got that deeply unserious, hyper-focused crease between your eyebrows. You are currently surrounded by an ungodly amount of paper, highlighters that have definitely seen better days, and a cup of something you made two hours ago and promptly abandoned for the sake of English literature.</p>
 
-            <p>It’s highly distracting, honestly. You sitting there, wrapped up in the gravity of tomorrow’s exam, completely unaware of how incredibly gorgeous you look when you’re quietly strategizing. I am sitting here, a whole timezone away, fighting the very strong, very irresponsible urge to book a flight immediately just so I can steal all your pens and force you to pay attention to me instead.</p>
+            <p>It’s highly distracting, honestly. You sitting there, wrapped up in the gravity of tomorrow’s exam, completely unaware of how incredibly gorgeous you look when you’re quietly strategizing. I am sitting here, a few states away, fighting the very strong, very irresponsible urge to book a flight immediately just so I can steal all your pens and force you to pay attention to me instead.</p>
 
             <p>But I am exercising superhuman restraint, because I know what tomorrow is.</p>
 
@@ -474,19 +523,66 @@
 
             <p>Can we just pause for a second and appreciate how incredibly hot it is that you care this much? Seriously. The sheer force of your willpower is terrifying in the best way possible. But my god, Aaradhya, can we also acknowledge how wildly unnecessary it is for you to carry this much stress on your shoulders?</p>
 
-            <p>Long distance is hard enough without the CBSE catching strays and stressing out my girl. Before I give you my incredibly biased, entirely unsolicited advice for tomorrow, I actually hacked the NYT games section just to prove a point. Play this first.</p>
+            <p>Long distance is hard enough without the CBSE catching strays and stressing out my girl. Before I give you my incredibly biased, entirely unsolicited advice for tomorrow, I actually hacked the NYT games section twice just to prove a point. Play these first.</p>
 
-            <!-- CONNECTIONS GAME -->
-            <div class="connections-wrapper">
-                <div class="connections-header">Connections</div>
-                <div class="connections-sub">Aaradhya Edition • Group words that share a common thread.</div>
+            <!-- GAME 1: THE MINI CROSSWORD -->
+            <div class="game-wrapper">
+                <div class="game-header">The Mini Crossword</div>
+                <div class="game-sub">Aaradhya Edition • A tiny puzzle for a brilliant mind.</div>
+                
+                <div class="mini-board" id="miniBoard">
+                    <!-- Row 1 -->
+                    <div class="mini-cell" data-letter="M"><span class="mini-num">1</span><span class="mini-val">M</span></div>
+                    <div class="mini-cell" data-letter="I"><span class="mini-num">2</span><span class="mini-val">I</span></div>
+                    <div class="mini-cell" data-letter="N"><span class="mini-num">3</span><span class="mini-val">N</span></div>
+                    <div class="mini-cell" data-letter="E"><span class="mini-num">4</span><span class="mini-val">E</span></div>
+                    <!-- Row 2 -->
+                    <div class="mini-cell" data-letter="I"><span class="mini-num">5</span><span class="mini-val">I</span></div>
+                    <div class="mini-cell" data-letter="C"><span class="mini-val">C</span></div>
+                    <div class="mini-cell" data-letter="O"><span class="mini-val">O</span></div>
+                    <div class="mini-cell" data-letter="N"><span class="mini-val">N</span></div>
+                    <!-- Row 3 -->
+                    <div class="mini-cell" data-letter="N"><span class="mini-num">6</span><span class="mini-val">N</span></div>
+                    <div class="mini-cell" data-letter="O"><span class="mini-val">O</span></div>
+                    <div class="mini-cell" data-letter="T"><span class="mini-val">T</span></div>
+                    <div class="mini-cell" data-letter="E"><span class="mini-val">E</span></div>
+                    <!-- Row 4 -->
+                    <div class="mini-cell" data-letter="E"><span class="mini-num">7</span><span class="mini-val">E</span></div>
+                    <div class="mini-cell" data-letter="N"><span class="mini-val">N</span></div>
+                    <div class="mini-cell" data-letter="D"><span class="mini-val">D</span></div>
+                    <div class="mini-cell" data-letter="S"><span class="mini-val">S</span></div>
+                </div>
+
+                <div class="mini-clues">
+                    <div class="clue-col">
+                        <h4>Across</h4>
+                        <p><strong>1.</strong> Whose you are.</p>
+                        <p><strong>5.</strong> A cultural one (you, essentially).</p>
+                        <p><strong>6.</strong> What you're fiercely reviewing right now.</p>
+                        <p><strong>7.</strong> How this exam period finally finishes.</p>
+                    </div>
+                    <div class="clue-col">
+                        <h4>Down</h4>
+                        <p><strong>1.</strong> Belonging to me.</p>
+                        <p><strong>2.</strong> Legend, star, or ___.</p>
+                        <p><strong>3.</strong> A message passed in class.</p>
+                        <p><strong>4.</strong> Wraps up.</p>
+                    </div>
+                </div>
+                <button class="play-btn" id="playMiniBtn">Auto-Solve Mini &rarr;</button>
+            </div>
+
+            <!-- GAME 2: CONNECTIONS -->
+            <div class="game-wrapper">
+                <div class="game-header">Connections</div>
+                <div class="game-sub">Aaradhya Edition • Group words that share a common thread.</div>
                 
                 <div class="conn-solved-container" id="connSolvedContainer"></div>
                 
                 <div class="connections-grid" id="connGrid">
                     <!-- Shuffled Tiles -->
                     <div class="conn-tile" data-group="yellow">LAUGH</div>
-                    <div class="conn-tile" data-group="green">CLOCKS</div>
+                    <div class="conn-tile" data-group="green">FLIGHTS</div>
                     <div class="conn-tile" data-group="blue">GENIUS</div>
                     <div class="conn-tile" data-group="purple">MINE</div>
                     <div class="conn-tile" data-group="green">WI-FI</div>
@@ -503,18 +599,18 @@
                     <div class="conn-tile" data-group="purple">GORGEOUS</div>
                 </div>
 
-                <button class="play-conn-btn" id="playConnBtn">Auto-Solve &rarr;</button>
+                <button class="play-btn" id="playConnBtn">Auto-Solve Connections &rarr;</button>
             </div>
 
             <p>See? That’s what actually matters. You’re sitting there keeping quiet when I know your brain is running at a hundred miles an hour, cataloging themes and character sketches and poetic devices. You’re treating tomorrow like it’s a trial by fire. Like if you don’t walk out with full marks, the universe is going to send you a strongly worded email of disappointment.</p>
 
-            <p>I need you to listen to me, across all these miles and all these stupid timezones: you don’t owe this exam a damn thing.</p>
+            <p>I need you to listen to me, across all these miles and all these stupid state lines: you don’t owe this exam a damn thing.</p>
 
             <p>You don't owe it a perfect score. You don't owe it a comeback story. The syllabus is just an artificial construct, and frankly, I think it’s just intimidated by you. Think about how absurd it is to take someone like you—someone who is naturally witty, who notices the tiniest, most beautiful details about the world, who makes me feel like the luckiest person alive—and ask you to flatten all that vibrant intelligence into bullet points.</p>
 
             <p>I wish you could see yourself the way I see you. If there were an exam on how deeply you care about the people in your life, you would break the grading curve. If they handed out marks for the way your laugh completely changes the energy in a room, or the way you fiercely defend your opinions, they’d run out of paper.</p>
 
-            <p>I’m telling you this because I want to interrupt that little voice in your head right now. The one that’s telling you that everything hinges on tomorrow. That voice is a liar. You are fiercely intelligent. You have put in the work. The knowledge is in there, tucked behind the stress, waiting to be used. You are going to sit down tomorrow, and you are going to handle it, just like you handle everything else—with absolute grace.</p>
+            <p>I’m telling you this because I want to interrupt that little voice in your head right now. The one that’s telling you that everything hinges on tomorrow. That voice is a liar. You are fiercely intelligent. You have put in the work. All those other people's last lessons are tucked behind the stress, waiting to be used. You are going to sit down tomorrow, and you are going to handle it, just like you handle everything else—with absolute grace.</p>
 
             <p>But even if you don't? Even if the paper is weird, or you forget a quote? It changes literally nothing. I will still be right here, entirely obsessed with you. I will still think you are the most fascinating, beautiful, brilliant girl to ever walk the earth. You are going places that no mark sheet could ever map out, and I am just ridiculously happy I get a front-row seat to watch you do it.</p>
 
@@ -532,7 +628,7 @@
         &copy; 2026 The New York Times Company. All rights reserved.
     </footer>
 
-    <!-- FULL SCREEN LOVDLE OVERLAY -->
+    <!-- GAME 3: FULL SCREEN LOVDLE OVERLAY -->
     <div class="lovdle-overlay" id="lovdleOverlay">
         <button class="lovdle-close" id="lovdleClose">&times;</button>
         <div class="lovdle-title">Wordle: Aaradhya Edition</div>
@@ -570,10 +666,31 @@
     </div>
 
     <script>
-        // --- Helper for waiting ---
         const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-        // --- GAME 1: CONNECTIONS LOGIC ---
+        // --- GAME 1: MINI CROSSWORD LOGIC ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const playMiniBtn = document.getElementById('playMiniBtn');
+            const miniCells = document.querySelectorAll('.mini-cell');
+
+            playMiniBtn.addEventListener('click', async () => {
+                playMiniBtn.style.display = 'none';
+                
+                // Read row by row left to right
+                for (let i = 0; i < miniCells.length; i++) {
+                    const cell = miniCells[i];
+                    const valSpan = cell.querySelector('.mini-val');
+                    const letter = cell.getAttribute('data-letter');
+                    
+                    valSpan.textContent = letter;
+                    valSpan.classList.add('solved');
+                    
+                    await sleep(100); // typing speed
+                }
+            });
+        });
+
+        // --- GAME 2: CONNECTIONS LOGIC ---
         document.addEventListener("DOMContentLoaded", () => {
             const playConnBtn = document.getElementById('playConnBtn');
             const connGrid = document.getElementById('connGrid');
@@ -581,7 +698,7 @@
 
             const categories =[
                 { color: 'yellow', class: 'cat-yellow', name: 'THINGS I MISS RIGHT NOW', words: 'LAUGH, EYES, VOICE, HUGS' },
-                { color: 'green', class: 'cat-green', name: 'LONG DISTANCE VILLAINS', words: 'MILES, WI-FI, CLOCKS, SCREENS' },
+                { color: 'green', class: 'cat-green', name: 'LONG DISTANCE VILLAINS', words: 'MILES, WI-FI, FLIGHTS, SCREENS' },
                 { color: 'blue', class: 'cat-blue', name: 'YOUR EXAM ARSENAL', words: 'BRAIN, FOCUS, COFFEE, GENIUS' },
                 { color: 'purple', class: 'cat-purple', name: 'WHAT YOU ARE TO ME', words: 'MINE, PRETTY, PERFECT, GORGEOUS' }
             ];
@@ -593,19 +710,15 @@
                     const group = categories[i];
                     const tiles = document.querySelectorAll(`.conn-tile[data-group="${group.color}"]`);
 
-                    // Highlight one by one
                     for (let j = 0; j < tiles.length; j++) {
                         tiles[j].classList.add('selected');
                         await sleep(300);
                     }
                     
-                    // Pause to show the matched 4
                     await sleep(600);
 
-                    // Hide the individual tiles
                     tiles.forEach(t => t.style.display = 'none');
 
-                    // Create the solved row and append above the grid
                     const solvedRow = document.createElement('div');
                     solvedRow.className = `conn-solved-row ${group.class}`;
                     solvedRow.innerHTML = `
@@ -614,17 +727,14 @@
                     `;
                     solvedContainer.appendChild(solvedRow);
 
-                    // Wait a bit before starting next category
                     await sleep(500);
                 }
                 
-                // Remove empty grid container at the end
                 connGrid.style.display = 'none';
             });
         });
 
-
-        // --- GAME 2: LOVDLE (OVERLAY) LOGIC ---
+        // --- GAME 3: LOVDLE (OVERLAY) LOGIC ---
         document.addEventListener("DOMContentLoaded", () => {
             const trigger = document.getElementById("lovdleTrigger");
             const overlay = document.getElementById("lovdleOverlay");
@@ -635,19 +745,18 @@
             trigger.addEventListener("click", (e) => {
                 e.preventDefault();
                 overlay.classList.add("active");
-                
-                // Prevent scrolling on background
                 document.body.style.overflow = "hidden";
 
                 if (!hasPlayed) {
                     hasPlayed = true;
-                    let delay = 600; // Wait for overlay to fade in
+                    let delay = 600; 
                     
                     tiles.forEach((tile) => {
                         setTimeout(() => {
+                            tile.textContent = tile.getAttribute('data-letter');
                             tile.classList.add("reveal");
                         }, delay);
-                        delay += 120; // Stagger effect
+                        delay += 120;
                     });
                 }
             });
