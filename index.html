@@ -9,13 +9,13 @@
             /* Main Layout Colors */
             --bg-pure-black: #000000;
             --bg-terminal: #0A0A0A;
-            --bg-data-box: #1A1A1A;
+            --bg-data-box: #141414;
             --text-primary: #FFFFFF;
-            --text-secondary: #CCCCCC;
+            --text-secondary: #A1A1AA;
             --accent-orange: #FF9500;
             --color-gain: #00D084;
             --color-loss: #FF5A5F;
-            --border-subtle: #333333;
+            --border-subtle: #27272A;
             
             /* Ticker Card Colors */
             --card-bg: #E6E6E6;
@@ -24,10 +24,9 @@
             --card-gain: #2E8C59; 
             --live-color: #FF7D7D;
             
-            /* Typography */
-            --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            --font-mono: "Courier New", "Monaco", monospace;
-            --font-data: "Roboto Mono", "Courier New", monospace;
+            /* Modern Typography Setup */
+            --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-data: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         * {
@@ -45,33 +44,37 @@
             overflow-x: hidden;
         }
 
-        /* 1. NEW HEADER (WHITE, NOT STICKY) */
+        .tabular-nums {
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.02em;
+        }
+
+        /* 1. HEADER */
         .bbg-white-header {
             background-color: #FFFFFF;
             padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            /* Removed sticky positioning as requested */
         }
 
         .bbg-logo-black {
             font-family: var(--font-sans);
-            font-weight: 700; 
+            font-weight: 800; 
             font-size: 32px;
             color: #000000;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
             line-height: 1;
         }
 
-        /* 2. TICKER BAR (CARDS) */
+        /* 2. TICKER BAR */
         .ticker-wrap-cards {
             background-color: #000000;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid var(--border-subtle);
             border-top: 1px solid #000;
             display: flex;
             align-items: center;
-            padding: 10px 0;
+            padding: 12px 0;
             overflow: hidden;
             width: 100%;
         }
@@ -111,9 +114,10 @@
 
         .ticker-name {
             color: var(--card-text);
-            font-weight: 600;
-            font-size: 15px;
+            font-weight: 700;
+            font-size: 14px;
             letter-spacing: -0.3px;
+            text-transform: uppercase;
         }
 
         .ticker-value-row {
@@ -122,11 +126,11 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            font-weight: 400;
+            font-weight: 500;
         }
 
-        .card-gain { color: var(--card-gain); font-weight: 500; }
-        .card-loss { color: var(--card-loss); font-weight: 500; }
+        .card-gain { color: var(--card-gain); font-weight: 600; }
+        .card-loss { color: var(--card-loss); font-weight: 600; }
 
         /* 3. LIVE INDICATOR */
         .live-indicator-bar {
@@ -136,9 +140,11 @@
             justify-content: center;
             align-items: center;
             gap: 8px;
-            font-size: 20px;
-            font-weight: 500;
+            font-size: 18px;
+            font-weight: 600;
             color: var(--live-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .live-dot {
@@ -150,9 +156,9 @@
         }
 
         @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
+            0% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 125, 125, 0.7); }
+            50% { opacity: 0.6; box-shadow: 0 0 0 8px rgba(255, 125, 125, 0); }
+            100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 125, 125, 0); }
         }
 
         /* 4. LAYOUT CONTAINER */
@@ -167,29 +173,34 @@
 
         /* TERMINAL BOXES (Shared) */
         .term-box {
-            background-color: var(--bg-terminal);
+            background-color: var(--bg-data-box);
             border: 1px solid var(--border-subtle);
+            border-radius: 6px;
             padding: 20px;
             margin-bottom: 25px;
-            font-family: var(--font-mono);
+            font-family: var(--font-data);
             font-size: 14px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
 
         .term-box-header {
             border-bottom: 1px solid var(--border-subtle);
-            padding-bottom: 10px;
+            padding-bottom: 12px;
             margin-bottom: 15px;
-            font-weight: bold;
+            font-weight: 700;
             color: var(--text-primary);
             text-transform: uppercase;
             display: flex;
             justify-content: space-between;
+            letter-spacing: 0.5px;
+            font-size: 13px;
         }
 
         .term-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
 
         .term-row span:first-child { color: var(--text-secondary); }
@@ -197,99 +208,213 @@
         /* LEFT SIDEBAR */
         .sidebar { display: flex; flex-direction: column; }
         .hero-term { color: var(--color-gain); }
-        .hero-term .term-row span:first-child { color: var(--text-primary); }
-
-        .related-links ul { list-style: none; }
-        .related-links li { margin-bottom: 12px; display: flex; gap: 10px; }
-        .related-links a { color: #66B2FF; text-decoration: none; font-family: var(--font-sans); }
-        .related-links a:hover { text-decoration: underline; }
+        .hero-term .term-row span:first-child { color: var(--text-secondary); }
+        .hero-term .term-row span:last-child { font-weight: 600; }
 
         /* RIGHT ARTICLE */
         .article { max-width: 100%; overflow: hidden; }
         
         .headline { 
-            font-size: 42px; 
+            font-size: 46px; 
             font-weight: 800; 
             line-height: 1.1; 
-            margin-bottom: 15px; 
-            letter-spacing: -1px; 
+            margin-bottom: 16px; 
+            letter-spacing: -1.5px; 
+            color: #FFFFFF;
         }
         
         .subheadline { 
             font-size: 20px; 
             font-weight: 400; 
             color: var(--text-secondary); 
-            margin-bottom: 25px; 
-            line-height: 1.4; 
+            margin-bottom: 30px; 
+            line-height: 1.5; 
         }
         
         .metadata { 
-            font-family: var(--font-mono); 
-            font-size: 13px; 
+            font-size: 12px; 
             color: var(--text-secondary); 
             margin-bottom: 40px; 
             padding-bottom: 20px; 
             border-bottom: 1px solid var(--border-subtle); 
             text-transform: uppercase; 
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
         
         .article p { 
-            font-size: 17px; 
+            font-size: 18px; 
             margin-bottom: 24px; 
-            color: #E5E5E5; 
+            color: #D4D4D8;
+            font-weight: 400;
         }
 
-        /* EMBEDDED CHART */
-        .chart-box { 
-            background-color: var(--bg-pure-black); 
-            border: 1px solid var(--border-subtle); 
-            padding: 20px; 
-            margin: 40px 0; 
-            overflow-x: auto; 
-            -webkit-overflow-scrolling: touch;
+        /* --- MODERN VISUAL CHART --- */
+        .chart-container {
+            background-color: var(--bg-data-box);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        
-        .chart-pre { 
-            font-family: var(--font-mono); 
-            font-size: 13px; 
-            line-height: 1.4; 
-            color: var(--color-gain); 
-            white-space: pre; 
+
+        .chart-title {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 12px;
         }
+
+        .chart-wrapper {
+            display: flex;
+            height: 250px;
+            align-items: flex-end;
+            position: relative;
+            padding-left: 30px;
+            padding-bottom: 30px;
+        }
+
+        .y-axis {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .chart-grid {
+            position: absolute;
+            left: 30px;
+            right: 0;
+            top: 6px;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1;
+        }
+
+        .grid-line {
+            height: 1px;
+            width: 100%;
+            background-color: #27272A;
+            border-top: 1px dashed #3F3F46;
+        }
+
+        .bars-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            align-items: flex-end;
+        }
+
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 50px;
+        }
+
+        .bar {
+            width: 100%;
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            transition: height 1s ease-out;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .bar.q1 { background: linear-gradient(180deg, #FF5A5F 0%, #7F2D2F 100%); }
+        .bar.q2 { background: linear-gradient(180deg, #FF5A5F 0%, #7F2D2F 100%); }
+        .bar.q3 { background: linear-gradient(180deg, #00D084 0%, #006842 100%); }
+        .bar.love { 
+            background: linear-gradient(180deg, #FF7D7D 0%, #FF0055 100%); 
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+        }
+
+        .bar.q1 .bar-value, .bar.q2 .bar-value { color: var(--color-loss); }
+        .bar.q3 .bar-value { color: var(--color-gain); }
+        .bar.love .bar-value { color: #FF7D7D; text-shadow: 0 0 5px rgba(255,125,125,0.5); font-size: 18px; top: -30px;}
+
+        .x-axis-label {
+            position: absolute;
+            bottom: -30px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            line-height: 1.2;
+        }
+        .x-axis-label span { display: block; font-size: 10px; color: #71717A; font-weight: 500; }
 
         /* ANALYST QUOTES */
-        .quotes-box { background-color: var(--bg-data-box); border: 1px solid var(--border-subtle); padding: 25px; margin: 40px 0; }
-        .quote { margin-bottom: 20px; }
+        .quotes-box { 
+            background-color: var(--bg-data-box); 
+            border: 1px solid var(--border-subtle); 
+            border-radius: 8px;
+            padding: 30px; 
+            margin: 40px 0; 
+            border-left: 4px solid var(--accent-orange);
+        }
+        .quote { margin-bottom: 24px; }
         .quote:last-child { margin-bottom: 0; }
-        .quote-text { font-family: var(--font-sans); font-style: italic; font-size: 16px; margin-bottom: 5px; }
-        .quote-attr { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+        .quote-text { font-size: 18px; margin-bottom: 8px; font-weight: 500; color: #FFFFFF; font-style: italic; }
+        .quote-attr { font-size: 13px; color: var(--accent-orange); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
 
         /* TABLES */
         .table-wrapper {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            margin: 30px 0;
+            margin: 20px 0;
         }
-        .data-table { width: 100%; border-collapse: collapse; font-family: var(--font-data); font-size: 14px; min-width: 300px; }
-        .data-table th, .data-table td { padding: 10px; text-align: right; border-bottom: 1px solid var(--border-subtle); }
-        .data-table th:first-child, .data-table td:first-child { text-align: left; color: var(--text-secondary); }
-        .data-table tr:hover { background-color: #111; }
-        .gain { color: var(--color-gain); }
-        .loss { color: var(--color-loss); }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 300px; }
+        .data-table th, .data-table td { padding: 12px 10px; text-align: right; border-bottom: 1px solid var(--border-subtle); }
+        .data-table th:first-child, .data-table td:first-child { text-align: left; color: var(--text-secondary); font-weight: 500;}
+        .data-table td.tabular-nums { font-weight: 600; }
+        .data-table tr:hover { background-color: rgba(255,255,255,0.03); }
+        .gain { color: var(--color-gain); font-weight: 700; }
+        .loss { color: var(--color-loss); font-weight: 700; }
 
         /* PROGRESS BARS */
-        .sentiment-row { display: flex; align-items: center; margin-bottom: 10px; font-family: var(--font-mono); }
-        .sentiment-label { width: 80px; flex-shrink: 0; }
-        .sentiment-bar-bg { flex-grow: 1; height: 12px; background-color: #222; margin: 0 10px; position: relative; }
-        .sentiment-bar-fill { height: 100%; background-color: var(--color-gain); }
-        .sentiment-bar-fill.neutral { background-color: var(--text-secondary); }
+        .sentiment-row { display: flex; align-items: center; margin-bottom: 12px; font-weight: 600; font-size: 13px; }
+        .sentiment-label { width: 80px; flex-shrink: 0; color: var(--text-secondary); text-transform: uppercase;}
+        .sentiment-bar-bg { flex-grow: 1; height: 8px; background-color: #27272A; margin: 0 15px; border-radius: 4px; overflow: hidden; }
+        .sentiment-bar-fill { height: 100%; background-color: var(--color-gain); border-radius: 4px; }
+        .sentiment-bar-fill.neutral { background-color: #A1A1AA; }
         .sentiment-bar-fill.bearish { background-color: var(--color-loss); }
 
         /* BOTTOM LINE */
-        .bottom-line { border-top: 3px solid var(--text-primary); border-bottom: 3px solid var(--text-primary); padding: 30px 0; margin: 50px 0; }
-        .bottom-line h3 { font-family: var(--font-sans); font-size: 20px; text-transform: uppercase; margin-bottom: 15px; }
-        .bottom-line p { margin-bottom: 15px; }
-        .bottom-line-data { font-family: var(--font-mono); background: var(--bg-data-box); padding: 15px; margin-top: 20px; border-left: 4px solid var(--color-gain); font-size: 14px;}
+        .bottom-line { border-top: 2px solid var(--text-primary); border-bottom: 2px solid var(--text-primary); padding: 40px 0; margin: 60px 0; }
+        .bottom-line h3 { font-size: 24px; font-weight: 800; text-transform: uppercase; margin-bottom: 20px; letter-spacing: -0.5px; }
+        .bottom-line p { margin-bottom: 20px; font-size: 18px; color: #D4D4D8; }
+        .bottom-line-data { 
+            background: var(--bg-data-box); 
+            padding: 20px; 
+            margin-top: 30px; 
+            border-left: 4px solid var(--color-gain); 
+            font-size: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        .bottom-line-data div { margin-bottom: 8px; }
 
         /* MOBILE RESPONSIVE CSS */
         @media (max-width: 900px) {
@@ -300,18 +425,20 @@
             }
             .sidebar { order: 2; }
             .article { order: 1; }
-            .headline { font-size: 32px; letter-spacing: -0.5px; }
+            .headline { font-size: 34px; letter-spacing: -1px; }
             .subheadline { font-size: 18px; }
-            .article p { font-size: 16px; }
-            .term-box { padding: 15px; }
-            .chart-pre { font-size: 11px; } /* Prevent chart breaking on small screens */
-            .quotes-box { padding: 15px; }
+            .article p { font-size: 17px; }
+            .term-box, .chart-container, .quotes-box { padding: 15px; }
+            .chart-wrapper { height: 200px; padding-left: 25px; }
+            .y-axis { font-size: 10px; }
+            .bar-group { width: 40px; }
+            .bar-value { font-size: 12px; }
         }
 
         @media (max-width: 400px) {
             .headline { font-size: 28px; }
-            .data-table { font-size: 12px; }
-            .bottom-line-data { font-size: 12px; }
+            .data-table { font-size: 13px; }
+            .bottom-line-data { font-size: 14px; }
         }
     </style>
 </head>
@@ -329,86 +456,86 @@
                 <!-- Set 1 -->
                 <div class="ticker-card">
                     <div class="ticker-name">AARA Q3</div>
-                    <div class="ticker-value-row">
+                    <div class="ticker-value-row tabular-nums">
                         <span>100.00</span>
                         <span class="card-gain">▲ FLAWLESS</span>
                     </div>
                 </div>
                 <div class="ticker-card">
-                    <div class="ticker-name">MY_HEART</div>
-                    <div class="ticker-value-row">
-                        <span>Infinite</span>
-                        <span class="card-gain">▲ 999%</span>
+                    <div class="ticker-name">GS_QUANTS</div>
+                    <div class="ticker-value-row tabular-nums">
+                        <span>Wrong</span>
+                        <span class="card-loss">▼ In Shambles</span>
                     </div>
                 </div>
                 <div class="ticker-card">
-                    <div class="ticker-name">CHEM_Q1</div>
-                    <div class="ticker-value-row">
-                        <span>Past</span>
-                        <span class="card-loss">▼ Irrelevant</span>
+                    <div class="ticker-name">MS_WEALTH</div>
+                    <div class="ticker-value-row tabular-nums">
+                        <span>Priceless</span>
+                        <span class="card-gain">▲ Untouchable</span>
                     </div>
                 </div>
                 <div class="ticker-card">
-                    <div class="ticker-name">PHYS_Q2</div>
-                    <div class="ticker-value-row">
-                        <span>Past</span>
-                        <span class="card-loss">▼ Forgotten</span>
+                    <div class="ticker-name">PIERPOINT</div>
+                    <div class="ticker-value-row tabular-nums">
+                        <span>Energy</span>
+                        <span class="card-gain">▲ Ruthless</span>
                     </div>
                 </div>
                 <div class="ticker-card">
                     <div class="ticker-name">KISSES</div>
-                    <div class="ticker-value-row">
+                    <div class="ticker-value-row tabular-nums">
                         <span>1,000,000</span>
                         <span class="card-gain">▲ Owed</span>
                     </div>
                 </div>
                 <div class="ticker-card">
                     <div class="ticker-name">PROUD_BF</div>
-                    <div class="ticker-value-row">
+                    <div class="ticker-value-row tabular-nums">
                         <span>Maxed Out</span>
                         <span class="card-gain">▲ 3000%</span>
                     </div>
                 </div>
                 
-                <!-- Set 2 (Duplicated for seamless infinite scrolling) -->
+                <!-- Set 2 (Duplicated for seamless scrolling) -->
                 <div class="ticker-card">
                     <div class="ticker-name">AARA Q3</div>
-                    <div class="ticker-value-row">
+                    <div class="ticker-value-row tabular-nums">
                         <span>100.00</span>
                         <span class="card-gain">▲ FLAWLESS</span>
                     </div>
                 </div>
                 <div class="ticker-card">
-                    <div class="ticker-name">MY_HEART</div>
-                    <div class="ticker-value-row">
-                        <span>Infinite</span>
-                        <span class="card-gain">▲ 999%</span>
+                    <div class="ticker-name">GS_QUANTS</div>
+                    <div class="ticker-value-row tabular-nums">
+                        <span>Wrong</span>
+                        <span class="card-loss">▼ In Shambles</span>
                     </div>
                 </div>
                 <div class="ticker-card">
-                    <div class="ticker-name">CHEM_Q1</div>
-                    <div class="ticker-value-row">
-                        <span>Past</span>
-                        <span class="card-loss">▼ Irrelevant</span>
+                    <div class="ticker-name">MS_WEALTH</div>
+                    <div class="ticker-value-row tabular-nums">
+                        <span>Priceless</span>
+                        <span class="card-gain">▲ Untouchable</span>
                     </div>
                 </div>
                 <div class="ticker-card">
-                    <div class="ticker-name">PHYS_Q2</div>
-                    <div class="ticker-value-row">
-                        <span>Past</span>
-                        <span class="card-loss">▼ Forgotten</span>
+                    <div class="ticker-name">PIERPOINT</div>
+                    <div class="ticker-value-row tabular-nums">
+                        <span>Energy</span>
+                        <span class="card-gain">▲ Ruthless</span>
                     </div>
                 </div>
                 <div class="ticker-card">
                     <div class="ticker-name">KISSES</div>
-                    <div class="ticker-value-row">
+                    <div class="ticker-value-row tabular-nums">
                         <span>1,000,000</span>
                         <span class="card-gain">▲ Owed</span>
                     </div>
                 </div>
                 <div class="ticker-card">
                     <div class="ticker-name">PROUD_BF</div>
-                    <div class="ticker-value-row">
+                    <div class="ticker-value-row tabular-nums">
                         <span>Maxed Out</span>
                         <span class="card-gain">▲ 3000%</span>
                     </div>
@@ -433,27 +560,27 @@
                     <span>AARA</span>
                     <span>EQUITY (OF MY HEART)</span>
                 </div>
-                <div style="color: #fff; margin-bottom: 15px;">Aaradhya Ltd.</div>
+                <div style="color: #fff; margin-bottom: 18px; font-weight: 700; font-size: 16px;">Aaradhya Ltd.</div>
                 
                 <div class="term-row"><span>Last Price</span><span class="gain">Priceless</span></div>
-                <div class="term-row"><span>Q3 (English)</span><span class="gain">+100.00 ▲</span></div>
-                <div class="term-row"><span>% Change</span><span class="gain">Infinity ▲</span></div>
+                <div class="term-row tabular-nums"><span>Q3 (English)</span><span class="gain">+100.00 ▲</span></div>
+                <div class="term-row tabular-nums"><span>% Change</span><span class="gain">Infinity ▲</span></div>
                 <div class="term-row"><span>Volume</span><span>Loud & Proud</span></div>
                 <br>
                 <div class="term-row"><span>Open</span><span>Gorgeous</span></div>
-                <div class="term-row"><span>High (Proj)</span><span>100.00</span></div>
+                <div class="term-row tabular-nums"><span>High (Proj)</span><span>100.00</span></div>
                 <div class="term-row"><span>Low (Q1/Q2)</span><span>Still Perfect</span></div>
                 <div class="term-row"><span>Mkt Cap</span><span>Immeasurable</span></div>
                 <br>
                 <div class="term-row"><span>52W Range</span><span>Cute - Breathtaking</span></div>
-                <div class="term-row"><span>Beta</span><span>0.0 (Perfectly Stable)</span></div>
+                <div class="term-row tabular-nums"><span>Beta</span><span>0.0 (Stable)</span></div>
                 <div class="term-row"><span>P/E Ratio</span><span>Too Precious</span></div>
             </div>
 
             <!-- MARKET DEPTH -->
             <div class="term-box">
                 <div class="term-box-header">ROMANCE DEPTH</div>
-                <div class="term-row" style="color:var(--text-secondary); border-bottom:1px solid #333; padding-bottom:5px; margin-bottom:10px;">
+                <div class="term-row" style="color:var(--text-secondary); border-bottom:1px solid var(--border-subtle); padding-bottom:8px; margin-bottom:12px;">
                     <span>MY BID</span><span>HER ASK</span>
                 </div>
                 <div class="term-row"><span>Infinite Hugs</span><span>Ice Cream</span></div>
@@ -469,7 +596,7 @@
             <!-- TECHNICAL INDICATORS -->
             <div class="term-box">
                 <div class="term-box-header">TECHNICAL INDICATORS</div>
-                <div class="term-row"><span>RSI (14-day)</span><span>100.0</span></div>
+                <div class="term-row tabular-nums"><span>RSI (14-day)</span><span>100.0</span></div>
                 <div class="term-row"><span>Signal:</span><span class="gain">Overwhelmingly Cute</span></div>
                 <br>
                 <div class="term-row"><span>MACD</span><span class="gain">Bullish</span></div>
@@ -484,89 +611,125 @@
         <!-- RIGHT ARTICLE -->
         <article class="article">
             <!-- HEADLINE -->
-            <h1 class="headline">AARADHYA CRUSHES Q3: ENGLISH EXAM FLAWLESS, BOYFRIEND’S HEART HITS ALL-TIME HIGH</h1>
-            <h2 class="subheadline">After a brutal bear market in Chemistry and Physics, the Humanities division saves the fiscal year. Chief Sentiment Officer (me) issues a "FOREVER HOLD" rating.</h2>
+            <h1 class="headline">AARADHYA CRUSHES Q3: ENGLISH EXAM FLAWLESS, WALL STREET QUANTS IN SHAMBLES</h1>
+            <h2 class="subheadline">After a brutal bear market in Chemistry and Physics, the Humanities division saves the fiscal year with pure Pierpoint ruthlessness. Chief Sentiment Officer (me) issues a "FOREVER HOLD" rating.</h2>
             
             <div class="metadata">
                 By The Desk of The Proudest Partner Alive &nbsp;|&nbsp; 4 min read
             </div>
 
             <!-- ARTICLE BODY -->
-            <p>Aaradhya posted an absolutely breathtaking result in her Q3 English Language & Literature examination, marking a decisive turnaround that left primary stakeholders (me) completely in awe. Preliminary self-assessment suggests a flawless score of 100/100, finally ending the volatility seen earlier in the fiscal calendar.</p>
+            <p>Aaradhya posted an absolutely breathtaking result in her Q3 English Language & Literature examination, marking a decisive turnaround that left primary stakeholders (me) completely in awe. Preliminary self-assessment suggests a flawless score of <span class="tabular-nums">100/100</span>, finally ending the volatility seen earlier in the fiscal calendar.</p>
             
-            <p>"The execution was clean, elegant, and frankly, kind of hot," said a source close to the matter, speaking from the position of holding her hand. "She controlled what she could control, blocked out the noise, and delivered an alpha-generating performance in prose and poetry."</p>
+            <p>"She approached the literature section with the ruthless efficiency of Harper Stern booking a massive block trade," said a source close to the matter, speaking from the position of holding her hand. "She wore her school uniform like a Pierpoint purple fleece. Pure intimidation. She blocked out the noise and ripped the face off the CBSE board."</p>
 
-            <p>The stellar showing comes after a notoriously annoying Q1 (Chemistry) and Q2 (Physics). During that "Sciences Bear Market," some board members worried about pressure management. However, internal sentiment remained stubbornly bullish. As the lead portfolio manager of her heart, I maintained a "Strong Buy" rating throughout the entire dip.</p>
+            <p>The stellar showing comes after a notoriously annoying Q1 (Chemistry) and Q2 (Physics). During that "Sciences Bear Market," some board members worried about pressure management. Goldman Sachs quants ran 10,000 Monte Carlo simulations, but frankly, their models completely failed to account for how beautiful she looked studying at 2 AM. As the lead portfolio manager of her heart, I bought the dip and maintained a "Strong Buy" rating throughout.</p>
 
             <!-- ANALYST QUOTES -->
             <div class="quotes-box">
-                <div class="term-box-header">WHAT THE STREET IS SAYING</div>
                 <div class="quote">
-                    <div class="quote-text">"Her prose is as flawless as her smile. Chemistry and Physics were just a correction. We're upgrading to SOULMATE."</div>
-                    <div class="quote-attr">— Chief Sentiment Officer, Boyfriend Capital LLC</div>
-                </div>
-                <div class="quote">
-                    <div class="quote-text">"We were slightly worried during Q2 physics, but honestly, gravity is entirely irrelevant when she's already the center of my universe."</div>
+                    <div class="quote-text">"Morgan Stanley’s wealth management desk called asking for my secret to securing an asset this perfect. I hung up. You can't put a price on my girl."</div>
                     <div class="quote-attr">— Director of Romantics, Wall Street</div>
                 </div>
                 <div class="quote">
-                    <div class="quote-text">"The way she handled that Q3 literature section? Literal chills. She's a killer. The numbers don't lie, and neither do my feelings."</div>
-                    <div class="quote-attr">— Anonymous Trader (Me, staring lovingly)</div>
+                    <div class="quote-text">"I am a man, and I am relentless. But she is my girl, and her academic comeback is legendary. Put the phone down and buy."</div>
+                    <div class="quote-attr">— Eric Tao (Probably)</div>
+                </div>
+                <div class="quote">
+                    <div class="quote-text">"Her prose is as flawless as her smile. Chemistry and Physics were just a minor correction. We're upgrading her status to SOULMATE."</div>
+                    <div class="quote-attr">— Chief Sentiment Officer, Boyfriend Capital LLC</div>
                 </div>
             </div>
 
-            <p>According to analysts at the Romance Education Desk, the Q3 performance indicates a structural shift in Aaradhya's already massive intellectual capital. She basically walked into the exam hall, looked at the English paper, and decided to end its whole career.</p>
+            <p>According to analysts at the Romance Education Desk, the Q3 performance indicates a structural shift in Aaradhya's already massive intellectual capital. This wasn't just a pass; it was the trade of the year. She basically walked into the exam hall, looked at the English paper, and decided to end its whole career.</p>
 
-            <!-- PERFORMANCE CHART -->
-            <div class="chart-box">
-                <div class="term-box-header">AARADHYA'S Q1-Q3 RECOVERY TIMELINE</div>
-<pre class="chart-pre">
- 100│ ──────────────────────────────● My Love For Her
-    │                               ● Q3: English (100)
-  90│    
-    │           
-  80│      ● Q1: Chemistry (82)
-    │
-  70│                  ● Q2: Physics (79)
-    │
-    └──────────────────────────────────────────────
-        January       February      March (Now)
-        
-    Note: Fluctuations in Q1/Q2 have exactly 0.00% 
-    impact on how utterly perfect she is to me.
-</pre>
+            <!-- MODERN VISUAL CSS CHART -->
+            <div class="chart-container">
+                <div class="chart-title">Aaradhya's Q1-Q3 Recovery & My Heart Rate</div>
+                
+                <div class="chart-wrapper">
+                    <div class="y-axis tabular-nums">
+                        <span>100</span>
+                        <span>75</span>
+                        <span>50</span>
+                        <span>25</span>
+                        <span>0</span>
+                    </div>
+                    
+                    <div class="chart-grid">
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+
+                    <div class="bars-container">
+                        <!-- Q1 Bar -->
+                        <div class="bar-group">
+                            <div class="bar q1" style="height: 82%;">
+                                <span class="bar-value tabular-nums">82</span>
+                            </div>
+                            <div class="x-axis-label">Q1<span>Chem</span></div>
+                        </div>
+
+                        <!-- Q2 Bar -->
+                        <div class="bar-group">
+                            <div class="bar q2" style="height: 79%;">
+                                <span class="bar-value tabular-nums">79</span>
+                            </div>
+                            <div class="x-axis-label">Q2<span>Phys</span></div>
+                        </div>
+
+                        <!-- Q3 Bar -->
+                        <div class="bar-group">
+                            <div class="bar q3" style="height: 100%;">
+                                <span class="bar-value tabular-nums">100</span>
+                            </div>
+                            <div class="x-axis-label" style="color:#00D084;">Q3<span>English</span></div>
+                        </div>
+
+                        <!-- Love Bar -->
+                        <div class="bar-group">
+                            <div class="bar love" style="height: 110%;">
+                                <span class="bar-value tabular-nums">∞</span>
+                            </div>
+                            <div class="x-axis-label" style="color:#FF7D7D;">Love<span>For Her</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <p>Market depth shows a tight alignment between how smart she is and how absolutely gorgeous she looked walking out of the exam hall. Over 240 hours of preparation time were logged. It's clear she's internalized the "this is your year" energy, completely maxing out her humanities alpha to save the fiscal year.</p>
+            <p>Market depth shows a tight alignment between how smart she is and how absolutely gorgeous she looked walking out of the exam hall. Over <span class="tabular-nums">240</span> hours of preparation time were logged. It's clear she's internalized the "this is your year" energy, hedging against the downside risk of the sciences by completely maxing out her humanities alpha to save the fiscal year.</p>
 
             <!-- THE NUMBERS TABLE -->
             <div class="term-box">
                 <div class="term-box-header">THE METRICS THAT MATTER</div>
                 <div class="table-wrapper">
                     <table class="data-table">
-                        <tr><td>Expected Score (Q3 English)</td><td>100/100</td></tr>
+                        <tr><td>Expected Score (Q3 English)</td><td class="tabular-nums">100/100</td></tr>
                         <tr><td>My Pride Index</td><td class="gain">Bursting ▲</td></tr>
                         <tr><td>Her Cuteness Level</td><td class="gain">Unquantifiable ▲</td></tr>
-                        <tr><td colspan="2" style="border:none; height:10px;"></td></tr>
-                        <tr><td>Preparation Time Logged</td><td>~240 hrs</td></tr>
-                        <tr><td>Hours I Spent Missing Her</td><td>~240 hrs</td></tr>
+                        <tr><td colspan="2" style="border:none; height:15px;"></td></tr>
+                        <tr><td>Preparation Time Logged</td><td class="tabular-nums">~240 hrs</td></tr>
+                        <tr><td>Hours I Spent Missing Her</td><td class="tabular-nums">~240 hrs</td></tr>
                         <tr><td>Kisses Owed for Hard Work</td><td class="gain">Infinite ▲</td></tr>
-                        <tr><td colspan="2" style="border:none; height:10px;"></td></tr>
+                        <tr><td colspan="2" style="border:none; height:15px;"></td></tr>
                         <tr><td><strong>Previous Quarters</strong></td><td></td></tr>
-                        <tr><td>Q1: Chemistry</td><td class="loss">82/100 ▼</td></tr>
-                        <tr><td>Q2: Physics</td><td class="loss">79/100 ▼</td></tr>
-                        <tr><td colspan="2" style="border:none; height:10px;"></td></tr>
+                        <tr><td>Q1: Chemistry</td><td class="loss tabular-nums">82/100 ▼</td></tr>
+                        <tr><td>Q2: Physics</td><td class="loss tabular-nums">79/100 ▼</td></tr>
+                        <tr><td colspan="2" style="border:none; height:15px;"></td></tr>
                         <tr><td>Does Q1/Q2 Matter?</td><td class="gain">Absolutely Not ▲</td></tr>
-                        <tr><td>Our Personal Chemistry</td><td class="gain">10,000/100 ▲</td></tr>
+                        <tr><td>Our Personal Chemistry</td><td class="gain tabular-nums">10,000/100 ▲</td></tr>
                     </table>
                 </div>
             </div>
 
-            <h3 style="margin-top:40px; margin-bottom:15px; text-transform:uppercase; font-size: 18px;">Risk Factors to Monitor</h3>
+            <h3 style="margin-top:40px; margin-bottom:15px; text-transform:uppercase; font-size: 18px; letter-spacing: 0.5px;">Risk Factors to Monitor</h3>
             <p style="color:var(--text-secondary);">While initial indicators are overwhelmingly positive, analysts urge me to monitor several lingering risk factors:</p>
             <ul style="color:var(--text-secondary); margin-bottom:24px; padding-left:20px; font-size:16px;">
                 <li style="margin-bottom:10px;"><strong>Extreme Heart Volatility:</strong> The subject's smile has been known to cause sudden, violent spikes in my heart rate.</li>
-                <li style="margin-bottom:10px;"><strong>Over-Celebration Risk:</strong> There is a dangerously high probability of me buying too much ice cream, flowers, and gifts to celebrate this Q3 victory.</li>
+                <li style="margin-bottom:10px;"><strong>Over-Celebration Risk:</strong> There is a dangerously high probability of me taking her on too many dates to celebrate this Q3 victory. My wallet is ready.</li>
                 <li style="margin-bottom:10px;"><strong>Distraction Bias:</strong> Her beauty may distract CBSE evaluators from actually reading the test paper, though her flawless handwriting should mitigate this risk.</li>
                 <li><strong>Physics Irrelevance:</strong> It has become increasingly apparent that calculating her trajectory is impossible because she's an absolute star.</li>
             </ul>
@@ -587,10 +750,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>Q1</td><td>Chemistry</td><td>82</td><td class="gain">We have our own</td></tr>
-                            <tr><td>Q2</td><td>Physics</td><td>79</td><td class="gain">She defies gravity</td></tr>
-                            <tr><td>Q3</td><td>English</td><td>100*</td><td class="gain">Poetry in motion</td></tr>
-                            <tr><td>YTD</td><td>Being Adorable</td><td>1000</td><td class="gain">Every single day</td></tr>
+                            <tr><td>Q1</td><td>Chemistry</td><td class="tabular-nums">82</td><td class="gain">We have our own</td></tr>
+                            <tr><td>Q2</td><td>Physics</td><td class="tabular-nums">79</td><td class="gain">She defies gravity</td></tr>
+                            <tr><td>Q3</td><td>English</td><td class="tabular-nums">100*</td><td class="gain">Poetry in motion</td></tr>
+                            <tr><td>YTD</td><td>Being Adorable</td><td class="tabular-nums">1000</td><td class="gain">Every single day</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -603,17 +766,17 @@
                 <div class="sentiment-row">
                     <div class="sentiment-label">Simping</div>
                     <div class="sentiment-bar-bg"><div class="sentiment-bar-fill" style="width: 99%;"></div></div>
-                    <div>99%</div>
+                    <div class="tabular-nums">99%</div>
                 </div>
                 <div class="sentiment-row">
                     <div class="sentiment-label">In Awe</div>
                     <div class="sentiment-bar-bg"><div class="sentiment-bar-fill neutral" style="width: 99%;"></div></div>
-                    <div>99%</div>
+                    <div class="tabular-nums">99%</div>
                 </div>
                 <div class="sentiment-row">
                     <div class="sentiment-label">Bearish</div>
                     <div class="sentiment-bar-bg"><div class="sentiment-bar-fill bearish" style="width: 0%;"></div></div>
-                    <div>0%</div>
+                    <div class="tabular-nums">0%</div>
                 </div>
 
                 <div style="margin-top: 20px; border-top: 1px solid var(--border-subtle); padding-top: 15px; display: flex; justify-content: space-between;">
@@ -633,7 +796,7 @@
                     <div><strong>Price Target:</strong> Priceless</div>
                     <div><strong>Risk:</strong> LOW (I'm fully hedged in love)</div>
                     <br>
-                    <div style="color:var(--text-secondary)">Next Catalyst: Me taking her out to celebrate.</div>
+                    <div style="color:var(--text-secondary); font-size:13px; text-transform:uppercase;">Next Catalyst: Me taking her out to celebrate.</div>
                 </div>
             </div>
         </article>
