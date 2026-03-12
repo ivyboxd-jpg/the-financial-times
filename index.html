@@ -3,769 +3,641 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The New York Times</title>
+    <title>Aaradhya Crushes Q3 - Bloomberg</title>
     <style>
-        /* CSS Variables */
-        @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
-        
         :root {
-            --nyt-black: #121212;
-            --nyt-red: #D0021B;
-            --nyt-blue: #326891;
-            --nyt-gray: #555555;
-            --nyt-light-gray: #e2e2e2;
-            --bg-color: #ffffff;
+            /* Main Layout Colors */
+            --bg-pure-black: #000000;
+            --bg-terminal: #0A0A0A;
+            --bg-data-box: #1A1A1A;
+            --text-primary: #FFFFFF;
+            --text-secondary: #CCCCCC;
+            --accent-orange: #FF9500;
+            --color-gain: #00D084;
+            --color-loss: #FF5A5F;
+            --border-subtle: #333333;
             
-            /* Wordle Colors */
-            --wordle-empty-border: #d3d6da;
-            --wordle-green: #6aaa64;
+            /* Ticker Card Colors */
+            --card-bg: #E6E6E6;
+            --card-text: #000000;
+            --card-loss: #F07070; 
+            --card-gain: #2E8C59; 
+            --live-color: #FF7D7D;
             
-            /* Connections Colors */
-            --conn-bg: #f4f4f4;
-            --conn-selected: #5a594e;
-            --conn-yellow: #f9df6d;
-            --conn-green: #a0c35a;
-            --conn-blue: #b0c4ef;
-            --conn-purple: #ba81c5;
-
-            --font-serif: "Cheltenham", Georgia, serif;
-            --font-sans: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
-            --font-gothic: 'UnifrakturMaguntia', "Old English Text MT", blackletter, serif;
+            /* Typography */
+            --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            --font-mono: "Courier New", "Monaco", monospace;
+            --font-data: "Roboto Mono", "Courier New", monospace;
         }
 
-        /* Global Reset & Base Styles */
-        body, html {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: var(--bg-color);
-            font-family: var(--font-serif);
-            color: var(--nyt-black);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* NYT Header */
-        .top-nav {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            padding: 10px 20px;
+        body {
+            background-color: var(--bg-pure-black);
+            color: var(--text-primary);
             font-family: var(--font-sans);
-            font-size: 11px;
-            text-transform: uppercase;
-            color: var(--nyt-black);
-            border-bottom: 1px solid var(--nyt-light-gray);
-            flex-wrap: wrap;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
-        
-        .top-nav a { text-decoration: none; color: var(--nyt-black); cursor: pointer; }
-        .top-nav a:hover { text-decoration: underline; }
 
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 20px 10px;
+        /* 1. NEW HEADER (WHITE, NOT STICKY) */
+        .bbg-white-header {
+            background-color: #FFFFFF;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            /* Removed sticky positioning as requested */
+        }
+
+        .bbg-logo-black {
+            font-family: var(--font-sans);
+            font-weight: 700; 
+            font-size: 32px;
+            color: #000000;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        /* 2. TICKER BAR (CARDS) */
+        .ticker-wrap-cards {
+            background-color: #000000;
+            border-bottom: 1px solid #333;
+            border-top: 1px solid #000;
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .ticker-scroll-container {
+            flex-grow: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .ticker-scroll-inner {
+            display: inline-flex;
+            gap: 12px;
+            animation: ticker 25s linear infinite;
+            padding-left: 15px;
+        }
+
+        .ticker-scroll-inner:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .ticker-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 8px 14px;
+            min-width: 130px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-        }
-
-        /* Reduced font size for the masthead */
-        .masthead {
-            font-family: var(--font-gothic);
-            font-size: 42px; 
-            font-weight: normal;
-            text-align: center;
-            color: #000000;
-            margin: 0;
-            line-height: 1;
-            white-space: nowrap;
-        }
-
-        .date-bar {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            border-top: 1px solid var(--nyt-black);
-            border-bottom: 2px solid var(--nyt-black);
-            padding: 5px 0;
-            margin-top: 15px;
-            font-family: var(--font-sans);
-            font-size: 12px;
-            color: var(--nyt-black);
-        }
-
-        .date-bar-left, .date-bar-right { flex: 1; }
-        .date-bar-right { text-align: right; }
-        .date-bar-center { font-weight: bold; text-transform: uppercase; text-align: center; }
-
-        /* Article Layout */
-        .article-container {
-            max-width: 680px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            box-sizing: border-box;
-        }
-
-        .section-label {
-            color: var(--nyt-red);
-            font-size: 12px;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            margin-bottom: 15px;
-            font-family: var(--font-sans);
-        }
-
-        .headline {
-            font-size: 44px;
-            font-weight: bold;
-            font-style: italic;
-            line-height: 1.15;
-            margin: 0 0 16px 0;
-            color: var(--nyt-black);
-            letter-spacing: -0.5px;
-        }
-
-        .subheadline {
-            font-size: 20px;
-            font-weight: normal;
-            color: var(--nyt-gray);
-            line-height: 1.4;
-            margin: 0 0 25px 0;
-        }
-
-        .article-meta {
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--nyt-light-gray);
-            margin-bottom: 30px;
-        }
-
-        .byline {
-            font-size: 15px;
-            color: var(--nyt-black);
-            font-weight: bold;
-            margin: 0 0 3px 0;
-            font-family: var(--font-sans);
-        }
-
-        .date {
-            font-size: 13px;
-            color: var(--nyt-gray);
-            margin: 0;
-            font-family: var(--font-sans);
-        }
-
-        /* Typography & Body */
-        .article-body p {
-            font-size: 20px;
-            line-height: 1.65;
-            margin: 0 0 1.5em 0;
-            color: var(--nyt-black);
-        }
-
-        .article-body p:first-of-type::first-letter {
-            float: left;
-            font-size: 80px;
-            line-height: 60px;
-            padding-top: 4px;
-            padding-right: 8px;
-            padding-left: 3px;
-            font-family: var(--font-gothic);
-        }
-
-        /* Generic Play Button */
-        .play-btn {
-            background-color: #000;
-            color: #fff;
-            border: none;
-            border-radius: 20px;
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: bold;
-            font-family: var(--font-sans);
-            cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 15px;
-        }
-        .play-btn:hover { background-color: #333; }
-
-        /* -----------------------------------
-           GAME 1: THE MINI CROSSWORD
-           ----------------------------------- */
-        .game-wrapper {
-            margin: 50px 0;
-            padding: 30px 20px;
-            background-color: #ffffff;
-            border: 1px solid var(--nyt-light-gray);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-
-        .game-header {
-            font-family: var(--font-sans);
-            font-weight: bold;
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        
-        .game-sub {
-            font-family: var(--font-sans);
-            font-size: 14px;
-            color: var(--nyt-gray);
-            margin-bottom: 25px;
-        }
-
-        .mini-board {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            width: 240px;
-            height: 240px;
-            margin: 0 auto 25px;
-            border: 2px solid #000;
-            background-color: #000;
             gap: 2px;
         }
 
-        .mini-cell {
-            background-color: #fff;
-            position: relative;
+        .ticker-name {
+            color: var(--card-text);
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: -0.3px;
+        }
+
+        .ticker-value-row {
+            color: var(--card-text);
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 400;
+        }
+
+        .card-gain { color: var(--card-gain); font-weight: 500; }
+        .card-loss { color: var(--card-loss); font-weight: 500; }
+
+        /* 3. LIVE INDICATOR */
+        .live-indicator-bar {
+            background-color: #000000;
+            padding: 20px 0 10px 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: var(--font-sans);
+            gap: 8px;
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--live-color);
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--live-color);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        /* 4. LAYOUT CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 50px;
+        }
+
+        /* TERMINAL BOXES (Shared) */
+        .term-box {
+            background-color: var(--bg-terminal);
+            border: 1px solid var(--border-subtle);
+            padding: 20px;
+            margin-bottom: 25px;
+            font-family: var(--font-mono);
+            font-size: 14px;
+        }
+
+        .term-box-header {
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
             font-weight: bold;
-            font-size: 32px;
+            color: var(--text-primary);
             text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
         }
 
-        .mini-num {
-            position: absolute;
-            top: 3px;
-            left: 4px;
-            font-size: 11px;
-            font-weight: normal;
-            line-height: 1;
+        .term-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
         }
 
-        .mini-val {
-            color: transparent;
-            transition: color 0.1s;
+        .term-row span:first-child { color: var(--text-secondary); }
+
+        /* LEFT SIDEBAR */
+        .sidebar { display: flex; flex-direction: column; }
+        .hero-term { color: var(--color-gain); }
+        .hero-term .term-row span:first-child { color: var(--text-primary); }
+
+        .related-links ul { list-style: none; }
+        .related-links li { margin-bottom: 12px; display: flex; gap: 10px; }
+        .related-links a { color: #66B2FF; text-decoration: none; font-family: var(--font-sans); }
+        .related-links a:hover { text-decoration: underline; }
+
+        /* RIGHT ARTICLE */
+        .article { max-width: 100%; overflow: hidden; }
+        
+        .headline { 
+            font-size: 42px; 
+            font-weight: 800; 
+            line-height: 1.1; 
+            margin-bottom: 15px; 
+            letter-spacing: -1px; 
         }
         
-        .mini-val.solved {
-            color: var(--nyt-blue);
-            animation: popText 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        .subheadline { 
+            font-size: 20px; 
+            font-weight: 400; 
+            color: var(--text-secondary); 
+            margin-bottom: 25px; 
+            line-height: 1.4; 
+        }
+        
+        .metadata { 
+            font-family: var(--font-mono); 
+            font-size: 13px; 
+            color: var(--text-secondary); 
+            margin-bottom: 40px; 
+            padding-bottom: 20px; 
+            border-bottom: 1px solid var(--border-subtle); 
+            text-transform: uppercase; 
+        }
+        
+        .article p { 
+            font-size: 17px; 
+            margin-bottom: 24px; 
+            color: #E5E5E5; 
         }
 
-        .mini-clues {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            text-align: left;
-            font-family: var(--font-sans);
-            font-size: 14px;
-            border-top: 1px solid var(--nyt-light-gray);
-            padding-top: 20px;
+        /* EMBEDDED CHART */
+        .chart-box { 
+            background-color: var(--bg-pure-black); 
+            border: 1px solid var(--border-subtle); 
+            padding: 20px; 
+            margin: 40px 0; 
+            overflow-x: auto; 
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .chart-pre { 
+            font-family: var(--font-mono); 
+            font-size: 13px; 
+            line-height: 1.4; 
+            color: var(--color-gain); 
+            white-space: pre; 
         }
 
-        .mini-clues h4 { margin: 0 0 10px 0; text-transform: uppercase; font-size: 13px; color: #000; }
-        .mini-clues p { margin: 0 0 8px 0; line-height: 1.4; color: var(--nyt-black); }
-        .mini-clues p strong { color: #000; }
+        /* ANALYST QUOTES */
+        .quotes-box { background-color: var(--bg-data-box); border: 1px solid var(--border-subtle); padding: 25px; margin: 40px 0; }
+        .quote { margin-bottom: 20px; }
+        .quote:last-child { margin-bottom: 0; }
+        .quote-text { font-family: var(--font-sans); font-style: italic; font-size: 16px; margin-bottom: 5px; }
+        .quote-attr { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
 
-        /* -----------------------------------
-           GAME 2: CONNECTIONS 
-           ----------------------------------- */
-        .connections-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-bottom: 20px;
+        /* TABLES */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 30px 0;
+        }
+        .data-table { width: 100%; border-collapse: collapse; font-family: var(--font-data); font-size: 14px; min-width: 300px; }
+        .data-table th, .data-table td { padding: 10px; text-align: right; border-bottom: 1px solid var(--border-subtle); }
+        .data-table th:first-child, .data-table td:first-child { text-align: left; color: var(--text-secondary); }
+        .data-table tr:hover { background-color: #111; }
+        .gain { color: var(--color-gain); }
+        .loss { color: var(--color-loss); }
+
+        /* PROGRESS BARS */
+        .sentiment-row { display: flex; align-items: center; margin-bottom: 10px; font-family: var(--font-mono); }
+        .sentiment-label { width: 80px; flex-shrink: 0; }
+        .sentiment-bar-bg { flex-grow: 1; height: 12px; background-color: #222; margin: 0 10px; position: relative; }
+        .sentiment-bar-fill { height: 100%; background-color: var(--color-gain); }
+        .sentiment-bar-fill.neutral { background-color: var(--text-secondary); }
+        .sentiment-bar-fill.bearish { background-color: var(--color-loss); }
+
+        /* BOTTOM LINE */
+        .bottom-line { border-top: 3px solid var(--text-primary); border-bottom: 3px solid var(--text-primary); padding: 30px 0; margin: 50px 0; }
+        .bottom-line h3 { font-family: var(--font-sans); font-size: 20px; text-transform: uppercase; margin-bottom: 15px; }
+        .bottom-line p { margin-bottom: 15px; }
+        .bottom-line-data { font-family: var(--font-mono); background: var(--bg-data-box); padding: 15px; margin-top: 20px; border-left: 4px solid var(--color-gain); font-size: 14px;}
+
+        /* MOBILE RESPONSIVE CSS */
+        @media (max-width: 900px) {
+            .container { 
+                grid-template-columns: 1fr; 
+                gap: 30px;
+                padding: 0 15px;
+            }
+            .sidebar { order: 2; }
+            .article { order: 1; }
+            .headline { font-size: 32px; letter-spacing: -0.5px; }
+            .subheadline { font-size: 18px; }
+            .article p { font-size: 16px; }
+            .term-box { padding: 15px; }
+            .chart-pre { font-size: 11px; } /* Prevent chart breaking on small screens */
+            .quotes-box { padding: 15px; }
         }
 
-        .conn-tile {
-            background-color: var(--conn-bg);
-            color: #000;
-            font-family: var(--font-sans);
-            font-weight: bold;
-            font-size: 14px;
-            text-transform: uppercase;
-            aspect-ratio: 4/3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            user-select: none;
-            padding: 4px;
-            text-align: center;
-        }
-
-        .conn-tile.selected {
-            background-color: var(--conn-selected);
-            color: #ffffff;
-            transform: scale(0.95);
-        }
-
-        .conn-solved-container {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
-        .conn-solved-row {
-            border-radius: 6px;
-            padding: 16px;
-            text-align: center;
-            font-family: var(--font-sans);
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        .conn-solved-row .conn-name {
-            font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-        }
-
-        .conn-solved-row .conn-words {
-            font-size: 14px;
-            text-transform: uppercase;
-        }
-
-        .cat-yellow { background-color: var(--conn-yellow); }
-        .cat-green { background-color: var(--conn-green); }
-        .cat-blue { background-color: var(--conn-blue); }
-        .cat-purple { background-color: var(--conn-purple); color: #fff; }
-
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        @keyframes popText {
-            0% { transform: scale(0.5); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        /* -----------------------------------
-           GAME 3: LOVDLE (OVERLAY) 
-           ----------------------------------- */
-        .trigger-container {
-            text-align: center;
-            margin: 60px 0;
-        }
-
-        .lovdle-link {
-            color: var(--nyt-blue);
-            font-family: var(--font-serif);
-            font-size: 18px;
-            text-decoration: none;
-            cursor: pointer;
-            font-weight: bold;
-            border-bottom: 1px solid var(--nyt-blue);
-            padding-bottom: 2px;
-            transition: opacity 0.2s;
-        }
-
-        .lovdle-link:hover { opacity: 0.7; }
-
-        .lovdle-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(18, 18, 18, 0.98);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-        }
-
-        .lovdle-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .lovdle-close {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            color: #fff;
-            font-family: var(--font-sans);
-            font-size: 32px;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-
-        .lovdle-title {
-            color: #fff;
-            font-family: var(--font-gothic);
-            font-size: 36px;
-            margin-bottom: 50px;
-            letter-spacing: 1px;
-        }
-
-        .lovdle-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .wordle-row {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-        }
-
-        .tile {
-            width: 62px;
-            height: 62px;
-            border: 2px solid #3a3a3c;
-            background-color: transparent;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: var(--font-sans);
-            font-weight: bold;
-            font-size: 36px;
-            text-transform: uppercase;
-            color: transparent; 
-            box-sizing: border-box;
-            user-select: none;
-        }
-
-        @keyframes flipTileDark {
-            0% { transform: rotateX(0deg); background-color: transparent; border-color: #3a3a3c; color: transparent; }
-            49.9% { transform: rotateX(90deg); background-color: transparent; border-color: #3a3a3c; color: transparent; }
-            50% { transform: rotateX(90deg); background-color: var(--wordle-green); border-color: var(--wordle-green); color: #ffffff; }
-            100% { transform: rotateX(0deg); background-color: var(--wordle-green); border-color: var(--wordle-green); color: #ffffff; }
-        }
-
-        .tile.reveal { animation: flipTileDark 0.6s ease forwards; }
-
-        .site-footer {
-            border-top: 1px solid var(--nyt-light-gray);
-            padding: 30px 20px;
-            text-align: center;
-            font-family: var(--font-sans);
-            font-size: 12px;
-            color: var(--nyt-gray);
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 600px) {
-            .masthead { font-size: 36px; }
-            .headline { font-size: 34px; }
-            .article-body p { font-size: 18px; }
-            .date-bar { flex-direction: column; align-items: center; gap: 5px; }
-            .top-nav { display: none; }
-            .mini-clues { grid-template-columns: 1fr; gap: 10px; }
-            .conn-tile { font-size: 11px; }
-            .tile { width: 50px; height: 50px; font-size: 28px; }
-            .lovdle-title { font-size: 28px; margin-bottom: 30px;}
-        }
         @media (max-width: 400px) {
-            .mini-board { width: 200px; height: 200px; }
-            .mini-cell { font-size: 24px; }
-            .conn-tile { font-size: 9px; padding: 2px; }
-            .tile { width: 42px; height: 42px; font-size: 24px; gap: 6px; }
+            .headline { font-size: 28px; }
+            .data-table { font-size: 12px; }
+            .bottom-line-data { font-size: 12px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Mock NYT Navigation -->
-    <nav class="top-nav">
-        <a>World</a> <a>U.S.</a> <a>Politics</a> <a>N.Y.</a> <a>Business</a> 
-        <a>Opinion</a> <a>Tech</a> <a>Science</a> <a>Health</a> <a>Sports</a> 
-        <a>Arts</a> <a>Books</a> <a>Style</a> <a>Food</a> <a>Travel</a>
-    </nav>
-
-    <header class="header-container">
-        <h1 class="masthead">The New York Times</h1>
-        <div class="date-bar">
-            <div class="date-bar-left">Wednesday, March 11, 2026</div>
-            <div class="date-bar-center">Today's Paper</div>
-            <div class="date-bar-right">New York Edition</div>
-        </div>
+    <!-- 1. HEADER (NOT STICKY) -->
+    <header class="bbg-white-header">
+        <div class="bbg-logo-black">Bloomberg</div>
     </header>
 
-    <main class="article-container">
-        <div class="section-label">Opinion</div>
-        <h1 class="headline">A Highly Biased Assessment of Your Worth</h1>
-        <h2 class="subheadline">Spoiler: It has nothing to do with tomorrow’s exam.</h2>
-        
-        <div class="article-meta">
-            <div class="byline">By Niv</div>
-            <div class="date">March 11, 2026</div>
-        </div>
-        
-        <div class="article-body">
-            <p>I am looking at you right now through a screen, and I’m just going to say it: you are an absolute menace when you’re in the zone. You’ve got that deeply unserious, hyper-focused crease between your eyebrows. You are currently surrounded by an ungodly amount of paper, notebooks that have definitely seen better days, and a cup of something you made a while ago and promptly abandoned for the sake of English.</p>
-
-            <p>It’s highly distracting, honestly. You sitting there, wrapped up in the gravity of tomorrow’s exam, completely unaware of how incredibly gorgeous you look when you’re quietly strategizing. I am sitting here, a few states away, fighting the very strong, very irresponsible urge to book a flight immediately just so I can steal all your pens and force you to pay attention to me instead.</p>
-
-            <p>But I am exercising superhuman restraint, because I know what tomorrow is.</p>
-
-            <p>Three hours of sitting at a wobbly desk, trying to convince some terribly underpaid examiner that you deeply, spiritually resonate with the metaphor of a tree. I know how your mind works. And because I know you, I know exactly what kind of mental gymnastics are happening behind those pretty eyes right now. You are meticulously plotting an academic revenge arc.</p>
-
-            <p>The last two exams were, for lack of a better word, profoundly rude. You walked out of those halls knowing exactly what you were capable of, only for the paper to stubbornly refuse to cooperate. And because you are you—fierce, stubbornly brilliant, and maybe just a tiny bit competitive—you’ve decided that tomorrow is where you even the score. You’ve decided you need to absolutely annihilate this English paper to "make up" for the others.</p>
-
-            <p>Can we just pause for a second and appreciate how incredibly hot it is that you care this much? Seriously. The sheer force of your willpower is terrifying in the best way possible. But my god, Aaradhya, can we also acknowledge how wildly unnecessary it is for you to carry this much stress on your shoulders?</p>
-
-            <p>Long distance is hard enough without the CBSE catching strays and stressing out my girl. Before I give you my incredibly biased, entirely unsolicited advice for tomorrow, I actually hacked the NYT games section twice just to prove a point. Play these first.</p>
-
-            <!-- GAME 1: THE MINI CROSSWORD -->
-            <div class="game-wrapper">
-                <div class="game-header">The Mini Crossword</div>
-                <div class="game-sub">Aaradhya Edition • A tiny puzzle for a brilliant mind.</div>
-                
-                <div class="mini-board" id="miniBoard">
-                    <!-- Row 1 -->
-                    <div class="mini-cell" data-letter="M"><span class="mini-num">1</span><span class="mini-val">M</span></div>
-                    <div class="mini-cell" data-letter="I"><span class="mini-num">2</span><span class="mini-val">I</span></div>
-                    <div class="mini-cell" data-letter="N"><span class="mini-num">3</span><span class="mini-val">N</span></div>
-                    <div class="mini-cell" data-letter="E"><span class="mini-num">4</span><span class="mini-val">E</span></div>
-                    <!-- Row 2 -->
-                    <div class="mini-cell" data-letter="I"><span class="mini-num">5</span><span class="mini-val">I</span></div>
-                    <div class="mini-cell" data-letter="C"><span class="mini-val">C</span></div>
-                    <div class="mini-cell" data-letter="O"><span class="mini-val">O</span></div>
-                    <div class="mini-cell" data-letter="N"><span class="mini-val">N</span></div>
-                    <!-- Row 3 -->
-                    <div class="mini-cell" data-letter="N"><span class="mini-num">6</span><span class="mini-val">N</span></div>
-                    <div class="mini-cell" data-letter="O"><span class="mini-val">O</span></div>
-                    <div class="mini-cell" data-letter="T"><span class="mini-val">T</span></div>
-                    <div class="mini-cell" data-letter="E"><span class="mini-val">E</span></div>
-                    <!-- Row 4 -->
-                    <div class="mini-cell" data-letter="E"><span class="mini-num">7</span><span class="mini-val">E</span></div>
-                    <div class="mini-cell" data-letter="N"><span class="mini-val">N</span></div>
-                    <div class="mini-cell" data-letter="D"><span class="mini-val">D</span></div>
-                    <div class="mini-cell" data-letter="S"><span class="mini-val">S</span></div>
-                </div>
-
-                <div class="mini-clues">
-                    <div class="clue-col">
-                        <h4>Across</h4>
-                        <p><strong>1.</strong> Whose you are.</p>
-                        <p><strong>5.</strong> A cultural one (you, essentially).</p>
-                        <p><strong>6.</strong> What you're fiercely reviewing right now.</p>
-                        <p><strong>7.</strong> How this exam period finally finishes.</p>
-                    </div>
-                    <div class="clue-col">
-                        <h4>Down</h4>
-                        <p><strong>1.</strong> Belonging to me.</p>
-                        <p><strong>2.</strong> Legend, star, or ___.</p>
-                        <p><strong>3.</strong> A message passed in class.</p>
-                        <p><strong>4.</strong> Wraps up.</p>
+    <!-- 2. TICKER BAR -->
+    <div class="ticker-wrap-cards">
+        <div class="ticker-scroll-container">
+            <div class="ticker-scroll-inner">
+                <!-- Set 1 -->
+                <div class="ticker-card">
+                    <div class="ticker-name">AARA Q3</div>
+                    <div class="ticker-value-row">
+                        <span>100.00</span>
+                        <span class="card-gain">▲ FLAWLESS</span>
                     </div>
                 </div>
-                <button class="play-btn" id="playMiniBtn">Solve Mini &rarr;</button>
-            </div>
-
-            <!-- GAME 2: CONNECTIONS -->
-            <div class="game-wrapper">
-                <div class="game-header">Connections</div>
-                <div class="game-sub">Aaradhya Edition • Group words that share a common thread.</div>
-                
-                <div class="conn-solved-container" id="connSolvedContainer"></div>
-                
-                <div class="connections-grid" id="connGrid">
-                    <!-- Shuffled Tiles -->
-                    <div class="conn-tile" data-group="yellow">LAUGH</div>
-                    <div class="conn-tile" data-group="green">FLIGHTS</div>
-                    <div class="conn-tile" data-group="blue">GENIUS</div>
-                    <div class="conn-tile" data-group="purple">MINE</div>
-                    <div class="conn-tile" data-group="green">WI-FI</div>
-                    <div class="conn-tile" data-group="yellow">EYES</div>
-                    <div class="conn-tile" data-group="purple">PRETTY</div>
-                    <div class="conn-tile" data-group="blue">FOCUS</div>
-                    <div class="conn-tile" data-group="blue">COFFEE</div>
-                    <div class="conn-tile" data-group="purple">PERFECT</div>
-                    <div class="conn-tile" data-group="yellow">VOICE</div>
-                    <div class="conn-tile" data-group="green">MILES</div>
-                    <div class="conn-tile" data-group="yellow">HUGS</div>
-                    <div class="conn-tile" data-group="green">SCREENS</div>
-                    <div class="conn-tile" data-group="blue">BRAIN</div>
-                    <div class="conn-tile" data-group="purple">GORGEOUS</div>
+                <div class="ticker-card">
+                    <div class="ticker-name">MY_HEART</div>
+                    <div class="ticker-value-row">
+                        <span>Infinite</span>
+                        <span class="card-gain">▲ 999%</span>
+                    </div>
                 </div>
-
-                <button class="play-btn" id="playConnBtn">Solve Connections &rarr;</button>
-            </div>
-
-            <p>See? That’s what actually matters. You’re sitting there keeping quiet when I know your brain is running at a hundred miles an hour, cataloging themes and character sketches and poetic devices. You’re treating tomorrow like it’s a trial by fire. Like if you don’t walk out with full marks, the universe is going to send you a strongly worded email of disappointment.</p>
-
-            <p>I need you to listen to me, across all these miles and all these stupid state lines: you don’t owe this exam a damn thing.</p>
-
-            <p>You don't owe it a perfect score. You don't owe it a comeback story. The syllabus is just an artificial construct, and frankly, I think it’s just intimidated by you. Think about how absurd it is to take someone like you—someone who is naturally witty, who notices the tiniest, most beautiful details about the world, who makes me feel like the luckiest person alive—and ask you to flatten all that vibrant intelligence into bullet points.</p>
-
-            <p>I wish you could see yourself the way I see you. If there were an exam on how deeply you care about the people in your life, you would break the grading curve. If they handed out marks for the way your laugh completely changes the energy in a room, or the way you fiercely defend your opinions, they’d run out of paper.</p>
-
-            <p>I’m telling you this because I want to interrupt that little voice in your head right now. The one that’s telling you that everything hinges on tomorrow. That voice is a liar. You are fiercely intelligent. You have put in the work. All those other people's last lessons are tucked behind the stress, waiting to be used. You are going to sit down tomorrow, and you are going to handle it, just like you handle everything else—with absolute grace.</p>
-
-            <p>But even if you don't? Even if the paper is weird, or you forget a quote? It changes literally nothing. I will still be right here, entirely obsessed with you. I will still think you are the most fascinating, beautiful, brilliant girl to ever walk the earth. You are going places that no mark sheet could ever map out, and I am just ridiculously happy I get a front-row seat to watch you do it.</p>
-
-            <p>So here is my official advice for the rest of your Tuesday: finish the chapter you’re on. Highlight whatever needs highlighting. And then, please, close the book. Step away from the desk. Let your brain breathe.</p>
-
-            <p>You have absolutely nothing to prove tomorrow. You are already enough. Take a deep breath, gorgeous. You’ve got this. And even when you feel like you don't, I’ve got you.</p>
-
-            <div class="trigger-container">
-                <a class="lovdle-link" id="lovdleTrigger">Solve the Lovdle &rarr;</a>
-            </div>
-        </div>
-    </main>
-
-    <footer class="site-footer">
-        &copy; 2026 The New York Times Company. All rights reserved.
-    </footer>
-
-    <!-- GAME 3: FULL SCREEN LOVDLE OVERLAY -->
-    <div class="lovdle-overlay" id="lovdleOverlay">
-        <button class="lovdle-close" id="lovdleClose">&times;</button>
-        <div class="lovdle-title">Wordle: Aaradhya Edition</div>
-        <div class="lovdle-grid" id="lovdleGrid">
-            <!-- Row 1: I (1 letter) -->
-            <div class="wordle-row">
-                <div class="tile" data-letter="I">I</div>
-            </div>
-            <!-- Row 2: L O V E (4 letters) -->
-            <div class="wordle-row">
-                <div class="tile" data-letter="L">L</div>
-                <div class="tile" data-letter="O">O</div>
-                <div class="tile" data-letter="V">V</div>
-                <div class="tile" data-letter="E">E</div>
-            </div>
-            <!-- Row 3: Y O U (3 letters) -->
-            <div class="wordle-row">
-                <div class="tile" data-letter="Y">Y</div>
-                <div class="tile" data-letter="O">O</div>
-                <div class="tile" data-letter="U">U</div>
-            </div>
-            <!-- Row 4: S O (2 letters) -->
-            <div class="wordle-row">
-                <div class="tile" data-letter="S">S</div>
-                <div class="tile" data-letter="O">O</div>
-            </div>
-            <!-- Row 5: M U C H (4 letters) -->
-            <div class="wordle-row">
-                <div class="tile" data-letter="M">M</div>
-                <div class="tile" data-letter="U">U</div>
-                <div class="tile" data-letter="C">C</div>
-                <div class="tile" data-letter="H">H</div>
+                <div class="ticker-card">
+                    <div class="ticker-name">CHEM_Q1</div>
+                    <div class="ticker-value-row">
+                        <span>Past</span>
+                        <span class="card-loss">▼ Irrelevant</span>
+                    </div>
+                </div>
+                <div class="ticker-card">
+                    <div class="ticker-name">PHYS_Q2</div>
+                    <div class="ticker-value-row">
+                        <span>Past</span>
+                        <span class="card-loss">▼ Forgotten</span>
+                    </div>
+                </div>
+                <div class="ticker-card">
+                    <div class="ticker-name">KISSES</div>
+                    <div class="ticker-value-row">
+                        <span>1,000,000</span>
+                        <span class="card-gain">▲ Owed</span>
+                    </div>
+                </div>
+                <div class="ticker-card">
+                    <div class="ticker-name">PROUD_BF</div>
+                    <div class="ticker-value-row">
+                        <span>Maxed Out</span>
+                        <span class="card-gain">▲ 3000%</span>
+                    </div>
+                </div>
+                
+                <!-- Set 2 (Duplicated for seamless infinite scrolling) -->
+                <div class="ticker-card">
+                    <div class="ticker-name">AARA Q3</div>
+                    <div class="ticker-value-row">
+                        <span>100.00</span>
+                        <span class="card-gain">▲ FLAWLESS</span>
+                    </div>
+                </div>
+                <div class="ticker-card">
+                    <div class="ticker-name">MY_HEART</div>
+                    <div class="ticker-value-row">
+                        <span>Infinite</span>
+                        <span class="card-gain">▲ 999%</span>
+                    </div>
+                </div>
+                <div class="ticker-card">
+                    <div class="ticker-name">CHEM_Q1</div>
+                    <div class="ticker-value-row">
+                        <span>Past</span>
+                        <span class="card-loss">▼ Irrelevant</span>
+                    </div>
+                </div>
+                <div class="ticker-card">
+                    <div class="ticker-name">PHYS_Q2</div>
+                    <div class="ticker-value-row">
+                        <span>Past</span>
+                        <span class="card-loss">▼ Forgotten</span>
+                    </div>
+                </div>
+                <div class="ticker-card">
+                    <div class="ticker-name">KISSES</div>
+                    <div class="ticker-value-row">
+                        <span>1,000,000</span>
+                        <span class="card-gain">▲ Owed</span>
+                    </div>
+                </div>
+                <div class="ticker-card">
+                    <div class="ticker-name">PROUD_BF</div>
+                    <div class="ticker-value-row">
+                        <span>Maxed Out</span>
+                        <span class="card-gain">▲ 3000%</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script>
-        const sleep = ms => new Promise(r => setTimeout(r, ms));
+    <!-- 3. LIVE INDICATOR -->
+    <div class="live-indicator-bar">
+        <div class="live-dot"></div> Live
+    </div>
 
-        // --- GAME 1: MINI CROSSWORD LOGIC ---
-        document.addEventListener("DOMContentLoaded", () => {
-            const playMiniBtn = document.getElementById('playMiniBtn');
-            const miniCells = document.querySelectorAll('.mini-cell');
-
-            playMiniBtn.addEventListener('click', async () => {
-                playMiniBtn.style.display = 'none';
+    <!-- MAIN CONTAINER -->
+    <main class="container">
+        
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar">
+            <!-- HERO TERMINAL BOX -->
+            <div class="term-box hero-term">
+                <div class="term-box-header">
+                    <span>AARA</span>
+                    <span>EQUITY (OF MY HEART)</span>
+                </div>
+                <div style="color: #fff; margin-bottom: 15px;">Aaradhya Ltd.</div>
                 
-                // Read row by row left to right
-                for (let i = 0; i < miniCells.length; i++) {
-                    const cell = miniCells[i];
-                    const valSpan = cell.querySelector('.mini-val');
-                    const letter = cell.getAttribute('data-letter');
-                    
-                    valSpan.textContent = letter;
-                    valSpan.classList.add('solved');
-                    
-                    await sleep(100); // typing speed
-                }
-            });
-        });
+                <div class="term-row"><span>Last Price</span><span class="gain">Priceless</span></div>
+                <div class="term-row"><span>Q3 (English)</span><span class="gain">+100.00 ▲</span></div>
+                <div class="term-row"><span>% Change</span><span class="gain">Infinity ▲</span></div>
+                <div class="term-row"><span>Volume</span><span>Loud & Proud</span></div>
+                <br>
+                <div class="term-row"><span>Open</span><span>Gorgeous</span></div>
+                <div class="term-row"><span>High (Proj)</span><span>100.00</span></div>
+                <div class="term-row"><span>Low (Q1/Q2)</span><span>Still Perfect</span></div>
+                <div class="term-row"><span>Mkt Cap</span><span>Immeasurable</span></div>
+                <br>
+                <div class="term-row"><span>52W Range</span><span>Cute - Breathtaking</span></div>
+                <div class="term-row"><span>Beta</span><span>0.0 (Perfectly Stable)</span></div>
+                <div class="term-row"><span>P/E Ratio</span><span>Too Precious</span></div>
+            </div>
 
-        // --- GAME 2: CONNECTIONS LOGIC ---
-        document.addEventListener("DOMContentLoaded", () => {
-            const playConnBtn = document.getElementById('playConnBtn');
-            const connGrid = document.getElementById('connGrid');
-            const solvedContainer = document.getElementById('connSolvedContainer');
+            <!-- MARKET DEPTH -->
+            <div class="term-box">
+                <div class="term-box-header">ROMANCE DEPTH</div>
+                <div class="term-row" style="color:var(--text-secondary); border-bottom:1px solid #333; padding-bottom:5px; margin-bottom:10px;">
+                    <span>MY BID</span><span>HER ASK</span>
+                </div>
+                <div class="term-row"><span>Infinite Hugs</span><span>Ice Cream</span></div>
+                <div class="term-row"><span>Forehead Kisses</span><span>Naps</span></div>
+                <div class="term-row"><span>Taking Her Out</span><span>Boba Tea</span></div>
+                <div class="term-row"><span>Eternal Love</span><span>100/100 English</span></div>
+                <br>
+                <div class="term-row"><span>Spread:</span><span>Zero</span></div>
+                <div class="term-row"><span>Liquidity:</span><span>Flowing Tears (Proud)</span></div>
+                <div class="term-row"><span>Conviction:</span><span class="gain">Absolute</span></div>
+            </div>
 
-            const categories =[
-                { color: 'yellow', class: 'cat-yellow', name: 'THINGS I MISS RIGHT NOW', words: 'LAUGH, EYES, VOICE, HUGS' },
-                { color: 'green', class: 'cat-green', name: 'LONG DISTANCE VILLAINS', words: 'MILES, WI-FI, FLIGHTS, SCREENS' },
-                { color: 'blue', class: 'cat-blue', name: 'YOUR EXAM ARSENAL', words: 'BRAIN, FOCUS, COFFEE, GENIUS' },
-                { color: 'purple', class: 'cat-purple', name: 'WHAT YOU ARE TO ME', words: 'MINE, PRETTY, PERFECT, GORGEOUS' }
-            ];
+            <!-- TECHNICAL INDICATORS -->
+            <div class="term-box">
+                <div class="term-box-header">TECHNICAL INDICATORS</div>
+                <div class="term-row"><span>RSI (14-day)</span><span>100.0</span></div>
+                <div class="term-row"><span>Signal:</span><span class="gain">Overwhelmingly Cute</span></div>
+                <br>
+                <div class="term-row"><span>MACD</span><span class="gain">Bullish</span></div>
+                <div class="term-row"><span>Signal:</span><span>Strong infatuation</span></div>
+                <br>
+                <div class="term-row"><span>Moving Avg (50d)</span><span>Gorgeous</span></div>
+                <div class="term-row"><span>Moving Avg (200d)</span><span>Stunning</span></div>
+                <div class="term-row"><span>Signal:</span><span class="gain">Above all averages</span></div>
+            </div>
+        </aside>
 
-            playConnBtn.addEventListener('click', async () => {
-                playConnBtn.style.display = 'none';
+        <!-- RIGHT ARTICLE -->
+        <article class="article">
+            <!-- HEADLINE -->
+            <h1 class="headline">AARADHYA CRUSHES Q3: ENGLISH EXAM FLAWLESS, BOYFRIEND’S HEART HITS ALL-TIME HIGH</h1>
+            <h2 class="subheadline">After a brutal bear market in Chemistry and Physics, the Humanities division saves the fiscal year. Chief Sentiment Officer (me) issues a "FOREVER HOLD" rating.</h2>
+            
+            <div class="metadata">
+                By The Desk of The Proudest Partner Alive &nbsp;|&nbsp; 4 min read
+            </div>
 
-                for (let i = 0; i < categories.length; i++) {
-                    const group = categories[i];
-                    const tiles = document.querySelectorAll(`.conn-tile[data-group="${group.color}"]`);
+            <!-- ARTICLE BODY -->
+            <p>Aaradhya posted an absolutely breathtaking result in her Q3 English Language & Literature examination, marking a decisive turnaround that left primary stakeholders (me) completely in awe. Preliminary self-assessment suggests a flawless score of 100/100, finally ending the volatility seen earlier in the fiscal calendar.</p>
+            
+            <p>"The execution was clean, elegant, and frankly, kind of hot," said a source close to the matter, speaking from the position of holding her hand. "She controlled what she could control, blocked out the noise, and delivered an alpha-generating performance in prose and poetry."</p>
 
-                    for (let j = 0; j < tiles.length; j++) {
-                        tiles[j].classList.add('selected');
-                        await sleep(300);
-                    }
-                    
-                    await sleep(600);
+            <p>The stellar showing comes after a notoriously annoying Q1 (Chemistry) and Q2 (Physics). During that "Sciences Bear Market," some board members worried about pressure management. However, internal sentiment remained stubbornly bullish. As the lead portfolio manager of her heart, I maintained a "Strong Buy" rating throughout the entire dip.</p>
 
-                    tiles.forEach(t => t.style.display = 'none');
+            <!-- ANALYST QUOTES -->
+            <div class="quotes-box">
+                <div class="term-box-header">WHAT THE STREET IS SAYING</div>
+                <div class="quote">
+                    <div class="quote-text">"Her prose is as flawless as her smile. Chemistry and Physics were just a correction. We're upgrading to SOULMATE."</div>
+                    <div class="quote-attr">— Chief Sentiment Officer, Boyfriend Capital LLC</div>
+                </div>
+                <div class="quote">
+                    <div class="quote-text">"We were slightly worried during Q2 physics, but honestly, gravity is entirely irrelevant when she's already the center of my universe."</div>
+                    <div class="quote-attr">— Director of Romantics, Wall Street</div>
+                </div>
+                <div class="quote">
+                    <div class="quote-text">"The way she handled that Q3 literature section? Literal chills. She's a killer. The numbers don't lie, and neither do my feelings."</div>
+                    <div class="quote-attr">— Anonymous Trader (Me, staring lovingly)</div>
+                </div>
+            </div>
 
-                    const solvedRow = document.createElement('div');
-                    solvedRow.className = `conn-solved-row ${group.class}`;
-                    solvedRow.innerHTML = `
-                        <div class="conn-name">${group.name}</div>
-                        <div class="conn-words">${group.words}</div>
-                    `;
-                    solvedContainer.appendChild(solvedRow);
+            <p>According to analysts at the Romance Education Desk, the Q3 performance indicates a structural shift in Aaradhya's already massive intellectual capital. She basically walked into the exam hall, looked at the English paper, and decided to end its whole career.</p>
 
-                    await sleep(500);
-                }
+            <!-- PERFORMANCE CHART -->
+            <div class="chart-box">
+                <div class="term-box-header">AARADHYA'S Q1-Q3 RECOVERY TIMELINE</div>
+<pre class="chart-pre">
+ 100│ ──────────────────────────────● My Love For Her
+    │                               ● Q3: English (100)
+  90│    
+    │           
+  80│      ● Q1: Chemistry (82)
+    │
+  70│                  ● Q2: Physics (79)
+    │
+    └──────────────────────────────────────────────
+        January       February      March (Now)
+        
+    Note: Fluctuations in Q1/Q2 have exactly 0.00% 
+    impact on how utterly perfect she is to me.
+</pre>
+            </div>
+
+            <p>Market depth shows a tight alignment between how smart she is and how absolutely gorgeous she looked walking out of the exam hall. Over 240 hours of preparation time were logged. It's clear she's internalized the "this is your year" energy, completely maxing out her humanities alpha to save the fiscal year.</p>
+
+            <!-- THE NUMBERS TABLE -->
+            <div class="term-box">
+                <div class="term-box-header">THE METRICS THAT MATTER</div>
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <tr><td>Expected Score (Q3 English)</td><td>100/100</td></tr>
+                        <tr><td>My Pride Index</td><td class="gain">Bursting ▲</td></tr>
+                        <tr><td>Her Cuteness Level</td><td class="gain">Unquantifiable ▲</td></tr>
+                        <tr><td colspan="2" style="border:none; height:10px;"></td></tr>
+                        <tr><td>Preparation Time Logged</td><td>~240 hrs</td></tr>
+                        <tr><td>Hours I Spent Missing Her</td><td>~240 hrs</td></tr>
+                        <tr><td>Kisses Owed for Hard Work</td><td class="gain">Infinite ▲</td></tr>
+                        <tr><td colspan="2" style="border:none; height:10px;"></td></tr>
+                        <tr><td><strong>Previous Quarters</strong></td><td></td></tr>
+                        <tr><td>Q1: Chemistry</td><td class="loss">82/100 ▼</td></tr>
+                        <tr><td>Q2: Physics</td><td class="loss">79/100 ▼</td></tr>
+                        <tr><td colspan="2" style="border:none; height:10px;"></td></tr>
+                        <tr><td>Does Q1/Q2 Matter?</td><td class="gain">Absolutely Not ▲</td></tr>
+                        <tr><td>Our Personal Chemistry</td><td class="gain">10,000/100 ▲</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <h3 style="margin-top:40px; margin-bottom:15px; text-transform:uppercase; font-size: 18px;">Risk Factors to Monitor</h3>
+            <p style="color:var(--text-secondary);">While initial indicators are overwhelmingly positive, analysts urge me to monitor several lingering risk factors:</p>
+            <ul style="color:var(--text-secondary); margin-bottom:24px; padding-left:20px; font-size:16px;">
+                <li style="margin-bottom:10px;"><strong>Extreme Heart Volatility:</strong> The subject's smile has been known to cause sudden, violent spikes in my heart rate.</li>
+                <li style="margin-bottom:10px;"><strong>Over-Celebration Risk:</strong> There is a dangerously high probability of me buying too much ice cream, flowers, and gifts to celebrate this Q3 victory.</li>
+                <li style="margin-bottom:10px;"><strong>Distraction Bias:</strong> Her beauty may distract CBSE evaluators from actually reading the test paper, though her flawless handwriting should mitigate this risk.</li>
+                <li><strong>Physics Irrelevance:</strong> It has become increasingly apparent that calculating her trajectory is impossible because she's an absolute star.</li>
+            </ul>
+
+            <p>Despite these minor headwinds, the broader market unequivocally agrees: Aaradhya is the absolute best investment of my life, generating unprecedented returns in happiness, love, and awe.</p>
+
+            <!-- COMPARATIVE PERFORMANCE -->
+            <div class="term-box">
+                <div class="term-box-header">COMPARATIVE PERFORMANCE: EXAMS VS REALITY</div>
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Quarter</th>
+                                <th>Subject</th>
+                                <th>Actual</th>
+                                <th>My Assessment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Q1</td><td>Chemistry</td><td>82</td><td class="gain">We have our own</td></tr>
+                            <tr><td>Q2</td><td>Physics</td><td>79</td><td class="gain">She defies gravity</td></tr>
+                            <tr><td>Q3</td><td>English</td><td>100*</td><td class="gain">Poetry in motion</td></tr>
+                            <tr><td>YTD</td><td>Being Adorable</td><td>1000</td><td class="gain">Every single day</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- MARKET SENTIMENT -->
+            <div class="term-box">
+                <div class="term-box-header">INTERNAL SENTIMENT (MY BRAIN RIGHT NOW)</div>
                 
-                connGrid.style.display = 'none';
-            });
-        });
+                <div class="sentiment-row">
+                    <div class="sentiment-label">Simping</div>
+                    <div class="sentiment-bar-bg"><div class="sentiment-bar-fill" style="width: 99%;"></div></div>
+                    <div>99%</div>
+                </div>
+                <div class="sentiment-row">
+                    <div class="sentiment-label">In Awe</div>
+                    <div class="sentiment-bar-bg"><div class="sentiment-bar-fill neutral" style="width: 99%;"></div></div>
+                    <div>99%</div>
+                </div>
+                <div class="sentiment-row">
+                    <div class="sentiment-label">Bearish</div>
+                    <div class="sentiment-bar-bg"><div class="sentiment-bar-fill bearish" style="width: 0%;"></div></div>
+                    <div>0%</div>
+                </div>
 
-        // --- GAME 3: LOVDLE (OVERLAY) LOGIC ---
-        document.addEventListener("DOMContentLoaded", () => {
-            const trigger = document.getElementById("lovdleTrigger");
-            const overlay = document.getElementById("lovdleOverlay");
-            const closeBtn = document.getElementById("lovdleClose");
-            const tiles = document.querySelectorAll(".lovdle-grid .tile");
-            let hasPlayed = false;
+                <div style="margin-top: 20px; border-top: 1px solid var(--border-subtle); padding-top: 15px; display: flex; justify-content: space-between;">
+                    <span>Pride Level: <span class="gain">Astronomical</span></span>
+                    <span>Outlook: <span class="gain">Forever</span></span>
+                </div>
+            </div>
 
-            trigger.addEventListener("click", (e) => {
-                e.preventDefault();
-                overlay.classList.add("active");
-                document.body.style.overflow = "hidden";
+            <!-- THE BOTTOM LINE -->
+            <div class="bottom-line">
+                <h3>The Bottom Line</h3>
+                <p>Aaradhya's reported 100/100 performance in Q3 English is a stunning reminder of her brilliance, but honestly, she doesn't need a test score to prove she's the smartest, most capable, and most beautiful person in the room. She handled a brutal Q1 and Q2 with grace, pivoted her strategy, and completely crushed Q3.</p>
+                <p>She is resilient, incredibly adaptable, and an absolute joy to witness. This portfolio manager has never been more proud.</p>
+                
+                <div class="bottom-line-data">
+                    <div><strong>Recommendation:</strong> STRONG BUY (AND HOLD FOREVER)</div>
+                    <div><strong>Price Target:</strong> Priceless</div>
+                    <div><strong>Risk:</strong> LOW (I'm fully hedged in love)</div>
+                    <br>
+                    <div style="color:var(--text-secondary)">Next Catalyst: Me taking her out to celebrate.</div>
+                </div>
+            </div>
+        </article>
+    </main>
 
-                if (!hasPlayed) {
-                    hasPlayed = true;
-                    let delay = 600; 
-                    
-                    tiles.forEach((tile) => {
-                        setTimeout(() => {
-                            tile.textContent = tile.getAttribute('data-letter');
-                            tile.classList.add("reveal");
-                        }, delay);
-                        delay += 120;
-                    });
-                }
-            });
-
-            closeBtn.addEventListener("click", () => {
-                overlay.classList.remove("active");
-                document.body.style.overflow = "auto";
-            });
-        });
-    </script>
 </body>
 </html>
