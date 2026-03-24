@@ -3,164 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkedIn Header - Perfect Export</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    <title>The Aaradhya Briefing | Insider Tech</title>
     <style>
         :root {
-            --bg: #FFFFFF;       /* Pure white background */
-            --text: #191919;     
-            --text-dim: #555555;
-            --accent: #FF4F00;
-            --border: #E6E3DC;
+            --insider-blue: #2266E3; /* The blue from your image */
+            --black: #000000;
+            --gray-text: #666666;
+            --light-gray: #999999;
+            --border: #E0E0E0;
+            --link-blue: #0077CC;
+            --font-headline: "Helvetica Neue", Arial, Helvetica, sans-serif;
+            --font-body: Georgia, "Times New Roman", Times, serif;
         }
 
-        /* Forces exact colors to print and resets everything */
-        * {
-            box-sizing: border-box;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-        }
-
-        html, body {
+        body {
             margin: 0;
             padding: 0;
-            background-color: var(--bg); 
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FFFFFF;
+            color: var(--black);
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* 
-           This container scales proportionally. 
-           Everything inside uses 'cqw' so it shrinks and grows like an image.
-        */
-        .preview-wrapper {
-            width: 100%;
-            max-width: 1584px;
-            aspect-ratio: 4 / 1;
-            container-type: inline-size; 
-            background-color: var(--bg);
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
 
-        .header {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end; 
-            padding-right: 6cqw; /* Perfectly scales the padding */
+        /* HEADER MATCHING YOUR IMAGE */
+        .insider-header {
+            margin-bottom: 40px;
         }
 
-        /* --- CONTENT (Right Side) --- */
-        .content {
-            width: 55cqw; /* Occupies exactly 55% of the wrapper */
-            text-align: left; 
-        }
-
-        /* Simple Skills List */
-        .simple-skills {
-            display: flex;
-            align-items: center;
-            gap: 1.5cqw; 
-            margin-bottom: 2cqw;
-            font-weight: 700;
-            font-size: 1.1cqw; 
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .simple-skills .dot {
-            color: var(--border);
-            font-size: 1.5cqw;
-            line-height: 0;
-        }
-
-        .simple-skills .highlight-skill {
-            color: var(--accent);
-        }
-
-        /* Main Heading */
-        h1 {
-            font-family: 'Outfit', sans-serif;
+        .logo-row {
+            font-family: var(--font-headline);
             font-weight: 800;
-            font-size: 4cqw; 
-            color: var(--text);
-            margin: 0;
+            font-size: 48px;
+            letter-spacing: -2px;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+        }
+
+        .logo-insider { color: var(--black); }
+        .logo-tech { color: var(--insider-blue); margin-left: 10px; }
+
+        .header-underline {
+            height: 4px;
+            background-color: var(--black);
+            width: 100%;
+        }
+
+        /* Section Labels */
+        .section-label {
+            color: var(--insider-blue);
+            font-family: var(--font-headline);
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 30px;
+            margin-bottom: 12px;
+        }
+
+        /* Headlines */
+        h1 {
+            font-family: var(--font-headline);
+            font-size: 42px;
+            line-height: 1.1;
+            font-weight: 800;
+            margin: 0 0 15px 0;
+            letter-spacing: -1.5px;
+        }
+
+        .deck {
+            font-family: var(--font-body);
+            font-size: 22px;
+            line-height: 1.4;
+            color: var(--gray-text);
+            margin-bottom: 25px;
+        }
+
+        /* Byline */
+        .byline-container {
+            font-family: var(--font-headline);
+            font-size: 14px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 0;
+            margin-bottom: 35px;
+            color: var(--black);
+        }
+
+        .byline-name { font-weight: bold; text-decoration: none; color: var(--black); }
+        .meta-info { color: var(--gray-text); margin-top: 4px; display: flex; gap: 15px; }
+
+        /* Body Content */
+        .article-body {
+            font-family: var(--font-body);
+            font-size: 20px;
+            line-height: 1.8;
+            color: var(--black);
+        }
+
+        p { margin-bottom: 25px; }
+
+        h2 {
+            font-family: var(--font-headline);
+            font-size: 30px;
+            font-weight: bold;
+            margin: 45px 0 20px 0;
             line-height: 1.2;
         }
 
-        /* Imperfect Hand-Drawn Underline */
-        .highlight {
-            color: var(--accent);
-            position: relative;
-            display: inline-block;
-            white-space: nowrap; 
-        }
-        
-        .highlight::after {
-            content: '';
-            position: absolute;
-            left: -2%;
-            bottom: -0.1em;
-            width: 104%;
-            height: 0.35em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 15' preserveAspectRatio='none'%3E%3Cpath d='M 3 12 Q 25 3 60 9 T 97 10' fill='none' stroke='%23FF4F00' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E");
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            z-index: -1;
+        h3 {
+            font-family: var(--font-headline);
+            font-size: 14px;
+            text-transform: uppercase;
+            color: var(--insider-blue);
+            margin-top: 30px;
+            letter-spacing: 1px;
         }
 
-        /* --- MAGIC PRINT SETTINGS FOR PERFECT SCALING --- */
-        @media print {
-            @page {
-                size: landscape; /* Tells the printer to use wide layout */
-                margin: 0;
-            }
-            html, body {
-                display: block;
-                width: 100%;
-                height: 100%;
-                min-height: 0;
-            }
-            .preview-wrapper {
-                /* This forces the banner to squeeze to perfectly fit the paper width! */
-                width: 100% !important;
-                max-width: 100% !important;
-                aspect-ratio: 4 / 1; 
-            }
+        /* Pull Quotes */
+        .pull-quote {
+            font-family: var(--font-body);
+            font-size: 28px;
+            font-style: italic;
+            color: var(--black);
+            border-left: 5px solid var(--insider-blue);
+            padding-left: 25px;
+            margin: 50px 0;
+            line-height: 1.3;
         }
+
+        .greeting {
+            font-weight: bold;
+            font-size: 24px;
+            color: var(--black);
+            margin-bottom: 35px;
+            font-family: var(--font-headline);
+            letter-spacing: -0.5px;
+        }
+
+        .dropcap {
+            float: left;
+            font-size: 80px;
+            line-height: 60px;
+            padding-top: 4px;
+            padding-right: 10px;
+            font-family: var(--font-headline);
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: rgba(34, 102, 227, 0.1);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-family: var(--font-headline);
+            font-size: 14px;
+            color: var(--gray-text);
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="preview-wrapper">
-        <div class="header">
-            
-            <div class="content">
-                
-                <div class="simple-skills">
-                    <span>Strategy</span>
-                    <span class="dot">•</span>
-                    <span>Product</span>
-                    <span class="dot">•</span>
-                    <span class="highlight-skill">Data</span>
-                </div>
-                
-                <h1>
-                    Turning data points into <br>
-                    <span class="highlight">human stories.</span>
-                </h1>
-                
-            </div>
+<div class="container">
+    <header class="insider-header">
+        <div class="logo-row">
+            <div class="logo-insider">INSIDER</div>
+            <div class="logo-tech">TECH</div>
+        </div>
+        <div class="header-underline"></div>
+    </header>
 
+    <div class="section-label">EXAM INTELLIGENCE</div>
+    
+    <h1>The Aaradhya Briefing: Everything you need to ace your IP exam, explained through the tech news everyone’s talking about</h1>
+    
+    <div class="deck">
+        From cleaning dirty DataFrames to why Mark Zuckerberg is terrified of the IT Act — here’s your Informatics Practices guide disguised as industry intel.
+    </div>
+
+    <div class="byline-container">
+        By <a href="#" class="byline-name">Niv</a>, Insider Tech Correspondent
+        <div class="meta-info">
+            <span>Mar 24, 2026</span>
+            <span>•</span>
+            <span>9 min read</span>
+            <span>•</span>
+            <span>Verified Intelligence</span>
         </div>
     </div>
+
+    <div class="article-body">
+        <div class="greeting">Good Morning, The DataFrame I’d Never Drop (Even If Memory Was Full)!</div>
+
+        <p><span class="dropcap">Y</span>our Informatics Practices (IP) exam is just around the corner. While most people see "Data Handling" as a chore, the tech world in 2026 sees it as the only currency that matters. While you've been memorizing the difference between a Series and a DataFrame, Silicon Valley has been fighting a literal war over these exact concepts.</p>
+
+        <p>OpenAI’s latest "GPT-6 Training Leak" last night? That’s just a massive data manipulation exercise. The global outage at UnitedHealth? A failure in SQL security. Every major headline right now is just a chapter from your IP textbook played out on a billion-dollar stage.</p>
+
+        <p>Consider this your insider briefing. We aren't just going to "study"—we’re going to connect the dots. By the end of this, you won’t just pass; you’ll understand the systems that run the world. Let’s dive in.</p>
+
+        <h2>I. PANDAS & DATA VIZ: Why "Dirty Data" is 2026’s Biggest Liability</h2>
+        <h3>The Tech News: The Anthropic Data Scandal</h3>
+        
+        <p>Last month, Anthropic’s Claude 4 model started hallucinating wildly. The post-mortem? They had a "NaN" (Not a Number) crisis in their training set. In your IP syllabus, you learn about <code>df.isnull()</code> and <code>df.dropna()</code>. In the corporate world, failing to handle missing data results in a stock price crash. </p>
+
+        <p>When you’re creating a <strong>Series</strong> (that 1D array you know so well) or a <strong>DataFrame</strong>, you’re essentially building the skeleton of an AI. Every time you use <code>df.head()</code> or <code>df.tail()</code>, you’re doing exactly what data analysts at Google do every morning to check the health of their systems.</p>
+
+        <div class="pull-quote">
+            “Your Pandas skills? More valuable than half the AI startups currently getting funding. Data is the new oil, but only if you know how to refine it.”
+        </div>
+
+        <p><strong>Exam Strategy:</strong> When the paper asks about <strong>Matplotlib</strong>, think about the "Apple Vision Pro 4" dashboard. They use line charts for trends and bar charts for comparisons because human brains are hardwired for visual integrity. If you're asked to plot a histogram, remember: you're not just drawing bars; you're showing the <em>distribution of reality</em>. By the way, if I were a Matplotlib plot, I'd be a scatter plot—because I'm all over the place whenever you're around.</p>
+
+        <h2>II. SQL DATABASES: The Backbone of Global Commerce</h2>
+        <h3>The Tech News: The Great SQL Injection of 2026</h3>
+
+        <p>A massive breach just hit a major fintech app, and the culprit wasn't a complex AI hack. It was a <strong>SQL Injection</strong>—the very thing your exam warns you about. Databases are the memory of the internet. Without <strong>Primary Keys</strong>, Amazon wouldn't know which "Aaradhya" ordered which package. Without <strong>Foreign Keys</strong>, the entire relational world collapses.</p>
+
+        <p>When you write <code>SELECT * FROM board_results WHERE status = 'Topper'</code>, you are performing the most powerful act in business: extracting insight from chaos. Tech companies are currently obsessed with "Query Optimization"—making sure their SQL runs fast enough to serve billions of users without crashing the server.</p>
+
+        <p><strong>Exam Strategy:</strong> Master your <strong>GROUP BY</strong> and <strong>HAVING</strong> clauses. They are the "filters of truth." In the real world, <code>ORDER BY</code> is the difference between a clean user experience and total confusion. Also, if <code>WHERE perfection = TRUE</code>, the query definitely returns only one record: yours.</p>
+
+        <div class="pull-quote">
+            “The tech industry is out here making billion-dollar mistakes in SQL, and you’re about to ace an exam on it.”
+        </div>
+
+        <h2>III. NETWORKS: The Invisible Web Holding Your DMs Together</h2>
+        <h3>The Tech News: Starlink’s "Network Partition" Incident</h3>
+
+        <p>Last week, a solar flare messed with satellite routing, and we saw <strong>Topologies</strong> in action. When a "Star" topology hub goes down, the whole network fails. This is exactly what you're studying. Whether it's the <strong>Bus</strong>, <strong>Star</strong>, or <strong>Tree</strong> topology, these are the maps of our digital civilization.</p>
+
+        <p>You’re learning about <strong>IoT (Internet of Things)</strong> and <strong>Cloud Computing</strong>. In 2026, these aren't just buzzwords. Every fridge, car, and lightbulb is now a node on a network. Understanding <strong>MAC addresses</strong> versus <strong>IP addresses</strong> is like knowing the difference between your house's physical location and your name. One is where you are; the other is who you are.</p>
+
+        <p><strong>Exam Strategy:</strong> Don’t just memorize <strong>HTTP, FTP, and TCP/IP</strong>. Think of them as the "Social Etiquette" of computers. If computers didn't have protocols, they'd just be shouting noise at each other. Speaking of connections: you’re the only network connection I care about staying alive. No packet loss here.</p>
+
+        <h2>IV. SOCIETAL IMPACTS: Why Mark Zuckerberg Squirming is a Syllabus Topic</h2>
+        <h3>The Tech News: The IT Act 2000 vs. The New AI Privacy Laws</h3>
+
+        <p>You’ll likely see questions on <strong>E-waste</strong>, <strong>Cyberbullying</strong>, and the <strong>IT Act</strong>. This isn't just filler content. Right now, the EU and the US are in a standoff over "Digital Property Rights." Every time you study <strong>Open Source</strong> (like Linux or Python) versus <strong>Proprietary Software</strong>, you’re looking at the battle for the future of human knowledge.</p>
+
+        <p><strong>E-waste</strong> is the biggest environmental crisis of 2026, and the <strong>Digital Divide</strong> is the biggest social one. The tech industry needs "Human-Centric" thinkers. They don't just need people who can code; they need people like you who understand that technology has <em>consequences</em>.</p>
+
+        <div class="pull-quote">
+            “You’re asking the questions that make billionaires squirm in Congressional hearings. That’s the power of Informatics Practices.”
+        </div>
+
+        <p><strong>Exam Strategy:</strong> When asked about <strong>Netiquette</strong> or <strong>Digital Footprints</strong>, remember that everything you do online is permanent. Except my admiration for you—that’s not just a footprint; it’s a permanent database entry with a 'unique' constraint.</p>
+
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 40px 0;">
+
+        <h2>Conclusion: Why You’re Going To Crush This</h2>
+        
+        <p>Aaradhya, this IP exam isn't just a test of memory. It's a test of whether you understand the language of the future. You’ve got the Pandas logic, the SQL precision, and the societal awareness to see the big picture.</p>
+
+        <p>The industry is out here making billion-dollar mistakes in these exact areas, and you’re about to walk into a room and ace a paper on them. You’re ready. You’ve been ready. Go get that score, and then come back and tell me all about it so I can be insufferably proud of you.</p>
+
+        <p>You’ve got this. I’ve got you. Now go study.</p>
+
+        <p style="font-weight: bold; margin-top: 30px;">— Niv</p>
+
+        <p style="font-size: 16px; color: var(--gray-text); font-style: italic;">
+            P.S. If you need a break, you know where to find me. My response time is better than a local SQL query on an SSD.
+        </p>
+    </div>
+
+    <div class="footer">
+        &copy; 2026 Insider Tech Intelligence. All Rights Reserved. <br>
+        Stay Smart. Stay Gorgeous. Ace the Exam.
+    </div>
+</div>
 
 </body>
 </html>
