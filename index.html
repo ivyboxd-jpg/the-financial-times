@@ -3,322 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Aaradhya Report | Insider Tech</title>
+    <title>F1® OFFICIAL REPORT | Aaradhya GP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --insider-blue: #2266E3;
-            --black: #000000;
-            --gray-text: #666666;
-            --light-gray: #999999;
-            --border: #E0E0E0;
-            --code-bg: #1e1e1e;
-            /* Tighter, Professional Font Scaling */
-            --font-headline: "Helvetica Neue", Arial, Helvetica, sans-serif;
-            --font-body: Georgia, "Times New Roman", Times, serif;
-            --size-h1: 28px;
-            --size-deck: 17px;
-            --size-body: 16px;
-            --size-meta: 11px;
+            --f1-red: #e10600;
+            --carbon: #15151e;
+            --f1-grey: #1f1f27;
+            --f1-light-grey: #38383f;
+            --f1-white: #ffffff;
+            --gold: #d4af37;
+            --silver: #bdc3c7;
         }
+
+        * { box-sizing: border-box; }
 
         body {
+            background-color: var(--carbon);
+            background-image: radial-gradient(circle at 2px 2px, #25252e 1px, transparent 0);
+            background-size: 40px 40px;
+            color: var(--f1-white);
+            font-family: 'Titillium Web', sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: #FFFFFF;
-            color: var(--black);
-            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
         }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 30px 20px;
-        }
-
-        /* HEADER LOGO - BRAND MATCH */
-        .insider-header {
-            margin-bottom: 20px;
-        }
-
-        .logo-row {
-            font-family: var(--font-headline);
-            font-weight: 800;
-            font-size: 36px;
-            letter-spacing: -1.5px;
-            display: flex;
-            align-items: center;
-            padding-bottom: 6px;
-        }
-
-        .logo-insider { color: var(--black); }
-        .logo-tech { color: var(--insider-blue); margin-left: 8px; }
-
-        .header-underline {
-            height: 4px;
-            background-color: var(--black);
-            width: 100%;
-        }
-
-        .section-label {
-            color: var(--insider-blue);
-            font-family: var(--font-headline);
-            font-size: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-top: 25px;
-            margin-bottom: 8px;
-        }
-
-        h1 {
-            font-family: var(--font-headline);
-            font-size: var(--size-h1);
-            line-height: 1.15;
-            font-weight: 800;
-            margin: 0 0 10px 0;
-            letter-spacing: -0.5px;
-        }
-
-        .deck {
-            font-family: var(--font-body);
-            font-size: var(--size-deck);
-            line-height: 1.4;
-            color: var(--gray-text);
-            margin-bottom: 20px;
-        }
-
-        .byline-container {
-            font-family: var(--font-headline);
-            font-size: var(--size-meta);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 10px 0;
-            margin-bottom: 25px;
+        /* PREMIUM SPACED NAV */
+        nav {
+            background: var(--f1-white);
+            padding: 20px 8%;
             display: flex;
             justify-content: space-between;
-            color: var(--black);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* ARTICLE BODY */
-        .article-body {
-            font-family: var(--font-body);
-            font-size: var(--size-body);
-            line-height: 1.75;
-            color: var(--black);
-        }
-
-        p { margin-bottom: 20px; }
-
-        .greeting-blended {
-            font-weight: bold;
-            font-family: var(--font-headline);
-            font-size: 16px;
-        }
-
-        /* INTERACTIVE CODE BLOCK */
-        .code-window {
-            background-color: var(--code-bg);
-            border-radius: 8px;
-            padding: 18px;
-            margin: 30px 0;
-            font-family: 'Courier New', Courier, monospace;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        .code-header {
-            display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            border-bottom: 6px solid var(--f1-red);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .dot { height: 10px; width: 10px; border-radius: 50%; margin-right: 6px; }
-        .red { background-color: #ff5f56; }
-        .yellow { background-color: #ffbd2e; }
-        .green { background-color: #27c93f; }
-        
-        .filename { color: #757575; font-size: 12px; margin-left: 8px; flex-grow: 1; }
-
-        .code-content {
-            color: #d4d4d4;
-            font-size: 13px;
-            line-height: 1.5;
-            white-space: pre;
-            overflow-x: auto;
-            margin-bottom: 15px;
+        .f1-logo {
+            height: 30px;
+            width: auto;
         }
 
-        .comment { color: #6a9955; font-style: italic; }
-        .keyword { color: #c586c0; }
-        .func { color: #dcdcaa; }
-        .string { color: #ce9178; }
-
-        .controls {
-            border-top: 1px solid #333;
-            padding-top: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        select {
-            background: #333;
-            color: white;
-            border: 1px solid #444;
-            padding: 4px;
-            border-radius: 4px;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .run-btn {
-            background-color: var(--insider-blue);
-            color: white;
-            border: none;
-            padding: 4px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 11px;
+        .report-tag {
+            color: #15151e;
+            font-weight: 900;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
         }
 
-        .terminal-output {
-            margin-top: 12px;
-            padding: 8px;
-            background: #000;
-            color: #27c93f;
-            font-size: 12px;
-            border-radius: 4px;
-            display: none;
-            border: 1px solid #333;
+        /* HERO SECTION */
+        .hero {
+            padding: 100px 8% 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            min-height: 80vh;
         }
 
-        .pull-quote {
-            font-family: var(--font-body);
-            font-size: 19px;
+        .hero-text h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 900;
             font-style: italic;
-            color: var(--black);
-            border-left: 3px solid var(--insider-blue);
-            padding-left: 15px;
-            margin: 35px 0;
-            line-height: 1.4;
+            text-transform: uppercase;
+            line-height: 0.85;
+            margin: 0 0 30px 0;
         }
 
-        .sig { margin-top: 25px; font-weight: bold; }
+        .status-pill {
+            display: inline-block;
+            background: var(--f1-red);
+            padding: 6px 15px;
+            font-weight: 900;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
 
+        /* CIRCUIT MAP (The "Something Else") */
+        .circuit-container {
+            position: relative;
+            text-align: center;
+            padding: 40px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+        }
+
+        .circuit-svg {
+            width: 100%;
+            max-width: 450px;
+            filter: drop-shadow(0 0 15px var(--f1-red));
+        }
+
+        /* CLASSIFICATION CARD */
+        .content-section {
+            padding: 80px 8%;
+        }
+
+        .card {
+            background: var(--f1-grey);
+            padding: 40px;
+            border-radius: 0 0 30px 0;
+            border-top: 5px solid var(--f1-light-grey);
+            margin-bottom: 40px;
+        }
+
+        .card-title {
+            text-transform: uppercase;
+            font-weight: 900;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--f1-white);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .card-title::before {
+            content: '';
+            height: 25px;
+            width: 5px;
+            background: var(--f1-red);
+        }
+
+        /* TABLE CUSTOMIZATION */
+        .results-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th { text-align: left; color: #949498; padding: 15px; font-size: 0.8rem; text-transform: uppercase; }
+        td { padding: 20px 15px; border-bottom: 1px solid #2d2d36; font-weight: 700; }
+        .pos { color: var(--f1-red); font-weight: 900; font-size: 1.4rem; font-style: italic; }
+
+        /* TROPHY SECTION */
+        .trophy-section {
+            padding: 120px 8%;
+            text-align: center;
+            background: linear-gradient(180deg, transparent, #000);
+        }
+
+        .trophy-pillar {
+            width: 120px;
+            margin-bottom: 40px;
+        }
+
+        .champ-name {
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+            margin: 0;
+            letter-spacing: -2px;
+            background: linear-gradient(180deg, #fff 40%, #555 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 60px;
+                text-align: center;
+            }
+            nav { padding: 15px 5%; }
+            .content-section { padding: 40px 5%; }
+            .card { padding: 20px; }
+            .hero-text h1 { font-size: 3.5rem; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header class="insider-header">
-        <div class="logo-row">
-            <div class="logo-insider">INSIDER</div>
-            <div class="logo-tech">TECH</div>
+    <nav>
+        <!-- F1 LOGO PLACEHOLDER -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/F1.svg" alt="F1" class="f1-logo">
+        <span class="report-tag">Official Anniversary Report</span>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-text">
+            <div class="status-pill">P1 - CHAMPIONSHIP LEADER</div>
+            <h1>The Aaradhya Grand Prix</h1>
+            <p style="color: #949498; font-size: 1.2rem; font-weight: 600;">
+                ROUND 10: 19 MAY 2024 — 19 MARCH 2025<br>
+                CIRCUIT DE L'AMOUR, ENDURANCE SPEC.
+            </p>
         </div>
-        <div class="header-underline"></div>
+
+        <div class="circuit-container">
+            <!-- RELATIONSHIP CIRCUIT MAP SVG -->
+            <svg class="circuit-svg" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 250 C 20 250, 20 50, 150 50 C 250 50, 250 150, 350 150 C 450 150, 480 50, 400 50 C 300 50, 450 250, 250 250 L 100 250" 
+                      stroke="white" stroke-width="8" stroke-linejoin="round"/>
+                <path d="M100 250 L 140 250" stroke="var(--f1-red)" stroke-width="10" /> <!-- Start/Finish -->
+                <text x="100" y="280" fill="var(--f1-red)" font-weight="900" font-size="14">START / MONTH 1</text>
+                <circle cx="350" cy="150" r="8" fill="var(--f1-red)">
+                    <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite" />
+                </circle>
+                <text x="365" y="145" fill="white" font-weight="900" font-size="14">CURRENT: LAP 10</text>
+            </svg>
+            <p style="color: #666; font-size: 0.8rem; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px;">Telemetry: Infinite Grip / Zero Mistakes</p>
+        </div>
     </header>
 
-    <div class="section-label">MARKET VALUATION</div>
-    
-    <h1>The Aaradhya Report: Why "Market Underprepared" is the strongest buy signal of 2026</h1>
-    
-    <div class="deck">
-        A post-prep analysis on why exam anxiety is a low-value metric and why your long-term potential remains "Strong Outperform."
-    </div>
-
-    <div class="byline-container">
-        <span>By <b>Niv</b>, Insider Tech Correspondent</span>
-        <span>Mar 24, 2026</span>
-    </div>
-
-    <div class="article-body">
-        <p><span class="greeting-blended">Good morning, the only API I’d never rate-limit.</span> I’m passing along a 2026 industry update: <strong>recognizing that you are the standard, regardless of how the Informatics Practices prep went.</strong></p>
-
-        <p>In the high-stakes world of technology, we have a term for what you’re feeling: "Continuous Integration." It describes a system that is constantly updating, constantly testing, and—most importantly—constantly feeling like it’s a work in progress. When you feel underprepared, you aren't experiencing a lack of knowledge. You are experiencing the reality of having a high-bandwidth brain that understands the sheer scale of the information it's processing.</p>
-
-        <p>Your Informatics Practices syllabus covers things like <strong>Pandas, SQL, and Matplotlib.</strong> In the actual 2026 market, these are the languages of power. Companies like OpenAI and Anthropic spend billions trying to find people who can manipulate DataFrames and optimize queries. But more than that, they look for people who can handle the "Load Stress" of a launch week. The fact that you are standing at this starting line, managing the pressure of this exam, proves your hardware is already elite.</p>
-
-        <div class="pull-quote">
-            “The industry doesn’t reward people who have a bug-free journey; it rewards the ones who can look at a messy terminal and find the logic inside. That is your core strength.”
+    <section class="content-section">
+        <div class="card">
+            <div class="card-title">Race Classification</div>
+            <div class="results-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pos</th>
+                            <th>Milestone</th>
+                            <th>Interval</th>
+                            <th>Pts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="pos">1</td>
+                            <td>First Message</td>
+                            <td>LIGHTS OUT</td>
+                            <td>25</td>
+                        </tr>
+                        <tr>
+                            <td class="pos">2</td>
+                            <td>First FaceTime</td>
+                            <td style="color: #b62ad0;">FASTEST</td>
+                            <td>18</td>
+                        </tr>
+                        <tr>
+                            <td class="pos">3</td>
+                            <td>100th Voice Note</td>
+                            <td>+0.19s</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td class="pos">4</td>
+                            <td>6-Month Mark</td>
+                            <td>+1.10s</td>
+                            <td>12</td>
+                        </tr>
+                        <tr>
+                            <td class="pos">5</td>
+                            <td>The Chemistry Exam</td>
+                            <td style="color: #b62ad0;">PURPLE</td>
+                            <td>10</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <p>I’ve written a small script to visualize the logic of your current valuation. You can audit the code and run the simulation yourself below to see the result of your current "System Check."</p>
-
-        <!-- INTERACTIVE CODE WINDOW -->
-        <div class="code-window">
-            <div class="code-header">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-                <div class="filename">valuation_audit.py</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            <div class="card" style="padding: 25px;">
+                <span style="color: var(--f1-red); font-weight: 900; font-size: 0.7rem; text-transform: uppercase;">Team Radio</span>
+                <p style="font-style: italic; margin-top: 10px;">"Box box, Aaradhya. We're celebrating 10 months of dominance. You're simply the best on the grid."</p>
             </div>
-            <div class="code-content"><span class="comment"># Global status audit for Aaradhya</span>
-<span class="keyword">def</span> <span class="func">get_status</span>(<span class="param">current_mood</span>):
-    valuation = <span class="string">"Market Leader"</span>
-    
-    <span class="keyword">if</span> current_mood == <span class="string">"Underprepared"</span>:
-        <span class="keyword">return</span> <span class="string">"Result: High-processing brain. You are the standard."</span>
-    <span class="keyword">elif</span> current_mood == <span class="string">"Stressed"</span>:
-        <span class="keyword">return</span> <span class="string">"Result: System normal. You are a 10/10."</span>
-    <span class="keyword">else</span>:
-        <span class="keyword">return</span> <span class="string">"Result: You are amazing. (Come here)."</span>
-
-<span class="comment"># Update mood and run audit</span>
-my_mood = <span class="string">"<span id="mood-text">Underprepared</span>"</span>
-<span class="func">print</span>(get_status(my_mood))</div>
-            
-            <div class="controls">
-                <select id="mood-select" onchange="updateCode()">
-                    <option value="Underprepared">Underprepared</option>
-                    <option value="Stressed">Stressed</option>
-                    <option value="Just Tired">Other</option>
-                </select>
-                <button class="run-btn" onclick="runScript()">Run Script</button>
+            <div class="card" style="padding: 25px;">
+                <span style="color: var(--f1-red); font-weight: 900; font-size: 0.7rem; text-transform: uppercase;">Technical Summary</span>
+                <p style="margin-top: 10px; font-weight: 700;">Engine: 100% Reliable<br>Tyres: Soft (High Warmth)<br>DRS: Permanently Enabled</p>
             </div>
-            <div id="output" class="terminal-output"></div>
         </div>
+    </section>
 
-        <p>Take a breath and look at the bigger picture. Whether you're dealing with the <strong>IT Act</strong>, <strong>Societal Impacts</strong>, or <strong>Data Handling</strong>, these are just snapshots of a much larger intelligence that you possess. We often confuse "preparation" with "memorization." Real preparation is your ability to wake up, face the stress, and keep your logic intact. You've already done the hardest part of the job.</p>
+    <section class="trophy-section">
+        <!-- MODERN SLEEK F1 TROPHY PILLAR -->
+        <svg class="trophy-pillar" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#7f8c8d" />
+                    <stop offset="50%" style="stop-color:#ecf0f1" />
+                    <stop offset="100%" style="stop-color:#7f8c8d" />
+                </linearGradient>
+            </defs>
+            <!-- Base -->
+            <rect x="20" y="130" width="60" height="10" fill="#111" />
+            <!-- Pillar Body -->
+            <path d="M35 130 L40 20 L60 20 L65 130 Z" fill="url(#silverGrad)" />
+            <!-- Red F1 Slant Detail -->
+            <path d="M45 40 L55 40 L54 50 L46 50 Z" fill="var(--f1-red)" />
+            <path d="M44 60 L56 60 L55 70 L45 70 Z" fill="var(--f1-red)" />
+            <!-- Top Cap -->
+            <rect x="38" y="15" width="24" height="5" fill="#d4af37" />
+        </svg>
 
-        <p>In every major tech release, there are bugs. There are things the developers wish they had more time to fix. But the launch goes ahead because the core product is sound. You are a very sound core product, Aaradhya. Walk into that room knowing that your value is a constant, not a variable. I am incredibly proud of the way you've handled this week, and I am betting everything on you.</p>
+        <p style="color: var(--gold); font-weight: 900; letter-spacing: 5px; text-transform: uppercase;">2024-2025 World Champion</p>
+        <h2 class="champ-name">Aaradhya</h2>
+        <div style="margin-top: 30px; color: #666; font-weight: 700;">TEAM NIV-AARADHYA RACING</div>
+    </section>
 
-        <p>You’ve got this. I’ve got you. Go show them why you're the standard.</p>
-
-        <p class="sig">— Niv</p>
-
-        <p style="font-size: 13px; color: var(--gray-text); font-style: italic; margin-top: 10px;">
-            P.S. If your processing speed starts to drop, remember my DMs have a 100% uptime guarantee for you today.
+    <footer style="text-align: center; padding: 60px 0; border-top: 1px solid var(--f1-light-grey);">
+        <p style="font-size: 0.7rem; color: #444; text-transform: uppercase; letter-spacing: 2px;">
+            FIA OFFICIAL RELATIONSHIP DOCUMENT // RECAP LAP 10 OF 1000
         </p>
-    </div>
-</div>
-
-<script>
-    function updateCode() {
-        const mood = document.getElementById('mood-select').value;
-        document.getElementById('mood-text').innerText = mood;
-        document.getElementById('output').style.display = 'none';
-    }
-
-    function runScript() {
-        const mood = document.getElementById('mood-select').value;
-        const output = document.getElementById('output');
-        output.style.display = 'block';
-        output.innerText = ">>> Initializing System Audit...\n";
-        
-        setTimeout(() => {
-            if (mood === "Underprepared") {
-                output.innerText += ">>> Result: High-processing brain. You are the standard.";
-            } else if (mood === "Stressed") {
-                output.innerText += ">>> Result: System normal. You are a 10/10.";
-            } else {
-                output.innerText += ">>> Result: You are amazing. (Come here).";
-            }
-        }, 600);
-    }
-</script>
+    </footer>
 
 </body>
 </html>
