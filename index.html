@@ -2,314 +2,1151 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AARADHYA GP | MONACO SEASON REVIEW</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>NYT Games - For Aaradhya</title>
     <style>
+        /* =========================================
+           NYT EXACT COLOR PALETTE & TYPOGRAPHY
+           ========================================= */
+        @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
+
         :root {
-            --f1-red: #e10600;
-            --carbon: #0a0a0a;
-            --surface: #121212;
-            --gold: #d4af37;
-            --s1: #f9d807; /* Yellow */
-            --s2: #00d200; /* Green */
-            --s3: #b62ad0; /* Purple */
-            --f1-font: 'Bebas Neue', sans-serif;
-            --body-font: 'Montserrat', sans-serif;
+            /* Fonts */
+            --sans: "nyt-franklin", "Helvetica Neue", Arial, sans-serif;
+            --serif: "nyt-karnak", "KarnakPro-CondensedBlack", Georgia, serif;
+            --gothic: 'UnifrakturMaguntia', serif;
+            
+            /* App Colors */
+            --bg-main: #FFFFFF;
+            --bg-offwhite: #F3F3F3;
+            --text-main: #121212;
+            --text-muted: #737373;
+            --border-light: #E2E2E2;
+            
+            /* Game Colors */
+            --w-green: #538D4E;
+            --w-yellow: #B59F3B;
+            --w-gray: #3A3A3C;
+            --w-light-gray: #D3D6DA;
+            --w-dark-gray: #787C7E;
+            
+            --c-green: #A0C35A;
+            --c-yellow: #F9DF6D;
+            --c-blue: #B0C4EF;
+            --c-purple: #BA81C5;
+            --c-bg: #EFEFE6;
+            
+            --bee-yellow: #F7DA21;
+            --strands-blue: #AFCAEA;
+            --heart-red: #E0245E;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            background-color: var(--carbon); 
-            color: white; 
-            font-family: var(--body-font); 
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            margin: 0; padding: 0;
         }
 
-        section { width: 100%; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
-
-        /* NAV */
-        nav {
-            background: rgba(0,0,0,0.98);
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 3px solid var(--f1-red);
+        body {
+            background-color: #000;
+            font-family: var(--sans);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            height: 100dvh; /* Mobile friendly viewport height */
+            overflow: hidden;
         }
-        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
-        .f1-logo { height: 22px; }
-        .session-tag { font-family: var(--f1-font); font-size: 1.2rem; letter-spacing: 2px; color: var(--f1-red); }
 
-        /* HERO */
-        .hero { 
-            padding: 100px 0; 
-            text-align: center; 
-            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 100%);
-        }
-        .hero p { font-size: 0.8rem; letter-spacing: 8px; color: #555; text-transform: uppercase; margin-bottom: 15px; font-weight: 900; }
-        .hero h1 { font-family: var(--f1-font); font-size: clamp(4.5rem, 15vw, 10rem); font-style: italic; line-height: 0.8; margin: 0; }
-
-        /* TECHNICAL GRID */
-        .main-grid { 
-            display: grid; 
-            grid-template-columns: 1.2fr 0.8fr; 
-            gap: 2px; 
-            background: rgba(255,255,255,0.05); 
-        }
-        
-        .card { 
-            background: var(--carbon); 
-            padding: 60px 40px; 
+        /* App Container */
+        #app {
+            width: 100%;
+            max-width: 500px;
+            background: var(--bg-main);
+            height: 100dvh;
+            position: relative;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
 
-        .card-header { 
-            font-family: var(--f1-font); 
-            font-size: 2.2rem; 
-            margin-bottom: 40px; 
+        /* =========================================
+           APP HEADER & NAVIGATION
+           ========================================= */
+        .app-header {
+            display: flex;
+            justify-content: center; /* Centered since icons are removed */
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-light);
+            background: var(--bg-main);
+            z-index: 10;
+        }
+        .header-logo {
+            font-family: var(--gothic);
+            font-size: 32px;
+            font-weight: normal;
+            letter-spacing: 0.5px;
+            line-height: 1;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 12px 0 24px 0;
+            border-top: 1px solid var(--border-light);
+            background: var(--bg-main);
+            z-index: 10;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 50%;
+        }
+        .nav-item.active { color: var(--text-main); }
+        .nav-item svg { width: 24px; height: 24px; margin-bottom: 4px; }
+
+        /* =========================================
+           SCROLLABLE VIEWS
+           ========================================= */
+        .scroll-view {
+            flex-grow: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: var(--bg-main);
+            display: none;
+        }
+        .scroll-view.active { display: block; }
+
+        .hub-date {
+            font-weight: 700;
+            font-size: 13px;
+            padding: 24px 20px 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .hub-title {
+            font-family: var(--serif);
+            font-size: clamp(28px, 8vw, 36px);
+            font-weight: 900;
+            padding: 0 20px 20px;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .game-list {
+            padding: 0 20px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .card {
             display: flex;
             align-items: center;
-            gap: 15px;
+            padding: 16px;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            background: var(--bg-main);
+            cursor: pointer;
+            transition: transform 0.1s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            touch-action: manipulation;
         }
-        .card-header::before { content: ''; width: 4px; height: 30px; background: var(--f1-red); display: inline-block; }
-
-        /* MONACO TECHNICAL CIRCUIT */
-        .map-wrapper { 
-            position: relative; 
-            padding: 20px 0; 
-            text-align: center;
-        }
-        .map-svg { width: 100%; max-width: 550px; height: auto; filter: drop-shadow(0 0 20px rgba(0,0,0,0.5)); }
+        .card:active { transform: scale(0.97); background: var(--bg-offwhite); }
         
-        /* DATA TAGS */
-        .data-overlay {
+        .card-thumb {
+            width: clamp(56px, 15vw, 64px); 
+            height: clamp(56px, 15vw, 64px);
+            border-radius: 12px;
+            margin-right: 16px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+            display: flex; flex-wrap: wrap; align-content: center; justify-content: center;
+        }
+        
+        /* Thumbnails drawn with CSS */
+        .thumb-wordle { background: var(--bg-main); border: 1px solid var(--border-light); gap: 2px; padding: 6px; }
+        .thumb-wordle div { width: 28%; height: 28%; border-radius: 2px; }
+        .tw-g { background: var(--w-green); } .tw-y { background: var(--w-yellow); } .tw-e { background: var(--w-light-gray); }
+
+        .thumb-conn { background: var(--c-bg); gap: 2px; padding: 6px; }
+        .thumb-conn div { width: 45%; height: 45%; border-radius: 3px; }
+        .tc-p { background: var(--c-purple); } .tc-b { background: var(--c-blue); } .tc-y { background: var(--c-yellow); } .tc-g { background: var(--c-green); }
+
+        .thumb-mini { background: var(--bg-main); border: 2px solid #000; width: 60px; height: 60px; margin-left: 2px; }
+        .thumb-mini div { width: 33.3%; height: 33.3%; border: 1px solid #000; float: left; }
+        .tm-b { background: #000; }
+
+        .thumb-bee { background: var(--bg-main); align-items: center; }
+        .thumb-bee-hex { width: 40px; height: 45px; background: var(--bee-yellow); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); position: relative; }
+        .thumb-bee-hex::after { content: ''; position: absolute; top:5px; left:5px; right:5px; bottom:5px; background: white; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+
+        .thumb-strands { background: var(--strands-blue); }
+        .thumb-strands svg { width: 100%; height: 100%; stroke: white; stroke-width: 4; fill: none; }
+
+        .thumb-lb { background: #fff; border: 3px solid var(--c-purple); border-radius: 0; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; }
+        .thumb-lb::after { content: 'A'; font-weight: bold; font-family: var(--sans); font-size: 20px; }
+
+        .thumb-sudoku { background: #fff; border: 2px solid #000; width: 56px; height: 56px; }
+        .thumb-sudoku div { width: 33.3%; height: 33.3%; border: 1px solid #000; float: left; }
+
+        .thumb-tiles { background: #000; position: relative; }
+        .thumb-tiles div { position: absolute; width: 50%; height: 50%; background: var(--c-green); transform: rotate(45deg); border: 2px solid #000; }
+        .thumb-tiles div:nth-child(2) { background: var(--bee-yellow); top: 15%; left: 15%; z-index: 2;}
+
+        .thumb-cross { background: #fff; border: 2px solid #000; width: 60px; height: 60px; }
+        .thumb-cross div { width: 25%; height: 25%; border: 1px solid #000; float: left; }
+
+        .thumb-vertex { background: var(--c-blue); position: relative; }
+        .thumb-vertex svg { width: 100%; height: 100%; fill: rgba(255,255,255,0.4); stroke: white; stroke-width: 2; }
+
+        .card-text { flex-grow: 1; }
+        .card-text h3 { font-family: var(--serif); font-size: 20px; margin-bottom: 4px; letter-spacing: -0.3px; }
+        .card-text p { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; line-height: 1.3; }
+        .card-tag { display: inline-block; font-size: 11px; font-weight: 700; background: var(--bg-offwhite); padding: 4px 8px; border-radius: 4px; color: var(--text-main); }
+        .card-status { font-size: 11px; font-weight: 700; color: var(--w-green); display: inline-block; margin-left: 8px; }
+
+        /* =========================================
+           STATS VIEW
+           ========================================= */
+        .stats-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid var(--border-light); }
+        .stats-header h2 { font-family: var(--serif); font-size: 28px; margin-bottom: 5px; }
+        .stats-header p { color: var(--text-muted); font-size: 14px; }
+        
+        .stat-box-container { display: flex; justify-content: space-between; padding: 20px; gap: 10px; }
+        .stat-box { flex: 1; text-align: center; }
+        .stat-num { font-size: 32px; font-weight: 300; margin-bottom: 4px; }
+        .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); }
+
+        .stats-section { padding: 20px; border-top: 10px solid var(--bg-offwhite); }
+        .stats-section h3 { font-size: 16px; margin-bottom: 20px; font-weight: 700; text-transform: uppercase; }
+        
+        .chart-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
+        .chart-num { width: 15px; text-align: right; margin-right: 10px; }
+        .chart-bar { background: var(--w-dark-gray); color: white; padding: 4px 8px; min-width: 25px; text-align: right; }
+        .chart-bar.win { background: var(--w-green); width: 100%; }
+        
+        .fun-stats { list-style: none; padding: 0; }
+        .fun-stats li { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-light); font-size: 15px; }
+        .fun-stats li span:last-child { font-weight: 700; }
+
+        /* =========================================
+           GAME VIEWS (SLIDE IN OVER EVERYTHING)
+           ========================================= */
+        .game-view {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-main);
+            z-index: 50; /* Covers bottom nav */
             display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 8px;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        .data-tag {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: 800;
-            letter-spacing: 1px;
+        .game-view.active { transform: translateX(0); }
+        
+        .game-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 16px 20px; border-bottom: 1px solid var(--border-light);
+            background: var(--bg-main);
         }
-        .data-tag span { color: var(--f1-red); display: block; font-size: 0.9rem; margin-top: 5px; }
+        .game-header-title { font-family: var(--serif); font-size: 20px; font-weight: 900; }
+        .btn-icon { background: none; border: none; font-size: 20px; cursor: pointer; padding: 4px; }
 
-        /* CLASSIFICATION */
-        table { width: 100%; border-collapse: collapse; }
-        td { padding: 22px 0; border-bottom: 1px solid #1a1a1a; font-weight: 700; font-size: 0.95rem; }
-        .pos { font-family: var(--f1-font); font-size: 2.2rem; color: var(--f1-red); width: 60px; font-style: italic; }
-        .label { font-size: 0.6rem; color: #444; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; display: block; }
-        .purple { color: var(--s3); font-family: var(--f1-font); font-size: 1.4rem; }
+        .game-body { flex-grow: 1; overflow-y: auto; padding: 5vw; display: flex; flex-direction: column; align-items: center; }
+        .game-desc { font-size: 15px; color: var(--text-muted); margin-bottom: 20px; text-align: center; }
 
-        /* STATS BOX */
-        .perf-section { padding: 80px 0; background: #0c0c0c; }
-        .stats-row { display: flex; justify-content: space-between; flex-wrap: wrap; text-align: center; }
-        .stat-item { flex: 1; padding: 20px; border-right: 1px solid #1a1a1a; }
-        .stat-item:last-child { border: none; }
-        .stat-val { font-family: var(--f1-font); font-size: clamp(2rem, 5vw, 4rem); color: var(--f1-red); display: block; line-height: 1; }
-        .stat-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 3px; font-weight: 800; }
-
-        /* FINAL PODIUM */
-        .podium { 
-            padding: 120px 0; 
-            text-align: center; 
-            background: radial-gradient(circle at center, #151515 0%, #000 100%); 
+        .solve-btn {
+            background: var(--text-main); color: var(--bg-main); border: none;
+            padding: 16px 32px; border-radius: 30px; font-size: 16px; font-weight: 700;
+            cursor: pointer; margin-top: auto; margin-bottom: 20px;
+            transition: transform 0.1s, opacity 0.3s; width: 90%; max-width: 320px;
         }
+        .solve-btn:active { transform: scale(0.95); }
+        .solve-btn:disabled { opacity: 0.5; pointer-events: none; }
 
-        .trophy-svg { 
-            width: 220px; 
-            height: auto; 
-            margin-bottom: 50px;
-            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6)); 
+        .toast {
+            position: absolute; top: 80px; left: 50%; transform: translateX(-50%);
+            background: #000; color: #fff; font-weight: 700; padding: 12px 20px;
+            border-radius: 8px; font-size: 14px; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s; z-index: 100; text-align: center; white-space: nowrap;
         }
+        .toast.show { opacity: 1; pointer-events: auto; }
 
-        .hof-title { 
-            font-size: 1.1rem; 
-            font-weight: 900; 
-            letter-spacing: 16px; 
-            color: var(--gold); 
-            text-transform: uppercase;
-            margin-bottom: 25px;
-            display: block;
+        /* =========================================
+           RESPONSIVE GAME COMPONENTS
+           ========================================= */
+
+        /* 1. WORDLE */
+        #wordle-grid { width: 100%; max-width: 350px; display: grid; grid-template-rows: repeat(6, 1fr); gap: 1.5vw; margin-bottom: 30px; }
+        .w-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5vw; }
+        .w-cell {
+            aspect-ratio: 1; border: 2px solid var(--border-light);
+            display: flex; justify-content: center; align-items: center;
+            font-size: clamp(24px, 8vw, 36px); font-weight: 700; text-transform: uppercase;
         }
-
-        .hof-name {
-            font-family: var(--f1-font);
-            font-size: clamp(5rem, 18vw, 12rem);
-            line-height: 0.8;
-            margin: 0;
-            font-style: italic;
-            text-transform: uppercase;
-            background: linear-gradient(to bottom, #fff 40%, var(--gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            padding-bottom: 15px;
+        .w-cell.absent { background: var(--w-dark-gray); border-color: var(--w-dark-gray); color: white; }
+        .w-cell.present { background: var(--w-yellow); border-color: var(--w-yellow); color: white; }
+        .w-cell.correct { background: var(--w-green); border-color: var(--w-green); color: white; }
+        .w-cell.flip { animation: wFlip 0.5s ease forwards; }
+        @keyframes wFlip {
+            0% { transform: rotateX(0); background: white; border-color: var(--w-dark-gray); color: black; }
+            50% { transform: rotateX(90deg); background: white; }
+            51% { background: var(--w-green); border-color: var(--w-green); color: white; }
+            100% { transform: rotateX(0); background: var(--w-green); border-color: var(--w-green); color: white; }
         }
 
-        footer { padding: 60px 0; text-align: center; opacity: 0.3; font-size: 0.65rem; letter-spacing: 5px; text-transform: uppercase; }
+        /* 2. CONNECTIONS */
+        #conn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2vw; width: 100%; max-width: 400px; margin-bottom: 20px; }
+        .c-tile { background: var(--c-bg); border-radius: 6px; display: flex; justify-content: center; align-items: center; aspect-ratio: 1.2; font-weight: 700; font-size: clamp(10px, 3vw, 13px); text-transform: uppercase; text-align: center; padding: 4px; word-break: break-word; }
+        .c-tile.hide { display: none; }
+        .c-group { border-radius: 6px; padding: 16px; text-align: center; margin-bottom: 8px; display: none; animation: popIn 0.3s; width: 100%; max-width: 400px; }
+        .c-group h4 { margin-bottom: 4px; font-size: 15px; }
+        .c-group p { font-size: 12px; font-weight: 400; }
+        .cg-0 { background: var(--c-green); } .cg-1 { background: var(--c-yellow); } .cg-2 { background: var(--c-blue); } .cg-3 { background: var(--c-purple); color: white; }
 
-        @media (max-width: 950px) {
-            .main-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 5rem; }
-            .stat-item { flex: 50%; border-bottom: 1px solid #1a1a1a; }
-            .stat-item:nth-child(2n) { border-right: none; }
-            .hof-title { letter-spacing: 10px; font-size: 0.8rem; }
-            .container { padding: 0 20px; }
-        }
+        /* 3. MINI CROSSWORD */
+        #mini-grid { display: grid; grid-template-columns: repeat(5, 1fr); border: 2px solid #000; width: 100%; max-width: 300px; margin-bottom: 30px; }
+        .m-cell { aspect-ratio: 1; border: 1px solid #000; position: relative; font-size: clamp(20px, 6vw, 28px); font-weight: bold; display: flex; justify-content: center; align-items: center; text-transform: uppercase; }
+        .m-cell.black { background: #000; }
+        .m-cell.highlight { background: var(--strands-blue); }
+        .m-num { position: absolute; top: 2px; left: 4px; font-size: 10px; font-weight: normal; }
+        .m-clues { font-size: 14px; width: 100%; max-width: 300px; margin-bottom: 20px; }
+        .m-clue { margin-bottom: 8px; border-bottom: 1px solid var(--border-light); padding-bottom: 8px; }
+
+        /* 4. STRANDS */
+        #strands-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2vw; margin-bottom: 20px; width: 100%; max-width: 350px; }
+        .s-cell { aspect-ratio: 1; border-radius: 50%; background: var(--bg-offwhite); display: flex; justify-content: center; align-items: center; font-size: clamp(18px, 5vw, 24px); font-weight: bold; }
+        .s-cell.active { background: var(--strands-blue); color: white; }
+        .s-words { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; min-height: 40px; }
+        .s-pill { background: var(--strands-blue); color: white; padding: 6px 12px; border-radius: 16px; font-size: 13px; font-weight: bold; animation: popIn 0.3s; }
+
+        /* 5. SPELLING BEE */
+        .bee-container { position: relative; width: 100%; max-width: 260px; aspect-ratio: 1; margin: 0 auto 30px; }
+        .hex { width: 30%; height: 34%; background: #E6E6E6; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); position: absolute; display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: clamp(24px, 6vw, 32px); }
+        .hex.center { background: var(--bee-yellow); top: 33%; left: 35%; }
+        .hex:nth-child(2) { top: 3%; left: 35%; } .hex:nth-child(3) { top: 18%; left: 61%; }
+        .hex:nth-child(4) { top: 48%; left: 61%; } .hex:nth-child(5) { top: 63%; left: 35%; }
+        .hex:nth-child(6) { top: 48%; left: 9%; } .hex:nth-child(7) { top: 18%; left: 9%; }
+        .bee-status { font-weight: bold; font-size: 16px; margin-bottom: 20px; }
+
+        /* 6. LETTER BOXED */
+        .lb-container { position: relative; width: 100%; max-width: 250px; aspect-ratio: 1; margin: 0 auto 40px; }
+        .lb-box { position: absolute; top: 15%; left: 15%; width: 70%; height: 70%; border: 3px solid var(--c-purple); background: #FFF; }
+        .lb-letter { position: absolute; font-weight: 700; font-size: clamp(20px, 6vw, 28px); width: 15%; height: 15%; display: flex; justify-content: center; align-items: center; z-index: 2; }
+        #lb-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;}
+        .lb-words { font-size: 18px; font-weight: bold; color: var(--w-green); margin-bottom: 20px; height: 24px; text-align: center;}
+
+        /* 7. SUDOKU */
+        #sudoku-grid { display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; max-width: 300px; border: 3px solid #000; margin-bottom: 30px; }
+        .su-cell { aspect-ratio: 1; border: 1px solid #999; display: flex; justify-content: center; align-items: center; font-size: clamp(28px, 8vw, 40px); font-weight: 300; color: var(--text-main); }
+        .su-cell:nth-child(2n) { border-right: 3px solid #000; }
+        .su-cell:nth-child(4n) { border-right: none; }
+        .su-cell:nth-child(n+5):nth-child(-n+8) { border-bottom: 3px solid #000; }
+        .su-cell.filled { animation: popIn 0.3s; }
+
+        /* 8. TILES */
+        #tiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2vw; width: 100%; max-width: 350px; margin-bottom: 30px; }
+        .t-card { aspect-ratio: 1; background: var(--c-bg); border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: clamp(10px, 3vw, 13px); font-weight: 700; color: transparent; border: 2px solid transparent; transition: all 0.3s; word-break: break-all; padding: 2px;}
+        .t-card.flipped { background: white; color: black; border-color: #000; }
+        .t-card.matched { background: var(--c-green); color: white; border-color: var(--c-green); }
+
+        /* 9. CROSSWORD (BIG) */
+        #cross-grid { display: grid; grid-template-columns: repeat(7, 1fr); border: 2px solid #000; width: 100%; max-width: 350px; margin-bottom: 20px; }
+        .cr-cell { aspect-ratio: 1; border: 1px solid #000; display: flex; justify-content: center; align-items: center; font-size: clamp(14px, 4vw, 20px); font-weight: bold; text-transform: uppercase; background: #fff;}
+        .cr-cell.black { background: #000; }
+        .cr-cell.filled { color: var(--w-green); animation: popIn 0.2s; }
+
+        /* 10. VERTEX */
+        #vertex-container { position: relative; width: 100%; max-width: 320px; aspect-ratio: 1; background: var(--bg-offwhite); border-radius: 50%; margin-bottom: 40px; overflow: hidden;}
+        #vertex-svg { position: absolute; top:0; left:0; width: 100%; height: 100%; }
+        .vx-dot { position: absolute; width: clamp(20px, 6vw, 30px); height: clamp(20px, 6vw, 30px); background: #000; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: bold; transform: translate(-50%, -50%); z-index: 2;}
+
+        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="container nav-flex">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/F1.svg" class="f1-logo" alt="F1">
-            <span class="session-tag">MONACO REPORT // LAP 10</span>
+<div id="app">
+    <!-- Main Header -->
+    <header class="app-header">
+        <div class="header-logo">The New York Times</div>
+    </header>
+
+    <!-- HUB VIEW -->
+    <div id="hub-view" class="scroll-view active">
+        <div class="hub-date" id="hub-date">Play</div>
+        <div class="hub-title">Games for Aaradhya</div>
+        
+        <div class="game-list">
+            <!-- 1. Wordle -->
+            <div class="card" onclick="openGame('wordle')">
+                <div class="card-thumb thumb-wordle">
+                    <div class="tw-g"></div><div class="tw-g"></div><div class="tw-y"></div>
+                    <div class="tw-g"></div><div class="tw-e"></div><div class="tw-e"></div>
+                    <div class="tw-y"></div><div class="tw-g"></div><div class="tw-g"></div>
+                </div>
+                <div class="card-text">
+                    <h3>Wordle</h3>
+                    <p>Get 6 chances to guess a 5-letter word.</p>
+                    <div class="card-tag">For Her</div>
+                    <div class="card-status">In Progress</div>
+                </div>
+            </div>
+
+            <!-- 2. Connections -->
+            <div class="card" onclick="openGame('conn')">
+                <div class="card-thumb thumb-conn">
+                    <div class="tc-p"></div><div class="tc-b"></div>
+                    <div class="tc-y"></div><div class="tc-g"></div>
+                </div>
+                <div class="card-text">
+                    <h3>Connections</h3>
+                    <p>Group words that share a common thread.</p>
+                    <div class="card-tag">Relationship Edition</div>
+                </div>
+            </div>
+
+            <!-- 3. The Mini -->
+            <div class="card" onclick="openGame('mini')">
+                <div class="card-thumb thumb-mini">
+                    <div class="tm-b"></div><div></div><div></div>
+                    <div></div><div></div><div class="tm-b"></div>
+                    <div></div><div class="tm-b"></div><div></div>
+                </div>
+                <div class="card-text">
+                    <h3>The Mini</h3>
+                    <p>Solve a bite-sized crossword puzzle.</p>
+                    <div class="card-tag">About Us</div>
+                </div>
+            </div>
+
+            <!-- 4. Strands -->
+            <div class="card" onclick="openGame('strands')">
+                <div class="card-thumb thumb-strands">
+                    <svg viewBox="0 0 100 100"><path d="M10,50 Q25,20 50,50 T90,50"/></svg>
+                </div>
+                <div class="card-text">
+                    <h3>Strands</h3>
+                    <p>Uncover words in a sea of letters.</p>
+                    <div class="card-tag">Love Theme</div>
+                </div>
+            </div>
+
+            <!-- 5. Spelling Bee -->
+            <div class="card" onclick="openGame('bee')">
+                <div class="card-thumb thumb-bee">
+                    <div class="thumb-bee-hex"></div>
+                </div>
+                <div class="card-text">
+                    <h3>Spelling Bee</h3>
+                    <p>How many words can you make with 7 letters?</p>
+                    <div class="card-tag">A-A-R-A-D-H-Y-A</div>
+                </div>
+            </div>
+
+            <!-- 6. Letter Boxed -->
+            <div class="card" onclick="openGame('lb')">
+                <div class="card-thumb thumb-lb"></div>
+                <div class="card-text">
+                    <h3>Letter Boxed</h3>
+                    <p>Create words using letters around the square.</p>
+                    <div class="card-tag">Her Name</div>
+                </div>
+            </div>
+
+            <!-- 7. Sudoku -->
+            <div class="card" onclick="openGame('sudoku')">
+                <div class="card-thumb thumb-sudoku">
+                    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+                </div>
+                <div class="card-text">
+                    <h3>Sudoku</h3>
+                    <p>Fill the grid with numbers... or hearts.</p>
+                    <div class="card-tag">Easy ❤️</div>
+                </div>
+            </div>
+
+            <!-- 8. Tiles -->
+            <div class="card" onclick="openGame('tiles')">
+                <div class="card-thumb thumb-tiles">
+                    <div></div><div></div>
+                </div>
+                <div class="card-text">
+                    <h3>Tiles</h3>
+                    <p>Match visual elements to clear the board.</p>
+                    <div class="card-tag">Perfect Match</div>
+                </div>
+            </div>
+
+            <!-- 9. Crossword -->
+            <div class="card" onclick="openGame('cross')">
+                <div class="card-thumb thumb-cross">
+                    <div></div><div></div><div class="tm-b"></div><div></div>
+                    <div class="tm-b"></div><div></div><div></div><div class="tm-b"></div>
+                    <div></div><div class="tm-b"></div><div></div><div></div>
+                    <div></div><div></div><div></div><div class="tm-b"></div>
+                </div>
+                <div class="card-text">
+                    <h3>The Crossword</h3>
+                    <p>The classic puzzle, Sunday sized love.</p>
+                    <div class="card-tag">Big Grid</div>
+                </div>
+            </div>
+
+            <!-- 10. Vertex -->
+            <div class="card" onclick="openGame('vertex')">
+                <div class="card-thumb thumb-vertex">
+                    <svg viewBox="0 0 100 100"><polygon points="50,20 80,80 20,80"/></svg>
+                </div>
+                <div class="card-text">
+                    <h3>Vertex</h3>
+                    <p>Connect the dots to reveal the hidden shape.</p>
+                    <div class="card-tag">Draw a ❤️</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATS VIEW -->
+    <div id="stats-view" class="scroll-view">
+        <div class="stats-header">
+            <h2>Aaradhya's Stats</h2>
+            <p>Perfect scores since day one.</p>
+        </div>
+        
+        <div class="stat-box-container">
+            <div class="stat-box">
+                <div class="stat-num">100</div>
+                <div class="stat-label">Win %</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-num">∞</div>
+                <div class="stat-label">Current Streak</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-num">∞</div>
+                <div class="stat-label">Max Streak</div>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <h3>Wordle Guess Distribution</h3>
+            <div class="chart-row"><div class="chart-num">1</div><div class="chart-bar win">9,999</div></div>
+            <div class="chart-row"><div class="chart-num">2</div><div class="chart-bar">0</div></div>
+            <div class="chart-row"><div class="chart-num">3</div><div class="chart-bar">0</div></div>
+            <div class="chart-row"><div class="chart-num">4</div><div class="chart-bar">0</div></div>
+            <div class="chart-row"><div class="chart-num">5</div><div class="chart-bar">0</div></div>
+            <div class="chart-row"><div class="chart-num">6</div><div class="chart-bar">0</div></div>
+        </div>
+
+        <div class="stats-section">
+            <h3>Relationship Metrics</h3>
+            <ul class="fun-stats">
+                <li><span>Connections Mistakes</span> <span>0</span></li>
+                <li><span>Mini Crossword Avg</span> <span>0:01s</span></li>
+                <li><span>Times you made me smile</span> <span>Countless</span></li>
+                <li><span>Spelling Bee Rank</span> <span>Forever Genius</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" id="nav-games" onclick="switchTab('games')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Games
+        </div>
+        <div class="nav-item" id="nav-stats" onclick="switchTab('stats')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"></path><path d="M12 20V4"></path><path d="M6 20v-4"></path></svg>
+            Stats
         </div>
     </nav>
 
-    <header class="hero">
-        <div class="container">
-            <p>10 Months Completed // Season 2024-25</p>
-            <h1>AARADHYA <br> GRAND PRIX</h1>
+    <!-- Global Toast for Alerts -->
+    <div class="toast" id="toast">Message</div>
+
+    <!-- =========================================
+         GAME VIEWS
+         ========================================= -->
+
+    <!-- 1. WORDLE VIEW -->
+    <div class="game-view" id="view-wordle">
+        <div class="game-header">
+            <button class="btn-icon" onclick="closeGame()">←</button>
+            <div class="game-header-title">Wordle</div>
+            <div style="width:28px"></div>
         </div>
-    </header>
+        <div class="game-body">
+            <div class="game-desc">Guess the word in 6 tries.</div>
+            <div id="wordle-grid"></div>
+            <button class="solve-btn" id="btn-wordle" onclick="solveWordle()">Reveal Guess 6</button>
+        </div>
+    </div>
 
-    <section class="main-grid">
-        <!-- MONACO CIRCUIT TECHNICAL MAP -->
-        <div class="card">
-            <h2 class="card-header">Circuit de Monaco // Technical Spec</h2>
-            <div class="map-wrapper">
-                <svg class="map-svg" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Asphalt Track Bed -->
-                    <path d="M50 250 L80 100 L250 80 L320 120 L320 180 L280 200 L350 220 L450 150 L550 180 L520 300 L150 300 Z" 
-                          fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="28" stroke-linejoin="round" stroke-linecap="round"/>
-                    
-                    <!-- Racing Line Segments -->
-                    <!-- S1: Yellow (Start to Casino) -->
-                    <path d="M50 250 L80 100 L250 80" fill="none" stroke="var(--s1)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-                    
-                    <!-- S2: Green (Mirabeau through Tunnel) -->
-                    <path d="M250 80 L320 120 L320 180 L280 200 L350 220 L450 150 L550 180" fill="none" stroke="var(--s2)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-                    
-                    <!-- S3: Purple (Swimming Pool to Finish) -->
-                    <path d="M550 180 L520 300 L150 300 L50 250" fill="none" stroke="var(--s3)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- 2. CONNECTIONS VIEW -->
+    <div class="game-view" id="view-conn">
+        <div class="game-header">
+            <button class="btn-icon" onclick="closeGame()">←</button>
+            <div class="game-header-title">Connections</div>
+            <div style="width:28px"></div>
+        </div>
+        <div class="game-body">
+            <div class="game-desc">Create four groups of four!</div>
+            <div id="conn-solved"></div>
+            <div id="conn-grid"></div>
+            <button class="solve-btn" id="btn-conn" onclick="solveConn()">Solve Connections</button>
+        </div>
+    </div>
 
-                    <!-- Labels -->
-                    <text x="45" y="275" fill="white" font-size="10" font-family="Montserrat" font-weight="900">START</text>
-                    <text x="240" y="70" fill="var(--s1)" font-size="10" font-family="Bebas Neue">S1</text>
-                    <text x="400" y="140" fill="var(--s2)" font-size="10" font-family="Bebas Neue">S2</text>
-                    <text x="350" y="315" fill="var(--s3)" font-size="10" font-family="Bebas Neue">S3</text>
-
-                    <!-- Turn Markers -->
-                    <circle cx="80" cy="100" r="3" fill="#444" /> <!-- St Devote -->
-                    <circle cx="320" cy="150" r="3" fill="#444" /> <!-- Hairpin -->
-                    <circle cx="550" cy="180" r="3" fill="#444" /> <!-- Tabac -->
-
-                    <!-- Live Marker -->
-                    <circle cx="150" cy="300" r="8" fill="white">
-                        <animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite" />
-                    </circle>
-                </svg>
+    <!-- 3. MINI VIEW -->
+    <div class="game-view" id="view-mini">
+        <div class="game-header">
+            <button class="btn-icon" onclick="closeGame()">←</button>
+            <div class="game-header-title">The Mini</div>
+            <div style="width:28px"></div>
+        </div>
+        <div class="game-body">
+            <div id="mini-grid"></div>
+            <div class="m-clues">
+                <div class="m-clue"><strong>1A.</strong> How I feel about you</div>
+                <div class="m-clue"><strong>3A.</strong> What you're taking tomorrow</div>
+                <div class="m-clue"><strong>1D.</strong> What you write</div>
             </div>
+            <button class="solve-btn" id="btn-mini" onclick="solveMini()">Auto-Fill</button>
+        </div>
+    </div>
+
+    <!-- 4. STRANDS VIEW -->
+    <div class="game-view" id="view-strands">
+        <div class="game-header">
+            <button class="btn-icon" onclick="closeGame()">←</button>
+            <div class="game-header-title">Strands</div>
+            <div style="width:28px"></div>
+        </div>
+        <div class="game-body">
+            <div class="game-desc" style="font-weight:bold; color:var(--text-main);">Today's Theme: Reasons I Love Her</div>
+            <div class="s-words" id="strands-words"></div>
+            <div id="strands-grid"></div>
+            <button class="solve-btn" id="btn-strands" onclick="solveStrands()">Find Words</button>
+        </div>
+    </div>
+
+    <!-- 5. BEE VIEW -->
+    <div class="game-view" id="view-bee">
+        <div class="game-header">
+            <button class="btn-icon" onclick="closeGame()">←</button>
+            <div class="game-header-title">Spelling Bee</div>
+            <div style="width:28px"></div>
+        </div>
+        <div class="game-body">
+            <div class="bee-status" id="bee-status">Beginner - 0 pts</div>
+            <div class="s-words" id="bee-words"></div>
+            <div class="bee-container">
+                <div class="hex center">A</div><div class="hex">R</div><div class="hex">D</div>
+                <div class="hex">H</div><div class="hex">Y</div><div class="hex">L</div><div class="hex">V</div>
+            </div>
+            <button class="solve-btn" id="btn-bee" onclick="solveBee()">Find Pangram</button>
+        </div>
+    </div>
+
+    <!-- 6. LETTER BOXED VIEW -->
+    <div class="game-view" id="view-lb">
+        <div class="game-header">
+            <button class="btn-icon" onclick="closeGame()">←</button>
+            <div class="game-header-title">Letter Boxed</div>
+            <div style="width:28px"></div>
+        </div>
+        <div class="game-body">
+            <div class="game-desc">Connect letters to make words.</div>
+            <div class="lb-words" id="lb-words"></div>
+            <div class="lb-container" id="lb-container">
+                <div class="lb-box"></div>
+                <svg id="lb-svg"></svg>
+            </div>
+            <button class="solve-btn" id="btn-lb" onclick="solveLB()">Solve Box</button>
+        </div>
+    </div>
+
+    <!-- 7. SUDOKU VIEW -->
+    <div class="game-view" id="view-sudoku">
+        <div class="game-header">
+            <button class="btn-icon" onclick="closeGame()">←</button>
+            <div class="game-header-title">Sudoku</div>
+            <div style="width:28px"></div>
+        </div>
+        <div class="game-body">
+            <div class="game-desc">Easy • For Aaradhya</div>
+            <div id="sudoku-grid"></div>
+            <button class="solve-btn" id="btn-sudoku" onclick="solveSudoku()">Fill Grid</button>
+        </div>
+    </div>
+
+    <!-- 8. TILES VIEW -->
+    <div class="game-view" id="view-tiles">
+        <div class="game-header">
+            <button class="btn-icon" onclick="closeGame()">←</button>
+            <div class="game-header-title">Tiles</div>
+            <div style="width:28px"></div>
+        </div>
+        <div class="game-body">
+            <div class="game-desc">Match the connected pairs.</div>
+            <div id="tiles-grid"></div>
+            <button class="solve-btn" id="btn-tiles" onclick="solveTiles()">Match All</button>
+        </div>
+    </div>
+
+    <!-- 9. CROSSWORD VIEW -->
+    <div class="game-view" id="view-cross">
+        <div class="game-header">
+            <button class="btn-icon" onclick="closeGame()">←</button>
+            <div class="game-header-title">The Crossword</div>
+            <div style="width:28px"></div>
+        </div>
+        <div class="game-body">
+            <div id="cross-grid"></div>
+            <button class="solve-btn" id="btn-cross" onclick="solveCross()">Reveal Crossword</button>
+        </div>
+    </div>
+
+    <!-- 10. VERTEX VIEW -->
+    <div class="game-view" id="view-vertex">
+        <div class="game-header">
+            <button class="btn-icon" onclick="closeGame()">←</button>
+            <div class="game-header-title">Vertex</div>
+            <div style="width:28px"></div>
+        </div>
+        <div class="game-body">
+            <div class="game-desc">Connect points to form shapes.</div>
+            <div id="vertex-container">
+                <svg id="vertex-svg" viewBox="0 0 100 100"></svg>
+            </div>
+            <button class="solve-btn" id="btn-vertex" onclick="solveVertex()">Connect Dots</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+    // Initialization
+    document.addEventListener("DOMContentLoaded", () => {
+        const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+        document.getElementById('hub-date').textContent = "Play • " + new Date().toLocaleDateString('en-US', options);
+
+        initWordle();
+        initConn();
+        initMini();
+        initStrands();
+        initLB();
+        initSudoku();
+        initTiles();
+        initCross();
+        initVertex();
+    });
+
+    // Tab Switching
+    function switchTab(tab) {
+        document.getElementById('hub-view').classList.remove('active');
+        document.getElementById('stats-view').classList.remove('active');
+        document.getElementById(tab + '-view').classList.add('active');
+        
+        document.getElementById('nav-games').classList.remove('active');
+        document.getElementById('nav-stats').classList.remove('active');
+        document.getElementById('nav-' + tab).classList.add('active');
+    }
+
+    // Navigation
+    function openGame(id) { document.getElementById('view-' + id).classList.add('active'); }
+    function closeGame() { document.querySelectorAll('.game-view').forEach(el => el.classList.remove('active')); }
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+    function disableBtn(id) {
+        const btn = document.getElementById(id);
+        btn.disabled = true;
+        btn.textContent = "Solved";
+    }
+
+    // ==========================================
+    // 1. WORDLE (Pre-filled 5 rows, animates 6th)
+    // ==========================================
+    const wordleGuesses = [
+        [{l:'S', s:'absent'}, {l:'M', s:'absent'}, {l:'I', s:'absent'}, {l:'L', s:'absent'}, {l:'E', s:'absent'}],
+        [{l:'C', s:'absent'}, {l:'A', s:'absent'}, {l:'R', s:'present'}, {l:'E', s:'absent'}, {l:'S', s:'absent'}],
+        [{l:'B', s:'absent'}, {l:'R', s:'correct'}, {l:'A', s:'absent'}, {l:'I', s:'absent'}, {l:'N', s:'absent'}],
+        [{l:'F', s:'absent'}, {l:'R', s:'correct'}, {l:'O', s:'correct'}, {l:'N', s:'absent'}, {l:'T', s:'absent'}],
+        [{l:'G', s:'absent'}, {l:'R', s:'correct'}, {l:'O', s:'correct'}, {l:'U', s:'correct'}, {l:'P', s:'present'}]
+    ];
+    function initWordle() {
+        const grid = document.getElementById('wordle-grid');
+        for(let r=0; r<5; r++) {
+            let rowDiv = document.createElement('div');
+            rowDiv.className = 'w-row';
+            for(let c=0; c<5; c++) {
+                let cell = document.createElement('div');
+                cell.className = `w-cell ${wordleGuesses[r][c].s}`;
+                cell.textContent = wordleGuesses[r][c].l;
+                rowDiv.appendChild(cell);
+            }
+            grid.appendChild(rowDiv);
+        }
+        let finalRow = document.createElement('div');
+        finalRow.className = 'w-row';
+        finalRow.id = 'w-final-row';
+        for(let c=0; c<5; c++) {
+            let cell = document.createElement('div');
+            cell.className = 'w-cell';
+            finalRow.appendChild(cell);
+        }
+        grid.appendChild(finalRow);
+    }
+    async function solveWordle() {
+        disableBtn('btn-wordle');
+        const word = ['P','R','O','U','D'];
+        const cells = document.getElementById('w-final-row').children;
+        for(let i=0; i<5; i++) {
+            cells[i].textContent = word[i];
+            cells[i].style.borderColor = "var(--w-dark-gray)";
+            await sleep(150);
+        }
+        await sleep(300);
+        for(let i=0; i<5; i++) {
+            cells[i].classList.add('flip');
+            await sleep(250);
+        }
+        await sleep(800);
+        showToast("Splendid! I'm so proud of you 💚");
+    }
+
+    // ==========================================
+    // 2. CONNECTIONS
+    // ==========================================
+    const connData = [
+        { cat: 'WHAT SHE STUDIES', words: ['BIOLOGY', 'CELLS', 'CHEMISTRY', 'PHYSICS'] },
+        { cat: 'WHAT SHE CREATES', words: ['POETRY', 'VERSES', 'STANZAS', 'RHYMES'] },
+        { cat: 'WHAT SHE DOES TO ME', words: ['DISTRACTS', 'CAPTIVATES', 'AMAZES', 'FLOORS'] },
+        { cat: 'WORDS TO DESCRIBE HER', words: ['BRILLIANT', 'GORGEOUS', 'KIND', 'PERFECT'] }
+    ];
+    function initConn() {
+        const grid = document.getElementById('conn-grid');
+        let flat = [];
+        connData.forEach((g, idx) => g.words.forEach(w => flat.push({w, idx})));
+        const order = [0,4,8,12, 1,5,9,13, 2,6,10,14, 3,7,11,15]; 
+        order.forEach(i => {
+            let tile = document.createElement('div');
+            tile.className = 'c-tile';
+            tile.dataset.group = flat[i].idx;
+            tile.textContent = flat[i].w;
+            grid.appendChild(tile);
+        });
+    }
+    async function solveConn() {
+        disableBtn('btn-conn');
+        const tiles = Array.from(document.querySelectorAll('.c-tile'));
+        const solved = document.getElementById('conn-solved');
+        for(let g=0; g<4; g++) {
+            let groupTiles = tiles.filter(t => t.dataset.group == g);
+            groupTiles.forEach(t => t.style.background = '#ddd');
+            await sleep(500);
+            groupTiles.forEach(t => t.classList.add('hide'));
             
-            <div class="data-overlay">
-                <div class="data-tag">Sector 1 <span>Foundations</span></div>
-                <div class="data-tag">Sector 2 <span>Tunnel (Growth)</span></div>
-                <div class="data-tag">Sector 3 <span>Paddock (Dominance)</span></div>
-            </div>
-        </div>
+            let block = document.createElement('div');
+            block.className = `c-group cg-${g}`;
+            block.innerHTML = `<h4>${connData[g].cat}</h4><p>${connData[g].words.join(', ')}</p>`;
+            block.style.display = 'block';
+            solved.appendChild(block);
+            await sleep(600);
+        }
+        await sleep(400);
+        showToast("Perfect! You connected us 💚");
+    }
 
-        <!-- CLASSIFICATION -->
-        <div class="card">
-            <h2 class="card-header">Classification</h2>
-            <table>
-                <tr>
-                    <td class="pos">01</td>
-                    <td><span class="label">Event</span>First Message</td>
-                    <td style="text-align:right">MAY 19</td>
-                </tr>
-                <tr>
-                    <td class="pos">02</td>
-                    <td><span class="label">Event</span>FaceTime Debut</td>
-                    <td style="text-align:right" class="purple">FASTEST</td>
-                </tr>
-                <tr>
-                    <td class="pos">03</td>
-                    <td><span class="label">Event</span>100 Voice Notes</td>
-                    <td style="text-align:right">RELIABLE</td>
-                </tr>
-                <tr>
-                    <td class="pos">04</td>
-                    <td><span class="label">Event</span>6-Month Mark</td>
-                    <td style="text-align:right">CHAMP</td>
-                </tr>
-                <tr>
-                    <td class="pos">05</td>
-                    <td><span class="label">Event</span>Exam Support</td>
-                    <td style="text-align:right" class="purple">PURPLE</td>
-                </tr>
-            </table>
-        </div>
-    </section>
+    // ==========================================
+    // 3. MINI CROSSWORD
+    // ==========================================
+    const miniLayout = [
+        {c:'P',n:1},{c:'R',n:2},{c:'O',n:3},{c:'U',n:4},{c:'D',n:5},
+        {c:'O',n:null},{c:'#',n:null},{c:'V',n:null},{c:'#',n:null},{c:'A',n:null},
+        {c:'E',n:null},{c:'X',n:null},{c:'A',n:null},{c:'M',n:null},{c:'Y',n:null},
+        {c:'T',n:null},{c:'#',n:null},{c:'I',n:null},{c:'#',n:null},{c:'S',n:null},
+        {c:'S',n:null},{c:'W',n:null},{c:'E',n:null},{c:'E',n:null},{c:'T',n:null}
+    ];
+    function initMini() {
+        const grid = document.getElementById('mini-grid');
+        miniLayout.forEach(cell => {
+            let div = document.createElement('div');
+            div.className = 'm-cell' + (cell.c === '#' ? ' black' : '');
+            if(cell.n && cell.c !== '#') {
+                let num = document.createElement('span');
+                num.className = 'm-num'; num.textContent = cell.n;
+                div.appendChild(num);
+            }
+            grid.appendChild(div);
+        });
+    }
+    async function solveMini() {
+        disableBtn('btn-mini');
+        const cells = document.querySelectorAll('#mini-grid .m-cell');
+        for(let i=0; i<cells.length; i++) {
+            if(!cells[i].classList.contains('black')) {
+                cells[i].innerHTML += miniLayout[i].c;
+                cells[i].classList.add('highlight');
+                await sleep(80);
+                cells[i].classList.remove('highlight');
+            }
+        }
+        showToast("Solved! You're brilliant.");
+    }
 
-    <!-- PERFORMANCE SECTION -->
-    <section class="perf-section">
-        <div class="container">
-            <div class="stats-row">
-                <div class="stat-item"><span class="stat-val">100</span><span class="stat-label">Chemistry</span></div>
-                <div class="stat-item"><span class="stat-val">99</span><span class="stat-label">Kindness</span></div>
-                <div class="stat-item"><span class="stat-val">98</span><span class="stat-label">Patience</span></div>
-                <div class="stat-item"><span class="stat-val">∞</span><span class="stat-label">Support</span></div>
-            </div>
-        </div>
-    </section>
+    // ==========================================
+    // 4. STRANDS
+    // ==========================================
+    const strLetters = ['S','M','A','R','T','K', 'C','A','R','E','H','I', 'F','U','N','N','Y','N', 'G','O','R','G','E','D'];
+    const strWords = [{w:'SMART',p:[0,1,2,3,4]}, {w:'KIND',p:[5,11,17,23]}, {w:'FUNNY',p:[12,13,14,15,16]}];
+    function initStrands() {
+        const grid = document.getElementById('strands-grid');
+        strLetters.forEach((l, i) => {
+            let div = document.createElement('div');
+            div.className = 's-cell'; div.textContent = l; div.dataset.idx = i;
+            grid.appendChild(div);
+        });
+    }
+    async function solveStrands() {
+        disableBtn('btn-strands');
+        const cells = document.querySelectorAll('.s-cell');
+        const ctnr = document.getElementById('strands-words');
+        for(let sw of strWords) {
+            for(let idx of sw.p) { cells[idx].classList.add('active'); await sleep(150); }
+            let pill = document.createElement('div');
+            pill.className = 's-pill'; pill.textContent = sw.w;
+            ctnr.appendChild(pill);
+            await sleep(400);
+        }
+        showToast("Found them all!");
+    }
 
-    <!-- FINAL PODIUM -->
-    <section class="podium">
-        <div class="container">
-            <!-- REFINED MODERN PILLAR TROPHY (NO HANDLES) -->
-            <svg class="trophy-svg" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="gold-pillar-final" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#8a6d3b" />
-                        <stop offset="30%" style="stop-color:#d4af37" />
-                        <stop offset="50%" style="stop-color:#f9e27d" />
-                        <stop offset="70%" style="stop-color:#d4af37" />
-                        <stop offset="100%" style="stop-color:#8a6d3b" />
-                    </linearGradient>
-                </defs>
-                <!-- Sleek Sculptural Pillar -->
-                <path d="M42 140 L34 30 Q50 10 66 30 L58 140 Z" fill="url(#gold-pillar-final)" />
-                <!-- Core Twist Detail -->
-                <path d="M46 140 L40 30 Q50 20 60 30 L54 140 Z" fill="rgba(0,0,0,0.18)" />
-                <!-- Polished Reflection -->
-                <path d="M49 135 L45 35 Q50 30 55 35 L51 135 Z" fill="rgba(255,255,255,0.2)" />
-                <!-- Weighted Heavy Base -->
-                <rect x="25" y="140" width="50" height="10" fill="#000" />
-                <rect x="20" y="148" width="60" height="2" fill="var(--f1-red)" />
-                <rect x="30" y="150" width="40" height="4" fill="#000" />
-            </svg>
+    // ==========================================
+    // 5. SPELLING BEE
+    // ==========================================
+    async function solveBee() {
+        disableBtn('btn-bee');
+        const list = ['HARD', 'YARD', 'RADHA', 'AARADHYA'];
+        const wContainer = document.getElementById('bee-words');
+        const stat = document.getElementById('bee-status');
+        let pts = 0;
+        for(let i=0; i<list.length; i++) {
+            let w = document.createElement('div');
+            w.className = 's-pill'; 
+            w.style.background = i === list.length-1 ? 'var(--bee-yellow)' : '#eee';
+            w.style.color = 'black';
+            w.textContent = list[i];
+            wContainer.appendChild(w);
+            pts += list[i].length;
+            stat.textContent = `Genius - ${pts} pts`;
+            await sleep(600);
+        }
+        showToast("Pangram! You're a Genius.");
+    }
 
-            <span class="hof-title">INDUCTED: HALL OF FAME</span>
-            <h2 class="hof-name">AARADHYA</h2>
-            
-            <p style="margin-top: 60px; font-weight: 700; color: #444; letter-spacing: 5px; font-size: 0.7rem; text-transform: uppercase;">
-                CONSTRUCTOR CHAMPION: TEAM NIV-AARADHYA // STARTING LAP 11
-            </p>
-        </div>
-    </section>
+    // ==========================================
+    // 6. LETTER BOXED
+    // ==========================================
+    const lbPos = [
+        {t:'A',s:'top', pL:25, pT:0}, {t:'R',s:'top', pL:75, pT:0},
+        {t:'D',s:'right', pL:100, pT:25}, {t:'H',s:'right', pL:100, pT:75},
+        {t:'Y',s:'bottom', pL:75, pT:100}, {t:'E',s:'bottom', pL:25, pT:100},
+        {t:'S',s:'left', pL:0, pT:75}, {t:'T',s:'left', pL:0, pT:25}
+    ];
+    function initLB() {
+        const c = document.getElementById('lb-container');
+        lbPos.forEach((l, i) => {
+            let d = document.createElement('div'); d.className = 'lb-letter'; d.textContent = l.t; d.id = 'lb-l-' + i;
+            d.style.left = `calc(${l.pL}% - 7.5%)`;
+            d.style.top = `calc(${l.pT}% - 7.5%)`;
+            c.appendChild(d);
+        });
+    }
+    function getPercentCenter(el) { 
+        return { x: el.style.left.replace('calc(','').split('%')[0], y: el.style.top.replace('calc(','').split('%')[0] }; 
+    }
+    async function solveLB() {
+        disableBtn('btn-lb');
+        const svg = document.getElementById('lb-svg');
+        const path = [3,0,1,2,4, 5,0,6, 7,0,1]; 
+        let word = "";
+        for(let i=0; i<path.length; i++) {
+            let el = document.getElementById('lb-l-'+path[i]);
+            el.style.color = 'var(--c-purple)';
+            word += el.textContent;
+            document.getElementById('lb-words').textContent = word;
+            if(i>0) {
+                let p1 = getPercentCenter(document.getElementById('lb-l-'+path[i-1]));
+                let p2 = getPercentCenter(el);
+                let line = document.createElementNS('http://www.w3.org/2000/svg','line');
+                // Calculate roughly center of the absolute element
+                line.setAttribute('x1', `${parseFloat(p1.x) + 7.5}%`); line.setAttribute('y1', `${parseFloat(p1.y) + 7.5}%`);
+                line.setAttribute('x2', `${parseFloat(p2.x) + 7.5}%`); line.setAttribute('y2', `${parseFloat(p2.y) + 7.5}%`);
+                line.setAttribute('stroke', 'var(--c-purple)'); line.setAttribute('stroke-width', '3');
+                svg.appendChild(line);
+            }
+            if([4,7,10].includes(i)) { await sleep(600); word += " - "; svg.innerHTML=''; }
+            await sleep(400); el.style.color = 'black';
+        }
+        document.getElementById('lb-words').textContent = "HARDY - YEAS - STAR";
+        showToast("Solved perfectly!");
+    }
 
-    <footer>
-        OFFICIAL FIA DOCUMENT // CIRCUIT DE MONACO // VALIDATED BY NIV
-    </footer>
+    // ==========================================
+    // 7. SUDOKU
+    // ==========================================
+    const suSol = [
+        ['1','4','2','3'],
+        ['3','2','4','1'],
+        ['4','3','1','2'],
+        ['2','1','3','4']
+    ];
+    function initSudoku() {
+        const grid = document.getElementById('sudoku-grid');
+        for(let i=0; i<4; i++) {
+            for(let j=0; j<4; j++) {
+                let div = document.createElement('div');
+                div.className = 'su-cell'; div.id = `su-${i}-${j}`;
+                if((i+j)%2===0) div.textContent = suSol[i][j]; 
+                grid.appendChild(div);
+            }
+        }
+    }
+    async function solveSudoku() {
+        disableBtn('btn-sudoku');
+        for(let i=0; i<4; i++) {
+            for(let j=0; j<4; j++) {
+                let cell = document.getElementById(`su-${i}-${j}`);
+                if(!cell.textContent) {
+                    await sleep(150);
+                    cell.textContent = '❤️'; 
+                    cell.classList.add('filled');
+                    cell.style.color = 'var(--heart-red)';
+                }
+            }
+        }
+        showToast("Grid filled with love!");
+    }
 
+    // ==========================================
+    // 8. TILES
+    // ==========================================
+    const tpairs = ['AARADHYA','FOREVER','POETRY','VERSES','KIND','SWEET','AARADHYA','FOREVER','POETRY','VERSES','KIND','SWEET'];
+    function initTiles() {
+        const grid = document.getElementById('tiles-grid');
+        tpairs.forEach((w,i) => {
+            let div = document.createElement('div');
+            div.className = 't-card'; div.textContent = w; div.dataset.w = w; div.id = 't-'+i;
+            grid.appendChild(div);
+        });
+    }
+    async function solveTiles() {
+        disableBtn('btn-tiles');
+        const cards = document.querySelectorAll('.t-card');
+        cards.forEach(c => c.classList.add('flipped'));
+        await sleep(800);
+        let unique = ['AARADHYA','FOREVER','POETRY','VERSES','KIND','SWEET'];
+        for(let w of unique) {
+            let pair = Array.from(cards).filter(c => c.dataset.w === w);
+            pair.forEach(p => p.classList.add('matched'));
+            await sleep(500);
+        }
+        showToast("Perfect Match!");
+    }
+
+    // ==========================================
+    // 9. THE CROSSWORD (BIG)
+    // ==========================================
+    const crLayout = [
+        'L','O','V','E','#','U','S',
+        'A','L','W','A','Y','S','#',
+        '#','#','F','O','R','E','V',
+        'E','X','A','M','#','#','#',
+        '#','Y','O','U','R','S','#',
+        'P','R','O','U','D','#','#',
+        '#','#','#','B','A','B','E'
+    ];
+    function initCross() {
+        const grid = document.getElementById('cross-grid');
+        crLayout.forEach(c => {
+            let div = document.createElement('div');
+            div.className = 'cr-cell' + (c==='#'?' black':'');
+            grid.appendChild(div);
+        });
+    }
+    async function solveCross() {
+        disableBtn('btn-cross');
+        const cells = document.querySelectorAll('#cross-grid .cr-cell');
+        for(let i=0; i<cells.length; i++) {
+            if(!cells[i].classList.contains('black')) {
+                cells[i].textContent = crLayout[i];
+                cells[i].classList.add('filled');
+                await sleep(50);
+            }
+        }
+        showToast("Sunday Sized Love Solved!");
+    }
+
+    // ==========================================
+    // 10. VERTEX (Perfect SVG Heart)
+    // ==========================================
+    // Points forming a perfect geometric heart on a 0-100 scale
+    const vxPoints = [ 
+        {x:50, y:85}, /* Bottom Tip */
+        {x:15, y:45}, /* Left Curve Bottom */
+        {x:25, y:20}, /* Left Curve Top */
+        {x:50, y:35}, /* Center Inner Dip */
+        {x:75, y:20}, /* Right Curve Top */
+        {x:85, y:45}  /* Right Curve Bottom */
+    ];
+    function initVertex() {
+        const c = document.getElementById('vertex-container');
+        vxPoints.forEach((p,i) => {
+            let d = document.createElement('div');
+            d.className = 'vx-dot'; d.textContent = i+1;
+            d.style.left = p.x+'%'; d.style.top = p.y+'%';
+            c.appendChild(d);
+        });
+    }
+    async function solveVertex() {
+        disableBtn('btn-vertex');
+        const svg = document.getElementById('vertex-svg');
+        const order = [0,1,2,3,4,5,0]; // Connect all points
+        
+        let path = document.createElementNS('http://www.w3.org/2000/svg','path');
+        path.setAttribute('fill', 'var(--heart-red)'); 
+        path.setAttribute('stroke', 'var(--heart-red)');
+        path.setAttribute('stroke-width', '2');
+        path.setAttribute('stroke-linejoin', 'round');
+        svg.appendChild(path);
+
+        let dStr = `M ${vxPoints[order[0]].x} ${vxPoints[order[0]].y}`;
+        for(let i=1; i<order.length; i++) {
+            dStr += ` L ${vxPoints[order[i]].x} ${vxPoints[order[i]].y}`;
+            path.setAttribute('d', dStr);
+            await sleep(350);
+        }
+        showToast("You connected my heart ❤️");
+    }
+
+</script>
 </body>
 </html>
