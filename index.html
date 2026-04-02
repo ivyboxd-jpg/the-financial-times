@@ -76,7 +76,7 @@
            ========================================= */
         .app-header {
             display: flex;
-            justify-content: center; /* Centered since icons are removed */
+            justify-content: center;
             align-items: center;
             padding: 16px 20px;
             border-bottom: 1px solid var(--border-light);
@@ -382,8 +382,8 @@
         <div class="header-logo">The New York Times</div>
     </header>
 
-    <!-- HUB VIEW -->
-    <div id="hub-view" class="scroll-view active">
+    <!-- GAMES HUB VIEW -->
+    <div id="games-view" class="scroll-view active">
         <div class="hub-date" id="hub-date">Play</div>
         <div class="hub-title">Games for Aaradhya</div>
         
@@ -619,7 +619,7 @@
             <div id="mini-grid"></div>
             <div class="m-clues">
                 <div class="m-clue"><strong>1A.</strong> How I feel about you</div>
-                <div class="m-clue"><strong>3A.</strong> What you're taking tomorrow</div>
+                <div class="m-clue"><strong>3A.</strong> You are so incredibly ___</div>
                 <div class="m-clue"><strong>1D.</strong> What you write</div>
             </div>
             <button class="solve-btn" id="btn-mini" onclick="solveMini()">Auto-Fill</button>
@@ -757,7 +757,7 @@
 
     // Tab Switching
     function switchTab(tab) {
-        document.getElementById('hub-view').classList.remove('active');
+        document.getElementById('games-view').classList.remove('active');
         document.getElementById('stats-view').classList.remove('active');
         document.getElementById(tab + '-view').classList.add('active');
         
@@ -881,7 +881,7 @@
     const miniLayout = [
         {c:'P',n:1},{c:'R',n:2},{c:'O',n:3},{c:'U',n:4},{c:'D',n:5},
         {c:'O',n:null},{c:'#',n:null},{c:'V',n:null},{c:'#',n:null},{c:'A',n:null},
-        {c:'E',n:null},{c:'X',n:null},{c:'A',n:null},{c:'M',n:null},{c:'Y',n:null},
+        {c:'S',n:null},{c:'M',n:null},{c:'A',n:null},{c:'R',n:null},{c:'T',n:null},
         {c:'T',n:null},{c:'#',n:null},{c:'I',n:null},{c:'#',n:null},{c:'S',n:null},
         {c:'S',n:null},{c:'W',n:null},{c:'E',n:null},{c:'E',n:null},{c:'T',n:null}
     ];
@@ -997,7 +997,6 @@
                 let p1 = getPercentCenter(document.getElementById('lb-l-'+path[i-1]));
                 let p2 = getPercentCenter(el);
                 let line = document.createElementNS('http://www.w3.org/2000/svg','line');
-                // Calculate roughly center of the absolute element
                 line.setAttribute('x1', `${parseFloat(p1.x) + 7.5}%`); line.setAttribute('y1', `${parseFloat(p1.y) + 7.5}%`);
                 line.setAttribute('x2', `${parseFloat(p2.x) + 7.5}%`); line.setAttribute('y2', `${parseFloat(p2.y) + 7.5}%`);
                 line.setAttribute('stroke', 'var(--c-purple)'); line.setAttribute('stroke-width', '3');
@@ -1079,7 +1078,7 @@
         'L','O','V','E','#','U','S',
         'A','L','W','A','Y','S','#',
         '#','#','F','O','R','E','V',
-        'E','X','A','M','#','#','#',
+        'K','I','S','S','#','#','#',
         '#','Y','O','U','R','S','#',
         'P','R','O','U','D','#','#',
         '#','#','#','B','A','B','E'
@@ -1108,7 +1107,6 @@
     // ==========================================
     // 10. VERTEX (Perfect SVG Heart)
     // ==========================================
-    // Points forming a perfect geometric heart on a 0-100 scale
     const vxPoints = [ 
         {x:50, y:85}, /* Bottom Tip */
         {x:15, y:45}, /* Left Curve Bottom */
@@ -1129,7 +1127,7 @@
     async function solveVertex() {
         disableBtn('btn-vertex');
         const svg = document.getElementById('vertex-svg');
-        const order = [0,1,2,3,4,5,0]; // Connect all points
+        const order = [0,1,2,3,4,5,0]; 
         
         let path = document.createElementNS('http://www.w3.org/2000/svg','path');
         path.setAttribute('fill', 'var(--heart-red)'); 
