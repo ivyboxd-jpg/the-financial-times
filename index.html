@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HACK & SHIP: Project Hail Mary | Devvit</title>
+<title>Hack & Ship | Devvit</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Lexend:wght@400;700;800;900&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -38,7 +38,8 @@
     position: relative;
   }
 
-  /* ── VISUAL BACKGROUNDS (Grid, Nebulas, Astrophage) ── */
+  /* ── VISUAL BACKGROUNDS & HUD ── */
+  /* Perspective Grid */
   body::before {
     content: ''; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
     background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
@@ -48,10 +49,25 @@
   }
   @keyframes gridMove { 0% { transform: perspective(500px) rotateX(45deg) translateY(0); } 100% { transform: perspective(500px) rotateX(45deg) translateY(50px); } }
 
+  /* CRT Scanlines */
+  body::after {
+    content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px);
+    pointer-events: none; z-index: 99; opacity: 0.5;
+  }
+
+  /* Glow Orbs */
   .glow-orb-1 { position: absolute; top: 0; left: -20vw; width: 60vw; height: 60vw; background: radial-gradient(circle, var(--brand-purple-dim) 0%, transparent 60%); filter: blur(80px); pointer-events: none; z-index: -2; }
   .glow-orb-2 { position: absolute; top: 50vh; right: -20vw; width: 50vw; height: 50vw; background: radial-gradient(circle, var(--brand-orange-dim) 0%, transparent 60%); filter: blur(80px); pointer-events: none; z-index: -2; }
 
-  /* Floating Astrophage Particles */
+  /* Static Screen Crosshairs */
+  .hud-crosshair { position: fixed; width: 20px; height: 20px; pointer-events: none; z-index: 50; opacity: 0.3; }
+  .hud-tl { top: 20px; left: 20px; border-top: 2px solid var(--text-gray); border-left: 2px solid var(--text-gray); }
+  .hud-tr { top: 20px; right: 20px; border-top: 2px solid var(--text-gray); border-right: 2px solid var(--text-gray); }
+  .hud-bl { bottom: 20px; left: 20px; border-bottom: 2px solid var(--text-gray); border-left: 2px solid var(--text-gray); }
+  .hud-br { bottom: 20px; right: 20px; border-bottom: 2px solid var(--text-gray); border-right: 2px solid var(--text-gray); }
+
+  /* Astrophage Particles */
   .particles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -1; }
   .particle { position: absolute; width: 3px; height: 3px; background: var(--brand-orange); border-radius: 50%; box-shadow: 0 0 8px var(--brand-orange); animation: floatUp var(--duration) infinite linear; opacity: var(--opacity); }
   @keyframes floatUp { 0% { transform: translateY(100vh) scale(0.5); opacity: 0; } 10% { opacity: var(--opacity); } 90% { opacity: var(--opacity); } 100% { transform: translateY(-100px) scale(1.5); opacity: 0; } }
@@ -69,11 +85,15 @@
   strong { color: var(--text-white); font-weight: 600; }
   a { text-decoration: none; color: inherit; transition: 0.2s; }
 
+  /* Blinking Cursor */
+  .cursor-blink { animation: blinker 1s step-end infinite; color: var(--brand-orange); font-weight: 900; }
+  @keyframes blinker { 50% { opacity: 0; } }
+
   /* ── SPACING & LAYOUT ── */
   .section { margin-bottom: 120px; } 
   
   /* ── HEADER ── */
-  .pre-title { font-family: 'Space Grotesk', sans-serif; color: var(--brand-orange); font-size: clamp(12px, 3vw, 14px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 16px; display: block; display: flex; align-items: center; gap: 8px;}
+  .pre-title { font-family: 'Space Grotesk', sans-serif; color: var(--brand-orange); font-size: clamp(12px, 3vw, 14px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;}
   .pre-title::before { content: ''; width: 8px; height: 8px; background: var(--brand-orange); display: inline-block; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
   .title-highlight { color: var(--brand-purple); text-shadow: 0 0 40px var(--brand-purple-dim); }
   
@@ -85,17 +105,28 @@
   .pulse-dot { width: 10px; height: 10px; background: var(--brand-orange); border-radius: 50%; box-shadow: 0 0 0 0 rgba(255, 116, 57, 0.7); animation: pulse 1.5s infinite; }
   @keyframes pulse { 70% { box-shadow: 0 0 0 12px rgba(255, 116, 57, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 116, 57, 0); } }
 
-  /* ── TICKER ── */
-  .ticker-wrapper { background: var(--brand-orange); width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; padding: 12px 0; overflow: hidden; transform: rotate(-1.5deg); margin-top: 80px; margin-bottom: 100px; box-shadow: 0 10px 30px var(--brand-orange-dim); transition: transform 0.4s; z-index: 20; }
+  /* ── TICKER (FIXED FOR MOBILE) ── */
+  .ticker-wrapper { 
+    background: var(--brand-orange); 
+    width: 110vw; 
+    margin-left: calc(50% - 55vw); 
+    padding: 12px 0; 
+    overflow: hidden; 
+    transform: rotate(-1.5deg); 
+    margin-top: 80px; 
+    margin-bottom: 100px; 
+    box-shadow: 0 10px 30px var(--brand-orange-dim); 
+    transition: transform 0.4s; 
+    z-index: 20; 
+  }
   .ticker-wrapper:hover { transform: rotate(0deg) scale(1.01); }
-  .ticker { display: flex; width: max-content; animation: tickerScroll 25s linear infinite; }
+  .ticker { display: flex; width: max-content; animation: tickerScroll 30s linear infinite; }
   .ticker-item { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; color: var(--bg-dark); text-transform: uppercase; padding: 0 30px; display: flex; align-items: center; gap: 30px; }
   .ticker-item::after { content: '✦'; color: var(--bg-dark); }
   @keyframes tickerScroll { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-50%, 0, 0); } }
 
   /* ── VISUAL MOTIVE BLOCK (The WHO) ── */
   .motive-split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 48px; border: 1px solid var(--border-dim); border-left: 6px solid var(--brand-orange); background: linear-gradient(135deg, rgba(20,20,20,0.8), transparent); border-radius: 4px; position: relative; overflow: hidden; }
-  /* Radar visual overlay */
   .motive-split::after { content: ''; position: absolute; top: -50%; left: -10%; width: 500px; height: 500px; border: 1px dashed var(--border-dim); border-radius: 50%; pointer-events: none; z-index: 0; }
   .motive-split::before { content: ''; position: absolute; top: -30%; left: 0%; width: 300px; height: 300px; border: 1px dashed var(--border-dim); border-radius: 50%; pointer-events: none; z-index: 0; }
   
@@ -107,19 +138,23 @@
   /* ── VISUAL JUDGING MATRIX ── */
   .judging-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 32px; }
   .judge-card { background: var(--bg-card); padding: 32px 24px; border: 1px solid var(--border-dim); transition: 0.3s; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .judge-card::before { content:''; position:absolute; top:0; left:0; width:12px; height:12px; border-top: 2px solid var(--brand-purple); border-left: 2px solid var(--brand-purple); transition: 0.3s;}
+  .judge-card::after { content:''; position:absolute; bottom:0; right:0; width:12px; height:12px; border-bottom: 2px solid var(--brand-purple); border-right: 2px solid var(--brand-purple); transition: 0.3s;}
+  
   .judge-card:hover { border-color: var(--brand-purple); transform: translateY(-6px); box-shadow: 0 10px 30px var(--brand-purple-dim); }
+  .judge-card:hover::before { width: 100%; height: 100%; opacity: 0.1; }
+  
   .judge-num { font-family: 'Space Grotesk', sans-serif; font-size: 64px; font-weight: 700; color: var(--brand-purple-dim); position: absolute; top: -10px; right: -5px; line-height: 1; pointer-events: none; transition: 0.3s; }
   .judge-card:hover .judge-num { color: var(--brand-purple); right: 16px; top: 16px; font-size: 32px; }
   .judge-card h4 { font-size: 18px; margin-bottom: 12px; color: var(--text-white); position: relative; z-index: 2; }
   .judge-card p { font-size: 14px; color: var(--text-gray); margin-bottom: 24px; line-height: 1.5; position: relative; z-index: 2; flex-grow: 1; }
   
-  .weight-bar { width: 100%; height: 4px; background: var(--bg-dark); border-radius: 2px; overflow: hidden; margin-top: auto; }
+  .weight-bar { width: 100%; height: 4px; background: var(--bg-dark); border-radius: 2px; overflow: hidden; margin-top: auto; position: relative; z-index: 2;}
   .weight-fill { height: 100%; background: var(--brand-purple); width: 0; transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
   .judge-card:hover .weight-fill { width: 100%; }
 
   /* ── TIMELINE (FLIGHT PATH) ── */
   .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
-  /* Desktop orbital line */
   @media (min-width: 769px) { .timeline::before { content:''; position: absolute; left: 198px; top: 20px; bottom: 20px; width: 2px; background: var(--border-dim); z-index: 1; } }
   
   .timeline-row { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--border-dim); transition: 0.3s; align-items: center; position: relative; z-index: 2; }
@@ -127,7 +162,6 @@
   .timeline-row:hover { background: linear-gradient(90deg, transparent, rgba(167, 165, 255, 0.05), transparent); padding-left: 16px; }
   
   .time-col { font-family: 'Space Grotesk', sans-serif; font-size: 14px; color: var(--text-gray); font-weight: 700; letter-spacing: 0.1em; transition: 0.3s; display: flex; align-items: center; justify-content: space-between; }
-  /* Node Dot on Desktop */
   @media (min-width: 769px) { .time-col::after { content: ''; width: 10px; height: 10px; background: var(--bg-dark); border: 2px solid var(--border-dim); border-radius: 50%; z-index: 3; transition: 0.3s; transform: translateX(5px); } }
   
   .timeline-row:hover .time-col { color: var(--brand-purple); }
@@ -152,7 +186,7 @@
   .box-title { font-size: 20px; margin-bottom: 8px; }
 
   /* ── RESOURCES BENTO BOX ── */
-  .resource-card { background: var(--bg-card); border: 1px solid var(--border-dim); padding: 32px; display: flex; flex-direction: column; gap: 12px; transition: 0.3s; }
+  .resource-card { background: var(--bg-card); border: 1px solid var(--border-dim); padding: 32px; display: flex; flex-direction: column; gap: 12px; transition: 0.3s; position: relative;}
   .resource-card:hover { border-color: var(--brand-purple); box-shadow: 0 8px 30px var(--brand-purple-dim); transform: translateY(-4px); }
   .r-level { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; letter-spacing: 0.1em; display: flex; align-items: center; gap: 8px;}
   .r-level::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
@@ -167,13 +201,12 @@
   .r-item a:hover::after { opacity: 1; transform: translateX(0); }
   .r-tag { font-family: 'Space Grotesk', sans-serif; font-size: 11px; color: var(--text-gray); }
 
-  /* ── BRUTALIST CONTACT CARD ── */
-  .card-solid { padding: 48px; border-radius: 2px; margin: 80px 0; background: var(--brand-purple); color: var(--bg-dark); transition: 0.3s; display: flex; flex-direction: column; align-items: flex-start; position: relative; overflow: hidden; }
-  .card-solid::before { content: '✦✦✦'; position: absolute; right: 24px; top: -20px; font-size: 100px; color: var(--bg-dark); opacity: 0.1; line-height: 1; pointer-events: none; transition: 0.5s;}
+  /* ── BRUTALIST CONTACT CARD (Clean Version) ── */
+  .card-solid { padding: 48px; border-radius: 2px; margin: 80px 0; background-color: var(--brand-purple); 
+                color: var(--bg-dark); transition: 0.3s; display: flex; flex-direction: column; align-items: flex-start; position: relative; overflow: hidden; }
   .card-solid:hover { transform: translateY(-4px); box-shadow: 12px 12px 0 var(--brand-orange); }
-  .card-solid:hover::before { transform: rotate(15deg) scale(1.2); }
-  .card-solid h3 { color: var(--bg-dark); font-size: clamp(28px, 5vw, 40px); margin-bottom: 12px; }
-  .card-solid p { color: var(--bg-dark); font-weight: 600; font-size: clamp(14px, 3vw, 16px); max-width: 550px; margin-bottom: 24px;}
+  .card-solid h3 { color: var(--bg-dark); font-size: clamp(28px, 5vw, 40px); margin-bottom: 12px; text-shadow: 2px 2px 0px rgba(255,255,255,0.3);}
+  .card-solid p { color: var(--bg-dark); font-weight: 700; font-size: clamp(14px, 3vw, 16px); max-width: 550px; margin-bottom: 24px;}
   
   .btn-contact { display: inline-flex; align-items: center; gap: 10px; background: var(--bg-dark); color: var(--text-white); font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase; padding: 16px 32px; font-size: 14px; border: none; cursor: pointer; transition: 0.3s; letter-spacing: 0.1em; }
   .btn-contact:hover { background: var(--brand-orange); color: var(--bg-dark); transform: scale(1.02); }
@@ -199,7 +232,6 @@
     
     .motive-split { grid-template-columns: 1fr; gap: 24px; padding: 32px 24px; }
     
-    /* Mobile Timeline */
     .timeline-row { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; border-bottom: 1px dashed var(--border-dim); }
     .timeline-row:hover { padding-left: 0; background: none; }
     .event-content { padding-left: 0; }
@@ -210,16 +242,22 @@
     
     .card-solid { padding: 32px 24px; margin: 60px 0; }
     .card-solid h3 { font-size: 24px; }
+    
+    .hud-crosshair { display: none; }
   }
 </style>
 </head>
 <body>
 
-<!-- Dynamic Backgrounds -->
+<!-- Dynamic Background Elements -->
 <div class="glow-orb-1"></div>
 <div class="glow-orb-2"></div>
+<div class="hud-crosshair hud-tl"></div>
+<div class="hud-crosshair hud-tr"></div>
+<div class="hud-crosshair hud-bl"></div>
+<div class="hud-crosshair hud-br"></div>
+
 <div class="particles">
-  <!-- Astrophage Particles generated with pure CSS logic -->
   <div class="particle" style="left: 10%; --duration: 12s; --opacity: 0.6; animation-delay: 0s;"></div>
   <div class="particle" style="left: 30%; --duration: 18s; --opacity: 0.4; animation-delay: 3s;"></div>
   <div class="particle" style="left: 50%; --duration: 15s; --opacity: 0.8; animation-delay: 1s;"></div>
@@ -232,7 +270,7 @@
   <!-- HEADER -->
   <header class="section" style="margin-bottom: 40px;">
     <span class="pre-title">Mission Dossier // Theme: Project Hail Mary</span>
-    <h1>HACK & <span class="title-highlight">SHIP</span></h1>
+    <h1>HACK & <span class="title-highlight">SHIP<span class="cursor-blink">_</span></span></h1>
     <p style="max-width: 600px; font-size: clamp(15px, 3vw, 18px); margin-top: 16px; color: var(--text-white);">A 36-hour hackathon by Devvit. Blitz-scale rough ideas into real-world projects. No memory, no problem. Engineer a solution and ship it before the window closes.</p>
     
     <div class="meta-grid">
@@ -260,6 +298,7 @@
       <div class="ticker-item">Rule 04: Protect Your Sleep</div>
       <div class="ticker-item">Rule 05: Ship Before Zero</div>
       
+      <!-- Duplicated for infinite seamless scrolling -->
       <div class="ticker-item">Rule 01: Prototype, Don't Polish</div>
       <div class="ticker-item">Rule 02: Respect The Crew</div>
       <div class="ticker-item">Rule 03: AI Assists, You Decide</div>
@@ -298,7 +337,6 @@
         <div class="weight-bar"><div class="weight-fill" style="transition-delay: 0.2s;"></div></div>
       </div>
       <div class="judge-card">
-        <div class="judge-card-inner"></div>
         <div class="judge-num">03</div>
         <h4>Execution</h4>
         <p>Does the prototype actually work? (Even partially).</p>
@@ -411,7 +449,7 @@
     </div>
   </section>
 
-  <!-- CONTACT BLOCK -->
+  <!-- CONTACT BLOCK (Clean Brutalist Version) -->
   <div class="card-solid fade-in-section">
     <h3>Need Backup?</h3>
     <p>Mission Control is standing by. If you are stuck, confused, or need an administrative override, reach out to the Devvit Organizing Team.</p>
