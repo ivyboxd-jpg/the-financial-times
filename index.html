@@ -11,9 +11,9 @@
     --bg-dark: #0E0E0E;
     --bg-card: #141414;
     --brand-purple: #A7A5FF;
-    --brand-purple-dim: rgba(167, 165, 255, 0.1);
+    --brand-purple-dim: rgba(167, 165, 255, 0.15);
     --brand-orange: #FF7439;
-    --brand-orange-dim: rgba(255, 116, 57, 0.1);
+    --brand-orange-dim: rgba(255, 116, 57, 0.15);
     --text-white: #FFFFFF;
     --text-gray: #A0A0A0;
     --border-dim: #2A2A2A;
@@ -62,44 +62,50 @@
   /* Typography */
   h1, h2, h3, h4 { font-family: 'Lexend', sans-serif; color: var(--text-white); text-transform: uppercase; }
   h1 { font-size: clamp(48px, 8vw, 80px); font-weight: 900; line-height: 1; letter-spacing: -0.02em; margin-bottom: 16px; animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-  h2 { font-size: clamp(28px, 4vw, 36px); font-weight: 800; margin-bottom: 32px; display: inline-block; border-bottom: 4px solid var(--brand-purple); padding-bottom: 8px; }
+  h2 { font-size: clamp(28px, 4vw, 36px); font-weight: 800; margin-bottom: 32px; display: inline-block; border-bottom: 4px solid var(--brand-purple); padding-bottom: 8px; position: relative; }
+  h2::after { content:''; position: absolute; bottom: -4px; left: 0; width: 20px; height: 4px; background: var(--text-white); animation: pulseWidth 2s infinite alternate; }
   h3 { font-size: 20px; font-weight: 700; margin: 24px 0 12px; }
   p { margin-bottom: 16px; }
   strong { color: var(--text-white); font-weight: 600; }
+  a { text-decoration: none; color: inherit; transition: 0.2s; }
 
   /* ── HEADER ── */
-  .pre-title { font-family: 'Space Grotesk', sans-serif; color: var(--brand-orange); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; display: block; }
-  .title-highlight { color: var(--brand-purple); }
+  .header { animation: float 6s ease-in-out infinite; }
+  .pre-title { font-family: 'Space Grotesk', sans-serif; color: var(--brand-orange); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; display: block; animation: fadeIn 1s forwards; }
+  .title-highlight { color: var(--brand-purple); text-shadow: 0 0 30px var(--brand-purple-dim); }
   
-  .meta-grid { display: flex; gap: 40px; margin-top: 40px; border-top: 1px solid var(--border-dim); padding-top: 24px; flex-wrap: wrap; animation: fadeIn 1s ease 0.5s both; }
+  .meta-grid { display: flex; gap: 40px; margin-top: 40px; border-top: 1px solid var(--border-dim); padding-top: 24px; flex-wrap: wrap; animation: slideUp 1s ease 0.3s both; }
   .meta-item { display: flex; flex-direction: column; gap: 4px; }
   .meta-label { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-gray); text-transform: uppercase; }
   .meta-value { font-family: 'Lexend', sans-serif; font-size: 20px; color: var(--text-white); font-weight: 700; display: flex; align-items: center; gap: 10px; }
   
   .pulse-dot { width: 10px; height: 10px; background: var(--brand-orange); border-radius: 50%; box-shadow: 0 0 0 0 rgba(255, 116, 57, 0.7); animation: pulse 1.5s infinite; }
-  @keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(255, 116, 57, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 116, 57, 0); } }
 
   /* ── DYNAMIC RULES TICKER ── */
   .ticker-wrapper {
     background: var(--brand-orange); width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;
-    padding: 12px 0; overflow: hidden; transform: rotate(-1.5deg); margin-top: 60px; margin-bottom: 80px; box-shadow: 0 10px 30px var(--brand-orange-dim);
+    padding: 12px 0; overflow: hidden; transform: rotate(-1.5deg); margin-top: 60px; margin-bottom: 60px; box-shadow: 0 10px 30px var(--brand-orange-dim);
+    transition: transform 0.3s;
   }
+  .ticker-wrapper:hover { transform: rotate(0deg) scale(1.02); }
   .ticker { display: flex; width: max-content; animation: tickerScroll 25s linear infinite; }
   .ticker:hover { animation-play-state: paused; }
   .ticker-item { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; color: var(--bg-dark); text-transform: uppercase; padding: 0 40px; display: flex; align-items: center; gap: 40px; }
   .ticker-item::after { content: '✦'; color: var(--bg-dark); }
-  @keyframes tickerScroll { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-50%, 0, 0); } }
 
-  /* ── BRUTALIST CARDS (Hover Effects) ── */
-  .card-solid { padding: 32px; border-radius: 2px; margin: 32px 0; color: var(--bg-dark); transition: transform 0.2s, box-shadow 0.2s; }
-  .card-solid:hover { transform: translate(-4px, -4px); }
+  /* ── BRUTALIST CARDS ── */
+  .card-solid { padding: 32px; border-radius: 2px; margin: 32px 0; color: var(--bg-dark); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; position: relative; z-index: 10; }
+  .card-solid:hover { transform: translateY(-8px) scale(1.01); }
   .card-orange { background-color: var(--brand-orange); }
-  .card-orange:hover { box-shadow: 8px 8px 0 rgba(255, 116, 57, 0.3); }
+  .card-orange:hover { box-shadow: 12px 12px 0 var(--brand-purple); }
   .card-purple { background-color: var(--brand-purple); }
-  .card-purple:hover { box-shadow: 8px 8px 0 rgba(167, 165, 255, 0.3); }
+  .card-purple:hover { box-shadow: 12px 12px 0 var(--brand-orange); }
   
-  .card-solid h3 { color: var(--bg-dark); margin-top: 0; }
-  .card-solid p { margin: 0; color: var(--bg-dark); font-weight: 600; font-size: 18px; line-height: 1.4; }
+  .card-solid h3 { color: var(--bg-dark); margin-top: 0; font-size: 28px; }
+  .card-solid p { margin: 0; color: var(--bg-dark); font-weight: 600; font-size: 18px; line-height: 1.5; }
+  
+  .directive-box { border: 4px solid var(--brand-orange); background: rgba(255, 116, 57, 0.05); padding: 32px; margin: 40px 0; position: relative; animation: glowPulse 4s infinite alternate; }
+  .directive-box::before { content: 'CORE DIRECTIVE'; position: absolute; top: -14px; left: 24px; background: var(--bg-dark); color: var(--brand-orange); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14px; padding: 0 12px; }
 
   /* ── COMPACT TIMELINE ── */
   .timeline { display: grid; gap: 12px; }
@@ -107,10 +113,11 @@
     display: grid; grid-template-columns: 200px 1fr; background: var(--bg-card); padding: 20px 24px; 
     border-left: 4px solid var(--border-dim); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); cursor: default;
   }
-  .timeline-row:hover { border-left-color: var(--brand-purple); background: #1a1a1a; transform: translateX(8px); }
+  .timeline-row:hover { border-left-color: var(--brand-purple); background: #1a1a1a; transform: translateX(10px); }
   .timeline-row.critical { border-left-color: var(--brand-orange); }
   .timeline-row.critical:hover { background: var(--brand-orange-dim); }
-  .time-col { font-family: 'Space Grotesk', sans-serif; font-size: 14px; color: var(--brand-purple); font-weight: 700; letter-spacing: 0.05em; }
+  .time-col { font-family: 'Space Grotesk', sans-serif; font-size: 14px; color: var(--brand-purple); font-weight: 700; letter-spacing: 0.05em; transition: 0.3s; }
+  .timeline-row:hover .time-col { color: var(--text-white); }
   .timeline-row.critical .time-col { color: var(--brand-orange); }
   .event-title { font-family: 'Lexend', sans-serif; font-size: 18px; color: var(--text-white); margin-bottom: 4px; }
   .event-desc { font-size: 14px; }
@@ -123,8 +130,8 @@
     background: var(--bg-card); padding: 24px; border: 1px solid var(--border-dim); 
     transition: transform 0.2s, border-color 0.2s; position: relative; overflow: hidden;
   }
-  .box:hover { border-color: var(--brand-purple); transform: translateY(-4px); }
-  .box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--brand-purple); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .box:hover { border-color: var(--brand-purple); transform: translateY(-6px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+  .box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--brand-purple); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
   .box:hover::before { transform: scaleX(1); }
   
   .box-title { font-family: 'Lexend', sans-serif; font-size: 18px; color: var(--text-white); margin-bottom: 8px; }
@@ -132,25 +139,40 @@
 
   /* ── NUMBERED RULES / LISTS ── */
   .num-list { display: grid; gap: 16px; margin-top: 24px; }
-  .num-item { display: flex; gap: 24px; align-items: flex-start; padding: 20px; background: var(--bg-card); border: 1px solid var(--border-dim); transition: 0.2s; }
-  .num-item:hover { border-color: var(--text-gray); }
-  .num-digit { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; color: var(--brand-orange); line-height: 1; }
+  .num-item { display: flex; gap: 24px; align-items: flex-start; padding: 20px; background: var(--bg-card); border: 1px solid var(--border-dim); transition: all 0.3s; }
+  .num-item:hover { border-color: var(--brand-purple); transform: translateX(8px); }
+  .num-digit { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; color: var(--brand-orange); line-height: 1; transition: 0.3s; }
+  .num-item:hover .num-digit { color: var(--brand-purple); transform: scale(1.1); }
   .num-content h4 { font-size: 18px; color: var(--text-white); margin-bottom: 4px; }
   .num-content p { font-size: 14px; margin: 0; }
 
-  /* ── RESOURCES CARD FIX ── */
+  /* ── RESOURCES CARD ── */
   .resource-card {
     background: var(--bg-card); border: 1px solid var(--border-dim); padding: 24px; 
     display: flex; flex-direction: column; gap: 12px; transition: all 0.2s;
   }
-  .resource-card:hover { border-color: var(--brand-purple); background: #1a1a1a; box-shadow: 0 8px 24px var(--brand-purple-dim); }
-  .r-level { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; }
-  .r-level.beginner { color: #4ade80; } /* Green */
+  .resource-card:hover { border-color: var(--brand-purple); background: #1a1a1a; box-shadow: 0 8px 24px var(--brand-purple-dim); transform: translateY(-4px); }
+  .r-level { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
+  .r-level.beginner { color: #4ade80; } 
   .r-level.mid { color: var(--brand-orange); }
   .r-level.all { color: var(--brand-purple); }
-  .r-item { font-size: 14px; color: var(--text-white); display: flex; justify-content: space-between; border-bottom: 1px dashed var(--border-dim); padding-bottom: 8px; }
+  
+  .r-item { font-size: 14px; color: var(--text-white); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-dim); padding-bottom: 8px; position: relative; }
   .r-item:last-child { border-bottom: none; padding-bottom: 0; }
-  .r-tag { font-family: 'Space Grotesk', sans-serif; font-size: 10px; color: var(--text-gray); }
+  .r-item a { flex: 1; display: flex; justify-content: space-between; align-items: center; }
+  .r-item a:hover { color: var(--brand-purple); padding-left: 5px; }
+  .r-item a::after { content: '↗'; opacity: 0; transform: translateX(-10px); transition: 0.2s; font-family: 'Space Grotesk', sans-serif; }
+  .r-item a:hover::after { opacity: 1; transform: translateX(0); }
+  .r-tag { font-family: 'Space Grotesk', sans-serif; font-size: 10px; color: var(--text-gray); pointer-events: none; }
+
+  /* ── BUTTONS & CONTACT ── */
+  .btn-contact {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--brand-orange); color: var(--bg-dark); font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; text-transform: uppercase; padding: 16px 32px; font-size: 16px;
+    border: none; cursor: pointer; transition: 0.3s; margin-top: 16px; border-radius: 2px;
+  }
+  .btn-contact:hover { background: var(--text-white); box-shadow: 0 0 20px rgba(255,255,255,0.4); transform: translateY(-3px); }
 
   /* ── FOOTER ── */
   .footer { text-align: center; border-top: 1px solid var(--border-dim); padding-top: 60px; margin-top: 80px; padding-bottom: 40px; }
@@ -158,10 +180,14 @@
   .footer-sub { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-gray); margin-top: 12px; text-transform: uppercase; letter-spacing: 0.1em; }
 
   /* Animations */
-  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes pulseWidth { 0% { width: 20px; } 100% { width: 60px; } }
+  @keyframes tickerScroll { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-50%, 0, 0); } }
+  @keyframes glowPulse { 0% { box-shadow: 0 0 10px var(--brand-orange-dim); } 100% { box-shadow: 0 0 30px rgba(255, 116, 57, 0.3); } }
 
-  .section { margin-bottom: 100px; animation: fadeIn 1s ease both; animation-timeline: view(); animation-range: entry 10% cover 30%; }
+  .fade-in-section { animation: slideUp 0.8s ease-out forwards; animation-timeline: view(); animation-range: entry 5% cover 25%; }
 
   @media (max-width: 768px) {
     .timeline-row { grid-template-columns: 1fr; gap: 8px; }
@@ -197,7 +223,7 @@
   </header>
 
   <!-- DYNAMIC RULES TICKER -->
-  <div class="ticker-wrapper">
+  <div class="ticker-wrapper fade-in-section">
     <div class="ticker">
       <!-- Repeated twice for seamless looping -->
       <div class="ticker-item">Rule 01: Prototype, Don't Polish</div>
@@ -214,8 +240,15 @@
     </div>
   </div>
 
+  <!-- CORE MOTIVE (THE "WHO") -->
+  <div class="directive-box fade-in-section">
+    <h2 style="border: none; margin-bottom: 12px; color: var(--brand-orange);">The Hypothesis Standard</h2>
+    <p style="font-size: 20px; font-weight: 600; color: var(--text-white); margin-bottom: 8px;">A good proposal clearly defines <em>WHO</em> has the problem, not just <em>WHAT</em> the problem is.</p>
+    <p>If you build a brilliant solution for a vaguely defined target audience, you will fail the selection gate. Specificity is survival. Target a real demographic, define their exact pain point, and build the smallest prototype that solves it.</p>
+  </div>
+
   <!-- TIMELINE -->
-  <section class="section">
+  <section class="fade-in-section" style="margin-bottom: 80px;">
     <h2>Orbital Timeline</h2>
     <div class="timeline">
       <div class="timeline-row">
@@ -230,13 +263,6 @@
         <div>
           <div class="event-title">Mission Briefing</div>
           <div class="event-desc">Mandatory webinar. We prep you for the overnight window.</div>
-        </div>
-      </div>
-      <div class="timeline-row">
-        <div class="time-col">Apr 17 // 7:00 PM</div>
-        <div>
-          <div class="event-title">Hypothesis Window</div>
-          <div class="event-desc">Map your approach. Build the deck. Protect your sleep.</div>
         </div>
       </div>
       <div class="timeline-row critical">
@@ -263,12 +289,13 @@
     </div>
   </section>
 
-  <!-- CREW ROLES -->
-  <section class="section">
+  <!-- CREW & ALLIANCES (Team matching update) -->
+  <section class="fade-in-section" style="margin-bottom: 80px;">
     <h2>Crew Alliances</h2>
-    <p>Assign these roles in your first 30 minutes. Run a <strong>sync every hour:</strong> <em>What did I finish? What's next? Am I blocked?</em></p>
+    <p><strong>Bring your crew, or we’ll match you.</strong> If you already have a team, you're cleared for launch. If you're flying solo, don't panic—we will match you with a balanced crew of builders.</p>
+    <p>Additionally, every squad is assigned a <strong>Devvit Team Liaison</strong> to help unblock technical hurdles.</p>
     
-    <div class="grid-2">
+    <div class="grid-2" style="margin-top: 32px;">
       <div class="box">
         <div class="box-tag">The Grace</div>
         <div class="box-title">Problem Lead</div>
@@ -285,48 +312,58 @@
         <p>Builds the pitch deck <em>while</em> the code is written, not after.</p>
       </div>
       <div class="box">
-        <div class="box-tag">Mission Clock</div>
-        <div class="box-title">Timekeeper</div>
-        <p>Watches the Petrova line. Calls check-ins. Stops time-wasting.</p>
+        <div class="box-tag">Mission Control</div>
+        <div class="box-title">Devvit Liaison</div>
+        <p>Your embedded Devvit team member. Pings them when you've been stuck for 30 mins.</p>
       </div>
     </div>
   </section>
 
-  <!-- SHIP DIRECTIVES (RULES) -->
-  <section class="section">
-    <h2>Ship Directives</h2>
-    <p>Breaking these rules results in immediate airlock ejection (disqualification).</p>
-    <div class="num-list">
-      <div class="num-item">
-        <div class="num-digit">01</div>
-        <div class="num-content">
-          <h4>Fresh Code Only</h4>
-          <p>What happens on the ship, ships. No pre-built projects or recycled hackathon submissions allowed. Start from scratch.</p>
-        </div>
-      </div>
-      <div class="num-item">
-        <div class="num-digit">02</div>
-        <div class="num-content">
-          <h4>AI is a Tool, Not a Crewmate</h4>
-          <p>Use ChatGPT/Copilot to get unstuck. Do not use them to generate your core hypothesis. The thinking must be human.</p>
-        </div>
-      </div>
-      <div class="num-item">
-        <div class="num-digit">03</div>
-        <div class="num-content">
-          <h4>Mandatory Hourly Syncs</h4>
-          <p>Silence is deadly. If you are stuck for 30 minutes, ping Discord <code>#help</code>. Do not suffer in a vacuum.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RESOURCES GRID -->
-  <section class="section">
+  <!-- RESOURCES GRID WITH WORKING LINKS -->
+  <section class="fade-in-section" style="margin-bottom: 80px;">
     <h2>Ship Database (Resources)</h2>
-    <p>Free scaffolding and primitives to blitz-scale your ideas.</p>
+    <p>Free scaffolding and primitives to blitz-scale your ideas. Click to access.</p>
     
     <div class="grid-3">
       <div class="resource-card">
         <div class="r-level beginner">Cadet Level</div>
-        <div class="
+        <div class="r-item"><a href="https://www.figma.com/" target="_blank">Figma <span class="r-tag">DESIGN</span></a></div>
+        <div class="r-item"><a href="https://www.canva.com/" target="_blank">Canva <span class="r-tag">PITCH</span></a></div>
+        <div class="r-item"><a href="https://www.theodinproject.com/" target="_blank">Odin Project <span class="r-tag">LEARN</span></a></div>
+      </div>
+      <div class="resource-card">
+        <div class="r-level mid">Specialist</div>
+        <div class="r-item"><a href="https://vercel.com/" target="_blank">Vercel <span class="r-tag">DEPLOY</span></a></div>
+        <div class="r-item"><a href="https://supabase.com/" target="_blank">Supabase <span class="r-tag">DATA</span></a></div>
+        <div class="r-item"><a href="https://replit.com/" target="_blank">Replit <span class="r-tag">CODE</span></a></div>
+      </div>
+      <div class="resource-card">
+        <div class="r-level all">All Crew</div>
+        <div class="r-item"><a href="https://excalidraw.com/" target="_blank">Excalidraw <span class="r-tag">MINDMAP</span></a></div>
+        <div class="r-item"><a href="https://www.notion.so/" target="_blank">Notion <span class="r-tag">DOCS</span></a></div>
+        <div class="r-item"><a href="https://github.com/" target="_blank">GitHub <span class="r-tag">REPO</span></a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT US / SUPPORT BLOCK -->
+  <div class="card-solid card-purple fade-in-section">
+    <h3>Need Backup?</h3>
+    <p style="margin-bottom: 16px;">Mission Control is standing by. If you are stuck, confused, or need an administrative override, reach out to the Devvit Organizing Team.</p>
+    <ul style="list-style: none; display: grid; gap: 8px; margin-bottom: 24px;">
+      <li><strong>Discord:</strong> Drop a flare in <code>#ground-control</code></li>
+      <li><strong>Liaison:</strong> Ping your assigned Devvit team member</li>
+    </ul>
+    <a href="mailto:hello@devvit.com" class="btn-contact">Contact Devvit Command ✦</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer fade-in-section">
+    <div class="footer-logo">v/v DEVVIT</div>
+    <div class="footer-sub">Hack & Ship // Earth Date: April 17–19, 2026<br>© All rights reserved.</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
