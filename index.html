@@ -3,310 +3,110 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PROJECT HAIL MARY: Hack & Ship by Devvit</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>PROJECT HAIL MARY: Hack & Ship</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lexend:wght@400;700;800;900&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* Deep Space Palette */
-    --void: #030508;
-    --hull-dark: #080c13;
-    --hull-light: #111826;
-    --grid-line: rgba(0, 229, 255, 0.05);
-    
-    /* Thematic Colors */
-    --tech-blue: #00e5ff;
-    --tech-blue-dim: rgba(0, 229, 255, 0.15);
-    --astrophage: #ffb000;
-    --astrophage-dim: rgba(255, 176, 0, 0.15);
-    --alert-red: #ff3366;
-    --alert-red-dim: rgba(255, 51, 102, 0.15);
-    --eridian-rock: #a89f91;
-    
-    /* Text */
-    --text-main: #d1e4ec;
-    --text-dim: #7a93a3;
-    --text-muted: #4a5c6a;
+    /* Devvit Brand Colors */
+    --bg-dark: #0E0E0E;
+    --bg-card: #1A1A1A;
+    --brand-purple: #A7A5FF;
+    --brand-orange: #FF7439;
+    --text-white: #FFFFFF;
+    --text-gray: #A0A0A0;
+    --border-dim: #2A2A2A;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
 
   body {
-    background-color: var(--void);
-    background-image: 
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 30px 30px;
-    background-position: center center;
-    color: var(--text-main);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 17px;
-    line-height: 1.6;
+    background-color: var(--bg-dark);
+    color: var(--text-gray);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
     min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* CRT Scanline & Vignette */
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px);
-    pointer-events: none; z-index: 1000;
-  }
-  body::after {
-    content: ''; position: fixed; inset: 0;
-    background: radial-gradient(circle at center, transparent 40%, #000000 120%);
-    pointer-events: none; z-index: 999;
+    -webkit-font-smoothing: antialiased;
   }
 
   .container {
-    max-width: 860px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 40px 24px;
-    position: relative;
-    z-index: 10;
+    padding: 60px 24px;
   }
 
   /* Typography */
-  h1, h2, h3, .hud-title { font-family: 'Orbitron', sans-serif; text-transform: uppercase; }
-  .mono { font-family: 'Space Mono', monospace; }
-
-  /* ── HUD CONTAINER EFFECTS ── */
-  .hud-box {
-    background: rgba(8, 12, 19, 0.85);
-    border: 1px solid var(--text-muted);
-    backdrop-filter: blur(10px);
-    padding: 32px;
-    margin-bottom: 40px;
-    position: relative;
-    clip-path: polygon(
-      0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%
-    );
-  }
-
-  .hud-box::before {
-    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--tech-blue), transparent);
-    opacity: 0.5;
-  }
+  h1, h2, h3 { font-family: 'Lexend', sans-serif; color: var(--text-white); }
+  .mono { font-family: 'Space Grotesk', sans-serif; }
+  
+  h1 { font-size: clamp(48px, 8vw, 80px); font-weight: 900; line-height: 1; letter-spacing: -0.02em; margin-bottom: 16px; text-transform: uppercase; }
+  h2 { font-size: clamp(30px, 4vw, 40px); font-weight: 800; text-transform: uppercase; margin-bottom: 32px; display: inline-block; border-bottom: 4px solid var(--brand-purple); padding-bottom: 8px;}
+  h3 { font-size: 20px; font-weight: 700; margin: 24px 0 12px; }
+  
+  p { margin-bottom: 16px; }
+  strong { color: var(--text-white); font-weight: 600; }
 
   /* ── HEADER ── */
-  .header {
-    text-align: center;
-    margin-bottom: 60px;
-    position: relative;
-  }
+  .header { margin-bottom: 60px; }
+  .pre-title { font-family: 'Space Grotesk', sans-serif; color: var(--brand-orange); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; display: block; }
+  .title-highlight { color: var(--brand-purple); }
+  
+  .meta-grid { display: flex; gap: 40px; margin-top: 32px; border-top: 1px solid var(--border-dim); padding-top: 24px; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-gray); text-transform: uppercase; }
+  .meta-value { font-family: 'Lexend', sans-serif; font-size: 20px; color: var(--text-white); font-weight: 700; }
 
-  .status-badge {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-size: 12px; letter-spacing: 0.2em; color: var(--astrophage);
-    border: 1px solid var(--astrophage); padding: 6px 16px;
-    border-radius: 20px; margin-bottom: 24px; font-weight: 700;
-    box-shadow: 0 0 15px var(--astrophage-dim);
-  }
-  .status-badge::before {
-    content: ''; width: 8px; height: 8px; background: var(--astrophage); border-radius: 50%;
-    animation: pulse-astro 1.5s infinite;
-  }
-
-  @keyframes pulse-astro {
-    0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--astrophage); }
-    50% { opacity: 0.3; box-shadow: 0 0 0px var(--astrophage); }
-  }
-
-  .header h1 {
-    font-size: clamp(32px, 6vw, 56px);
-    color: #fff;
-    letter-spacing: 0.05em;
-    text-shadow: 0 0 20px var(--tech-blue-dim);
-    margin-bottom: 8px;
-  }
-  .header h1 span { color: var(--tech-blue); }
-
-  .meta-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 16px; margin-top: 40px;
-    border-top: 1px solid var(--tech-blue-dim);
-    border-bottom: 1px solid var(--tech-blue-dim);
-    padding: 20px 0;
-  }
-  .meta-item { text-align: left; border-left: 2px solid var(--tech-blue); padding-left: 12px; }
-  .meta-label { font-size: 10px; color: var(--tech-blue); letter-spacing: 0.2em; text-transform: uppercase; font-family: 'Space Mono'; display: block; margin-bottom: 4px; }
-  .meta-value { font-size: 16px; font-weight: 600; color: #fff; }
-
-  /* ── TOC / SYSTEMS MENU ── */
-  .toc {
-    background: var(--hull-light);
-    border-left: 4px solid var(--astrophage);
-    padding: 24px 32px;
-    margin: 40px 0 60px;
-  }
-  .toc-title { font-size: 12px; color: var(--astrophage); letter-spacing: 0.2em; margin-bottom: 16px; font-family: 'Space Mono'; }
-  .toc-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px; }
-  .toc-list li a {
-    color: var(--text-main); text-decoration: none; font-size: 15px; font-weight: 500;
-    display: flex; align-items: center; gap: 12px; transition: all 0.2s;
-  }
-  .toc-list li a:hover { color: var(--astrophage); transform: translateX(5px); }
-  .toc-num { color: var(--text-muted); font-family: 'Space Mono'; font-size: 12px; }
+  /* ── CALLOUT CARDS (Flat & Bold like Wireframe) ── */
+  .card-solid { padding: 32px; border-radius: 4px; margin: 32px 0; color: var(--bg-dark); }
+  .card-solid p { margin: 0; color: var(--bg-dark); font-weight: 600; font-size: 18px; line-height: 1.4; }
+  .card-solid h3 { color: var(--bg-dark); margin-top: 0; }
+  
+  .card-orange { background-color: var(--brand-orange); } /* Astrophage Theme */
+  .card-purple { background-color: var(--brand-purple); } /* Tech Theme */
 
   /* ── SECTIONS ── */
-  .section-header {
-    display: flex; align-items: flex-end; gap: 16px; margin-bottom: 32px;
-    border-bottom: 1px solid var(--tech-blue-dim); padding-bottom: 16px;
-  }
-  .section-num {
-    font-size: 40px; font-family: 'Orbitron'; font-weight: 900; color: var(--tech-blue-dim);
-    line-height: 0.8;
-  }
-  .section-tag { font-family: 'Space Mono'; font-size: 10px; color: var(--tech-blue); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 4px; }
-  h2 { font-size: 24px; color: #fff; letter-spacing: 0.05em; }
-  h3 { font-size: 18px; color: var(--tech-blue); margin: 32px 0 16px; letter-spacing: 0.05em; }
-  p { margin-bottom: 20px; font-size: 18px; color: var(--text-main); }
-  strong, .hl { color: #fff; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+  .section { margin-bottom: 80px; }
 
-  /* ── CALLOUT BOXES ── */
-  .callout {
-    padding: 24px 24px 24px 32px; margin: 32px 0; position: relative;
-    border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-top: 1px solid transparent;
-  }
-  .callout::before {
-    content: attr(data-label); font-family: 'Space Mono'; font-size: 10px;
-    letter-spacing: 0.2em; text-transform: uppercase; position: absolute;
-    top: -10px; left: 24px; background: var(--hull-dark); padding: 0 8px;
-  }
-  .callout p { margin: 0; font-size: 16px; }
+  /* ── COMPACT TIMELINE ── */
+  .timeline { display: grid; gap: 16px; }
+  .timeline-row { display: grid; grid-template-columns: 200px 1fr; background: var(--bg-card); padding: 16px 24px; border-left: 4px solid var(--border-dim); transition: border-color 0.2s; }
+  .timeline-row:hover { border-color: var(--brand-purple); }
+  .timeline-row.critical { border-color: var(--brand-orange); }
+  .time-col { font-family: 'Space Grotesk', sans-serif; font-size: 14px; color: var(--brand-purple); font-weight: 700; }
+  .timeline-row.critical .time-col { color: var(--brand-orange); }
+  .event-title { font-family: 'Lexend', sans-serif; font-size: 18px; color: var(--text-white); font-weight: 700; margin-bottom: 4px; }
+  .event-desc { font-size: 14px; }
 
-  .callout.astrophage {
-    border-left: 4px solid var(--astrophage);
-    background: linear-gradient(90deg, var(--astrophage-dim), transparent);
-    border-color: var(--astrophage-dim);
-  }
-  .callout.astrophage::before { color: var(--astrophage); }
-
-  .callout.danger {
-    border-left: 4px solid var(--alert-red);
-    background: linear-gradient(90deg, var(--alert-red-dim), transparent);
-    border-color: var(--alert-red-dim);
-  }
-  .callout.danger::before { color: var(--alert-red); }
-
-  .callout.tech {
-    border-left: 4px solid var(--tech-blue);
-    background: linear-gradient(90deg, var(--tech-blue-dim), transparent);
-    border-color: var(--tech-blue-dim);
-  }
-  .callout.tech::before { color: var(--tech-blue); }
-
-  /* ── ORBITAL TIMELINE ── */
-  .timeline { margin: 40px 0; position: relative; padding-left: 40px; }
-  .timeline::before {
-    content: ''; position: absolute; left: 9px; top: 0; bottom: 0; width: 2px;
-    background: var(--tech-blue-dim);
-  }
-  .timeline-item { position: relative; margin-bottom: 32px; }
-  .timeline-item:last-child { margin-bottom: 0; }
-  .timeline-dot {
-    position: absolute; left: -40px; top: 4px; width: 20px; height: 20px;
-    border: 2px solid var(--tech-blue); background: var(--hull-dark);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    z-index: 2; transition: all 0.3s;
-  }
-  .timeline-item.active .timeline-dot {
-    background: var(--astrophage); border-color: var(--astrophage);
-    box-shadow: 0 0 15px var(--astrophage);
-  }
-  .timeline-dot::after { content: ''; width: 4px; height: 4px; background: var(--tech-blue); border-radius: 50%; }
-  .timeline-item.active .timeline-dot::after { background: #000; }
+  /* ── GRID LAYOUTS (Roles, Framework, Judging) ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   
-  .timeline-time { font-family: 'Space Mono'; font-size: 11px; color: var(--tech-blue); letter-spacing: 0.1em; margin-bottom: 4px; }
-  .timeline-item.active .timeline-time { color: var(--astrophage); }
-  .timeline-label { font-size: 18px; color: #fff; font-weight: 600; margin-bottom: 6px; }
-  .timeline-note { font-size: 15px; color: var(--text-dim); }
+  .box { background: var(--bg-card); padding: 24px; border: 1px solid var(--border-dim); }
+  .box-title { font-family: 'Lexend', sans-serif; font-size: 18px; color: var(--brand-purple); margin-bottom: 8px; font-weight: 700; }
+  .box-tag { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-gray); margin-bottom: 12px; display: inline-block; background: var(--bg-dark); padding: 2px 8px;}
 
-  /* ── ROLE CARDS (CREW) ── */
-  .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
-  .role-card {
-    background: var(--hull-light); border: 1px solid var(--text-muted);
-    padding: 24px; position: relative; transition: border-color 0.3s;
-  }
-  .role-card:hover { border-color: var(--tech-blue); }
-  .role-card::after {
-    content: ''; position: absolute; bottom: 0; right: 0; width: 15px; height: 15px;
-    background: var(--text-muted); clip-path: polygon(100% 0, 0 100%, 100% 100%);
-  }
-  .role-name { font-family: 'Orbitron'; font-size: 16px; color: var(--tech-blue); margin-bottom: 8px; display: flex; justify-content: space-between;}
-  .role-desc { font-size: 15px; color: var(--text-main); }
+  /* ── NUMBERED LISTS (Framework & Judging) ── */
+  .num-list { display: grid; gap: 16px; }
+  .num-item { display: flex; gap: 24px; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid var(--border-dim); }
+  .num-item:last-child { border-bottom: none; }
+  .num-digit { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; color: var(--brand-purple); line-height: 1; }
+  .num-content h4 { font-family: 'Lexend', sans-serif; font-size: 18px; color: var(--text-white); margin-bottom: 4px; }
+  .num-content p { font-size: 14px; margin: 0; }
 
   /* ── CHECKLIST ── */
-  .checklist { list-style: none; margin: 24px 0; }
-  .checklist li {
-    display: flex; align-items: flex-start; gap: 16px; padding: 12px 0;
-    border-bottom: 1px dashed var(--tech-blue-dim); font-size: 16px;
-  }
-  .checklist li:last-child { border-bottom: none; }
-  .check-box {
-    width: 18px; height: 18px; border: 1px solid var(--tech-blue);
-    flex-shrink: 0; margin-top: 4px; position: relative;
-  }
-  .check-box::before {
-    content: '✓'; position: absolute; top: -3px; left: 2px;
-    color: var(--tech-blue); font-size: 14px; opacity: 0.2;
-  }
-
-  /* ── PROPOSAL FRAMEWORK ── */
-  .framework { margin: 32px 0; }
-  .framework-item {
-    display: flex; gap: 24px; padding: 24px; background: var(--hull-light);
-    border-left: 2px solid var(--tech-blue); margin-bottom: 16px;
-  }
-  .framework-num { font-family: 'Space Mono'; font-size: 24px; color: var(--tech-blue-dim); font-weight: 700; line-height: 1; }
-  .framework-q { font-size: 18px; color: #fff; font-weight: 600; margin-bottom: 8px; }
-  .framework-hint { font-size: 15px; color: var(--text-dim); }
-
-  /* ── RESOURCES ── */
-  .resource-group { margin: 32px 0; }
-  .resource-level {
-    font-family: 'Space Mono'; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-    padding: 6px 12px; border: 1px solid; display: inline-block; margin-bottom: 16px;
-  }
-  .resource-level.beginner { color: var(--tech-blue); border-color: var(--tech-blue); background: var(--tech-blue-dim); }
-  .resource-level.intermediate { color: var(--astrophage); border-color: var(--astrophage); background: var(--astrophage-dim); }
-  .resource-level.all { color: #fff; border-color: var(--text-muted); background: var(--hull-light); }
-
-  .resource-list { list-style: none; }
-  .resource-list li {
-    padding: 12px 16px; background: rgba(255,255,255,0.02); margin-bottom: 8px;
-    display: flex; justify-content: space-between; align-items: center;
-    border: 1px solid transparent; transition: 0.2s;
-  }
-  .resource-list li:hover { border-color: var(--tech-blue-dim); background: var(--hull-light); }
-  .resource-tag { font-family: 'Space Mono'; font-size: 10px; color: var(--tech-blue); letter-spacing: 0.1em; }
-
-  /* ── JUDGING ── */
-  .criteria-item { display: flex; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--tech-blue-dim); }
-  .criteria-weight { font-family: 'Orbitron'; font-size: 20px; color: var(--astrophage); font-weight: 700; }
-  .criteria-name { font-size: 18px; color: #fff; font-weight: 600; margin-bottom: 4px; }
-  .criteria-desc { font-size: 15px; color: var(--text-dim); }
-
-  /* ── CODE BLOCKS ── */
-  code {
-    font-family: 'Space Mono', monospace; font-size: 14px;
-    background: var(--hull-light); border: 1px solid var(--text-muted);
-    padding: 2px 6px; color: var(--tech-blue); border-radius: 2px;
-  }
+  .ul-clean { list-style: none; display: grid; gap: 12px; margin-bottom: 24px; }
+  .ul-clean li { display: flex; align-items: flex-start; gap: 12px; }
+  .ul-clean li::before { content: '→'; color: var(--brand-orange); font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
 
   /* ── FOOTER ── */
-  .footer { text-align: center; padding: 60px 0; position: relative; }
-  .footer-logo { font-family: 'Orbitron'; font-size: 24px; color: #fff; letter-spacing: 0.1em; margin-bottom: 8px; }
-  .footer-tagline { font-family: 'Space Mono'; font-size: 11px; color: var(--tech-blue); letter-spacing: 0.2em; }
-  .footer-line { width: 100px; height: 1px; background: var(--text-muted); margin: 24px auto; }
-  .footer-note { font-size: 13px; color: var(--text-muted); font-family: 'Space Mono'; }
+  .footer { text-align: center; border-top: 1px solid var(--border-dim); padding-top: 40px; margin-top: 80px; }
+  .footer-logo { font-family: 'Lexend', sans-serif; font-size: 24px; font-weight: 900; color: var(--text-white); }
+  .footer-sub { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-gray); margin-top: 8px; }
 
-  @media (max-width: 650px) {
-    .meta-grid { grid-template-columns: 1fr; }
-    .toc-list, .role-grid { grid-template-columns: 1fr; }
-    .framework-item { flex-direction: column; gap: 12px; }
-    .hud-box { padding: 24px 16px; }
+  @media (max-width: 600px) {
+    .timeline-row { grid-template-columns: 1fr; gap: 8px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    h1 { font-size: 40px; }
   }
 </style>
 </head>
@@ -316,386 +116,186 @@
 
   <!-- HEADER -->
   <header class="header">
-    <div class="status-badge">SYSTEMS ONLINE: TAU CETI ORBIT</div>
-    <h1>PROJECT <span>HAIL MARY</span></h1>
-    <div style="font-family: 'Space Mono'; color: var(--text-dim); letter-spacing: 0.15em; font-size: 12px; margin-top: 10px;">
-      MISSION DOSSIER: HACK & SHIP // AUTH DEVVIT // APR 2026
-    </div>
+    <span class="pre-title">Mission Dossier // Devvit // Apr 2026</span>
+    <h1>Project<br><span class="title-highlight">Hail Mary.</span></h1>
+    <p>A 36-hour hackathon to build rough ideas into real-world projects. No memory, no problem. Use the scientific method, engineer a solution, and ship it before the window closes.</p>
     
     <div class="meta-grid">
       <div class="meta-item">
         <span class="meta-label">Launch Window</span>
-        <span class="meta-value">APR 17 – APR 19, 2026</span>
+        <span class="meta-value">Apr 17-19, 2026</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">Crew Manifest</span>
-        <span class="meta-value">50 Specialists</span>
+        <span class="meta-value">50 Builders</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">Status</span>
-        <span class="meta-value" style="color: var(--astrophage); text-shadow: 0 0 10px var(--astrophage);">● MISSION CRITICAL</span>
+        <span class="meta-value" style="color: var(--brand-orange);">Mission Critical</span>
       </div>
     </div>
   </header>
 
-  <!-- TOC -->
-  <nav class="toc hud-box">
-    <div class="toc-title">>> SYSTEM DIAGNOSTICS & MANIFEST</div>
-    <ul class="toc-list">
-      <li><a href="#briefing"><span class="toc-num">01.</span> Mission Briefing</a></li>
-      <li><a href="#timeline"><span class="toc-num">02.</span> Orbital Trajectory (Timeline)</a></li>
-      <li><a href="#crew"><span class="toc-num">03.</span> Crew & Alliances</a></li>
-      <li><a href="#phase1"><span class="toc-num">04.</span> Phase 1: The Hypothesis</a></li>
-      <li><a href="#phase2"><span class="toc-num">05.</span> Phase 2: Engineering the Solution</a></li>
-      <li><a href="#groundcontrol"><span class="toc-num">06.</span> Mission Control</a></li>
-      <li><a href="#resources"><span class="toc-num">07.</span> Ship Database</a></li>
-      <li><a href="#judging"><span class="toc-num">08.</span> Evaluation Criteria</a></li>
-    </ul>
-  </nav>
+  <!-- ASTROPHAGE WARNING -->
+  <div class="card-solid card-orange">
+    <h3>Amaze! You Belong Here.</h3>
+    <p>If you feel like an imposter, that is normal. Every builder feels it. The ones who survive are the ones who show up anyway. You don't need to be an expert coder. You just need a problem worth solving and the grit to build a prototype.</p>
+  </div>
 
-  <!-- 01 MISSION BRIEFING -->
-  <section class="section hud-box" id="briefing">
-    <div class="section-header">
-      <span class="section-num">01</span>
-      <div>
-        <div class="section-tag">Orientation</div>
-        <h2>Mission Briefing</h2>
-      </div>
-    </div>
-
-    <p>In <em>Project Hail Mary</em>, Ryland Grace wakes up on a spaceship millions of miles from Earth. He has no memory, dead crewmates, and an extinction-level threat to solve. He figures it out anyway. He uses the scientific method. He ships the solution via the Beetles. He saves the world.</p>
-
-    <p>You are not expected to save the world this weekend. But you are expected to show up, figure it out with your crew, and ship something real before the window closes.</p>
-
-    <div class="callout astrophage" data-label="Astrophage Level: Critical">
-      <p>If you are reading this and thinking <strong>"I don't belong here, everyone else knows more than me"</strong> — that feeling is normal. It is also wrong. Every person registered for this mission felt the same thing. The ones who survive are the ones who show up anyway.</p>
-    </div>
-
-    <p>Hack & Ship is beginner-friendly by design. You do not need to have shipped a product before. You do not need to code at a professional level. You need a problem worth solving, a crew willing to work, and enough honesty to say when you're stuck.</p>
-
-  </section>
-
-  <!-- 02 TIMELINE -->
-  <section class="section hud-box" id="timeline">
-    <div class="section-header">
-      <span class="section-num">02</span>
-      <div>
-        <div class="section-tag">Trajectory</div>
-        <h2>Orbital Timeline</h2>
-      </div>
-    </div>
-
-    <p>The mission runs in two phases with a critical selection gate between them. Watch the clocks.</p>
-
+  <!-- TIMELINE -->
+  <section class="section">
+    <h2>Orbital Timeline</h2>
     <div class="timeline">
-      <div class="timeline-item active">
-        <div class="timeline-dot"></div>
-        <div class="timeline-time">APR 17 — MORNING [T-MINUS 10:00]</div>
-        <div class="timeline-label">Problem Statement Drops.</div>
-        <div class="timeline-note">You receive the global threat you'll be solving. Read it carefully. Start formulating a hypothesis.</div>
+      <div class="timeline-row">
+        <div class="time-col">Apr 17 // 10:00 AM</div>
+        <div>
+          <div class="event-title">Threat Drops</div>
+          <div class="event-desc">Problem statement released. Formulate a hypothesis.</div>
+        </div>
       </div>
-      
-      <div class="timeline-item active">
-        <div class="timeline-dot"></div>
-        <div class="timeline-time">APR 17 — 6:00 PM [T-MINUS 00:00]</div>
-        <div class="timeline-label">Mission Briefing Commences.</div>
-        <div class="timeline-note">One hour. We walk through proposal structure, answer questions, and set you up for the overnight window. Attendance is mandatory.</div>
+      <div class="timeline-row">
+        <div class="time-col">Apr 17 // 6:00 PM</div>
+        <div>
+          <div class="event-title">Mission Briefing</div>
+          <div class="event-desc">Mandatory webinar. We prep you for the overnight window.</div>
+        </div>
       </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-time">APR 17 — 7:00 PM ONWARDS</div>
-        <div class="timeline-label">Hypothesis Window Opens.</div>
-        <div class="timeline-note">Work with your crew. Define the problem. Map your approach. Build your proposal deck. Sleep is not optional — protect night one.</div>
+      <div class="timeline-row">
+        <div class="time-col">Apr 17 // 7:00 PM</div>
+        <div>
+          <div class="event-title">Hypothesis Window</div>
+          <div class="event-desc">Map your approach. Build the deck. Protect your sleep.</div>
+        </div>
       </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-time">APR 18 — 9:00–10:00 AM</div>
-        <div class="timeline-label">Proposal Submission Deadline.</div>
-        <div class="timeline-note">Done means submitted. A submitted proposal beats a perfect one that drifted into the void.</div>
+      <div class="timeline-row critical">
+        <div class="time-col">Apr 18 // 9:00 AM</div>
+        <div>
+          <div class="event-title">Proposal Deadline</div>
+          <div class="event-desc">Missing this means you don't build. Done beats perfect.</div>
+        </div>
       </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-time">APR 18 — AFTERNOON</div>
-        <div class="timeline-label">Selection Results.</div>
-        <div class="timeline-note">Selected crews move to Phase 2. If you are not selected, monitor the active crews — the knowledge compounds.</div>
+      <div class="timeline-row">
+        <div class="time-col">Apr 18 // Afternoon</div>
+        <div>
+          <div class="event-title">Engineering Begins</div>
+          <div class="event-desc">Selected crews move to Phase 2. Build your critical path.</div>
+        </div>
       </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-time">APR 18 — POST SELECTION</div>
-        <div class="timeline-label">Engineering Window Opens.</div>
-        <div class="timeline-note">Selected crews begin building. Scope small. Build the one thing that proves your science works.</div>
-      </div>
-
-      <div class="timeline-item active">
-        <div class="timeline-dot"></div>
-        <div class="timeline-time">APR 19 — 7:00–8:00 PM</div>
-        <div class="timeline-label hl" style="color: var(--astrophage);">Beetle Launch Window Closes.</div>
-        <div class="timeline-note">Final submission. Whatever you have built—pack it in the Beetle and ship it. An imperfect working prototype beats a perfect unsubmitted one.</div>
+      <div class="timeline-row critical">
+        <div class="time-col">Apr 19 // 7:00 PM</div>
+        <div>
+          <div class="event-title">Beetle Launch Closes</div>
+          <div class="event-desc">Final deadline. Pack your prototype and ship it.</div>
+        </div>
       </div>
     </div>
-
-    <div class="callout danger" data-label="Critical Failure Warning">
-      <p>There are two separate submission windows. Missing the <strong>proposal deadline on April 18th morning</strong> means you do not reach the build phase. Set an alarm. Then set another one. <em>Amaze!</em></p>
-    </div>
-
   </section>
 
-  <!-- 03 CREW -->
-  <section class="section hud-box" id="crew">
-    <div class="section-header">
-      <span class="section-num">03</span>
-      <div>
-        <div class="section-tag">Team Structure</div>
-        <h2>Crew & Alliances</h2>
+  <!-- CREW ROLES -->
+  <section class="section">
+    <h2>Crew & Alliances</h2>
+    <p>Assign these roles in your first 30 minutes. Run a <strong>sync every hour:</strong> <em>What did I finish? What's next? Am I blocked?</em></p>
+    
+    <div class="grid-2">
+      <div class="box">
+        <div class="box-tag">The Grace</div>
+        <div class="box-title">Problem Lead</div>
+        <p>Owns the problem definition. Stops the crew from drifting off mission.</p>
+      </div>
+      <div class="box">
+        <div class="box-tag">The Rocky</div>
+        <div class="box-title">Build Lead</div>
+        <p>Owns the tech approach. Makes the hard calls on implementation.</p>
+      </div>
+      <div class="box">
+        <div class="box-tag">Communicator</div>
+        <div class="box-title">Pitch Lead</div>
+        <p>Builds the pitch deck <em>while</em> the code is written, not after.</p>
+      </div>
+      <div class="box">
+        <div class="box-tag">Mission Clock</div>
+        <div class="box-title">Timekeeper</div>
+        <p>Watches the Petrova line. Calls check-ins. Stops time-wasting.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHASE 1 & 2 -->
+  <section class="section">
+    <h2>Mission Phases</h2>
+    
+    <h3>Phase 1: The Hypothesis (Proposal)</h3>
+    <p>Your proposal must clearly answer these 5 questions to pass the selection gate:</p>
+    <div class="num-list">
+      <div class="num-item">
+        <div class="num-digit">01</div>
+        <div class="num-content"><h4>Who faces this anomaly?</h4><p>Target a specific demographic, not "everyone."</p></div>
+      </div>
+      <div class="num-item">
+        <div class="num-digit">02</div>
+        <div class="num-content"><h4>What is the cost?</h4><p>Time, money, resources. Make the pain concrete.</p></div>
+      </div>
+      <div class="num-item">
+        <div class="num-digit">03</div>
+        <div class="num-content"><h4>What is the solution?</h4><p>Explain your engineered fix in one simple sentence.</p></div>
+      </div>
+      <div class="num-item">
+        <div class="num-digit">04</div>
+        <div class="num-content"><h4>What is the prototype?</h4><p>What is the smallest build that proves the science works?</p></div>
+      </div>
+      <div class="num-item">
+        <div class="num-digit">05</div>
+        <div class="num-content"><h4>Why this crew?</h4><p>What unique perspective do you bring to this problem?</p></div>
       </div>
     </div>
 
-    <p>Your team has been matched for you. You did not choose them. Grace didn't choose Rocky. Rocky didn't choose Grace. They showed up, built a common language, and engineered a solution neither could have built alone. That's the objective.</p>
-
-    <h3>Assign Roles on Day One</h3>
-    <p>In the first 30 minutes, decide who owns what. These don't have to be permanent, but they must exist.</p>
-
-    <div class="role-grid">
-      <div class="role-card">
-        <div class="role-name"><span>Problem Lead</span> <span class="mono" style="color:var(--text-muted)">// THE GRACE</span></div>
-        <div class="role-desc">Owns the problem definition. Ensures the crew doesn't drift from the actual hypothesis they are testing.</div>
-      </div>
-      <div class="role-card">
-        <div class="role-name"><span>Build Lead</span> <span class="mono" style="color:var(--text-muted)">// THE ROCKY</span></div>
-        <div class="role-desc">Owns the technical approach. Makes the hard calls when the team is stuck on implementation or materials.</div>
-      </div>
-      <div class="role-card">
-        <div class="role-name"><span>Pitch Lead</span> <span class="mono" style="color:var(--text-muted)">// COMMUNICATOR</span></div>
-        <div class="role-desc">Owns the presentation from hour one. The story and data logs are built alongside the product, not after.</div>
-      </div>
-      <div class="role-card">
-        <div class="role-name"><span>Timekeeper</span> <span class="mono" style="color:var(--text-muted)">// MISSION CLOCK</span></div>
-        <div class="role-desc">Watches the Petrova line. Calls check-ins every hour. Flags when the team is stuck in a resource sink.</div>
-      </div>
-    </div>
-
-    <h3>The Hourly Sync (🎵 Question? Answer! 🎵)</h3>
-    <p>Once an hour, every crew member answers three questions out loud:</p>
-    <ul class="checklist">
-      <li><div class="check-box"></div> What did I just finish?</li>
-      <li><div class="check-box"></div> What am I working on next?</li>
-      <li><div class="check-box"></div> Is anything blocking my progress?</li>
+    <h3 style="margin-top: 40px;">Phase 2: The Build</h3>
+    <ul class="ul-clean">
+      <li><strong>Prototype, not product:</strong> Build one core feature to prove the physics work.</li>
+      <li><strong>Parallel Processing:</strong> Pitch Lead works simultaneously. Demo is recorded before the deadline.</li>
+      <li><strong>Energy Management:</strong> Take breaks every 90 minutes. Eat. Protect your sleep.</li>
     </ul>
-
-    <div class="callout tech" data-label="Core Directive">
-      <p>The most critical feature gets built first. Once your core idea works — even badly — you have something to put in the Beetle. <strong>Decide on your critical path in the first hour and protect it.</strong></p>
-    </div>
-
   </section>
 
-  <!-- 04 PHASE 1 -->
-  <section class="section hud-box" id="phase1">
-    <div class="section-header">
-      <span class="section-num">04</span>
-      <div>
-        <div class="section-tag">Apr 17 Evening → Apr 18 Morning</div>
-        <h2>Phase 1: The Hypothesis</h2>
-      </div>
-    </div>
-
-    <p>The proposal is not just a pitch deck. It's a clarity exercise. Crews that pass the selection gate are the ones who clearly understand the anomaly they are solving and why their approach makes scientific sense.</p>
-
-    <h3>What a good hypothesis answers:</h3>
-    <div class="framework">
-      <div class="framework-item">
-        <div class="framework-num">01</div>
-        <div>
-          <div class="framework-q">Who specifically faces this anomaly?</div>
-          <div class="framework-hint">Not "everyone." A real demographic in a specific situation.</div>
-        </div>
-      </div>
-      <div class="framework-item">
-        <div class="framework-num">02</div>
-        <div>
-          <div class="framework-q">What is the actual cost?</div>
-          <div class="framework-hint">Time, resources, extinction? Make it concrete. If you can't measure the cost, you don't understand it.</div>
-        </div>
-      </div>
-      <div class="framework-item">
-        <div class="framework-num">03</div>
-        <div>
-          <div class="framework-q">What are you engineering, and how does it solve it?</div>
-          <div class="framework-hint">One sentence. If it takes a paragraph, the idea is too complex. Simplify.</div>
-        </div>
-      </div>
-      <div class="framework-item">
-        <div class="framework-num">04</div>
-        <div>
-          <div class="framework-q">What is the simplest working prototype?</div>
-          <div class="framework-hint">Not the final vision. The smallest piece of tech that proves the science works.</div>
-        </div>
-      </div>
-      <div class="framework-item">
-        <div class="framework-num">05</div>
-        <div>
-          <div class="framework-q">Why this crew? Why now?</div>
-          <div class="framework-hint">What unique perspective do you bring to this problem? Use your reality.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="callout danger" data-label="Evaluation Warning">
-      <p>The most common failure mode is falling in love with a technical solution before understanding the problem. <strong>Judges evaluate problem definition first.</strong> A brilliant solution to a vague problem loses to a simple solution to a well-understood one.</p>
-    </div>
-
-  </section>
-
-  <!-- 05 PHASE 2 -->
-  <section class="section hud-box" id="phase2">
-    <div class="section-header">
-      <span class="section-num">05</span>
-      <div>
-        <div class="section-tag">Apr 18 Afternoon → Apr 19 Evening</div>
-        <h2>Phase 2: Engineering the Solution</h2>
-      </div>
-    </div>
-
-    <p>You made it through selection. Now you build. The rules are simple: scope small, start immediately, and load the Beetles before the window closes.</p>
-
-    <div class="callout astrophage" data-label="Engineering Principle">
-      <p><strong>Prototype, not product.</strong> You are not building the final Hail Mary. You are building the small-scale model that proves the physics work. One feature. Working. Submittable.</p>
-    </div>
-
-    <h3>Energy Management</h3>
-    <ul class="checklist">
-      <li><div class="check-box"></div> <strong>Protect your sleep.</strong> Decisions made on zero rest are expensive.</li>
-      <li><div class="check-box"></div> Take a real break every 90 minutes. Step away from the monitors.</li>
-      <li><div class="check-box"></div> Eat before you realize you're hungry. You will forget while in flow.</li>
-      <li><div class="check-box"></div> If a system has been broken for 30 minutes, ping Mission Control.</li>
+  <!-- GROUND CONTROL -->
+  <div class="card-solid card-purple">
+    <h3>Mission Control & Comms</h3>
+    <p style="margin-bottom: 16px;">Stratt didn't build the ship; she gave you resources. Your Mentor works the same way.</p>
+    <ul class="ul-clean" style="margin-bottom: 0;">
+      <li><strong>30-Minute Rule:</strong> Stuck for 30 mins? Ping Discord. Silence is deadly.</li>
+      <li><strong>State the Blockage:</strong> Ask "We are deciding between A and B," not "What do we do?"</li>
+      <li><strong>Discord Channels:</strong> Use <code>#mission-briefing</code> for updates, <code>#help</code> when stuck, and <code>#launch-pad</code> for crew chatter.</li>
     </ul>
+  </div>
 
-    <h3>The Pitch runs parallel to the Build</h3>
-    <p>Your Pitch Lead is building the story while the code is written. By the time the prototype is ready, the presentation should be 80% done. Tell it in five minutes. One person presents. <strong>Record your demo</strong> — live technology at T-Zero is historically unreliable.</p>
-
-  </section>
-
-  <!-- 06 GROUND CONTROL -->
-  <section class="section hud-box" id="groundcontrol">
-    <div class="section-header">
-      <span class="section-num">06</span>
-      <div>
-        <div class="section-tag">Support Network</div>
-        <h2>Mission Control</h2>
+  <!-- JUDGING -->
+  <section class="section">
+    <h2>Evaluation</h2>
+    <p>Judges evaluate <strong>5 minutes of your presentation</strong>, not 36 hours of code. A brilliant build fails if the pitch doesn't explain why it matters.</p>
+    <div class="grid-2">
+      <div class="box">
+        <div class="box-title">1. Problem Definition</div>
+        <p>Is the anomaly real, specific, and fully understood?</p>
+      </div>
+      <div class="box">
+        <div class="box-title">2. Hypothesis</div>
+        <p>Does the technical approach logically solve the problem?</p>
+      </div>
+      <div class="box">
+        <div class="box-title">3. Execution</div>
+        <p>Does the prototype actually work? (Even one feature).</p>
+      </div>
+      <div class="box">
+        <div class="box-title">4. Presentation</div>
+        <p>Can you brief command clearly in 5 minutes?</p>
       </div>
     </div>
-
-    <p>Mission Control (Stratt) didn't build the ship for Grace. They gave him the resources to figure it out himself. That is your Mentor.</p>
-
-    <ul class="checklist">
-      <li><div class="check-box"></div> <strong>Contact them early.</strong> A mentor looped in at hour one is infinitely more useful than one pinged at hour twenty.</li>
-      <li><div class="check-box"></div> <strong>State the blockage, not the requested answer.</strong> "We can't decide between approaches A and B" is better than "Which do we pick?"</li>
-      <li><div class="check-box"></div> <strong>The 30-Minute Rule.</strong> Stuck for 30 minutes? Stop and ask for help. Silence is the enemy of survival.</li>
-    </ul>
-
-    <h3>Comms Channels (Discord)</h3>
-    <p>All support runs through Discord. Know your frequencies:</p>
-    <ul class="checklist">
-      <li><div class="check-box"></div> <code>#mission-briefing</code> — Strat-level announcements, schedule updates.</li>
-      <li><div class="check-box"></div> <code>#ground-control</code> — Logistics and organizer questions.</li>
-      <li><div class="check-box"></div> <code>#launch-pad</code> — Crew chatter, morale, progress sharing.</li>
-      <li><div class="check-box"></div> <code>#help</code> — Stuck? Ping here. Someone is awake.</li>
-    </ul>
-
-  </section>
-
-  <!-- 07 RESOURCES -->
-  <section class="section hud-box" id="resources">
-    <div class="section-header">
-      <span class="section-num">07</span>
-      <div>
-        <div class="section-tag">Ship Database</div>
-        <h2>Available Resources</h2>
-      </div>
-    </div>
-
-    <div class="resource-group">
-      <span class="resource-level beginner">Cadet Level</span>
-      <ul class="resource-list">
-        <li><div>freeCodeCamp — Responsive Web Design</div> <span class="resource-tag">INTERACTIVE</span></li>
-        <li><div>The Odin Project — Full stack foundations</div> <span class="resource-tag">STRUCTURED</span></li>
-        <li><div>Figma — Free UI design tool</div> <span class="resource-tag">TOOL</span></li>
-        <li><div>Canva / Google Slides — Pitch decks</div> <span class="resource-tag">PRESENTATION</span></li>
-      </ul>
-    </div>
-
-    <div class="resource-group">
-      <span class="resource-level intermediate">Specialist Level</span>
-      <ul class="resource-list">
-        <li><div>Replit — Browser-based coding environment</div> <span class="resource-tag">ENVIRONMENT</span></li>
-        <li><div>Vercel — Deploy a project in 5 minutes</div> <span class="resource-tag">DEPLOY</span></li>
-        <li><div>Supabase — Backend and database</div> <span class="resource-tag">DATA</span></li>
-        <li><div>GitHub Copilot — AI assistance</div> <span class="resource-tag">AI</span></li>
-      </ul>
-    </div>
-
-    <div class="callout danger" data-label="AI Usage Directive">
-      <p>AI tools (ChatGPT/Claude) are permitted to accelerate your build. Do not use them to replace the actual scientific thinking. Judges know when a hypothesis was generated by a model and not understood by the crew. <strong>The thinking must be yours.</strong></p>
-    </div>
-
-  </section>
-
-  <!-- 08 JUDGING -->
-  <section class="section hud-box" id="judging">
-    <div class="section-header">
-      <span class="section-num">08</span>
-      <div>
-        <div class="section-tag">Endgame</div>
-        <h2>Evaluation Criteria</h2>
-      </div>
-    </div>
-
-    <p>Judges are not evaluating the complexity of your code. They are evaluating if you understood a real problem and engineered a prototype that addresses it.</p>
-
-    <div class="criteria-item">
-      <div class="criteria-weight">01</div>
-      <div>
-        <div class="criteria-name">Problem Definition</div>
-        <div class="criteria-desc">Is the anomaly real? Is it specific? Do you clearly understand who faces it and the cost? Evaluated first.</div>
-      </div>
-    </div>
-    <div class="criteria-item">
-      <div class="criteria-weight">02</div>
-      <div>
-        <div class="criteria-name">Approach & Hypothesis</div>
-        <div class="criteria-desc">Does the solution address the anomaly? Did you make thoughtful engineering tradeoffs given your time constraints?</div>
-      </div>
-    </div>
-    <div class="criteria-item">
-      <div class="criteria-weight">03</div>
-      <div>
-        <div class="criteria-name">Execution (The Build)</div>
-        <div class="criteria-desc">Does it work? Even partially. A single working feature scores exponentially higher than an ambitious but broken shell.</div>
-      </div>
-    </div>
-    <div class="criteria-item">
-      <div class="criteria-weight">04</div>
-      <div>
-        <div class="criteria-name">Presentation & Comms</div>
-        <div class="criteria-desc">Can you brief command in five minutes? You are judged on what you communicate, not on what is hidden in your code repository.</div>
-      </div>
-    </div>
-
-    <div class="callout tech" data-label="Final Directive">
-      <p>You are judged on <strong>5 minutes of presentation</strong>, not on 36 hours of engineering. Teams fail when they build something incredible and fail to explain why it matters. The pitch matters as much as the build. <em>Amaze!</em></p>
-    </div>
-
   </section>
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="footer-logo">DEVVIT COMMAND</div>
-    <div class="footer-tagline">WHERE DEVS DON'T GATEKEEP</div>
-    <div class="footer-line"></div>
-    <div class="footer-note">Hack & Ship // Earth Date: April 17–19, 2026 // Dossier v1.0</div>
+    <div class="footer-logo">v/v DEVVIT</div>
+    <div class="footer-sub">Hack & Ship // Earth Date: April 17–19, 2026<br>© All rights reserved.</div>
   </footer>
 
 </div>
