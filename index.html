@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PROJECT HAIL MARY: Hack & Ship by Devvit</title>
+<title>HACK & SHIP: Project Hail Mary | Devvit</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Lexend:wght@400;700;800;900&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -20,163 +20,220 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; overflow-x: hidden; }
+  
+  html, body {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+  }
 
   body {
     background-color: var(--bg-dark);
     color: var(--text-gray);
     font-family: 'Inter', sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.6;
     min-height: 100vh;
-    overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     position: relative;
   }
 
-  /* ── VISUAL BACKGROUNDS (Grid + Nebula Glows) ── */
+  /* ── VISUAL BACKGROUNDS (Grid, Nebulas, Astrophage) ── */
   body::before {
     content: ''; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
     background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
                       linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 60px 60px; transform: perspective(500px) rotateX(45deg);
-    animation: gridMove 30s linear infinite; pointer-events: none; z-index: -2;
+    background-size: 50px 50px; transform: perspective(500px) rotateX(45deg);
+    animation: gridMove 30s linear infinite; pointer-events: none; z-index: -3;
   }
-  .glow-orb-1 { position: absolute; top: 10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, var(--brand-purple-dim) 0%, transparent 70%); filter: blur(80px); pointer-events: none; z-index: -1; }
-  .glow-orb-2 { position: absolute; top: 50%; right: -10%; width: 40vw; height: 40vw; background: radial-gradient(circle, var(--brand-orange-dim) 0%, transparent 70%); filter: blur(80px); pointer-events: none; z-index: -1; }
+  @keyframes gridMove { 0% { transform: perspective(500px) rotateX(45deg) translateY(0); } 100% { transform: perspective(500px) rotateX(45deg) translateY(50px); } }
 
-  @keyframes gridMove { 0% { transform: perspective(500px) rotateX(45deg) translateY(0); } 100% { transform: perspective(500px) rotateX(45deg) translateY(60px); } }
+  .glow-orb-1 { position: absolute; top: 0; left: -20vw; width: 60vw; height: 60vw; background: radial-gradient(circle, var(--brand-purple-dim) 0%, transparent 60%); filter: blur(80px); pointer-events: none; z-index: -2; }
+  .glow-orb-2 { position: absolute; top: 50vh; right: -20vw; width: 50vw; height: 50vw; background: radial-gradient(circle, var(--brand-orange-dim) 0%, transparent 60%); filter: blur(80px); pointer-events: none; z-index: -2; }
 
-  .container { max-width: 1000px; margin: 0 auto; padding: 120px 24px; }
+  /* Floating Astrophage Particles */
+  .particles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -1; }
+  .particle { position: absolute; width: 3px; height: 3px; background: var(--brand-orange); border-radius: 50%; box-shadow: 0 0 8px var(--brand-orange); animation: floatUp var(--duration) infinite linear; opacity: var(--opacity); }
+  @keyframes floatUp { 0% { transform: translateY(100vh) scale(0.5); opacity: 0; } 10% { opacity: var(--opacity); } 90% { opacity: var(--opacity); } 100% { transform: translateY(-100px) scale(1.5); opacity: 0; } }
+
+  .container { max-width: 1040px; margin: 0 auto; padding: 80px 24px; position: relative; z-index: 10; }
 
   /* ── TYPOGRAPHY ── */
   h1, h2, h3, h4 { font-family: 'Lexend', sans-serif; color: var(--text-white); text-transform: uppercase; }
-  h1 { font-size: clamp(56px, 10vw, 100px); font-weight: 900; line-height: 0.9; letter-spacing: -0.03em; margin-bottom: 24px; animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1); }
-  h2 { font-size: clamp(32px, 5vw, 48px); font-weight: 800; margin-bottom: 60px; position: relative; display: inline-block; }
-  h2::after { content:''; position: absolute; bottom: -12px; left: 0; width: 40px; height: 4px; background: var(--brand-purple); transition: width 0.3s; }
+  h1 { font-size: clamp(36px, 8vw, 80px); font-weight: 900; line-height: 1; letter-spacing: -0.02em; margin-bottom: 24px; animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1); }
+  h2 { font-size: clamp(26px, 5vw, 40px); font-weight: 800; margin-bottom: 40px; position: relative; display: inline-block; }
+  h2::after { content:''; position: absolute; bottom: -8px; left: 0; width: 40px; height: 3px; background: var(--brand-purple); transition: width 0.3s; }
   section:hover h2::after { width: 100%; }
   
-  p { margin-bottom: 24px; font-weight: 300; font-size: 18px; }
+  p { margin-bottom: 20px; font-weight: 300; }
   strong { color: var(--text-white); font-weight: 600; }
   a { text-decoration: none; color: inherit; transition: 0.2s; }
 
   /* ── SPACING & LAYOUT ── */
-  .section { margin-bottom: 160px; } /* Massive whitespace between sections */
+  .section { margin-bottom: 120px; } 
   
   /* ── HEADER ── */
-  .pre-title { font-family: 'Space Grotesk', sans-serif; color: var(--brand-orange); font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 24px; display: block; }
-  .title-highlight { color: var(--brand-purple); }
+  .pre-title { font-family: 'Space Grotesk', sans-serif; color: var(--brand-orange); font-size: clamp(12px, 3vw, 14px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 16px; display: block; display: flex; align-items: center; gap: 8px;}
+  .pre-title::before { content: ''; width: 8px; height: 8px; background: var(--brand-orange); display: inline-block; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+  .title-highlight { color: var(--brand-purple); text-shadow: 0 0 40px var(--brand-purple-dim); }
   
-  .meta-grid { display: flex; gap: 60px; margin-top: 60px; border-top: 1px solid var(--border-dim); padding-top: 40px; flex-wrap: wrap; }
-  .meta-item { display: flex; flex-direction: column; gap: 8px; }
-  .meta-label { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.1em; }
-  .meta-value { font-family: 'Lexend', sans-serif; font-size: 24px; color: var(--text-white); font-weight: 700; display: flex; align-items: center; gap: 12px; }
+  .meta-grid { display: flex; gap: 32px; margin-top: 40px; border-top: 1px solid var(--border-dim); padding-top: 32px; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 6px; }
+  .meta-label { font-family: 'Space Grotesk', sans-serif; font-size: 11px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.1em; }
+  .meta-value { font-family: 'Lexend', sans-serif; font-size: clamp(16px, 4vw, 22px); color: var(--text-white); font-weight: 700; display: flex; align-items: center; gap: 10px; }
   
-  .pulse-dot { width: 12px; height: 12px; background: var(--brand-orange); border-radius: 50%; box-shadow: 0 0 0 0 rgba(255, 116, 57, 0.7); animation: pulse 1.5s infinite; }
-  @keyframes pulse { 70% { box-shadow: 0 0 0 15px rgba(255, 116, 57, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 116, 57, 0); } }
+  .pulse-dot { width: 10px; height: 10px; background: var(--brand-orange); border-radius: 50%; box-shadow: 0 0 0 0 rgba(255, 116, 57, 0.7); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 70% { box-shadow: 0 0 0 12px rgba(255, 116, 57, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 116, 57, 0); } }
 
   /* ── TICKER ── */
-  .ticker-wrapper { background: var(--brand-orange); width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; padding: 20px 0; overflow: hidden; transform: rotate(-2deg); margin-top: 120px; margin-bottom: 120px; box-shadow: 0 20px 40px var(--brand-orange-dim); transition: transform 0.5s; }
-  .ticker-wrapper:hover { transform: rotate(0deg) scale(1.02); }
-  .ticker { display: flex; width: max-content; animation: tickerScroll 30s linear infinite; }
-  .ticker-item { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: var(--bg-dark); text-transform: uppercase; padding: 0 60px; display: flex; align-items: center; gap: 60px; }
+  .ticker-wrapper { background: var(--brand-orange); width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; padding: 12px 0; overflow: hidden; transform: rotate(-1.5deg); margin-top: 80px; margin-bottom: 100px; box-shadow: 0 10px 30px var(--brand-orange-dim); transition: transform 0.4s; z-index: 20; }
+  .ticker-wrapper:hover { transform: rotate(0deg) scale(1.01); }
+  .ticker { display: flex; width: max-content; animation: tickerScroll 25s linear infinite; }
+  .ticker-item { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; color: var(--bg-dark); text-transform: uppercase; padding: 0 30px; display: flex; align-items: center; gap: 30px; }
   .ticker-item::after { content: '✦'; color: var(--bg-dark); }
   @keyframes tickerScroll { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-50%, 0, 0); } }
 
   /* ── VISUAL MOTIVE BLOCK (The WHO) ── */
-  .motive-split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; padding: 60px; border: 1px solid var(--border-dim); border-left: 8px solid var(--brand-orange); background: linear-gradient(135deg, var(--bg-card), transparent); border-radius: 4px; }
-  .motive-huge { font-family: 'Lexend', sans-serif; font-size: 80px; line-height: 0.9; color: var(--brand-orange); margin: 0; }
-  .motive-huge span { color: var(--text-white); display: block; font-size: 40px; }
-  .motive-text p { font-size: 20px; color: var(--text-white); font-weight: 400; margin-bottom: 0; }
+  .motive-split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 48px; border: 1px solid var(--border-dim); border-left: 6px solid var(--brand-orange); background: linear-gradient(135deg, rgba(20,20,20,0.8), transparent); border-radius: 4px; position: relative; overflow: hidden; }
+  /* Radar visual overlay */
+  .motive-split::after { content: ''; position: absolute; top: -50%; left: -10%; width: 500px; height: 500px; border: 1px dashed var(--border-dim); border-radius: 50%; pointer-events: none; z-index: 0; }
+  .motive-split::before { content: ''; position: absolute; top: -30%; left: 0%; width: 300px; height: 300px; border: 1px dashed var(--border-dim); border-radius: 50%; pointer-events: none; z-index: 0; }
+  
+  .motive-huge { font-family: 'Lexend', sans-serif; font-size: clamp(40px, 8vw, 70px); line-height: 1; color: var(--brand-orange); margin: 0; position: relative; z-index: 2; }
+  .motive-huge span { color: var(--text-white); display: block; font-size: clamp(24px, 4vw, 36px); margin-top: 8px;}
+  .motive-text { position: relative; z-index: 2; }
+  .motive-text p { font-size: 16px; color: var(--text-white); font-weight: 400; margin-bottom: 12px; }
 
   /* ── VISUAL JUDGING MATRIX ── */
-  .judging-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-top: 40px; }
-  .judge-card { background: var(--bg-card); padding: 40px 32px; border: 1px solid var(--border-dim); transition: 0.3s; position: relative; overflow: hidden; }
-  .judge-card:hover { border-color: var(--brand-purple); transform: translateY(-10px); }
-  .judge-num { font-family: 'Space Grotesk', sans-serif; font-size: 60px; font-weight: 700; color: var(--brand-purple-dim); position: absolute; top: -10px; right: -10px; line-height: 1; pointer-events: none; transition: 0.3s; }
-  .judge-card:hover .judge-num { color: var(--brand-purple); right: 20px; top: 20px; font-size: 40px; }
-  .judge-card h4 { font-size: 20px; margin-bottom: 16px; color: var(--text-white); }
-  .judge-card p { font-size: 15px; color: var(--text-gray); margin-bottom: 24px; line-height: 1.5; }
+  .judging-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 32px; }
+  .judge-card { background: var(--bg-card); padding: 32px 24px; border: 1px solid var(--border-dim); transition: 0.3s; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .judge-card:hover { border-color: var(--brand-purple); transform: translateY(-6px); box-shadow: 0 10px 30px var(--brand-purple-dim); }
+  .judge-num { font-family: 'Space Grotesk', sans-serif; font-size: 64px; font-weight: 700; color: var(--brand-purple-dim); position: absolute; top: -10px; right: -5px; line-height: 1; pointer-events: none; transition: 0.3s; }
+  .judge-card:hover .judge-num { color: var(--brand-purple); right: 16px; top: 16px; font-size: 32px; }
+  .judge-card h4 { font-size: 18px; margin-bottom: 12px; color: var(--text-white); position: relative; z-index: 2; }
+  .judge-card p { font-size: 14px; color: var(--text-gray); margin-bottom: 24px; line-height: 1.5; position: relative; z-index: 2; flex-grow: 1; }
   
-  /* Visual Progress Bars for Judging Weight */
-  .weight-bar { width: 100%; height: 4px; background: var(--bg-dark); border-radius: 2px; overflow: hidden; }
+  .weight-bar { width: 100%; height: 4px; background: var(--bg-dark); border-radius: 2px; overflow: hidden; margin-top: auto; }
   .weight-fill { height: 100%; background: var(--brand-purple); width: 0; transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
   .judge-card:hover .weight-fill { width: 100%; }
 
-  /* ── TIMELINE ── */
-  .timeline { display: grid; gap: 24px; }
-  .timeline-row { display: grid; grid-template-columns: 250px 1fr; background: var(--bg-card); padding: 32px 40px; border-left: 4px solid var(--border-dim); transition: 0.3s; align-items: center; }
-  .timeline-row:hover { border-left-color: var(--brand-purple); transform: translateX(12px); box-shadow: -10px 10px 30px rgba(0,0,0,0.5); }
-  .timeline-row.critical { border-left-color: var(--brand-orange); }
-  .time-col { font-family: 'Space Grotesk', sans-serif; font-size: 16px; color: var(--text-gray); font-weight: 700; letter-spacing: 0.1em; }
+  /* ── TIMELINE (FLIGHT PATH) ── */
+  .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+  /* Desktop orbital line */
+  @media (min-width: 769px) { .timeline::before { content:''; position: absolute; left: 198px; top: 20px; bottom: 20px; width: 2px; background: var(--border-dim); z-index: 1; } }
+  
+  .timeline-row { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--border-dim); transition: 0.3s; align-items: center; position: relative; z-index: 2; }
+  .timeline-row:last-child { border-bottom: none; }
+  .timeline-row:hover { background: linear-gradient(90deg, transparent, rgba(167, 165, 255, 0.05), transparent); padding-left: 16px; }
+  
+  .time-col { font-family: 'Space Grotesk', sans-serif; font-size: 14px; color: var(--text-gray); font-weight: 700; letter-spacing: 0.1em; transition: 0.3s; display: flex; align-items: center; justify-content: space-between; }
+  /* Node Dot on Desktop */
+  @media (min-width: 769px) { .time-col::after { content: ''; width: 10px; height: 10px; background: var(--bg-dark); border: 2px solid var(--border-dim); border-radius: 50%; z-index: 3; transition: 0.3s; transform: translateX(5px); } }
+  
   .timeline-row:hover .time-col { color: var(--brand-purple); }
+  .timeline-row:hover .time-col::after { border-color: var(--brand-purple); background: var(--brand-purple); box-shadow: 0 0 15px var(--brand-purple); }
+  
   .timeline-row.critical .time-col { color: var(--brand-orange); }
-  .event-title { font-family: 'Lexend', sans-serif; font-size: 22px; color: var(--text-white); margin-bottom: 8px; }
-  .event-desc { font-size: 16px; margin: 0; }
+  @media (min-width: 769px) { .timeline-row.critical .time-col::after { border-color: var(--brand-orange); } }
+  .timeline-row.critical:hover .time-col::after { background: var(--brand-orange); box-shadow: 0 0 15px var(--brand-orange); }
+  
+  .event-content { padding-left: 16px; }
+  .event-title { font-family: 'Lexend', sans-serif; font-size: 20px; color: var(--text-white); margin-bottom: 6px; }
+  .event-desc { font-size: 14px; margin: 0; }
 
   /* ── GRIDS (Roles & Resources) ── */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
   
-  .box { background: var(--bg-card); padding: 40px; border: 1px solid var(--border-dim); transition: 0.3s; position: relative; }
-  .box:hover { border-color: var(--brand-purple); transform: translateY(-8px); }
-  .box-tag { font-family: 'Space Grotesk', sans-serif; font-size: 14px; color: var(--brand-purple); margin-bottom: 16px; display: inline-block; text-transform: uppercase; font-weight: 700; border: 1px solid var(--brand-purple-dim); padding: 4px 12px; border-radius: 30px; }
-  .box-title { font-size: 24px; margin-bottom: 12px; }
+  .box { background: var(--bg-card); padding: 32px; border: 1px solid var(--border-dim); transition: 0.3s; position: relative; }
+  .box:hover { border-color: var(--brand-purple); transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+  .box-tag { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--brand-purple); margin-bottom: 16px; display: inline-flex; align-items: center; gap: 8px; text-transform: uppercase; font-weight: 700; border: 1px solid var(--brand-purple-dim); padding: 6px 12px; border-radius: 4px; }
+  .box-tag .insignia { font-size: 14px; }
+  .box-title { font-size: 20px; margin-bottom: 8px; }
 
-  /* ── RESOURCES CARD ── */
-  .resource-card { background: var(--bg-card); border: 1px solid var(--border-dim); padding: 40px; display: flex; flex-direction: column; gap: 16px; transition: 0.3s; }
-  .resource-card:hover { border-color: var(--brand-purple); box-shadow: 0 10px 40px var(--brand-purple-dim); transform: translateY(-6px); }
-  .r-level { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; letter-spacing: 0.1em; }
-  .r-level.beginner { color: #4ade80; } 
-  .r-level.mid { color: var(--brand-orange); }
-  .r-level.all { color: var(--brand-purple); }
+  /* ── RESOURCES BENTO BOX ── */
+  .resource-card { background: var(--bg-card); border: 1px solid var(--border-dim); padding: 32px; display: flex; flex-direction: column; gap: 12px; transition: 0.3s; }
+  .resource-card:hover { border-color: var(--brand-purple); box-shadow: 0 8px 30px var(--brand-purple-dim); transform: translateY(-4px); }
+  .r-level { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; letter-spacing: 0.1em; display: flex; align-items: center; gap: 8px;}
+  .r-level::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
+  .r-level.beginner { color: #4ade80; } .r-level.beginner::before { background: #4ade80; }
+  .r-level.mid { color: var(--brand-orange); } .r-level.mid::before { background: var(--brand-orange); }
+  .r-level.all { color: var(--brand-purple); } .r-level.all::before { background: var(--brand-purple); }
   
-  .r-item a { font-size: 16px; color: var(--text-white); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-dim); padding-bottom: 12px; position: relative; }
+  .r-item a { font-size: 14px; color: var(--text-white); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-dim); padding-bottom: 12px; position: relative; }
   .r-item:last-child a { border-bottom: none; padding-bottom: 0; }
   .r-item a:hover { color: var(--brand-purple); padding-left: 8px; border-bottom-color: var(--brand-purple); }
   .r-item a::after { content: '↗'; opacity: 0; transform: translateX(-10px); transition: 0.2s; font-family: 'Space Grotesk', sans-serif; }
   .r-item a:hover::after { opacity: 1; transform: translateX(0); }
-  .r-tag { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-gray); }
+  .r-tag { font-family: 'Space Grotesk', sans-serif; font-size: 11px; color: var(--text-gray); }
 
   /* ── BRUTALIST CONTACT CARD ── */
-  .card-solid { padding: 60px; border-radius: 4px; margin: 80px 0; background: var(--brand-purple); color: var(--bg-dark); transition: 0.3s; display: flex; flex-direction: column; align-items: flex-start; }
-  .card-solid:hover { transform: translateY(-8px); box-shadow: 16px 16px 0 var(--brand-orange); }
-  .card-solid h3 { color: var(--bg-dark); font-size: 40px; margin-bottom: 16px; }
-  .card-solid p { color: var(--bg-dark); font-weight: 600; font-size: 20px; max-width: 600px; }
+  .card-solid { padding: 48px; border-radius: 2px; margin: 80px 0; background: var(--brand-purple); color: var(--bg-dark); transition: 0.3s; display: flex; flex-direction: column; align-items: flex-start; position: relative; overflow: hidden; }
+  .card-solid::before { content: '✦✦✦'; position: absolute; right: 24px; top: -20px; font-size: 100px; color: var(--bg-dark); opacity: 0.1; line-height: 1; pointer-events: none; transition: 0.5s;}
+  .card-solid:hover { transform: translateY(-4px); box-shadow: 12px 12px 0 var(--brand-orange); }
+  .card-solid:hover::before { transform: rotate(15deg) scale(1.2); }
+  .card-solid h3 { color: var(--bg-dark); font-size: clamp(28px, 5vw, 40px); margin-bottom: 12px; }
+  .card-solid p { color: var(--bg-dark); font-weight: 600; font-size: clamp(14px, 3vw, 16px); max-width: 550px; margin-bottom: 24px;}
   
-  .btn-contact { display: inline-flex; align-items: center; gap: 12px; background: var(--bg-dark); color: var(--text-white); font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase; padding: 20px 40px; font-size: 16px; border: none; cursor: pointer; transition: 0.3s; margin-top: 32px; letter-spacing: 0.1em; }
-  .btn-contact:hover { background: var(--brand-orange); color: var(--bg-dark); transform: scale(1.05); }
+  .btn-contact { display: inline-flex; align-items: center; gap: 10px; background: var(--bg-dark); color: var(--text-white); font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase; padding: 16px 32px; font-size: 14px; border: none; cursor: pointer; transition: 0.3s; letter-spacing: 0.1em; }
+  .btn-contact:hover { background: var(--brand-orange); color: var(--bg-dark); transform: scale(1.02); }
 
   /* ── FOOTER ── */
-  .footer { text-align: center; border-top: 1px solid var(--border-dim); padding-top: 80px; margin-top: 120px; padding-bottom: 60px; }
-  .footer-logo { font-family: 'Lexend', sans-serif; font-size: 40px; font-weight: 900; color: var(--text-white); letter-spacing: -0.05em; }
-  .footer-sub { font-family: 'Space Grotesk', sans-serif; font-size: 14px; color: var(--text-gray); margin-top: 16px; text-transform: uppercase; letter-spacing: 0.2em; }
+  .footer { text-align: center; border-top: 1px solid var(--border-dim); padding-top: 60px; margin-top: 80px; padding-bottom: 40px; position: relative; z-index: 10;}
+  .footer-logo { font-family: 'Lexend', sans-serif; font-size: 28px; font-weight: 900; color: var(--text-white); letter-spacing: -0.05em; }
+  .footer-sub { font-family: 'Space Grotesk', sans-serif; font-size: 11px; color: var(--text-gray); margin-top: 12px; text-transform: uppercase; letter-spacing: 0.15em; }
 
-  /* Animations */
-  @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-  .fade-in-section { animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-timeline: view(); animation-range: entry 5% cover 30%; }
+  /* ── ANIMATIONS ── */
+  @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in-section { animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-timeline: view(); animation-range: entry 5% cover 25%; }
 
-  @media (max-width: 800px) {
-    .container { padding: 60px 24px; }
-    .motive-split { grid-template-columns: 1fr; gap: 32px; padding: 40px 24px; }
-    .timeline-row { grid-template-columns: 1fr; gap: 12px; padding: 24px; }
-    .grid-2 { grid-template-columns: 1fr; }
-    .ticker-wrapper { transform: rotate(-3deg); }
+  /* ── RESPONSIVE MOBILE FIXES ── */
+  @media (max-width: 768px) {
+    .container { padding: 40px 20px; }
+    .section { margin-bottom: 80px; }
+    
+    .meta-grid { flex-direction: column; gap: 20px; padding-top: 24px; margin-top: 32px; }
+    
+    .ticker-wrapper { transform: rotate(-2.5deg); margin: 60px 0; padding: 8px 0; }
+    .ticker-item { font-size: 12px; padding: 0 20px; gap: 20px; }
+    
+    .motive-split { grid-template-columns: 1fr; gap: 24px; padding: 32px 24px; }
+    
+    /* Mobile Timeline */
+    .timeline-row { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; border-bottom: 1px dashed var(--border-dim); }
+    .timeline-row:hover { padding-left: 0; background: none; }
+    .event-content { padding-left: 0; }
+    .time-col { color: var(--brand-purple); font-size: 12px; }
+    
+    .grid-2 { grid-template-columns: 1fr; gap: 16px;}
+    .box, .judge-card, .resource-card { padding: 24px; }
+    
+    .card-solid { padding: 32px 24px; margin: 60px 0; }
+    .card-solid h3 { font-size: 24px; }
   }
 </style>
 </head>
 <body>
 
+<!-- Dynamic Backgrounds -->
 <div class="glow-orb-1"></div>
 <div class="glow-orb-2"></div>
+<div class="particles">
+  <!-- Astrophage Particles generated with pure CSS logic -->
+  <div class="particle" style="left: 10%; --duration: 12s; --opacity: 0.6; animation-delay: 0s;"></div>
+  <div class="particle" style="left: 30%; --duration: 18s; --opacity: 0.4; animation-delay: 3s;"></div>
+  <div class="particle" style="left: 50%; --duration: 15s; --opacity: 0.8; animation-delay: 1s;"></div>
+  <div class="particle" style="left: 70%; --duration: 20s; --opacity: 0.3; animation-delay: 5s;"></div>
+  <div class="particle" style="left: 90%; --duration: 14s; --opacity: 0.7; animation-delay: 2s;"></div>
+</div>
 
 <div class="container">
 
   <!-- HEADER -->
-  <header class="section" style="margin-bottom: 80px;">
-    <span class="pre-title">Mission Dossier // Devvit // Apr 2026</span>
-    <h1>Project<br><span class="title-highlight">Hail Mary.</span></h1>
-    <p style="max-width: 650px; font-size: 22px; margin-top: 32px;">A 36-hour hackathon to blitz-scale rough ideas into real-world projects. No memory, no problem. Engineer a solution and ship it before the window closes.</p>
+  <header class="section" style="margin-bottom: 40px;">
+    <span class="pre-title">Mission Dossier // Theme: Project Hail Mary</span>
+    <h1>HACK & <span class="title-highlight">SHIP</span></h1>
+    <p style="max-width: 600px; font-size: clamp(15px, 3vw, 18px); margin-top: 16px; color: var(--text-white);">A 36-hour hackathon by Devvit. Blitz-scale rough ideas into real-world projects. No memory, no problem. Engineer a solution and ship it before the window closes.</p>
     
     <div class="meta-grid">
       <div class="meta-item">
@@ -217,8 +274,7 @@
       <h3 class="motive-huge">WHO<br><span>HAS THE<br>PROBLEM?</span></h3>
       <div class="motive-text">
         <p>A good proposal clearly defines <strong>who</strong> has the problem, not just <em>what</em> the problem is.</p>
-        <br>
-        <p style="color: var(--text-gray); font-size: 16px;">If you build a brilliant solution for a vaguely defined audience, you will fail the selection gate. Specificity is survival. Target a real demographic, define their exact pain point, and build the smallest prototype that solves it.</p>
+        <p style="color: var(--text-gray); font-size: 14px; margin-top: 12px;">If you build a brilliant solution for a vaguely defined audience, you will fail the selection gate. Specificity is survival. Target a real demographic, define their exact pain point, and build the smallest prototype that solves it.</p>
       </div>
     </div>
   </section>
@@ -242,6 +298,7 @@
         <div class="weight-bar"><div class="weight-fill" style="transition-delay: 0.2s;"></div></div>
       </div>
       <div class="judge-card">
+        <div class="judge-card-inner"></div>
         <div class="judge-num">03</div>
         <h4>Execution</h4>
         <p>Does the prototype actually work? (Even partially).</p>
@@ -256,41 +313,41 @@
     </div>
   </section>
 
-  <!-- TIMELINE -->
+  <!-- TIMELINE (FLIGHT PATH) -->
   <section class="section fade-in-section">
-    <h2>Orbital Timeline</h2>
+    <h2>Orbital Flight Path</h2>
     <div class="timeline">
       <div class="timeline-row">
         <div class="time-col">Apr 17 // 10:00 AM</div>
-        <div>
+        <div class="event-content">
           <div class="event-title">Threat Drops</div>
           <p class="event-desc">Problem statement released. Formulate your hypothesis.</p>
         </div>
       </div>
       <div class="timeline-row">
         <div class="time-col">Apr 17 // 6:00 PM</div>
-        <div>
+        <div class="event-content">
           <div class="event-title">Mission Briefing</div>
           <p class="event-desc">Mandatory webinar. We prep you for the overnight window.</p>
         </div>
       </div>
       <div class="timeline-row critical">
         <div class="time-col">Apr 18 // 9:00 AM</div>
-        <div>
+        <div class="event-content">
           <div class="event-title">Proposal Deadline</div>
           <p class="event-desc">Missing this means you don't build. Done beats perfect.</p>
         </div>
       </div>
       <div class="timeline-row">
         <div class="time-col">Apr 18 // Afternoon</div>
-        <div>
+        <div class="event-content">
           <div class="event-title">Engineering Begins</div>
           <p class="event-desc">Selected crews move to Phase 2. Build your critical path.</p>
         </div>
       </div>
       <div class="timeline-row critical">
         <div class="time-col">Apr 19 // 7:00 PM</div>
-        <div>
+        <div class="event-content">
           <div class="event-title">Beetle Launch Closes</div>
           <p class="event-desc">Final deadline. Pack your prototype and ship it. Amaze!</p>
         </div>
@@ -303,26 +360,26 @@
     <h2>Crew & Alliances</h2>
     <p style="max-width: 700px;"><strong>Bring your crew, or we’ll match you.</strong> If you already have a team, you're cleared for launch. If you're flying solo, we will match you with a balanced crew of builders. Every squad also gets a <strong>Devvit Team Liaison</strong>.</p>
     
-    <div class="grid-2" style="margin-top: 60px;">
+    <div class="grid-2" style="margin-top: 40px;">
       <div class="box">
-        <div class="box-tag">The Grace</div>
+        <div class="box-tag"><span class="insignia">⬡</span> The Grace</div>
         <h3 class="box-title">Problem Lead</h3>
-        <p style="font-size: 16px; margin:0;">Owns the problem definition. Stops the crew from drifting off mission.</p>
+        <p style="font-size: 14px; margin:0;">Owns the problem definition. Stops the crew from drifting off mission.</p>
       </div>
       <div class="box">
-        <div class="box-tag">The Rocky</div>
+        <div class="box-tag"><span class="insignia">▱</span> The Rocky</div>
         <h3 class="box-title">Build Lead</h3>
-        <p style="font-size: 16px; margin:0;">Owns the tech approach. Makes the hard calls on implementation.</p>
+        <p style="font-size: 14px; margin:0;">Owns the tech approach. Makes the hard calls on implementation.</p>
       </div>
       <div class="box">
-        <div class="box-tag">Communicator</div>
+        <div class="box-tag"><span class="insignia">✧</span> Communicator</div>
         <h3 class="box-title">Pitch Lead</h3>
-        <p style="font-size: 16px; margin:0;">Builds the pitch deck <em>while</em> the code is written, not after.</p>
+        <p style="font-size: 14px; margin:0;">Builds the pitch deck <em>while</em> the code is written, not after.</p>
       </div>
       <div class="box" style="border-color: var(--brand-orange);">
-        <div class="box-tag" style="color: var(--brand-orange); border-color: var(--brand-orange-dim);">Mission Control</div>
+        <div class="box-tag" style="color: var(--brand-orange); border-color: var(--brand-orange-dim);"><span class="insignia">⌖</span> Mission Control</div>
         <h3 class="box-title">Devvit Liaison</h3>
-        <p style="font-size: 16px; margin:0;">Your embedded Devvit team member. Ping them when stuck.</p>
+        <p style="font-size: 14px; margin:0;">Your embedded Devvit team member. Ping them when stuck.</p>
       </div>
     </div>
   </section>
@@ -332,7 +389,7 @@
     <h2>Ship Database</h2>
     <p>Free scaffolding and primitives to blitz-scale your ideas. Click to access.</p>
     
-    <div class="grid-3" style="margin-top: 60px;">
+    <div class="grid-3" style="margin-top: 32px;">
       <div class="resource-card">
         <div class="r-level beginner">Cadet Level</div>
         <div class="r-item"><a href="https://www.figma.com/" target="_blank">Figma <span class="r-tag">DESIGN</span></a></div>
