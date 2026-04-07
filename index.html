@@ -1,1150 +1,704 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>NYT Games - For Aaradhya</title>
-    <style>
-        /* =========================================
-           NYT EXACT COLOR PALETTE & TYPOGRAPHY
-           ========================================= */
-        @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROJECT HAIL MARY: Hack & Ship by Devvit</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Deep Space Palette */
+    --void: #030508;
+    --hull-dark: #080c13;
+    --hull-light: #111826;
+    --grid-line: rgba(0, 229, 255, 0.05);
+    
+    /* Thematic Colors */
+    --tech-blue: #00e5ff;
+    --tech-blue-dim: rgba(0, 229, 255, 0.15);
+    --astrophage: #ffb000;
+    --astrophage-dim: rgba(255, 176, 0, 0.15);
+    --alert-red: #ff3366;
+    --alert-red-dim: rgba(255, 51, 102, 0.15);
+    --eridian-rock: #a89f91;
+    
+    /* Text */
+    --text-main: #d1e4ec;
+    --text-dim: #7a93a3;
+    --text-muted: #4a5c6a;
+  }
 
-        :root {
-            /* Fonts */
-            --sans: "nyt-franklin", "Helvetica Neue", Arial, sans-serif;
-            --serif: "nyt-karnak", "KarnakPro-CondensedBlack", Georgia, serif;
-            --gothic: 'UnifrakturMaguntia', serif;
-            
-            /* App Colors */
-            --bg-main: #FFFFFF;
-            --bg-offwhite: #F3F3F3;
-            --text-main: #121212;
-            --text-muted: #737373;
-            --border-light: #E2E2E2;
-            
-            /* Game Colors */
-            --w-green: #538D4E;
-            --w-yellow: #B59F3B;
-            --w-gray: #3A3A3C;
-            --w-light-gray: #D3D6DA;
-            --w-dark-gray: #787C7E;
-            
-            --c-green: #A0C35A;
-            --c-yellow: #F9DF6D;
-            --c-blue: #B0C4EF;
-            --c-purple: #BA81C5;
-            --c-bg: #EFEFE6;
-            
-            --bee-yellow: #F7DA21;
-            --strands-blue: #AFCAEA;
-            --heart-red: #E0245E;
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            margin: 0; padding: 0;
-        }
+  body {
+    background-color: var(--void);
+    background-image: 
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 30px 30px;
+    background-position: center center;
+    color: var(--text-main);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-        body {
-            background-color: #000;
-            font-family: var(--sans);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            height: 100dvh; /* Mobile friendly viewport height */
-            overflow: hidden;
-        }
+  /* CRT Scanline & Vignette */
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px);
+    pointer-events: none; z-index: 1000;
+  }
+  body::after {
+    content: ''; position: fixed; inset: 0;
+    background: radial-gradient(circle at center, transparent 40%, #000000 120%);
+    pointer-events: none; z-index: 999;
+  }
 
-        /* App Container */
-        #app {
-            width: 100%;
-            max-width: 500px;
-            background: var(--bg-main);
-            height: 100dvh;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    position: relative;
+    z-index: 10;
+  }
 
-        /* =========================================
-           APP HEADER & NAVIGATION
-           ========================================= */
-        .app-header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border-light);
-            background: var(--bg-main);
-            z-index: 10;
-        }
-        .header-logo {
-            font-family: var(--gothic);
-            font-size: 32px;
-            font-weight: normal;
-            letter-spacing: 0.5px;
-            line-height: 1;
-        }
+  /* Typography */
+  h1, h2, h3, .hud-title { font-family: 'Orbitron', sans-serif; text-transform: uppercase; }
+  .mono { font-family: 'Space Mono', monospace; }
 
-        .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 12px 0 24px 0;
-            border-top: 1px solid var(--border-light);
-            background: var(--bg-main);
-            z-index: 10;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 50%;
-        }
-        .nav-item.active { color: var(--text-main); }
-        .nav-item svg { width: 24px; height: 24px; margin-bottom: 4px; }
+  /* ── HUD CONTAINER EFFECTS ── */
+  .hud-box {
+    background: rgba(8, 12, 19, 0.85);
+    border: 1px solid var(--text-muted);
+    backdrop-filter: blur(10px);
+    padding: 32px;
+    margin-bottom: 40px;
+    position: relative;
+    clip-path: polygon(
+      0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%
+    );
+  }
 
-        /* =========================================
-           SCROLLABLE VIEWS
-           ========================================= */
-        .scroll-view {
-            flex-grow: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            background: var(--bg-main);
-            display: none;
-        }
-        .scroll-view.active { display: block; }
+  .hud-box::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--tech-blue), transparent);
+    opacity: 0.5;
+  }
 
-        .hub-date {
-            font-weight: 700;
-            font-size: 13px;
-            padding: 24px 20px 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .hub-title {
-            font-family: var(--serif);
-            font-size: clamp(28px, 8vw, 36px);
-            font-weight: 900;
-            padding: 0 20px 20px;
-            line-height: 1;
-            letter-spacing: -1px;
-        }
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+  }
 
-        .game-list {
-            padding: 0 20px 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        
-        .card {
-            display: flex;
-            align-items: center;
-            padding: 16px;
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            background: var(--bg-main);
-            cursor: pointer;
-            transition: transform 0.1s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-            touch-action: manipulation;
-        }
-        .card:active { transform: scale(0.97); background: var(--bg-offwhite); }
-        
-        .card-thumb {
-            width: clamp(56px, 15vw, 64px); 
-            height: clamp(56px, 15vw, 64px);
-            border-radius: 12px;
-            margin-right: 16px;
-            flex-shrink: 0;
-            position: relative;
-            overflow: hidden;
-            display: flex; flex-wrap: wrap; align-content: center; justify-content: center;
-        }
-        
-        /* Thumbnails drawn with CSS */
-        .thumb-wordle { background: var(--bg-main); border: 1px solid var(--border-light); gap: 2px; padding: 6px; }
-        .thumb-wordle div { width: 28%; height: 28%; border-radius: 2px; }
-        .tw-g { background: var(--w-green); } .tw-y { background: var(--w-yellow); } .tw-e { background: var(--w-light-gray); }
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; letter-spacing: 0.2em; color: var(--astrophage);
+    border: 1px solid var(--astrophage); padding: 6px 16px;
+    border-radius: 20px; margin-bottom: 24px; font-weight: 700;
+    box-shadow: 0 0 15px var(--astrophage-dim);
+  }
+  .status-badge::before {
+    content: ''; width: 8px; height: 8px; background: var(--astrophage); border-radius: 50%;
+    animation: pulse-astro 1.5s infinite;
+  }
 
-        .thumb-conn { background: var(--c-bg); gap: 2px; padding: 6px; }
-        .thumb-conn div { width: 45%; height: 45%; border-radius: 3px; }
-        .tc-p { background: var(--c-purple); } .tc-b { background: var(--c-blue); } .tc-y { background: var(--c-yellow); } .tc-g { background: var(--c-green); }
+  @keyframes pulse-astro {
+    0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--astrophage); }
+    50% { opacity: 0.3; box-shadow: 0 0 0px var(--astrophage); }
+  }
 
-        .thumb-mini { background: var(--bg-main); border: 2px solid #000; width: 60px; height: 60px; margin-left: 2px; }
-        .thumb-mini div { width: 33.3%; height: 33.3%; border: 1px solid #000; float: left; }
-        .tm-b { background: #000; }
+  .header h1 {
+    font-size: clamp(32px, 6vw, 56px);
+    color: #fff;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 20px var(--tech-blue-dim);
+    margin-bottom: 8px;
+  }
+  .header h1 span { color: var(--tech-blue); }
 
-        .thumb-bee { background: var(--bg-main); align-items: center; }
-        .thumb-bee-hex { width: 40px; height: 45px; background: var(--bee-yellow); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); position: relative; }
-        .thumb-bee-hex::after { content: ''; position: absolute; top:5px; left:5px; right:5px; bottom:5px; background: white; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+  .meta-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-top: 40px;
+    border-top: 1px solid var(--tech-blue-dim);
+    border-bottom: 1px solid var(--tech-blue-dim);
+    padding: 20px 0;
+  }
+  .meta-item { text-align: left; border-left: 2px solid var(--tech-blue); padding-left: 12px; }
+  .meta-label { font-size: 10px; color: var(--tech-blue); letter-spacing: 0.2em; text-transform: uppercase; font-family: 'Space Mono'; display: block; margin-bottom: 4px; }
+  .meta-value { font-size: 16px; font-weight: 600; color: #fff; }
 
-        .thumb-strands { background: var(--strands-blue); }
-        .thumb-strands svg { width: 100%; height: 100%; stroke: white; stroke-width: 4; fill: none; }
+  /* ── TOC / SYSTEMS MENU ── */
+  .toc {
+    background: var(--hull-light);
+    border-left: 4px solid var(--astrophage);
+    padding: 24px 32px;
+    margin: 40px 0 60px;
+  }
+  .toc-title { font-size: 12px; color: var(--astrophage); letter-spacing: 0.2em; margin-bottom: 16px; font-family: 'Space Mono'; }
+  .toc-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px; }
+  .toc-list li a {
+    color: var(--text-main); text-decoration: none; font-size: 15px; font-weight: 500;
+    display: flex; align-items: center; gap: 12px; transition: all 0.2s;
+  }
+  .toc-list li a:hover { color: var(--astrophage); transform: translateX(5px); }
+  .toc-num { color: var(--text-muted); font-family: 'Space Mono'; font-size: 12px; }
 
-        .thumb-lb { background: #fff; border: 3px solid var(--c-purple); border-radius: 0; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; }
-        .thumb-lb::after { content: 'A'; font-weight: bold; font-family: var(--sans); font-size: 20px; }
+  /* ── SECTIONS ── */
+  .section-header {
+    display: flex; align-items: flex-end; gap: 16px; margin-bottom: 32px;
+    border-bottom: 1px solid var(--tech-blue-dim); padding-bottom: 16px;
+  }
+  .section-num {
+    font-size: 40px; font-family: 'Orbitron'; font-weight: 900; color: var(--tech-blue-dim);
+    line-height: 0.8;
+  }
+  .section-tag { font-family: 'Space Mono'; font-size: 10px; color: var(--tech-blue); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 4px; }
+  h2 { font-size: 24px; color: #fff; letter-spacing: 0.05em; }
+  h3 { font-size: 18px; color: var(--tech-blue); margin: 32px 0 16px; letter-spacing: 0.05em; }
+  p { margin-bottom: 20px; font-size: 18px; color: var(--text-main); }
+  strong, .hl { color: #fff; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
 
-        .thumb-sudoku { background: #fff; border: 2px solid #000; width: 56px; height: 56px; }
-        .thumb-sudoku div { width: 33.3%; height: 33.3%; border: 1px solid #000; float: left; }
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    padding: 24px 24px 24px 32px; margin: 32px 0; position: relative;
+    border-right: 1px solid transparent; border-bottom: 1px solid transparent; border-top: 1px solid transparent;
+  }
+  .callout::before {
+    content: attr(data-label); font-family: 'Space Mono'; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase; position: absolute;
+    top: -10px; left: 24px; background: var(--hull-dark); padding: 0 8px;
+  }
+  .callout p { margin: 0; font-size: 16px; }
 
-        .thumb-tiles { background: #000; position: relative; }
-        .thumb-tiles div { position: absolute; width: 50%; height: 50%; background: var(--c-green); transform: rotate(45deg); border: 2px solid #000; }
-        .thumb-tiles div:nth-child(2) { background: var(--bee-yellow); top: 15%; left: 15%; z-index: 2;}
+  .callout.astrophage {
+    border-left: 4px solid var(--astrophage);
+    background: linear-gradient(90deg, var(--astrophage-dim), transparent);
+    border-color: var(--astrophage-dim);
+  }
+  .callout.astrophage::before { color: var(--astrophage); }
 
-        .thumb-cross { background: #fff; border: 2px solid #000; width: 60px; height: 60px; }
-        .thumb-cross div { width: 25%; height: 25%; border: 1px solid #000; float: left; }
+  .callout.danger {
+    border-left: 4px solid var(--alert-red);
+    background: linear-gradient(90deg, var(--alert-red-dim), transparent);
+    border-color: var(--alert-red-dim);
+  }
+  .callout.danger::before { color: var(--alert-red); }
 
-        .thumb-vertex { background: var(--c-blue); position: relative; }
-        .thumb-vertex svg { width: 100%; height: 100%; fill: rgba(255,255,255,0.4); stroke: white; stroke-width: 2; }
+  .callout.tech {
+    border-left: 4px solid var(--tech-blue);
+    background: linear-gradient(90deg, var(--tech-blue-dim), transparent);
+    border-color: var(--tech-blue-dim);
+  }
+  .callout.tech::before { color: var(--tech-blue); }
 
-        .card-text { flex-grow: 1; }
-        .card-text h3 { font-family: var(--serif); font-size: 20px; margin-bottom: 4px; letter-spacing: -0.3px; }
-        .card-text p { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; line-height: 1.3; }
-        .card-tag { display: inline-block; font-size: 11px; font-weight: 700; background: var(--bg-offwhite); padding: 4px 8px; border-radius: 4px; color: var(--text-main); }
-        .card-status { font-size: 11px; font-weight: 700; color: var(--w-green); display: inline-block; margin-left: 8px; }
+  /* ── ORBITAL TIMELINE ── */
+  .timeline { margin: 40px 0; position: relative; padding-left: 40px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 9px; top: 0; bottom: 0; width: 2px;
+    background: var(--tech-blue-dim);
+  }
+  .timeline-item { position: relative; margin-bottom: 32px; }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-dot {
+    position: absolute; left: -40px; top: 4px; width: 20px; height: 20px;
+    border: 2px solid var(--tech-blue); background: var(--hull-dark);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    z-index: 2; transition: all 0.3s;
+  }
+  .timeline-item.active .timeline-dot {
+    background: var(--astrophage); border-color: var(--astrophage);
+    box-shadow: 0 0 15px var(--astrophage);
+  }
+  .timeline-dot::after { content: ''; width: 4px; height: 4px; background: var(--tech-blue); border-radius: 50%; }
+  .timeline-item.active .timeline-dot::after { background: #000; }
+  
+  .timeline-time { font-family: 'Space Mono'; font-size: 11px; color: var(--tech-blue); letter-spacing: 0.1em; margin-bottom: 4px; }
+  .timeline-item.active .timeline-time { color: var(--astrophage); }
+  .timeline-label { font-size: 18px; color: #fff; font-weight: 600; margin-bottom: 6px; }
+  .timeline-note { font-size: 15px; color: var(--text-dim); }
 
-        /* =========================================
-           STATS VIEW
-           ========================================= */
-        .stats-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid var(--border-light); }
-        .stats-header h2 { font-family: var(--serif); font-size: 28px; margin-bottom: 5px; }
-        .stats-header p { color: var(--text-muted); font-size: 14px; }
-        
-        .stat-box-container { display: flex; justify-content: space-between; padding: 20px; gap: 10px; }
-        .stat-box { flex: 1; text-align: center; }
-        .stat-num { font-size: 32px; font-weight: 300; margin-bottom: 4px; }
-        .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); }
+  /* ── ROLE CARDS (CREW) ── */
+  .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+  .role-card {
+    background: var(--hull-light); border: 1px solid var(--text-muted);
+    padding: 24px; position: relative; transition: border-color 0.3s;
+  }
+  .role-card:hover { border-color: var(--tech-blue); }
+  .role-card::after {
+    content: ''; position: absolute; bottom: 0; right: 0; width: 15px; height: 15px;
+    background: var(--text-muted); clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  }
+  .role-name { font-family: 'Orbitron'; font-size: 16px; color: var(--tech-blue); margin-bottom: 8px; display: flex; justify-content: space-between;}
+  .role-desc { font-size: 15px; color: var(--text-main); }
 
-        .stats-section { padding: 20px; border-top: 10px solid var(--bg-offwhite); }
-        .stats-section h3 { font-size: 16px; margin-bottom: 20px; font-weight: 700; text-transform: uppercase; }
-        
-        .chart-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
-        .chart-num { width: 15px; text-align: right; margin-right: 10px; }
-        .chart-bar { background: var(--w-dark-gray); color: white; padding: 4px 8px; min-width: 25px; text-align: right; }
-        .chart-bar.win { background: var(--w-green); width: 100%; }
-        
-        .fun-stats { list-style: none; padding: 0; }
-        .fun-stats li { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-light); font-size: 15px; }
-        .fun-stats li span:last-child { font-weight: 700; }
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; margin: 24px 0; }
+  .checklist li {
+    display: flex; align-items: flex-start; gap: 16px; padding: 12px 0;
+    border-bottom: 1px dashed var(--tech-blue-dim); font-size: 16px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box {
+    width: 18px; height: 18px; border: 1px solid var(--tech-blue);
+    flex-shrink: 0; margin-top: 4px; position: relative;
+  }
+  .check-box::before {
+    content: '✓'; position: absolute; top: -3px; left: 2px;
+    color: var(--tech-blue); font-size: 14px; opacity: 0.2;
+  }
 
-        /* =========================================
-           GAME VIEWS (SLIDE IN OVER EVERYTHING)
-           ========================================= */
-        .game-view {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg-main);
-            z-index: 50; /* Covers bottom nav */
-            display: flex;
-            flex-direction: column;
-            transform: translateX(100%);
-            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .game-view.active { transform: translateX(0); }
-        
-        .game-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 16px 20px; border-bottom: 1px solid var(--border-light);
-            background: var(--bg-main);
-        }
-        .game-header-title { font-family: var(--serif); font-size: 20px; font-weight: 900; }
-        .btn-icon { background: none; border: none; font-size: 20px; cursor: pointer; padding: 4px; }
+  /* ── PROPOSAL FRAMEWORK ── */
+  .framework { margin: 32px 0; }
+  .framework-item {
+    display: flex; gap: 24px; padding: 24px; background: var(--hull-light);
+    border-left: 2px solid var(--tech-blue); margin-bottom: 16px;
+  }
+  .framework-num { font-family: 'Space Mono'; font-size: 24px; color: var(--tech-blue-dim); font-weight: 700; line-height: 1; }
+  .framework-q { font-size: 18px; color: #fff; font-weight: 600; margin-bottom: 8px; }
+  .framework-hint { font-size: 15px; color: var(--text-dim); }
 
-        .game-body { flex-grow: 1; overflow-y: auto; padding: 5vw; display: flex; flex-direction: column; align-items: center; }
-        .game-desc { font-size: 15px; color: var(--text-muted); margin-bottom: 20px; text-align: center; }
+  /* ── RESOURCES ── */
+  .resource-group { margin: 32px 0; }
+  .resource-level {
+    font-family: 'Space Mono'; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 6px 12px; border: 1px solid; display: inline-block; margin-bottom: 16px;
+  }
+  .resource-level.beginner { color: var(--tech-blue); border-color: var(--tech-blue); background: var(--tech-blue-dim); }
+  .resource-level.intermediate { color: var(--astrophage); border-color: var(--astrophage); background: var(--astrophage-dim); }
+  .resource-level.all { color: #fff; border-color: var(--text-muted); background: var(--hull-light); }
 
-        .solve-btn {
-            background: var(--text-main); color: var(--bg-main); border: none;
-            padding: 16px 32px; border-radius: 30px; font-size: 16px; font-weight: 700;
-            cursor: pointer; margin-top: auto; margin-bottom: 20px;
-            transition: transform 0.1s, opacity 0.3s; width: 90%; max-width: 320px;
-        }
-        .solve-btn:active { transform: scale(0.95); }
-        .solve-btn:disabled { opacity: 0.5; pointer-events: none; }
+  .resource-list { list-style: none; }
+  .resource-list li {
+    padding: 12px 16px; background: rgba(255,255,255,0.02); margin-bottom: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+    border: 1px solid transparent; transition: 0.2s;
+  }
+  .resource-list li:hover { border-color: var(--tech-blue-dim); background: var(--hull-light); }
+  .resource-tag { font-family: 'Space Mono'; font-size: 10px; color: var(--tech-blue); letter-spacing: 0.1em; }
 
-        .toast {
-            position: absolute; top: 80px; left: 50%; transform: translateX(-50%);
-            background: #000; color: #fff; font-weight: 700; padding: 12px 20px;
-            border-radius: 8px; font-size: 14px; opacity: 0; pointer-events: none;
-            transition: opacity 0.3s; z-index: 100; text-align: center; white-space: nowrap;
-        }
-        .toast.show { opacity: 1; pointer-events: auto; }
+  /* ── JUDGING ── */
+  .criteria-item { display: flex; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--tech-blue-dim); }
+  .criteria-weight { font-family: 'Orbitron'; font-size: 20px; color: var(--astrophage); font-weight: 700; }
+  .criteria-name { font-size: 18px; color: #fff; font-weight: 600; margin-bottom: 4px; }
+  .criteria-desc { font-size: 15px; color: var(--text-dim); }
 
-        /* =========================================
-           RESPONSIVE GAME COMPONENTS
-           ========================================= */
+  /* ── CODE BLOCKS ── */
+  code {
+    font-family: 'Space Mono', monospace; font-size: 14px;
+    background: var(--hull-light); border: 1px solid var(--text-muted);
+    padding: 2px 6px; color: var(--tech-blue); border-radius: 2px;
+  }
 
-        /* 1. WORDLE */
-        #wordle-grid { width: 100%; max-width: 350px; display: grid; grid-template-rows: repeat(6, 1fr); gap: 1.5vw; margin-bottom: 30px; }
-        .w-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5vw; }
-        .w-cell {
-            aspect-ratio: 1; border: 2px solid var(--border-light);
-            display: flex; justify-content: center; align-items: center;
-            font-size: clamp(24px, 8vw, 36px); font-weight: 700; text-transform: uppercase;
-        }
-        .w-cell.absent { background: var(--w-dark-gray); border-color: var(--w-dark-gray); color: white; }
-        .w-cell.present { background: var(--w-yellow); border-color: var(--w-yellow); color: white; }
-        .w-cell.correct { background: var(--w-green); border-color: var(--w-green); color: white; }
-        .w-cell.flip { animation: wFlip 0.5s ease forwards; }
-        @keyframes wFlip {
-            0% { transform: rotateX(0); background: white; border-color: var(--w-dark-gray); color: black; }
-            50% { transform: rotateX(90deg); background: white; }
-            51% { background: var(--w-green); border-color: var(--w-green); color: white; }
-            100% { transform: rotateX(0); background: var(--w-green); border-color: var(--w-green); color: white; }
-        }
+  /* ── FOOTER ── */
+  .footer { text-align: center; padding: 60px 0; position: relative; }
+  .footer-logo { font-family: 'Orbitron'; font-size: 24px; color: #fff; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .footer-tagline { font-family: 'Space Mono'; font-size: 11px; color: var(--tech-blue); letter-spacing: 0.2em; }
+  .footer-line { width: 100px; height: 1px; background: var(--text-muted); margin: 24px auto; }
+  .footer-note { font-size: 13px; color: var(--text-muted); font-family: 'Space Mono'; }
 
-        /* 2. CONNECTIONS */
-        #conn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2vw; width: 100%; max-width: 400px; margin-bottom: 20px; }
-        .c-tile { background: var(--c-bg); border-radius: 6px; display: flex; justify-content: center; align-items: center; aspect-ratio: 1.2; font-weight: 700; font-size: clamp(10px, 3vw, 13px); text-transform: uppercase; text-align: center; padding: 4px; word-break: break-word; }
-        .c-tile.hide { display: none; }
-        .c-group { border-radius: 6px; padding: 16px; text-align: center; margin-bottom: 8px; display: none; animation: popIn 0.3s; width: 100%; max-width: 400px; }
-        .c-group h4 { margin-bottom: 4px; font-size: 15px; }
-        .c-group p { font-size: 12px; font-weight: 400; }
-        .cg-0 { background: var(--c-green); } .cg-1 { background: var(--c-yellow); } .cg-2 { background: var(--c-blue); } .cg-3 { background: var(--c-purple); color: white; }
-
-        /* 3. MINI CROSSWORD */
-        #mini-grid { display: grid; grid-template-columns: repeat(5, 1fr); border: 2px solid #000; width: 100%; max-width: 300px; margin-bottom: 30px; }
-        .m-cell { aspect-ratio: 1; border: 1px solid #000; position: relative; font-size: clamp(20px, 6vw, 28px); font-weight: bold; display: flex; justify-content: center; align-items: center; text-transform: uppercase; }
-        .m-cell.black { background: #000; }
-        .m-cell.highlight { background: var(--strands-blue); }
-        .m-num { position: absolute; top: 2px; left: 4px; font-size: 10px; font-weight: normal; }
-        .m-clues { font-size: 14px; width: 100%; max-width: 300px; margin-bottom: 20px; }
-        .m-clue { margin-bottom: 8px; border-bottom: 1px solid var(--border-light); padding-bottom: 8px; }
-
-        /* 4. STRANDS */
-        #strands-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2vw; margin-bottom: 20px; width: 100%; max-width: 350px; }
-        .s-cell { aspect-ratio: 1; border-radius: 50%; background: var(--bg-offwhite); display: flex; justify-content: center; align-items: center; font-size: clamp(18px, 5vw, 24px); font-weight: bold; }
-        .s-cell.active { background: var(--strands-blue); color: white; }
-        .s-words { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; min-height: 40px; }
-        .s-pill { background: var(--strands-blue); color: white; padding: 6px 12px; border-radius: 16px; font-size: 13px; font-weight: bold; animation: popIn 0.3s; }
-
-        /* 5. SPELLING BEE */
-        .bee-container { position: relative; width: 100%; max-width: 260px; aspect-ratio: 1; margin: 0 auto 30px; }
-        .hex { width: 30%; height: 34%; background: #E6E6E6; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); position: absolute; display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: clamp(24px, 6vw, 32px); }
-        .hex.center { background: var(--bee-yellow); top: 33%; left: 35%; }
-        .hex:nth-child(2) { top: 3%; left: 35%; } .hex:nth-child(3) { top: 18%; left: 61%; }
-        .hex:nth-child(4) { top: 48%; left: 61%; } .hex:nth-child(5) { top: 63%; left: 35%; }
-        .hex:nth-child(6) { top: 48%; left: 9%; } .hex:nth-child(7) { top: 18%; left: 9%; }
-        .bee-status { font-weight: bold; font-size: 16px; margin-bottom: 20px; }
-
-        /* 6. LETTER BOXED */
-        .lb-container { position: relative; width: 100%; max-width: 250px; aspect-ratio: 1; margin: 0 auto 40px; }
-        .lb-box { position: absolute; top: 15%; left: 15%; width: 70%; height: 70%; border: 3px solid var(--c-purple); background: #FFF; }
-        .lb-letter { position: absolute; font-weight: 700; font-size: clamp(20px, 6vw, 28px); width: 15%; height: 15%; display: flex; justify-content: center; align-items: center; z-index: 2; }
-        #lb-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;}
-        .lb-words { font-size: 18px; font-weight: bold; color: var(--w-green); margin-bottom: 20px; height: 24px; text-align: center;}
-
-        /* 7. SUDOKU */
-        #sudoku-grid { display: grid; grid-template-columns: repeat(4, 1fr); width: 100%; max-width: 300px; border: 3px solid #000; margin-bottom: 30px; }
-        .su-cell { aspect-ratio: 1; border: 1px solid #999; display: flex; justify-content: center; align-items: center; font-size: clamp(28px, 8vw, 40px); font-weight: 300; color: var(--text-main); }
-        .su-cell:nth-child(2n) { border-right: 3px solid #000; }
-        .su-cell:nth-child(4n) { border-right: none; }
-        .su-cell:nth-child(n+5):nth-child(-n+8) { border-bottom: 3px solid #000; }
-        .su-cell.filled { animation: popIn 0.3s; }
-
-        /* 8. TILES */
-        #tiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2vw; width: 100%; max-width: 350px; margin-bottom: 30px; }
-        .t-card { aspect-ratio: 1; background: var(--c-bg); border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: clamp(10px, 3vw, 13px); font-weight: 700; color: transparent; border: 2px solid transparent; transition: all 0.3s; word-break: break-all; padding: 2px;}
-        .t-card.flipped { background: white; color: black; border-color: #000; }
-        .t-card.matched { background: var(--c-green); color: white; border-color: var(--c-green); }
-
-        /* 9. CROSSWORD (BIG) */
-        #cross-grid { display: grid; grid-template-columns: repeat(7, 1fr); border: 2px solid #000; width: 100%; max-width: 350px; margin-bottom: 20px; }
-        .cr-cell { aspect-ratio: 1; border: 1px solid #000; display: flex; justify-content: center; align-items: center; font-size: clamp(14px, 4vw, 20px); font-weight: bold; text-transform: uppercase; background: #fff;}
-        .cr-cell.black { background: #000; }
-        .cr-cell.filled { color: var(--w-green); animation: popIn 0.2s; }
-
-        /* 10. VERTEX */
-        #vertex-container { position: relative; width: 100%; max-width: 320px; aspect-ratio: 1; background: var(--bg-offwhite); border-radius: 50%; margin-bottom: 40px; overflow: hidden;}
-        #vertex-svg { position: absolute; top:0; left:0; width: 100%; height: 100%; }
-        .vx-dot { position: absolute; width: clamp(20px, 6vw, 30px); height: clamp(20px, 6vw, 30px); background: #000; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: bold; transform: translate(-50%, -50%); z-index: 2;}
-
-        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-    </style>
+  @media (max-width: 650px) {
+    .meta-grid { grid-template-columns: 1fr; }
+    .toc-list, .role-grid { grid-template-columns: 1fr; }
+    .framework-item { flex-direction: column; gap: 12px; }
+    .hud-box { padding: 24px 16px; }
+  }
+</style>
 </head>
 <body>
 
-<div id="app">
-    <!-- Main Header -->
-    <header class="app-header">
-        <div class="header-logo">The New York Times</div>
-    </header>
+<div class="container">
 
-    <!-- GAMES HUB VIEW -->
-    <div id="games-view" class="scroll-view active">
-        <div class="hub-date" id="hub-date">Play</div>
-        <div class="hub-title">Games for Aaradhya</div>
-        
-        <div class="game-list">
-            <!-- 1. Wordle -->
-            <div class="card" onclick="openGame('wordle')">
-                <div class="card-thumb thumb-wordle">
-                    <div class="tw-g"></div><div class="tw-g"></div><div class="tw-y"></div>
-                    <div class="tw-g"></div><div class="tw-e"></div><div class="tw-e"></div>
-                    <div class="tw-y"></div><div class="tw-g"></div><div class="tw-g"></div>
-                </div>
-                <div class="card-text">
-                    <h3>Wordle</h3>
-                    <p>Get 6 chances to guess a 5-letter word.</p>
-                    <div class="card-tag">For Her</div>
-                    <div class="card-status">In Progress</div>
-                </div>
-            </div>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="status-badge">SYSTEMS ONLINE: TAU CETI ORBIT</div>
+    <h1>PROJECT <span>HAIL MARY</span></h1>
+    <div style="font-family: 'Space Mono'; color: var(--text-dim); letter-spacing: 0.15em; font-size: 12px; margin-top: 10px;">
+      MISSION DOSSIER: HACK & SHIP // AUTH DEVVIT // APR 2026
+    </div>
+    
+    <div class="meta-grid">
+      <div class="meta-item">
+        <span class="meta-label">Launch Window</span>
+        <span class="meta-value">APR 17 – APR 19, 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Crew Manifest</span>
+        <span class="meta-value">50 Specialists</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Status</span>
+        <span class="meta-value" style="color: var(--astrophage); text-shadow: 0 0 10px var(--astrophage);">● MISSION CRITICAL</span>
+      </div>
+    </div>
+  </header>
 
-            <!-- 2. Connections -->
-            <div class="card" onclick="openGame('conn')">
-                <div class="card-thumb thumb-conn">
-                    <div class="tc-p"></div><div class="tc-b"></div>
-                    <div class="tc-y"></div><div class="tc-g"></div>
-                </div>
-                <div class="card-text">
-                    <h3>Connections</h3>
-                    <p>Group words that share a common thread.</p>
-                    <div class="card-tag">Relationship Edition</div>
-                </div>
-            </div>
+  <!-- TOC -->
+  <nav class="toc hud-box">
+    <div class="toc-title">>> SYSTEM DIAGNOSTICS & MANIFEST</div>
+    <ul class="toc-list">
+      <li><a href="#briefing"><span class="toc-num">01.</span> Mission Briefing</a></li>
+      <li><a href="#timeline"><span class="toc-num">02.</span> Orbital Trajectory (Timeline)</a></li>
+      <li><a href="#crew"><span class="toc-num">03.</span> Crew & Alliances</a></li>
+      <li><a href="#phase1"><span class="toc-num">04.</span> Phase 1: The Hypothesis</a></li>
+      <li><a href="#phase2"><span class="toc-num">05.</span> Phase 2: Engineering the Solution</a></li>
+      <li><a href="#groundcontrol"><span class="toc-num">06.</span> Mission Control</a></li>
+      <li><a href="#resources"><span class="toc-num">07.</span> Ship Database</a></li>
+      <li><a href="#judging"><span class="toc-num">08.</span> Evaluation Criteria</a></li>
+    </ul>
+  </nav>
 
-            <!-- 3. The Mini -->
-            <div class="card" onclick="openGame('mini')">
-                <div class="card-thumb thumb-mini">
-                    <div class="tm-b"></div><div></div><div></div>
-                    <div></div><div></div><div class="tm-b"></div>
-                    <div></div><div class="tm-b"></div><div></div>
-                </div>
-                <div class="card-text">
-                    <h3>The Mini</h3>
-                    <p>Solve a bite-sized crossword puzzle.</p>
-                    <div class="card-tag">About Us</div>
-                </div>
-            </div>
-
-            <!-- 4. Strands -->
-            <div class="card" onclick="openGame('strands')">
-                <div class="card-thumb thumb-strands">
-                    <svg viewBox="0 0 100 100"><path d="M10,50 Q25,20 50,50 T90,50"/></svg>
-                </div>
-                <div class="card-text">
-                    <h3>Strands</h3>
-                    <p>Uncover words in a sea of letters.</p>
-                    <div class="card-tag">Love Theme</div>
-                </div>
-            </div>
-
-            <!-- 5. Spelling Bee -->
-            <div class="card" onclick="openGame('bee')">
-                <div class="card-thumb thumb-bee">
-                    <div class="thumb-bee-hex"></div>
-                </div>
-                <div class="card-text">
-                    <h3>Spelling Bee</h3>
-                    <p>How many words can you make with 7 letters?</p>
-                    <div class="card-tag">A-A-R-A-D-H-Y-A</div>
-                </div>
-            </div>
-
-            <!-- 6. Letter Boxed -->
-            <div class="card" onclick="openGame('lb')">
-                <div class="card-thumb thumb-lb"></div>
-                <div class="card-text">
-                    <h3>Letter Boxed</h3>
-                    <p>Create words using letters around the square.</p>
-                    <div class="card-tag">Her Name</div>
-                </div>
-            </div>
-
-            <!-- 7. Sudoku -->
-            <div class="card" onclick="openGame('sudoku')">
-                <div class="card-thumb thumb-sudoku">
-                    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-                </div>
-                <div class="card-text">
-                    <h3>Sudoku</h3>
-                    <p>Fill the grid with numbers... or hearts.</p>
-                    <div class="card-tag">Easy ❤️</div>
-                </div>
-            </div>
-
-            <!-- 8. Tiles -->
-            <div class="card" onclick="openGame('tiles')">
-                <div class="card-thumb thumb-tiles">
-                    <div></div><div></div>
-                </div>
-                <div class="card-text">
-                    <h3>Tiles</h3>
-                    <p>Match visual elements to clear the board.</p>
-                    <div class="card-tag">Perfect Match</div>
-                </div>
-            </div>
-
-            <!-- 9. Crossword -->
-            <div class="card" onclick="openGame('cross')">
-                <div class="card-thumb thumb-cross">
-                    <div></div><div></div><div class="tm-b"></div><div></div>
-                    <div class="tm-b"></div><div></div><div></div><div class="tm-b"></div>
-                    <div></div><div class="tm-b"></div><div></div><div></div>
-                    <div></div><div></div><div></div><div class="tm-b"></div>
-                </div>
-                <div class="card-text">
-                    <h3>The Crossword</h3>
-                    <p>The classic puzzle, Sunday sized love.</p>
-                    <div class="card-tag">Big Grid</div>
-                </div>
-            </div>
-
-            <!-- 10. Vertex -->
-            <div class="card" onclick="openGame('vertex')">
-                <div class="card-thumb thumb-vertex">
-                    <svg viewBox="0 0 100 100"><polygon points="50,20 80,80 20,80"/></svg>
-                </div>
-                <div class="card-text">
-                    <h3>Vertex</h3>
-                    <p>Connect the dots to reveal the hidden shape.</p>
-                    <div class="card-tag">Draw a ❤️</div>
-                </div>
-            </div>
-        </div>
+  <!-- 01 MISSION BRIEFING -->
+  <section class="section hud-box" id="briefing">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <div>
+        <div class="section-tag">Orientation</div>
+        <h2>Mission Briefing</h2>
+      </div>
     </div>
 
-    <!-- STATS VIEW -->
-    <div id="stats-view" class="scroll-view">
-        <div class="stats-header">
-            <h2>Aaradhya's Stats</h2>
-            <p>Perfect scores since day one.</p>
-        </div>
-        
-        <div class="stat-box-container">
-            <div class="stat-box">
-                <div class="stat-num">100</div>
-                <div class="stat-label">Win %</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-num">∞</div>
-                <div class="stat-label">Current Streak</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-num">∞</div>
-                <div class="stat-label">Max Streak</div>
-            </div>
-        </div>
+    <p>In <em>Project Hail Mary</em>, Ryland Grace wakes up on a spaceship millions of miles from Earth. He has no memory, dead crewmates, and an extinction-level threat to solve. He figures it out anyway. He uses the scientific method. He ships the solution via the Beetles. He saves the world.</p>
 
-        <div class="stats-section">
-            <h3>Wordle Guess Distribution</h3>
-            <div class="chart-row"><div class="chart-num">1</div><div class="chart-bar win">9,999</div></div>
-            <div class="chart-row"><div class="chart-num">2</div><div class="chart-bar">0</div></div>
-            <div class="chart-row"><div class="chart-num">3</div><div class="chart-bar">0</div></div>
-            <div class="chart-row"><div class="chart-num">4</div><div class="chart-bar">0</div></div>
-            <div class="chart-row"><div class="chart-num">5</div><div class="chart-bar">0</div></div>
-            <div class="chart-row"><div class="chart-num">6</div><div class="chart-bar">0</div></div>
-        </div>
+    <p>You are not expected to save the world this weekend. But you are expected to show up, figure it out with your crew, and ship something real before the window closes.</p>
 
-        <div class="stats-section">
-            <h3>Relationship Metrics</h3>
-            <ul class="fun-stats">
-                <li><span>Connections Mistakes</span> <span>0</span></li>
-                <li><span>Mini Crossword Avg</span> <span>0:01s</span></li>
-                <li><span>Times you made me smile</span> <span>Countless</span></li>
-                <li><span>Spelling Bee Rank</span> <span>Forever Genius</span></li>
-            </ul>
-        </div>
+    <div class="callout astrophage" data-label="Astrophage Level: Critical">
+      <p>If you are reading this and thinking <strong>"I don't belong here, everyone else knows more than me"</strong> — that feeling is normal. It is also wrong. Every person registered for this mission felt the same thing. The ones who survive are the ones who show up anyway.</p>
     </div>
 
-    <!-- Bottom Nav -->
-    <nav class="bottom-nav">
-        <div class="nav-item active" id="nav-games" onclick="switchTab('games')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-            Games
-        </div>
-        <div class="nav-item" id="nav-stats" onclick="switchTab('stats')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"></path><path d="M12 20V4"></path><path d="M6 20v-4"></path></svg>
-            Stats
-        </div>
-    </nav>
+    <p>Hack & Ship is beginner-friendly by design. You do not need to have shipped a product before. You do not need to code at a professional level. You need a problem worth solving, a crew willing to work, and enough honesty to say when you're stuck.</p>
 
-    <!-- Global Toast for Alerts -->
-    <div class="toast" id="toast">Message</div>
+  </section>
 
-    <!-- =========================================
-         GAME VIEWS
-         ========================================= -->
-
-    <!-- 1. WORDLE VIEW -->
-    <div class="game-view" id="view-wordle">
-        <div class="game-header">
-            <button class="btn-icon" onclick="closeGame()">←</button>
-            <div class="game-header-title">Wordle</div>
-            <div style="width:28px"></div>
-        </div>
-        <div class="game-body">
-            <div class="game-desc">Guess the word in 6 tries.</div>
-            <div id="wordle-grid"></div>
-            <button class="solve-btn" id="btn-wordle" onclick="solveWordle()">Reveal Guess 6</button>
-        </div>
+  <!-- 02 TIMELINE -->
+  <section class="section hud-box" id="timeline">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <div>
+        <div class="section-tag">Trajectory</div>
+        <h2>Orbital Timeline</h2>
+      </div>
     </div>
 
-    <!-- 2. CONNECTIONS VIEW -->
-    <div class="game-view" id="view-conn">
-        <div class="game-header">
-            <button class="btn-icon" onclick="closeGame()">←</button>
-            <div class="game-header-title">Connections</div>
-            <div style="width:28px"></div>
-        </div>
-        <div class="game-body">
-            <div class="game-desc">Create four groups of four!</div>
-            <div id="conn-solved"></div>
-            <div id="conn-grid"></div>
-            <button class="solve-btn" id="btn-conn" onclick="solveConn()">Solve Connections</button>
-        </div>
+    <p>The mission runs in two phases with a critical selection gate between them. Watch the clocks.</p>
+
+    <div class="timeline">
+      <div class="timeline-item active">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">APR 17 — MORNING [T-MINUS 10:00]</div>
+        <div class="timeline-label">Problem Statement Drops.</div>
+        <div class="timeline-note">You receive the global threat you'll be solving. Read it carefully. Start formulating a hypothesis.</div>
+      </div>
+      
+      <div class="timeline-item active">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">APR 17 — 6:00 PM [T-MINUS 00:00]</div>
+        <div class="timeline-label">Mission Briefing Commences.</div>
+        <div class="timeline-note">One hour. We walk through proposal structure, answer questions, and set you up for the overnight window. Attendance is mandatory.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">APR 17 — 7:00 PM ONWARDS</div>
+        <div class="timeline-label">Hypothesis Window Opens.</div>
+        <div class="timeline-note">Work with your crew. Define the problem. Map your approach. Build your proposal deck. Sleep is not optional — protect night one.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">APR 18 — 9:00–10:00 AM</div>
+        <div class="timeline-label">Proposal Submission Deadline.</div>
+        <div class="timeline-note">Done means submitted. A submitted proposal beats a perfect one that drifted into the void.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">APR 18 — AFTERNOON</div>
+        <div class="timeline-label">Selection Results.</div>
+        <div class="timeline-note">Selected crews move to Phase 2. If you are not selected, monitor the active crews — the knowledge compounds.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">APR 18 — POST SELECTION</div>
+        <div class="timeline-label">Engineering Window Opens.</div>
+        <div class="timeline-note">Selected crews begin building. Scope small. Build the one thing that proves your science works.</div>
+      </div>
+
+      <div class="timeline-item active">
+        <div class="timeline-dot"></div>
+        <div class="timeline-time">APR 19 — 7:00–8:00 PM</div>
+        <div class="timeline-label hl" style="color: var(--astrophage);">Beetle Launch Window Closes.</div>
+        <div class="timeline-note">Final submission. Whatever you have built—pack it in the Beetle and ship it. An imperfect working prototype beats a perfect unsubmitted one.</div>
+      </div>
     </div>
 
-    <!-- 3. MINI VIEW -->
-    <div class="game-view" id="view-mini">
-        <div class="game-header">
-            <button class="btn-icon" onclick="closeGame()">←</button>
-            <div class="game-header-title">The Mini</div>
-            <div style="width:28px"></div>
-        </div>
-        <div class="game-body">
-            <div id="mini-grid"></div>
-            <div class="m-clues">
-                <div class="m-clue"><strong>1A.</strong> How I feel about you</div>
-                <div class="m-clue"><strong>3A.</strong> You are so incredibly ___</div>
-                <div class="m-clue"><strong>1D.</strong> What you write</div>
-            </div>
-            <button class="solve-btn" id="btn-mini" onclick="solveMini()">Auto-Fill</button>
-        </div>
+    <div class="callout danger" data-label="Critical Failure Warning">
+      <p>There are two separate submission windows. Missing the <strong>proposal deadline on April 18th morning</strong> means you do not reach the build phase. Set an alarm. Then set another one. <em>Amaze!</em></p>
     </div>
 
-    <!-- 4. STRANDS VIEW -->
-    <div class="game-view" id="view-strands">
-        <div class="game-header">
-            <button class="btn-icon" onclick="closeGame()">←</button>
-            <div class="game-header-title">Strands</div>
-            <div style="width:28px"></div>
-        </div>
-        <div class="game-body">
-            <div class="game-desc" style="font-weight:bold; color:var(--text-main);">Today's Theme: Reasons I Love Her</div>
-            <div class="s-words" id="strands-words"></div>
-            <div id="strands-grid"></div>
-            <button class="solve-btn" id="btn-strands" onclick="solveStrands()">Find Words</button>
-        </div>
+  </section>
+
+  <!-- 03 CREW -->
+  <section class="section hud-box" id="crew">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <div>
+        <div class="section-tag">Team Structure</div>
+        <h2>Crew & Alliances</h2>
+      </div>
     </div>
 
-    <!-- 5. BEE VIEW -->
-    <div class="game-view" id="view-bee">
-        <div class="game-header">
-            <button class="btn-icon" onclick="closeGame()">←</button>
-            <div class="game-header-title">Spelling Bee</div>
-            <div style="width:28px"></div>
-        </div>
-        <div class="game-body">
-            <div class="bee-status" id="bee-status">Beginner - 0 pts</div>
-            <div class="s-words" id="bee-words"></div>
-            <div class="bee-container">
-                <div class="hex center">A</div><div class="hex">R</div><div class="hex">D</div>
-                <div class="hex">H</div><div class="hex">Y</div><div class="hex">L</div><div class="hex">V</div>
-            </div>
-            <button class="solve-btn" id="btn-bee" onclick="solveBee()">Find Pangram</button>
-        </div>
+    <p>Your team has been matched for you. You did not choose them. Grace didn't choose Rocky. Rocky didn't choose Grace. They showed up, built a common language, and engineered a solution neither could have built alone. That's the objective.</p>
+
+    <h3>Assign Roles on Day One</h3>
+    <p>In the first 30 minutes, decide who owns what. These don't have to be permanent, but they must exist.</p>
+
+    <div class="role-grid">
+      <div class="role-card">
+        <div class="role-name"><span>Problem Lead</span> <span class="mono" style="color:var(--text-muted)">// THE GRACE</span></div>
+        <div class="role-desc">Owns the problem definition. Ensures the crew doesn't drift from the actual hypothesis they are testing.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-name"><span>Build Lead</span> <span class="mono" style="color:var(--text-muted)">// THE ROCKY</span></div>
+        <div class="role-desc">Owns the technical approach. Makes the hard calls when the team is stuck on implementation or materials.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-name"><span>Pitch Lead</span> <span class="mono" style="color:var(--text-muted)">// COMMUNICATOR</span></div>
+        <div class="role-desc">Owns the presentation from hour one. The story and data logs are built alongside the product, not after.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-name"><span>Timekeeper</span> <span class="mono" style="color:var(--text-muted)">// MISSION CLOCK</span></div>
+        <div class="role-desc">Watches the Petrova line. Calls check-ins every hour. Flags when the team is stuck in a resource sink.</div>
+      </div>
     </div>
 
-    <!-- 6. LETTER BOXED VIEW -->
-    <div class="game-view" id="view-lb">
-        <div class="game-header">
-            <button class="btn-icon" onclick="closeGame()">←</button>
-            <div class="game-header-title">Letter Boxed</div>
-            <div style="width:28px"></div>
-        </div>
-        <div class="game-body">
-            <div class="game-desc">Connect letters to make words.</div>
-            <div class="lb-words" id="lb-words"></div>
-            <div class="lb-container" id="lb-container">
-                <div class="lb-box"></div>
-                <svg id="lb-svg"></svg>
-            </div>
-            <button class="solve-btn" id="btn-lb" onclick="solveLB()">Solve Box</button>
-        </div>
+    <h3>The Hourly Sync (🎵 Question? Answer! 🎵)</h3>
+    <p>Once an hour, every crew member answers three questions out loud:</p>
+    <ul class="checklist">
+      <li><div class="check-box"></div> What did I just finish?</li>
+      <li><div class="check-box"></div> What am I working on next?</li>
+      <li><div class="check-box"></div> Is anything blocking my progress?</li>
+    </ul>
+
+    <div class="callout tech" data-label="Core Directive">
+      <p>The most critical feature gets built first. Once your core idea works — even badly — you have something to put in the Beetle. <strong>Decide on your critical path in the first hour and protect it.</strong></p>
     </div>
 
-    <!-- 7. SUDOKU VIEW -->
-    <div class="game-view" id="view-sudoku">
-        <div class="game-header">
-            <button class="btn-icon" onclick="closeGame()">←</button>
-            <div class="game-header-title">Sudoku</div>
-            <div style="width:28px"></div>
-        </div>
-        <div class="game-body">
-            <div class="game-desc">Easy • For Aaradhya</div>
-            <div id="sudoku-grid"></div>
-            <button class="solve-btn" id="btn-sudoku" onclick="solveSudoku()">Fill Grid</button>
-        </div>
+  </section>
+
+  <!-- 04 PHASE 1 -->
+  <section class="section hud-box" id="phase1">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <div>
+        <div class="section-tag">Apr 17 Evening → Apr 18 Morning</div>
+        <h2>Phase 1: The Hypothesis</h2>
+      </div>
     </div>
 
-    <!-- 8. TILES VIEW -->
-    <div class="game-view" id="view-tiles">
-        <div class="game-header">
-            <button class="btn-icon" onclick="closeGame()">←</button>
-            <div class="game-header-title">Tiles</div>
-            <div style="width:28px"></div>
+    <p>The proposal is not just a pitch deck. It's a clarity exercise. Crews that pass the selection gate are the ones who clearly understand the anomaly they are solving and why their approach makes scientific sense.</p>
+
+    <h3>What a good hypothesis answers:</h3>
+    <div class="framework">
+      <div class="framework-item">
+        <div class="framework-num">01</div>
+        <div>
+          <div class="framework-q">Who specifically faces this anomaly?</div>
+          <div class="framework-hint">Not "everyone." A real demographic in a specific situation.</div>
         </div>
-        <div class="game-body">
-            <div class="game-desc">Match the connected pairs.</div>
-            <div id="tiles-grid"></div>
-            <button class="solve-btn" id="btn-tiles" onclick="solveTiles()">Match All</button>
+      </div>
+      <div class="framework-item">
+        <div class="framework-num">02</div>
+        <div>
+          <div class="framework-q">What is the actual cost?</div>
+          <div class="framework-hint">Time, resources, extinction? Make it concrete. If you can't measure the cost, you don't understand it.</div>
         </div>
+      </div>
+      <div class="framework-item">
+        <div class="framework-num">03</div>
+        <div>
+          <div class="framework-q">What are you engineering, and how does it solve it?</div>
+          <div class="framework-hint">One sentence. If it takes a paragraph, the idea is too complex. Simplify.</div>
+        </div>
+      </div>
+      <div class="framework-item">
+        <div class="framework-num">04</div>
+        <div>
+          <div class="framework-q">What is the simplest working prototype?</div>
+          <div class="framework-hint">Not the final vision. The smallest piece of tech that proves the science works.</div>
+        </div>
+      </div>
+      <div class="framework-item">
+        <div class="framework-num">05</div>
+        <div>
+          <div class="framework-q">Why this crew? Why now?</div>
+          <div class="framework-hint">What unique perspective do you bring to this problem? Use your reality.</div>
+        </div>
+      </div>
     </div>
 
-    <!-- 9. CROSSWORD VIEW -->
-    <div class="game-view" id="view-cross">
-        <div class="game-header">
-            <button class="btn-icon" onclick="closeGame()">←</button>
-            <div class="game-header-title">The Crossword</div>
-            <div style="width:28px"></div>
-        </div>
-        <div class="game-body">
-            <div id="cross-grid"></div>
-            <button class="solve-btn" id="btn-cross" onclick="solveCross()">Reveal Crossword</button>
-        </div>
+    <div class="callout danger" data-label="Evaluation Warning">
+      <p>The most common failure mode is falling in love with a technical solution before understanding the problem. <strong>Judges evaluate problem definition first.</strong> A brilliant solution to a vague problem loses to a simple solution to a well-understood one.</p>
     </div>
 
-    <!-- 10. VERTEX VIEW -->
-    <div class="game-view" id="view-vertex">
-        <div class="game-header">
-            <button class="btn-icon" onclick="closeGame()">←</button>
-            <div class="game-header-title">Vertex</div>
-            <div style="width:28px"></div>
-        </div>
-        <div class="game-body">
-            <div class="game-desc">Connect points to form shapes.</div>
-            <div id="vertex-container">
-                <svg id="vertex-svg" viewBox="0 0 100 100"></svg>
-            </div>
-            <button class="solve-btn" id="btn-vertex" onclick="solveVertex()">Connect Dots</button>
-        </div>
+  </section>
+
+  <!-- 05 PHASE 2 -->
+  <section class="section hud-box" id="phase2">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <div>
+        <div class="section-tag">Apr 18 Afternoon → Apr 19 Evening</div>
+        <h2>Phase 2: Engineering the Solution</h2>
+      </div>
     </div>
+
+    <p>You made it through selection. Now you build. The rules are simple: scope small, start immediately, and load the Beetles before the window closes.</p>
+
+    <div class="callout astrophage" data-label="Engineering Principle">
+      <p><strong>Prototype, not product.</strong> You are not building the final Hail Mary. You are building the small-scale model that proves the physics work. One feature. Working. Submittable.</p>
+    </div>
+
+    <h3>Energy Management</h3>
+    <ul class="checklist">
+      <li><div class="check-box"></div> <strong>Protect your sleep.</strong> Decisions made on zero rest are expensive.</li>
+      <li><div class="check-box"></div> Take a real break every 90 minutes. Step away from the monitors.</li>
+      <li><div class="check-box"></div> Eat before you realize you're hungry. You will forget while in flow.</li>
+      <li><div class="check-box"></div> If a system has been broken for 30 minutes, ping Mission Control.</li>
+    </ul>
+
+    <h3>The Pitch runs parallel to the Build</h3>
+    <p>Your Pitch Lead is building the story while the code is written. By the time the prototype is ready, the presentation should be 80% done. Tell it in five minutes. One person presents. <strong>Record your demo</strong> — live technology at T-Zero is historically unreliable.</p>
+
+  </section>
+
+  <!-- 06 GROUND CONTROL -->
+  <section class="section hud-box" id="groundcontrol">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <div>
+        <div class="section-tag">Support Network</div>
+        <h2>Mission Control</h2>
+      </div>
+    </div>
+
+    <p>Mission Control (Stratt) didn't build the ship for Grace. They gave him the resources to figure it out himself. That is your Mentor.</p>
+
+    <ul class="checklist">
+      <li><div class="check-box"></div> <strong>Contact them early.</strong> A mentor looped in at hour one is infinitely more useful than one pinged at hour twenty.</li>
+      <li><div class="check-box"></div> <strong>State the blockage, not the requested answer.</strong> "We can't decide between approaches A and B" is better than "Which do we pick?"</li>
+      <li><div class="check-box"></div> <strong>The 30-Minute Rule.</strong> Stuck for 30 minutes? Stop and ask for help. Silence is the enemy of survival.</li>
+    </ul>
+
+    <h3>Comms Channels (Discord)</h3>
+    <p>All support runs through Discord. Know your frequencies:</p>
+    <ul class="checklist">
+      <li><div class="check-box"></div> <code>#mission-briefing</code> — Strat-level announcements, schedule updates.</li>
+      <li><div class="check-box"></div> <code>#ground-control</code> — Logistics and organizer questions.</li>
+      <li><div class="check-box"></div> <code>#launch-pad</code> — Crew chatter, morale, progress sharing.</li>
+      <li><div class="check-box"></div> <code>#help</code> — Stuck? Ping here. Someone is awake.</li>
+    </ul>
+
+  </section>
+
+  <!-- 07 RESOURCES -->
+  <section class="section hud-box" id="resources">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <div>
+        <div class="section-tag">Ship Database</div>
+        <h2>Available Resources</h2>
+      </div>
+    </div>
+
+    <div class="resource-group">
+      <span class="resource-level beginner">Cadet Level</span>
+      <ul class="resource-list">
+        <li><div>freeCodeCamp — Responsive Web Design</div> <span class="resource-tag">INTERACTIVE</span></li>
+        <li><div>The Odin Project — Full stack foundations</div> <span class="resource-tag">STRUCTURED</span></li>
+        <li><div>Figma — Free UI design tool</div> <span class="resource-tag">TOOL</span></li>
+        <li><div>Canva / Google Slides — Pitch decks</div> <span class="resource-tag">PRESENTATION</span></li>
+      </ul>
+    </div>
+
+    <div class="resource-group">
+      <span class="resource-level intermediate">Specialist Level</span>
+      <ul class="resource-list">
+        <li><div>Replit — Browser-based coding environment</div> <span class="resource-tag">ENVIRONMENT</span></li>
+        <li><div>Vercel — Deploy a project in 5 minutes</div> <span class="resource-tag">DEPLOY</span></li>
+        <li><div>Supabase — Backend and database</div> <span class="resource-tag">DATA</span></li>
+        <li><div>GitHub Copilot — AI assistance</div> <span class="resource-tag">AI</span></li>
+      </ul>
+    </div>
+
+    <div class="callout danger" data-label="AI Usage Directive">
+      <p>AI tools (ChatGPT/Claude) are permitted to accelerate your build. Do not use them to replace the actual scientific thinking. Judges know when a hypothesis was generated by a model and not understood by the crew. <strong>The thinking must be yours.</strong></p>
+    </div>
+
+  </section>
+
+  <!-- 08 JUDGING -->
+  <section class="section hud-box" id="judging">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <div>
+        <div class="section-tag">Endgame</div>
+        <h2>Evaluation Criteria</h2>
+      </div>
+    </div>
+
+    <p>Judges are not evaluating the complexity of your code. They are evaluating if you understood a real problem and engineered a prototype that addresses it.</p>
+
+    <div class="criteria-item">
+      <div class="criteria-weight">01</div>
+      <div>
+        <div class="criteria-name">Problem Definition</div>
+        <div class="criteria-desc">Is the anomaly real? Is it specific? Do you clearly understand who faces it and the cost? Evaluated first.</div>
+      </div>
+    </div>
+    <div class="criteria-item">
+      <div class="criteria-weight">02</div>
+      <div>
+        <div class="criteria-name">Approach & Hypothesis</div>
+        <div class="criteria-desc">Does the solution address the anomaly? Did you make thoughtful engineering tradeoffs given your time constraints?</div>
+      </div>
+    </div>
+    <div class="criteria-item">
+      <div class="criteria-weight">03</div>
+      <div>
+        <div class="criteria-name">Execution (The Build)</div>
+        <div class="criteria-desc">Does it work? Even partially. A single working feature scores exponentially higher than an ambitious but broken shell.</div>
+      </div>
+    </div>
+    <div class="criteria-item">
+      <div class="criteria-weight">04</div>
+      <div>
+        <div class="criteria-name">Presentation & Comms</div>
+        <div class="criteria-desc">Can you brief command in five minutes? You are judged on what you communicate, not on what is hidden in your code repository.</div>
+      </div>
+    </div>
+
+    <div class="callout tech" data-label="Final Directive">
+      <p>You are judged on <strong>5 minutes of presentation</strong>, not on 36 hours of engineering. Teams fail when they build something incredible and fail to explain why it matters. The pitch matters as much as the build. <em>Amaze!</em></p>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">DEVVIT COMMAND</div>
+    <div class="footer-tagline">WHERE DEVS DON'T GATEKEEP</div>
+    <div class="footer-line"></div>
+    <div class="footer-note">Hack & Ship // Earth Date: April 17–19, 2026 // Dossier v1.0</div>
+  </footer>
 
 </div>
 
-<script>
-    const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-    // Initialization
-    document.addEventListener("DOMContentLoaded", () => {
-        const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
-        document.getElementById('hub-date').textContent = "Play • " + new Date().toLocaleDateString('en-US', options);
-
-        initWordle();
-        initConn();
-        initMini();
-        initStrands();
-        initLB();
-        initSudoku();
-        initTiles();
-        initCross();
-        initVertex();
-    });
-
-    // Tab Switching
-    function switchTab(tab) {
-        document.getElementById('games-view').classList.remove('active');
-        document.getElementById('stats-view').classList.remove('active');
-        document.getElementById(tab + '-view').classList.add('active');
-        
-        document.getElementById('nav-games').classList.remove('active');
-        document.getElementById('nav-stats').classList.remove('active');
-        document.getElementById('nav-' + tab).classList.add('active');
-    }
-
-    // Navigation
-    function openGame(id) { document.getElementById('view-' + id).classList.add('active'); }
-    function closeGame() { document.querySelectorAll('.game-view').forEach(el => el.classList.remove('active')); }
-    function showToast(msg) {
-        const toast = document.getElementById('toast');
-        toast.textContent = msg;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 3000);
-    }
-    function disableBtn(id) {
-        const btn = document.getElementById(id);
-        btn.disabled = true;
-        btn.textContent = "Solved";
-    }
-
-    // ==========================================
-    // 1. WORDLE (Pre-filled 5 rows, animates 6th)
-    // ==========================================
-    const wordleGuesses = [
-        [{l:'S', s:'absent'}, {l:'M', s:'absent'}, {l:'I', s:'absent'}, {l:'L', s:'absent'}, {l:'E', s:'absent'}],
-        [{l:'C', s:'absent'}, {l:'A', s:'absent'}, {l:'R', s:'present'}, {l:'E', s:'absent'}, {l:'S', s:'absent'}],
-        [{l:'B', s:'absent'}, {l:'R', s:'correct'}, {l:'A', s:'absent'}, {l:'I', s:'absent'}, {l:'N', s:'absent'}],
-        [{l:'F', s:'absent'}, {l:'R', s:'correct'}, {l:'O', s:'correct'}, {l:'N', s:'absent'}, {l:'T', s:'absent'}],
-        [{l:'G', s:'absent'}, {l:'R', s:'correct'}, {l:'O', s:'correct'}, {l:'U', s:'correct'}, {l:'P', s:'present'}]
-    ];
-    function initWordle() {
-        const grid = document.getElementById('wordle-grid');
-        for(let r=0; r<5; r++) {
-            let rowDiv = document.createElement('div');
-            rowDiv.className = 'w-row';
-            for(let c=0; c<5; c++) {
-                let cell = document.createElement('div');
-                cell.className = `w-cell ${wordleGuesses[r][c].s}`;
-                cell.textContent = wordleGuesses[r][c].l;
-                rowDiv.appendChild(cell);
-            }
-            grid.appendChild(rowDiv);
-        }
-        let finalRow = document.createElement('div');
-        finalRow.className = 'w-row';
-        finalRow.id = 'w-final-row';
-        for(let c=0; c<5; c++) {
-            let cell = document.createElement('div');
-            cell.className = 'w-cell';
-            finalRow.appendChild(cell);
-        }
-        grid.appendChild(finalRow);
-    }
-    async function solveWordle() {
-        disableBtn('btn-wordle');
-        const word = ['P','R','O','U','D'];
-        const cells = document.getElementById('w-final-row').children;
-        for(let i=0; i<5; i++) {
-            cells[i].textContent = word[i];
-            cells[i].style.borderColor = "var(--w-dark-gray)";
-            await sleep(150);
-        }
-        await sleep(300);
-        for(let i=0; i<5; i++) {
-            cells[i].classList.add('flip');
-            await sleep(250);
-        }
-        await sleep(800);
-        showToast("Splendid! I'm so proud of you 💚");
-    }
-
-    // ==========================================
-    // 2. CONNECTIONS
-    // ==========================================
-    const connData = [
-        { cat: 'WHAT SHE STUDIES', words: ['BIOLOGY', 'CELLS', 'CHEMISTRY', 'PHYSICS'] },
-        { cat: 'WHAT SHE CREATES', words: ['POETRY', 'VERSES', 'STANZAS', 'RHYMES'] },
-        { cat: 'WHAT SHE DOES TO ME', words: ['DISTRACTS', 'CAPTIVATES', 'AMAZES', 'FLOORS'] },
-        { cat: 'WORDS TO DESCRIBE HER', words: ['BRILLIANT', 'GORGEOUS', 'KIND', 'PERFECT'] }
-    ];
-    function initConn() {
-        const grid = document.getElementById('conn-grid');
-        let flat = [];
-        connData.forEach((g, idx) => g.words.forEach(w => flat.push({w, idx})));
-        const order = [0,4,8,12, 1,5,9,13, 2,6,10,14, 3,7,11,15]; 
-        order.forEach(i => {
-            let tile = document.createElement('div');
-            tile.className = 'c-tile';
-            tile.dataset.group = flat[i].idx;
-            tile.textContent = flat[i].w;
-            grid.appendChild(tile);
-        });
-    }
-    async function solveConn() {
-        disableBtn('btn-conn');
-        const tiles = Array.from(document.querySelectorAll('.c-tile'));
-        const solved = document.getElementById('conn-solved');
-        for(let g=0; g<4; g++) {
-            let groupTiles = tiles.filter(t => t.dataset.group == g);
-            groupTiles.forEach(t => t.style.background = '#ddd');
-            await sleep(500);
-            groupTiles.forEach(t => t.classList.add('hide'));
-            
-            let block = document.createElement('div');
-            block.className = `c-group cg-${g}`;
-            block.innerHTML = `<h4>${connData[g].cat}</h4><p>${connData[g].words.join(', ')}</p>`;
-            block.style.display = 'block';
-            solved.appendChild(block);
-            await sleep(600);
-        }
-        await sleep(400);
-        showToast("Perfect! You connected us 💚");
-    }
-
-    // ==========================================
-    // 3. MINI CROSSWORD
-    // ==========================================
-    const miniLayout = [
-        {c:'P',n:1},{c:'R',n:2},{c:'O',n:3},{c:'U',n:4},{c:'D',n:5},
-        {c:'O',n:null},{c:'#',n:null},{c:'V',n:null},{c:'#',n:null},{c:'A',n:null},
-        {c:'S',n:null},{c:'M',n:null},{c:'A',n:null},{c:'R',n:null},{c:'T',n:null},
-        {c:'T',n:null},{c:'#',n:null},{c:'I',n:null},{c:'#',n:null},{c:'S',n:null},
-        {c:'S',n:null},{c:'W',n:null},{c:'E',n:null},{c:'E',n:null},{c:'T',n:null}
-    ];
-    function initMini() {
-        const grid = document.getElementById('mini-grid');
-        miniLayout.forEach(cell => {
-            let div = document.createElement('div');
-            div.className = 'm-cell' + (cell.c === '#' ? ' black' : '');
-            if(cell.n && cell.c !== '#') {
-                let num = document.createElement('span');
-                num.className = 'm-num'; num.textContent = cell.n;
-                div.appendChild(num);
-            }
-            grid.appendChild(div);
-        });
-    }
-    async function solveMini() {
-        disableBtn('btn-mini');
-        const cells = document.querySelectorAll('#mini-grid .m-cell');
-        for(let i=0; i<cells.length; i++) {
-            if(!cells[i].classList.contains('black')) {
-                cells[i].innerHTML += miniLayout[i].c;
-                cells[i].classList.add('highlight');
-                await sleep(80);
-                cells[i].classList.remove('highlight');
-            }
-        }
-        showToast("Solved! You're brilliant.");
-    }
-
-    // ==========================================
-    // 4. STRANDS
-    // ==========================================
-    const strLetters = ['S','M','A','R','T','K', 'C','A','R','E','H','I', 'F','U','N','N','Y','N', 'G','O','R','G','E','D'];
-    const strWords = [{w:'SMART',p:[0,1,2,3,4]}, {w:'KIND',p:[5,11,17,23]}, {w:'FUNNY',p:[12,13,14,15,16]}];
-    function initStrands() {
-        const grid = document.getElementById('strands-grid');
-        strLetters.forEach((l, i) => {
-            let div = document.createElement('div');
-            div.className = 's-cell'; div.textContent = l; div.dataset.idx = i;
-            grid.appendChild(div);
-        });
-    }
-    async function solveStrands() {
-        disableBtn('btn-strands');
-        const cells = document.querySelectorAll('.s-cell');
-        const ctnr = document.getElementById('strands-words');
-        for(let sw of strWords) {
-            for(let idx of sw.p) { cells[idx].classList.add('active'); await sleep(150); }
-            let pill = document.createElement('div');
-            pill.className = 's-pill'; pill.textContent = sw.w;
-            ctnr.appendChild(pill);
-            await sleep(400);
-        }
-        showToast("Found them all!");
-    }
-
-    // ==========================================
-    // 5. SPELLING BEE
-    // ==========================================
-    async function solveBee() {
-        disableBtn('btn-bee');
-        const list = ['HARD', 'YARD', 'RADHA', 'AARADHYA'];
-        const wContainer = document.getElementById('bee-words');
-        const stat = document.getElementById('bee-status');
-        let pts = 0;
-        for(let i=0; i<list.length; i++) {
-            let w = document.createElement('div');
-            w.className = 's-pill'; 
-            w.style.background = i === list.length-1 ? 'var(--bee-yellow)' : '#eee';
-            w.style.color = 'black';
-            w.textContent = list[i];
-            wContainer.appendChild(w);
-            pts += list[i].length;
-            stat.textContent = `Genius - ${pts} pts`;
-            await sleep(600);
-        }
-        showToast("Pangram! You're a Genius.");
-    }
-
-    // ==========================================
-    // 6. LETTER BOXED
-    // ==========================================
-    const lbPos = [
-        {t:'A',s:'top', pL:25, pT:0}, {t:'R',s:'top', pL:75, pT:0},
-        {t:'D',s:'right', pL:100, pT:25}, {t:'H',s:'right', pL:100, pT:75},
-        {t:'Y',s:'bottom', pL:75, pT:100}, {t:'E',s:'bottom', pL:25, pT:100},
-        {t:'S',s:'left', pL:0, pT:75}, {t:'T',s:'left', pL:0, pT:25}
-    ];
-    function initLB() {
-        const c = document.getElementById('lb-container');
-        lbPos.forEach((l, i) => {
-            let d = document.createElement('div'); d.className = 'lb-letter'; d.textContent = l.t; d.id = 'lb-l-' + i;
-            d.style.left = `calc(${l.pL}% - 7.5%)`;
-            d.style.top = `calc(${l.pT}% - 7.5%)`;
-            c.appendChild(d);
-        });
-    }
-    function getPercentCenter(el) { 
-        return { x: el.style.left.replace('calc(','').split('%')[0], y: el.style.top.replace('calc(','').split('%')[0] }; 
-    }
-    async function solveLB() {
-        disableBtn('btn-lb');
-        const svg = document.getElementById('lb-svg');
-        const path = [3,0,1,2,4, 5,0,6, 7,0,1]; 
-        let word = "";
-        for(let i=0; i<path.length; i++) {
-            let el = document.getElementById('lb-l-'+path[i]);
-            el.style.color = 'var(--c-purple)';
-            word += el.textContent;
-            document.getElementById('lb-words').textContent = word;
-            if(i>0) {
-                let p1 = getPercentCenter(document.getElementById('lb-l-'+path[i-1]));
-                let p2 = getPercentCenter(el);
-                let line = document.createElementNS('http://www.w3.org/2000/svg','line');
-                line.setAttribute('x1', `${parseFloat(p1.x) + 7.5}%`); line.setAttribute('y1', `${parseFloat(p1.y) + 7.5}%`);
-                line.setAttribute('x2', `${parseFloat(p2.x) + 7.5}%`); line.setAttribute('y2', `${parseFloat(p2.y) + 7.5}%`);
-                line.setAttribute('stroke', 'var(--c-purple)'); line.setAttribute('stroke-width', '3');
-                svg.appendChild(line);
-            }
-            if([4,7,10].includes(i)) { await sleep(600); word += " - "; svg.innerHTML=''; }
-            await sleep(400); el.style.color = 'black';
-        }
-        document.getElementById('lb-words').textContent = "HARDY - YEAS - STAR";
-        showToast("Solved perfectly!");
-    }
-
-    // ==========================================
-    // 7. SUDOKU
-    // ==========================================
-    const suSol = [
-        ['1','4','2','3'],
-        ['3','2','4','1'],
-        ['4','3','1','2'],
-        ['2','1','3','4']
-    ];
-    function initSudoku() {
-        const grid = document.getElementById('sudoku-grid');
-        for(let i=0; i<4; i++) {
-            for(let j=0; j<4; j++) {
-                let div = document.createElement('div');
-                div.className = 'su-cell'; div.id = `su-${i}-${j}`;
-                if((i+j)%2===0) div.textContent = suSol[i][j]; 
-                grid.appendChild(div);
-            }
-        }
-    }
-    async function solveSudoku() {
-        disableBtn('btn-sudoku');
-        for(let i=0; i<4; i++) {
-            for(let j=0; j<4; j++) {
-                let cell = document.getElementById(`su-${i}-${j}`);
-                if(!cell.textContent) {
-                    await sleep(150);
-                    cell.textContent = '❤️'; 
-                    cell.classList.add('filled');
-                    cell.style.color = 'var(--heart-red)';
-                }
-            }
-        }
-        showToast("Grid filled with love!");
-    }
-
-    // ==========================================
-    // 8. TILES
-    // ==========================================
-    const tpairs = ['AARADHYA','FOREVER','POETRY','VERSES','KIND','SWEET','AARADHYA','FOREVER','POETRY','VERSES','KIND','SWEET'];
-    function initTiles() {
-        const grid = document.getElementById('tiles-grid');
-        tpairs.forEach((w,i) => {
-            let div = document.createElement('div');
-            div.className = 't-card'; div.textContent = w; div.dataset.w = w; div.id = 't-'+i;
-            grid.appendChild(div);
-        });
-    }
-    async function solveTiles() {
-        disableBtn('btn-tiles');
-        const cards = document.querySelectorAll('.t-card');
-        cards.forEach(c => c.classList.add('flipped'));
-        await sleep(800);
-        let unique = ['AARADHYA','FOREVER','POETRY','VERSES','KIND','SWEET'];
-        for(let w of unique) {
-            let pair = Array.from(cards).filter(c => c.dataset.w === w);
-            pair.forEach(p => p.classList.add('matched'));
-            await sleep(500);
-        }
-        showToast("Perfect Match!");
-    }
-
-    // ==========================================
-    // 9. THE CROSSWORD (BIG)
-    // ==========================================
-    const crLayout = [
-        'L','O','V','E','#','U','S',
-        'A','L','W','A','Y','S','#',
-        '#','#','F','O','R','E','V',
-        'K','I','S','S','#','#','#',
-        '#','Y','O','U','R','S','#',
-        'P','R','O','U','D','#','#',
-        '#','#','#','B','A','B','E'
-    ];
-    function initCross() {
-        const grid = document.getElementById('cross-grid');
-        crLayout.forEach(c => {
-            let div = document.createElement('div');
-            div.className = 'cr-cell' + (c==='#'?' black':'');
-            grid.appendChild(div);
-        });
-    }
-    async function solveCross() {
-        disableBtn('btn-cross');
-        const cells = document.querySelectorAll('#cross-grid .cr-cell');
-        for(let i=0; i<cells.length; i++) {
-            if(!cells[i].classList.contains('black')) {
-                cells[i].textContent = crLayout[i];
-                cells[i].classList.add('filled');
-                await sleep(50);
-            }
-        }
-        showToast("Sunday Sized Love Solved!");
-    }
-
-    // ==========================================
-    // 10. VERTEX (Perfect SVG Heart)
-    // ==========================================
-    const vxPoints = [ 
-        {x:50, y:85}, /* Bottom Tip */
-        {x:15, y:45}, /* Left Curve Bottom */
-        {x:25, y:20}, /* Left Curve Top */
-        {x:50, y:35}, /* Center Inner Dip */
-        {x:75, y:20}, /* Right Curve Top */
-        {x:85, y:45}  /* Right Curve Bottom */
-    ];
-    function initVertex() {
-        const c = document.getElementById('vertex-container');
-        vxPoints.forEach((p,i) => {
-            let d = document.createElement('div');
-            d.className = 'vx-dot'; d.textContent = i+1;
-            d.style.left = p.x+'%'; d.style.top = p.y+'%';
-            c.appendChild(d);
-        });
-    }
-    async function solveVertex() {
-        disableBtn('btn-vertex');
-        const svg = document.getElementById('vertex-svg');
-        const order = [0,1,2,3,4,5,0]; 
-        
-        let path = document.createElementNS('http://www.w3.org/2000/svg','path');
-        path.setAttribute('fill', 'var(--heart-red)'); 
-        path.setAttribute('stroke', 'var(--heart-red)');
-        path.setAttribute('stroke-width', '2');
-        path.setAttribute('stroke-linejoin', 'round');
-        svg.appendChild(path);
-
-        let dStr = `M ${vxPoints[order[0]].x} ${vxPoints[order[0]].y}`;
-        for(let i=1; i<order.length; i++) {
-            dStr += ` L ${vxPoints[order[i]].x} ${vxPoints[order[i]].y}`;
-            path.setAttribute('d', dStr);
-            await sleep(350);
-        }
-        showToast("You connected my heart ❤️");
-    }
-
-</script>
 </body>
 </html>
