@@ -3,31 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PROJECT HAIL MARY: Hack & Ship</title>
+<title>PROJECT HAIL MARY: Hack & Ship by Devvit</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lexend:wght@400;700;800;900&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     /* Devvit Brand Colors */
     --bg-dark: #0E0E0E;
-    --bg-card: #1A1A1A;
+    --bg-card: #141414;
     --brand-purple: #A7A5FF;
+    --brand-purple-dim: rgba(167, 165, 255, 0.1);
     --brand-orange: #FF7439;
+    --brand-orange-dim: rgba(255, 116, 57, 0.1);
     --text-white: #FFFFFF;
     --text-gray: #A0A0A0;
     --border-dim: #2A2A2A;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
 
   body {
     background-color: var(--bg-dark);
     color: var(--text-gray);
     font-family: 'Inter', sans-serif;
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.6;
     min-height: 100vh;
+    overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  /* ── ANIMATED BACKGROUND GRID ── */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    transform: perspective(500px) rotateX(45deg);
+    animation: gridMove 20s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+  @keyframes gridMove {
+    0% { transform: perspective(500px) rotateX(45deg) translateY(0); }
+    100% { transform: perspective(500px) rotateX(45deg) translateY(40px); }
   }
 
   .container {
@@ -37,76 +60,113 @@
   }
 
   /* Typography */
-  h1, h2, h3 { font-family: 'Lexend', sans-serif; color: var(--text-white); }
-  .mono { font-family: 'Space Grotesk', sans-serif; }
-  
-  h1 { font-size: clamp(48px, 8vw, 80px); font-weight: 900; line-height: 1; letter-spacing: -0.02em; margin-bottom: 16px; text-transform: uppercase; }
-  h2 { font-size: clamp(30px, 4vw, 40px); font-weight: 800; text-transform: uppercase; margin-bottom: 32px; display: inline-block; border-bottom: 4px solid var(--brand-purple); padding-bottom: 8px;}
+  h1, h2, h3, h4 { font-family: 'Lexend', sans-serif; color: var(--text-white); text-transform: uppercase; }
+  h1 { font-size: clamp(48px, 8vw, 80px); font-weight: 900; line-height: 1; letter-spacing: -0.02em; margin-bottom: 16px; animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  h2 { font-size: clamp(28px, 4vw, 36px); font-weight: 800; margin-bottom: 32px; display: inline-block; border-bottom: 4px solid var(--brand-purple); padding-bottom: 8px; }
   h3 { font-size: 20px; font-weight: 700; margin: 24px 0 12px; }
-  
   p { margin-bottom: 16px; }
   strong { color: var(--text-white); font-weight: 600; }
 
   /* ── HEADER ── */
-  .header { margin-bottom: 60px; }
   .pre-title { font-family: 'Space Grotesk', sans-serif; color: var(--brand-orange); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; display: block; }
   .title-highlight { color: var(--brand-purple); }
   
-  .meta-grid { display: flex; gap: 40px; margin-top: 32px; border-top: 1px solid var(--border-dim); padding-top: 24px; flex-wrap: wrap; }
+  .meta-grid { display: flex; gap: 40px; margin-top: 40px; border-top: 1px solid var(--border-dim); padding-top: 24px; flex-wrap: wrap; animation: fadeIn 1s ease 0.5s both; }
   .meta-item { display: flex; flex-direction: column; gap: 4px; }
   .meta-label { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-gray); text-transform: uppercase; }
-  .meta-value { font-family: 'Lexend', sans-serif; font-size: 20px; color: var(--text-white); font-weight: 700; }
-
-  /* ── CALLOUT CARDS (Flat & Bold like Wireframe) ── */
-  .card-solid { padding: 32px; border-radius: 4px; margin: 32px 0; color: var(--bg-dark); }
-  .card-solid p { margin: 0; color: var(--bg-dark); font-weight: 600; font-size: 18px; line-height: 1.4; }
-  .card-solid h3 { color: var(--bg-dark); margin-top: 0; }
+  .meta-value { font-family: 'Lexend', sans-serif; font-size: 20px; color: var(--text-white); font-weight: 700; display: flex; align-items: center; gap: 10px; }
   
-  .card-orange { background-color: var(--brand-orange); } /* Astrophage Theme */
-  .card-purple { background-color: var(--brand-purple); } /* Tech Theme */
+  .pulse-dot { width: 10px; height: 10px; background: var(--brand-orange); border-radius: 50%; box-shadow: 0 0 0 0 rgba(255, 116, 57, 0.7); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(255, 116, 57, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 116, 57, 0); } }
 
-  /* ── SECTIONS ── */
-  .section { margin-bottom: 80px; }
+  /* ── DYNAMIC RULES TICKER ── */
+  .ticker-wrapper {
+    background: var(--brand-orange); width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;
+    padding: 12px 0; overflow: hidden; transform: rotate(-1.5deg); margin-top: 60px; margin-bottom: 80px; box-shadow: 0 10px 30px var(--brand-orange-dim);
+  }
+  .ticker { display: flex; width: max-content; animation: tickerScroll 25s linear infinite; }
+  .ticker:hover { animation-play-state: paused; }
+  .ticker-item { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; color: var(--bg-dark); text-transform: uppercase; padding: 0 40px; display: flex; align-items: center; gap: 40px; }
+  .ticker-item::after { content: '✦'; color: var(--bg-dark); }
+  @keyframes tickerScroll { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-50%, 0, 0); } }
+
+  /* ── BRUTALIST CARDS (Hover Effects) ── */
+  .card-solid { padding: 32px; border-radius: 2px; margin: 32px 0; color: var(--bg-dark); transition: transform 0.2s, box-shadow 0.2s; }
+  .card-solid:hover { transform: translate(-4px, -4px); }
+  .card-orange { background-color: var(--brand-orange); }
+  .card-orange:hover { box-shadow: 8px 8px 0 rgba(255, 116, 57, 0.3); }
+  .card-purple { background-color: var(--brand-purple); }
+  .card-purple:hover { box-shadow: 8px 8px 0 rgba(167, 165, 255, 0.3); }
+  
+  .card-solid h3 { color: var(--bg-dark); margin-top: 0; }
+  .card-solid p { margin: 0; color: var(--bg-dark); font-weight: 600; font-size: 18px; line-height: 1.4; }
 
   /* ── COMPACT TIMELINE ── */
-  .timeline { display: grid; gap: 16px; }
-  .timeline-row { display: grid; grid-template-columns: 200px 1fr; background: var(--bg-card); padding: 16px 24px; border-left: 4px solid var(--border-dim); transition: border-color 0.2s; }
-  .timeline-row:hover { border-color: var(--brand-purple); }
-  .timeline-row.critical { border-color: var(--brand-orange); }
-  .time-col { font-family: 'Space Grotesk', sans-serif; font-size: 14px; color: var(--brand-purple); font-weight: 700; }
+  .timeline { display: grid; gap: 12px; }
+  .timeline-row { 
+    display: grid; grid-template-columns: 200px 1fr; background: var(--bg-card); padding: 20px 24px; 
+    border-left: 4px solid var(--border-dim); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); cursor: default;
+  }
+  .timeline-row:hover { border-left-color: var(--brand-purple); background: #1a1a1a; transform: translateX(8px); }
+  .timeline-row.critical { border-left-color: var(--brand-orange); }
+  .timeline-row.critical:hover { background: var(--brand-orange-dim); }
+  .time-col { font-family: 'Space Grotesk', sans-serif; font-size: 14px; color: var(--brand-purple); font-weight: 700; letter-spacing: 0.05em; }
   .timeline-row.critical .time-col { color: var(--brand-orange); }
-  .event-title { font-family: 'Lexend', sans-serif; font-size: 18px; color: var(--text-white); font-weight: 700; margin-bottom: 4px; }
+  .event-title { font-family: 'Lexend', sans-serif; font-size: 18px; color: var(--text-white); margin-bottom: 4px; }
   .event-desc { font-size: 14px; }
 
-  /* ── GRID LAYOUTS (Roles, Framework, Judging) ── */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  /* ── GRID LAYOUTS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 24px; }
   
-  .box { background: var(--bg-card); padding: 24px; border: 1px solid var(--border-dim); }
-  .box-title { font-family: 'Lexend', sans-serif; font-size: 18px; color: var(--brand-purple); margin-bottom: 8px; font-weight: 700; }
-  .box-tag { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-gray); margin-bottom: 12px; display: inline-block; background: var(--bg-dark); padding: 2px 8px;}
+  .box { 
+    background: var(--bg-card); padding: 24px; border: 1px solid var(--border-dim); 
+    transition: transform 0.2s, border-color 0.2s; position: relative; overflow: hidden;
+  }
+  .box:hover { border-color: var(--brand-purple); transform: translateY(-4px); }
+  .box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--brand-purple); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .box:hover::before { transform: scaleX(1); }
+  
+  .box-title { font-family: 'Lexend', sans-serif; font-size: 18px; color: var(--text-white); margin-bottom: 8px; }
+  .box-tag { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--brand-purple); margin-bottom: 12px; display: inline-block; text-transform: uppercase; font-weight: 700; }
 
-  /* ── NUMBERED LISTS (Framework & Judging) ── */
-  .num-list { display: grid; gap: 16px; }
-  .num-item { display: flex; gap: 24px; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid var(--border-dim); }
-  .num-item:last-child { border-bottom: none; }
-  .num-digit { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; color: var(--brand-purple); line-height: 1; }
-  .num-content h4 { font-family: 'Lexend', sans-serif; font-size: 18px; color: var(--text-white); margin-bottom: 4px; }
+  /* ── NUMBERED RULES / LISTS ── */
+  .num-list { display: grid; gap: 16px; margin-top: 24px; }
+  .num-item { display: flex; gap: 24px; align-items: flex-start; padding: 20px; background: var(--bg-card); border: 1px solid var(--border-dim); transition: 0.2s; }
+  .num-item:hover { border-color: var(--text-gray); }
+  .num-digit { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; color: var(--brand-orange); line-height: 1; }
+  .num-content h4 { font-size: 18px; color: var(--text-white); margin-bottom: 4px; }
   .num-content p { font-size: 14px; margin: 0; }
 
-  /* ── CHECKLIST ── */
-  .ul-clean { list-style: none; display: grid; gap: 12px; margin-bottom: 24px; }
-  .ul-clean li { display: flex; align-items: flex-start; gap: 12px; }
-  .ul-clean li::before { content: '→'; color: var(--brand-orange); font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+  /* ── RESOURCES CARD FIX ── */
+  .resource-card {
+    background: var(--bg-card); border: 1px solid var(--border-dim); padding: 24px; 
+    display: flex; flex-direction: column; gap: 12px; transition: all 0.2s;
+  }
+  .resource-card:hover { border-color: var(--brand-purple); background: #1a1a1a; box-shadow: 0 8px 24px var(--brand-purple-dim); }
+  .r-level { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+  .r-level.beginner { color: #4ade80; } /* Green */
+  .r-level.mid { color: var(--brand-orange); }
+  .r-level.all { color: var(--brand-purple); }
+  .r-item { font-size: 14px; color: var(--text-white); display: flex; justify-content: space-between; border-bottom: 1px dashed var(--border-dim); padding-bottom: 8px; }
+  .r-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .r-tag { font-family: 'Space Grotesk', sans-serif; font-size: 10px; color: var(--text-gray); }
 
   /* ── FOOTER ── */
-  .footer { text-align: center; border-top: 1px solid var(--border-dim); padding-top: 40px; margin-top: 80px; }
-  .footer-logo { font-family: 'Lexend', sans-serif; font-size: 24px; font-weight: 900; color: var(--text-white); }
-  .footer-sub { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-gray); margin-top: 8px; }
+  .footer { text-align: center; border-top: 1px solid var(--border-dim); padding-top: 60px; margin-top: 80px; padding-bottom: 40px; }
+  .footer-logo { font-family: 'Lexend', sans-serif; font-size: 32px; font-weight: 900; color: var(--text-white); letter-spacing: -0.05em; }
+  .footer-sub { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-gray); margin-top: 12px; text-transform: uppercase; letter-spacing: 0.1em; }
 
-  @media (max-width: 600px) {
+  /* Animations */
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .section { margin-bottom: 100px; animation: fadeIn 1s ease both; animation-timeline: view(); animation-range: entry 10% cover 30%; }
+
+  @media (max-width: 768px) {
     .timeline-row { grid-template-columns: 1fr; gap: 8px; }
-    .grid-2 { grid-template-columns: 1fr; }
-    h1 { font-size: 40px; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .ticker-wrapper { transform: rotate(-2deg); }
   }
 </style>
 </head>
@@ -118,7 +178,7 @@
   <header class="header">
     <span class="pre-title">Mission Dossier // Devvit // Apr 2026</span>
     <h1>Project<br><span class="title-highlight">Hail Mary.</span></h1>
-    <p>A 36-hour hackathon to build rough ideas into real-world projects. No memory, no problem. Use the scientific method, engineer a solution, and ship it before the window closes.</p>
+    <p style="font-size: 18px; max-width: 600px;">A 36-hour hackathon to blitz-scale rough ideas into real-world projects. No memory, no problem. Engineer a solution and ship it before the window closes.</p>
     
     <div class="meta-grid">
       <div class="meta-item">
@@ -131,15 +191,27 @@
       </div>
       <div class="meta-item">
         <span class="meta-label">Status</span>
-        <span class="meta-value" style="color: var(--brand-orange);">Mission Critical</span>
+        <span class="meta-value" style="color: var(--brand-orange);"><div class="pulse-dot"></div> Mission Critical</span>
       </div>
     </div>
   </header>
 
-  <!-- ASTROPHAGE WARNING -->
-  <div class="card-solid card-orange">
-    <h3>Amaze! You Belong Here.</h3>
-    <p>If you feel like an imposter, that is normal. Every builder feels it. The ones who survive are the ones who show up anyway. You don't need to be an expert coder. You just need a problem worth solving and the grit to build a prototype.</p>
+  <!-- DYNAMIC RULES TICKER -->
+  <div class="ticker-wrapper">
+    <div class="ticker">
+      <!-- Repeated twice for seamless looping -->
+      <div class="ticker-item">Rule 01: Prototype, Don't Polish</div>
+      <div class="ticker-item">Rule 02: Respect The Crew</div>
+      <div class="ticker-item">Rule 03: AI Assists, You Decide</div>
+      <div class="ticker-item">Rule 04: Protect Your Sleep</div>
+      <div class="ticker-item">Rule 05: Ship Before Zero</div>
+      
+      <div class="ticker-item">Rule 01: Prototype, Don't Polish</div>
+      <div class="ticker-item">Rule 02: Respect The Crew</div>
+      <div class="ticker-item">Rule 03: AI Assists, You Decide</div>
+      <div class="ticker-item">Rule 04: Protect Your Sleep</div>
+      <div class="ticker-item">Rule 05: Ship Before Zero</div>
+    </div>
   </div>
 
   <!-- TIMELINE -->
@@ -150,7 +222,7 @@
         <div class="time-col">Apr 17 // 10:00 AM</div>
         <div>
           <div class="event-title">Threat Drops</div>
-          <div class="event-desc">Problem statement released. Formulate a hypothesis.</div>
+          <div class="event-desc">Problem statement released. Formulate your hypothesis.</div>
         </div>
       </div>
       <div class="timeline-row">
@@ -185,7 +257,7 @@
         <div class="time-col">Apr 19 // 7:00 PM</div>
         <div>
           <div class="event-title">Beetle Launch Closes</div>
-          <div class="event-desc">Final deadline. Pack your prototype and ship it.</div>
+          <div class="event-desc">Final deadline. Pack your prototype and ship it. Amaze!</div>
         </div>
       </div>
     </div>
@@ -193,7 +265,7 @@
 
   <!-- CREW ROLES -->
   <section class="section">
-    <h2>Crew & Alliances</h2>
+    <h2>Crew Alliances</h2>
     <p>Assign these roles in your first 30 minutes. Run a <strong>sync every hour:</strong> <em>What did I finish? What's next? Am I blocked?</em></p>
     
     <div class="grid-2">
@@ -220,85 +292,41 @@
     </div>
   </section>
 
-  <!-- PHASE 1 & 2 -->
+  <!-- SHIP DIRECTIVES (RULES) -->
   <section class="section">
-    <h2>Mission Phases</h2>
-    
-    <h3>Phase 1: The Hypothesis (Proposal)</h3>
-    <p>Your proposal must clearly answer these 5 questions to pass the selection gate:</p>
+    <h2>Ship Directives</h2>
+    <p>Breaking these rules results in immediate airlock ejection (disqualification).</p>
     <div class="num-list">
       <div class="num-item">
         <div class="num-digit">01</div>
-        <div class="num-content"><h4>Who faces this anomaly?</h4><p>Target a specific demographic, not "everyone."</p></div>
+        <div class="num-content">
+          <h4>Fresh Code Only</h4>
+          <p>What happens on the ship, ships. No pre-built projects or recycled hackathon submissions allowed. Start from scratch.</p>
+        </div>
       </div>
       <div class="num-item">
         <div class="num-digit">02</div>
-        <div class="num-content"><h4>What is the cost?</h4><p>Time, money, resources. Make the pain concrete.</p></div>
+        <div class="num-content">
+          <h4>AI is a Tool, Not a Crewmate</h4>
+          <p>Use ChatGPT/Copilot to get unstuck. Do not use them to generate your core hypothesis. The thinking must be human.</p>
+        </div>
       </div>
       <div class="num-item">
         <div class="num-digit">03</div>
-        <div class="num-content"><h4>What is the solution?</h4><p>Explain your engineered fix in one simple sentence.</p></div>
-      </div>
-      <div class="num-item">
-        <div class="num-digit">04</div>
-        <div class="num-content"><h4>What is the prototype?</h4><p>What is the smallest build that proves the science works?</p></div>
-      </div>
-      <div class="num-item">
-        <div class="num-digit">05</div>
-        <div class="num-content"><h4>Why this crew?</h4><p>What unique perspective do you bring to this problem?</p></div>
+        <div class="num-content">
+          <h4>Mandatory Hourly Syncs</h4>
+          <p>Silence is deadly. If you are stuck for 30 minutes, ping Discord <code>#help</code>. Do not suffer in a vacuum.</p>
+        </div>
       </div>
     </div>
-
-    <h3 style="margin-top: 40px;">Phase 2: The Build</h3>
-    <ul class="ul-clean">
-      <li><strong>Prototype, not product:</strong> Build one core feature to prove the physics work.</li>
-      <li><strong>Parallel Processing:</strong> Pitch Lead works simultaneously. Demo is recorded before the deadline.</li>
-      <li><strong>Energy Management:</strong> Take breaks every 90 minutes. Eat. Protect your sleep.</li>
-    </ul>
   </section>
 
-  <!-- GROUND CONTROL -->
-  <div class="card-solid card-purple">
-    <h3>Mission Control & Comms</h3>
-    <p style="margin-bottom: 16px;">Stratt didn't build the ship; she gave you resources. Your Mentor works the same way.</p>
-    <ul class="ul-clean" style="margin-bottom: 0;">
-      <li><strong>30-Minute Rule:</strong> Stuck for 30 mins? Ping Discord. Silence is deadly.</li>
-      <li><strong>State the Blockage:</strong> Ask "We are deciding between A and B," not "What do we do?"</li>
-      <li><strong>Discord Channels:</strong> Use <code>#mission-briefing</code> for updates, <code>#help</code> when stuck, and <code>#launch-pad</code> for crew chatter.</li>
-    </ul>
-  </div>
-
-  <!-- JUDGING -->
+  <!-- RESOURCES GRID -->
   <section class="section">
-    <h2>Evaluation</h2>
-    <p>Judges evaluate <strong>5 minutes of your presentation</strong>, not 36 hours of code. A brilliant build fails if the pitch doesn't explain why it matters.</p>
-    <div class="grid-2">
-      <div class="box">
-        <div class="box-title">1. Problem Definition</div>
-        <p>Is the anomaly real, specific, and fully understood?</p>
-      </div>
-      <div class="box">
-        <div class="box-title">2. Hypothesis</div>
-        <p>Does the technical approach logically solve the problem?</p>
-      </div>
-      <div class="box">
-        <div class="box-title">3. Execution</div>
-        <p>Does the prototype actually work? (Even one feature).</p>
-      </div>
-      <div class="box">
-        <div class="box-title">4. Presentation</div>
-        <p>Can you brief command clearly in 5 minutes?</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-logo">v/v DEVVIT</div>
-    <div class="footer-sub">Hack & Ship // Earth Date: April 17–19, 2026<br>© All rights reserved.</div>
-  </footer>
-
-</div>
-
-</body>
-</html>
+    <h2>Ship Database (Resources)</h2>
+    <p>Free scaffolding and primitives to blitz-scale your ideas.</p>
+    
+    <div class="grid-3">
+      <div class="resource-card">
+        <div class="r-level beginner">Cadet Level</div>
+        <div class="
