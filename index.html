@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hack & Ship — Role Guide</title>
-    <!-- Fonts from Style Guide -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Lexend:wght@400;700;800;900&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <title>Staff Portal | Hack & Ship — Devvit</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Lexend:wght@400;700;900&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --purple: #A7A5FF;
             --orange: #FF7439;
             --black: #0E0E0E;
             --white: #FFFFFF;
-            --grey: #1A1A1A;
-            --muted: #666666;
-            --border: rgba(255, 255, 255, 0.1);
-            --transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            --grey: #161616;
+            --text-dim: #888888;
+            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,359 +31,248 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* TYPOGRAPHY */
-        h1, h2, h3 { font-family: 'Lexend', sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: -0.04em; }
-        .label { font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; font-size: 12px; color: var(--muted); }
+        /* Typography */
+        h1, h2, h3 { font-family: 'Lexend', sans-serif; text-transform: uppercase; letter-spacing: -0.04em; }
+        .label { font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; color: var(--text-dim); }
 
-        /* SCROLL ANIMATION */
-        .reveal { opacity: 0; transform: translateY(30px); transition: var(--transition); }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--black); }
+        ::-webkit-scrollbar-thumb { background: var(--orange); }
+
+        /* Animations */
+        .reveal { opacity: 0; transform: translateY(40px); transition: var(--transition); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* HEADER & NAVIGATION */
-        header {
-            padding: 120px 8% 60px;
-            max-width: 1600px;
-            margin: 0 auto;
+        /* Layout Helpers */
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        .section-padding { padding: 120px 0; }
+        @media (max-width: 768px) { .section-padding { padding: 80px 0; } }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 30px 0;
+            z-index: 1000;
+            background: linear-gradient(to bottom, var(--black), transparent);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; }
 
-        .logo { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; margin-bottom: 40px; }
+        /* Hero Section */
+        .hero { min-height: 90vh; display: flex; align-items: center; padding-top: 100px; }
+        .hero-title { font-size: clamp(48px, 12vw, 140px); font-weight: 900; line-height: 0.85; margin: 40px 0; }
+        .hero-title span { display: block; }
+        .hero-purple { color: var(--purple); }
+        .hero-orange { color: var(--orange); }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: flex-end; }
+        @media (max-width: 768px) { .hero-grid { grid-template-columns: 1fr; } }
 
-        h1 { font-size: clamp(60px, 12vw, 160px); line-height: 0.85; margin-bottom: 40px; }
-        h1 span.outline { color: transparent; -webkit-text-stroke: 1.5px var(--white); }
-        h1 span.accent { color: var(--purple); }
-
-        .hero-meta {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 40px;
-            align-items: flex-end;
-            margin-top: 60px;
-        }
-
-        .hero-desc { font-size: 20px; color: var(--muted); max-width: 500px; }
-
-        /* TABS */
-        .tab-section {
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            background: rgba(14, 14, 14, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 100;
-        }
-
-        .tabs {
-            display: flex;
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 0 8%;
-        }
-
-        .tab {
-            padding: 30px 40px 30px 0;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 14px;
-            color: var(--muted);
-        }
-
-        .tab:hover { color: var(--white); }
-        .tab.active { color: var(--orange); }
-
-        /* CONTENT */
-        .main-content {
-            padding: 120px 8%;
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        .panel { display: none; }
-        .panel.active { display: block; animation: fadeIn 0.8s ease; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* ROLE HERO */
-        .role-hero {
-            display: grid;
-            grid-template-columns: 100px 1fr;
-            gap: 40px;
-            margin-bottom: 100px;
-        }
-
-        .role-icon {
-            width: 100px; height: 100px;
-            border: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        .role-title { font-size: 56px; margin-bottom: 20px; }
-        .role-sub { font-size: 20px; color: var(--muted); max-width: 700px; }
-
-        /* TIMELINE - THE MONOLITH STYLE */
-        .timeline { border-left: 1px solid var(--border); margin-left: 15px; }
-
-        .tl-item {
-            position: relative;
-            padding: 0 0 80px 60px;
-        }
-
-        .tl-item::before {
-            content: '';
-            position: absolute;
-            left: -5px; top: 0;
-            width: 10px; height: 10px;
-            background: var(--white);
-        }
-
-        .tl-item.orange-dot::before { background: var(--orange); box-shadow: 0 0 20px var(--orange); }
-        .tl-item.purple-dot::before { background: var(--purple); box-shadow: 0 0 20px var(--purple); }
-
-        .tl-date { font-family: 'Space Grotesk', sans-serif; color: var(--muted); font-size: 14px; margin-bottom: 10px; display: block; }
-        .tl-header { font-size: 32px; margin-bottom: 30px; }
-
-        /* TASK LIST */
-        .tasks { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .task { 
-            padding: 30px; 
-            border: 1px solid var(--border); 
-            transition: var(--transition);
-        }
-        .task:hover { background: var(--grey); border-color: var(--white); }
-        .task span { display: block; color: var(--orange); margin-bottom: 10px; font-family: 'Space Grotesk'; }
-
-        /* DO/DONT GRID */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 100px; }
-
-        .status-card { padding: 60px; border: 1px solid var(--border); }
-        .status-card.do { border-top: 4px solid var(--purple); }
-        .status-card.dont { border-top: 4px solid var(--orange); }
-
-        .status-item { display: flex; gap: 20px; margin-bottom: 20px; font-size: 15px; }
-        .status-item svg { flex-shrink: 0; width: 20px; }
-
-        /* CALL TO ACTION */
-        .cta-box {
-            margin-top: 120px;
-            padding: 100px;
+        /* CTA Buttons */
+        .btn {
+            display: inline-flex;
+            padding: 20px 40px;
             background: var(--white);
             color: var(--black);
-            text-align: center;
-        }
-
-        .cta-box h2 { font-size: 64px; margin-bottom: 30px; color: var(--black); }
-        .cta-box p { font-size: 20px; max-width: 600px; margin: 0 auto 40px; }
-
-        .btn {
-            display: inline-block;
-            padding: 20px 50px;
-            background: var(--black);
-            color: var(--white);
             text-decoration: none;
-            font-family: 'Space Grotesk';
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
+            font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 2px;
             transition: var(--transition);
+            border: none; cursor: pointer;
         }
+        .btn:hover { background: var(--purple); transform: scale(1.05); }
+        .btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-outline:hover { border-color: var(--orange); background: transparent; color: var(--orange); }
 
-        .btn:hover { transform: translateY(-5px); background: var(--orange); }
-
-        @media (max-width: 1024px) {
-            .hero-meta, .tasks, .grid-2 { grid-template-columns: 1fr; }
-            h1 { font-size: 80px; }
-            .role-title { font-size: 40px; }
-            .cta-box { padding: 60px 20px; }
+        /* Designation Section */
+        .designation-tabs { display: flex; gap: 20px; border-bottom: 1px solid var(--grey); margin-bottom: 60px; }
+        .tab-trigger { 
+            padding: 20px 0; border: none; background: none; color: var(--text-dim); 
+            font-family: 'Space Grotesk', sans-serif; font-weight: 700; 
+            cursor: pointer; text-transform: uppercase; font-size: 14px;
+            position: relative;
         }
+        .tab-trigger.active { color: var(--white); }
+        .tab-trigger.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background: var(--orange); }
+
+        .role-content { display: none; }
+        .role-content.active { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; animation: fadeIn 0.8s ease; }
+        @media (max-width: 768px) { .role-content.active { grid-template-columns: 1fr; gap: 40px; } }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Cards */
+        .stat-box { background: var(--grey); padding: 40px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.03); }
+        .stat-box h3 { font-size: 24px; margin-bottom: 20px; }
+        .list-item { display: flex; gap: 15px; margin-bottom: 20px; color: var(--text-dim); font-size: 15px; }
+        .list-item svg { width: 20px; flex-shrink: 0; color: var(--purple); }
+
+        /* The Contact Section (The Monolith) */
+        .contact-section { background: var(--white); color: var(--black); padding: 120px 0; text-align: center; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #e0e0e0; margin-top: 60px; }
+        @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+        
+        .contact-card { background: var(--white); padding: 80px 40px; transition: var(--transition); text-decoration: none; color: var(--black); display: block; }
+        .contact-card:hover { background: #f9f9f9; }
+        .contact-card h2 { font-size: 40px; margin-bottom: 10px; }
+        .contact-card p { font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; color: var(--text-dim); font-weight: 700; }
+        .arrow-icon { font-size: 30px; margin-top: 20px; display: block; transition: var(--transition); }
+        .contact-card:hover .arrow-icon { transform: translateX(10px); color: var(--orange); }
+
+        footer { padding: 60px 0; border-top: 1px solid var(--grey); color: var(--text-dim); font-size: 12px; font-family: 'Space Grotesk', sans-serif; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo">v/v</div>
-    <h1 class="reveal">BUILD.<br><span class="outline">HOST.</span><br><span class="accent">SHIP.</span></h1>
-    <div class="hero-meta reveal">
-        <p class="hero-desc">Your operational blueprint for the 36-hour sprint. Understand your designation, execute with precision, and escalate when necessary.</p>
-        <div class="label" style="text-align: right;">Updated: APR 2026<br>Ver: 1.0.4</div>
-    </div>
-</header>
+    <nav>
+        <div class="container nav-flex">
+            <div class="logo">v/v</div>
+            <a href="#roles" class="btn btn-outline" style="padding: 10px 20px; font-size: 11px;">View Briefing</a>
+        </div>
+    </nav>
 
-<div class="tab-section">
-    <div class="tabs">
-        <div class="tab active" onclick="switchTab('liaison')">01. Liaison</div>
-        <div class="tab" onclick="switchTab('expert')">02. Expert</div>
-        <div class="tab" onclick="switchTab('matrix')">03. Matrix</div>
-    </div>
-</div>
+    <section class="hero">
+        <div class="container">
+            <div class="label reveal">Staff Command Center</div>
+            <h1 class="hero-title reveal">
+                <span>Build the</span>
+                <span class="hero-purple">Kinetic</span>
+                <span class="hero-orange">Stream.</span>
+            </h1>
+            <div class="hero-grid reveal">
+                <p class="hero-sub" style="font-size: 20px; color: var(--text-dim);">
+                    Hack & Ship isn't just a hackathon; it's a 36-hour sprint into the future of Devvit. We need Mentors to guide and Volunteers to anchor.
+                </p>
+                <div style="text-align: right;">
+                    <span class="label">Event Status</span><br>
+                    <span style="font-family: 'Lexend'; font-size: 24px;">APR 17-19, 2026</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="main-content">
+    <section id="roles" class="section-padding container">
+        <div class="label reveal" style="margin-bottom: 20px;">Designations</div>
+        <div class="designation-tabs reveal">
+            <button class="tab-trigger active" onclick="switchTab(event, 'volunteers')">01. Liaison (Volunteer)</button>
+            <button class="tab-trigger" onclick="switchTab(event, 'mentors')">02. Expert (Mentor)</button>
+        </div>
 
-    <!-- LIAISON PANEL (VOLUNTEER) -->
-    <div class="panel active" id="liaison">
-        <div class="role-hero reveal">
-            <div class="role-icon">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
-                    <rect x="2" y="2" width="20" height="20" rx="2"/>
-                    <path d="M12 8v8M8 12h8"/>
-                </svg>
+        <!-- VOLUNTEERS -->
+        <div id="volunteers" class="role-content active">
+            <div class="reveal">
+                <h2 style="font-size: 48px; margin-bottom: 30px;">Operational<br><span class="hero-orange">Anchor</span></h2>
+                <p style="color: var(--text-dim); margin-bottom: 40px;">You are the eyes and ears on the ground. You keep the teams moving, escalate blockers, and ensure the clock never stops.</p>
+                <a href="#contact" class="btn">Apply as Volunteer</a>
+            </div>
+            <div class="reveal">
+                <div class="stat-box">
+                    <h3>Primary Tasks</h3>
+                    <div class="list-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span>Team Health Check-ins every 3 hours.</span>
+                    </div>
+                    <div class="list-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span>Direct escalation of technical blockers to Mentors.</span>
+                    </div>
+                    <div class="list-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span>Ensuring final submissions are live by APR 19, 7PM.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MENTORS -->
+        <div id="mentors" class="role-content">
+            <div>
+                <h2 style="font-size: 48px; margin-bottom: 30px;">Technical<br><span class="hero-purple">Architect</span></h2>
+                <p style="color: var(--text-dim); margin-bottom: 40px;">Your role is high-level intervention. You don't code for them; you help them see the path when they're stuck in the weeds.</p>
+                <a href="#contact" class="btn">Join Mentor Squad</a>
             </div>
             <div>
-                <span class="label">Designation</span>
-                <h2 class="role-title">Liaison / Volunteer</h2>
-                <p class="role-sub">You are the team's operational anchor. You manage flow, remove friction, and act as the eyes and ears for leadership.</p>
-            </div>
-        </div>
-
-        <div class="timeline">
-            <div class="tl-item purple-dot reveal">
-                <span class="tl-date">APR 17 · PREP</span>
-                <h3 class="tl-header">Webinar & Team Briefing</h3>
-                <div class="tasks">
-                    <div class="task"><span>01</span>Attend the orientation webinar for full mission context.</div>
-                    <div class="task"><span>02</span>Audit your team’s background and technical comfort level.</div>
-                </div>
-            </div>
-
-            <div class="tl-item orange-dot reveal">
-                <span class="tl-date">APR 18 · BUILD</span>
-                <h3 class="tl-header">Execution & Monitoring</h3>
-                <div class="tasks">
-                    <div class="task"><span>01</span>Submit proposal briefs by the morning deadline. No exceptions.</div>
-                    <div class="task"><span>02</span>Monitor for scope creep. Ensure the build remains achievable.</div>
-                    <div class="task"><span>03</span>Surface technical blockers to Experts immediately.</div>
-                    <div class="task"><span>04</span>Escalate communication gaps to Raghav or Shradha.</div>
+                <div class="stat-box">
+                    <h3>Focus Areas</h3>
+                    <div class="list-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <span>Devvit API & App Logic guidance.</span>
+                    </div>
+                    <div class="list-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <span>Scope Reduction: Helping teams build the MVP.</span>
+                    </div>
+                    <div class="list-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <span>Strategic "On-Call" support via Discord/WhatsApp.</span>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="grid-2 reveal">
-            <div class="status-card do">
-                <span class="label" style="color:var(--purple); margin-bottom: 30px; display: block;">Operational Do's</span>
-                <div class="status-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                    Flag issues early—even if they seem minor.
-                </div>
-                <div class="status-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                    Maintain high team morale during the "3 AM slump."
-                </div>
-                <div class="status-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                    Contact Raghav or Shradha if the team loses direction.
-                </div>
-            </div>
-            <div class="status-card dont">
-                <span class="label" style="color:var(--orange); margin-bottom: 30px; display: block;">Forbidden Actions</span>
-                <div class="status-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                    Do not write any code or make technical decisions.
-                </div>
-                <div class="status-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                    Do not try to solve internal team conflicts alone.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- EXPERT PANEL (MENTOR) -->
-    <div class="panel" id="expert">
-        <div class="role-hero">
-            <div class="role-icon">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                </svg>
-            </div>
-            <div>
-                <span class="label">Designation</span>
-                <h2 class="role-title">Expert / Mentor</h2>
-                <p class="role-sub">The technical vanguard. You provide the logic scaffolding that helps teams turn rough ideas into real-world projects.</p>
-            </div>
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="label" style="color: var(--text-dim);">Ready to help?</div>
+            <h1 style="font-size: clamp(32px, 8vw, 80px); margin: 20px 0;">Escalate to Leadership</h1>
+            <p style="max-width: 600px; margin: 0 auto; color: var(--text-dim);">If you have questions about your role or are ready to confirm your availability, contact the founders directly.</p>
         </div>
 
-        <div class="timeline">
-            <div class="tl-item purple-dot">
-                <span class="tl-date">SATURDAY · BUILD DAY</span>
-                <h3 class="tl-header">Architectural Guidance</h3>
-                <div class="tasks">
-                    <div class="task"><span>01</span>Help teams refine their "Minimum Viable Product" (MVP).</div>
-                    <div class="task"><span>02</span>Provide directional feedback: "Have you tried X approach?"</div>
-                    <div class="task"><span>03</span>Unblock technical Devvit API hurdles when Liaisons escalate.</div>
-                </div>
+        <div class="contact-grid">
+            <!-- Replace # with actual WhatsApp or Discord link -->
+            <a href="https://wa.me/yournumber" class="contact-card">
+                <p>Tech & Ops Lead</p>
+                <h2>Raghav</h2>
+                <span class="arrow-icon">→</span>
+            </a>
+            <a href="https://wa.me/yournumber" class="contact-card">
+                <p>Product & Comms Lead</p>
+                <h2>Shradha</h2>
+                <span class="arrow-icon">→</span>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container nav-flex">
+            <div><dev/vit> Staff Portal © 2026</div>
+            <div style="display: flex; gap: 40px;">
+                <span>Protocol</span>
+                <span>Resources</span>
+                <span>Core Group</span>
             </div>
         </div>
-    </div>
+    </footer>
 
-    <!-- MATRIX PANEL (COMPARISON) -->
-    <div class="panel" id="matrix">
-        <h2 class="role-title">Role Matrix</h2>
-        <table style="width: 100%; border-top: 1px solid var(--border); margin-top: 40px;">
-            <thead>
-                <tr>
-                    <th style="text-align: left; padding: 20px 0;" class="label">Criteria</th>
-                    <th style="text-align: left; padding: 20px 0;" class="label">Liaison</th>
-                    <th style="text-align: left; padding: 20px 0;" class="label">Expert</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="padding: 30px 0; border-bottom: 1px solid var(--border); color: var(--muted); font-family: 'Space Grotesk';">Ownership</td>
-                    <td style="padding: 30px 0; border-bottom: 1px solid var(--border);">Operations & Deadlines</td>
-                    <td style="padding: 30px 0; border-bottom: 1px solid var(--border); color: var(--purple);">Product Quality & Logic</td>
-                </tr>
-                <tr>
-                    <td style="padding: 30px 0; border-bottom: 1px solid var(--border); color: var(--muted); font-family: 'Space Grotesk';">Commitment</td>
-                    <td style="padding: 30px 0; border-bottom: 1px solid var(--border);">Full 3-Day Window</td>
-                    <td style="padding: 30px 0; border-bottom: 1px solid var(--border);">Build Day (On-call)</td>
-                </tr>
-                <tr>
-                    <td style="padding: 30px 0; border-bottom: 1px solid var(--border); color: var(--muted); font-family: 'Space Grotesk';">Reporting</td>
-                    <td style="padding: 30px 0; border-bottom: 1px solid var(--border);">Raghav or Shradha</td>
-                    <td style="padding: 30px 0; border-bottom: 1px solid var(--border);">Raghav or Shradha</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <script>
+        // Simple Tab Switcher
+        function switchTab(event, roleId) {
+            const contents = document.querySelectorAll('.role-content');
+            const triggers = document.querySelectorAll('.tab-trigger');
+            
+            contents.forEach(c => c.classList.remove('active'));
+            triggers.forEach(t => t.classList.remove('active'));
+            
+            document.getElementById(roleId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
 
-    <!-- MANTRA / CTA -->
-    <div class="cta-box reveal">
-        <span class="label" style="color: var(--black); margin-bottom: 20px; display: block;">The Golden Rule</span>
-        <h2>STAY IN THE STREAM.</h2>
-        <p>The monolith is waiting for your contribution. If a team goes quiet or a submission is at risk, take immediate action.</p>
-        <a href="mailto:devvit.work@gmail.com" class="btn">Contact Raghav or Shradha</a>
-    </div>
+        // Reveal Animation on Scroll
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
 
-</div>
-
-<script>
-    // Tab Switching Logic
-    function switchTab(id) {
-        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        
-        document.getElementById(id).classList.add('active');
-        event.currentTarget.classList.add('active');
-        
-        window.scrollTo({ top: document.querySelector('.tab-section').offsetTop - 20, behavior: 'smooth' });
-    }
-
-    // Scroll Reveal Logic
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
-
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
