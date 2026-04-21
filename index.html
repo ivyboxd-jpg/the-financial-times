@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sybix Secure - Slide 2 (Full View Fixed)</title>
+    <title>Sybix Secure - Slide 2 Final</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,7 @@
             width: 1080px;
             height: 1350px;
             background: linear-gradient(150deg, #0d2136 0%, var(--teal) 100%);
-            padding: 60px 90px; /* Reduced vertical padding to 60px to fit all text */
+            padding: 60px 90px; 
             display: flex;
             flex-direction: column;
             position: relative;
@@ -62,12 +62,12 @@
             height: 100%;
         }
 
-        /* Logo - Keep 450px as requested */
+        /* Logo - Locked at 450px */
         .logo {
             width: 450px; 
             height: auto;
             align-self: center;
-            margin-bottom: 30px; /* Tightened for space */
+            margin-bottom: 30px;
         }
 
         .eyebrow {
@@ -81,14 +81,14 @@
 
         .heading-adriana {
             font-family: var(--font-adriana);
-            font-size: 4.5rem; /* Adjusted to 4.5rem to prevent text cutoff */
+            font-size: 4.5rem;
             line-height: 1.1;
             color: var(--white);
             margin: 0 0 40px 0;
             font-weight: 500;
         }
 
-        /* Service List - Now spaced to ensure all 3 points fit */
+        /* Service List */
         .service-list {
             display: flex;
             flex-direction: column;
@@ -110,79 +110,13 @@
 
         .service-desc {
             font-family: var(--font-body);
-            font-size: 1.75rem; /* Slightly smaller for perfect fit */
+            font-size: 1.75rem;
             color: var(--off-white);
             line-height: 1.4;
             font-weight: 300;
         }
 
-        /* Footer - Matches Slide 1 */
-        .footer-action {
-            margin-top: auto; 
-            font-family: var(--font-wide);
-            font-size: 1.7rem; 
-            color: var(--bright-cyan);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-top: 3px solid rgba(255,255,255,0.1);
-            padding-top: 30px;
-            padding-bottom: 10px;
-        }
-
-        .arrow { font-size: 3rem; }
-
         @media print {
             body { background: white; overflow: visible; }
             .preview-scale { transform: none; width: 1080px; height: 1350px; }
-            .poster { box-shadow: none; border: none; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="preview-scale">
-        <div class="poster" id="slide2">
-            <div class="content">
-                
-                <!-- Logo -->
-                <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Secure" class="logo">
-                
-                <div class="eyebrow">How we help</div>
-                
-                <h1 class="heading-adriana">Reclaiming your <br>digital peace.</h1>
-                
-                <div class="service-list">
-                    <!-- Point 1 -->
-                    <div class="service-item">
-                        <div class="service-title">Getting you back in</div>
-                        <div class="service-desc">Losing access to your accounts is stressful. We help you navigate the recovery process and reclaim your identity.</div>
-                    </div>
-
-                    <!-- Point 2 -->
-                    <div class="service-item">
-                        <div class="service-title">Cleaning the noise</div>
-                        <div class="service-desc">We identify and remove hidden threats, ensuring your personal devices feel safe, private, and like home again.</div>
-                    </div>
-
-                    <!-- Point 3 -->
-                    <div class="service-item">
-                        <div class="service-title">Defending your privacy</div>
-                        <div class="service-desc">If your private life has been compromised, we fight to remove the content and help you restore your personal boundaries.</div>
-                    </div>
-                </div>
-
-                <!-- Footer -->
-                <div class="footer-action">
-                    <span>Swipe for our process</span>
-                    <span class="arrow">&rarr;</span>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-</body>
-</html>
+            .poster { box-shadow: n
