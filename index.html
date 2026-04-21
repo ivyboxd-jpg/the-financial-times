@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sybix Secure - Slide 2 (Perfect Match)</title>
+    <title>Sybix Secure - Slide 2 (Final Fix)</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,12 +42,12 @@
             align-items: center;
         }
 
-        /* IDENTICAL TO SLIDE 1 */
+        /* 1080x1350 - Alignment matched to Slide 1 */
         .poster {
             width: 1080px;
             height: 1350px;
             background: linear-gradient(150deg, #0d2136 0%, var(--teal) 100%);
-            padding: 90px; 
+            padding: 80px 90px; /* Standardized padding */
             display: flex;
             flex-direction: column;
             position: relative;
@@ -62,40 +62,37 @@
             height: 100%;
         }
 
-        /* LOGO - EXACT MATCH (450px) */
+        /* Logo - Locked at 450px */
         .logo {
             width: 450px; 
             height: auto;
             align-self: center;
-            margin-bottom: 60px;
+            margin-bottom: 50px; /* Slightly tightened to save room */
         }
 
-        /* EYEBROW - EXACT MATCH */
         .eyebrow {
             font-family: var(--font-wide);
             font-size: 1.5rem;
             color: var(--light-aqua);
             letter-spacing: 5px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             text-transform: uppercase;
         }
 
-        /* HEADING */
         .heading-adriana {
             font-family: var(--font-adriana);
-            font-size: 5.5rem;
+            font-size: 5.2rem; /* Adjusted slightly for better fit */
             line-height: 1.1;
             color: var(--white);
-            margin: 0 0 50px 0;
+            margin: 0 0 45px 0;
             font-weight: 500;
         }
 
-        /* SERVICE LIST */
+        /* Service List - Point 3 is now fully visible */
         .service-list {
             display: flex;
             flex-direction: column;
-            gap: 40px;
-            margin-bottom: 40px; /* Added space so point 3 doesn't hit the footer */
+            gap: 30px; /* Balanced gap */
         }
 
         .service-item {
@@ -107,7 +104,7 @@
             font-family: var(--font-wide);
             font-size: 1.6rem;
             color: var(--light-aqua);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
 
@@ -115,11 +112,11 @@
             font-family: var(--font-body);
             font-size: 1.85rem; 
             color: var(--off-white);
-            line-height: 1.5;
+            line-height: 1.45;
             font-weight: 300;
         }
 
-        /* FOOTER - EXACT MATCH TO SLIDE 1 */
+        /* Footer - Matches Slide 1 exactly */
         .footer-action {
             margin-top: auto; 
             font-family: var(--font-wide);
@@ -131,8 +128,8 @@
             align-items: center;
             justify-content: space-between;
             border-top: 3px solid rgba(255,255,255,0.1);
-            padding-top: 40px;
-            padding-bottom: 20px;
+            padding-top: 35px;
+            padding-bottom: 10px;
         }
 
         .arrow { font-size: 3rem; }
@@ -150,7 +147,6 @@
         <div class="poster" id="slide2">
             <div class="content">
                 
-                <!-- Matching Logo -->
                 <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Secure" class="logo">
                 
                 <div class="eyebrow">How we help</div>
@@ -158,19 +154,10 @@
                 <h1 class="heading-adriana">Reclaiming your <br>digital peace.</h1>
                 
                 <div class="service-list">
-                    <!-- Point 1: Humane & Clear -->
+                    <!-- Point 1 -->
                     <div class="service-item">
-                        <div class="service-title">Returning what’s yours</div>
-                        <div class="service-desc">Losing an account is stressful. We work quickly to help you navigate the recovery process and regain control of your digital identity.</div>
+                        <div class="service-title">Getting you back in</div>
+                        <div class="service-desc">Losing access to your accounts is incredibly stressful. We help you navigate the recovery process and reclaim your identity.</div>
                     </div>
 
-                    <!-- Point 2: Humane & Clear -->
-                    <div class="service-item">
-                        <div class="service-title">Cleaning the noise</div>
-                        <div class="service-desc">We identify and remove hidden threats, ensuring your phone and computer feel safe, private, and like home again.</div>
-                    </div>
-
-                    <!-- Point 3: Defending Privacy with extra space -->
-                    <div class="service-item">
-                        <div class="service-title">Defending your privacy</div>
-                        <di
+                    <!-- Point 2 -->
