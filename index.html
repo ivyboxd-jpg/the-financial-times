@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sybix Secure - IG Posters</title>
+    <title>Sybix Secure - Slide 1</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
     
-    <!-- html2canvas library to enable downloading the posters -->
+    <!-- html2canvas library to enable downloading -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
@@ -31,35 +31,30 @@
         }
 
         body {
-            background-color: #2c3e50;
+            background-color: #1a2530;
             margin: 0;
             padding: 40px;
             font-family: var(--font-body);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 60px;
+            gap: 30px;
         }
 
-        .controls {
-            display: flex;
-            gap: 20px;
-            margin-bottom: -20px;
-            z-index: 10;
-        }
-
+        /* Download Button */
         button {
             background-color: var(--light-aqua);
             color: var(--dark-navy);
             border: none;
-            padding: 15px 30px;
+            padding: 15px 40px;
             font-family: var(--font-wide);
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(102, 227, 231, 0.3);
+            transition: all 0.2s;
+            z-index: 10;
         }
 
         button:hover {
@@ -68,72 +63,56 @@
             color: var(--white);
         }
 
-        /* Container scales down the massive posters so they fit on your screen to preview */
-        .preview-container {
-            display: flex;
-            gap: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-            transform: scale(0.45); /* Scales preview down for typical monitors */
+        /* Wrapper scales the massive 1080x1350 poster down so you can see it on your monitor */
+        .preview-wrapper {
+            transform: scale(0.5); /* Scales it down 50% for previewing */
             transform-origin: top center;
-            margin-bottom: -700px; /* Adjusts layout flow due to scaling */
+            height: 675px; /* 50% of 1350 */
+            width: 540px;  /* 50% of 1080 */
         }
 
-        /* Actual Poster - EXACT Instagram Portrait Size (1080 x 1350) */
+        /* ACTUAL POSTER - 1080x1350 Instagram Portrait Size */
         .poster {
             width: 1080px;
             height: 1350px;
-            padding: 120px 100px;
+            padding: 100px 90px; /* Adjusted padding to give text more room */
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-        }
-
-        /* Backgrounds */
-        .bg-slide-1 { 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            /* Gradient Background */
             background: linear-gradient(150deg, var(--dark-navy) 0%, #0d2136 100%); 
         }
-        
-        .bg-slide-2 { 
-            background: linear-gradient(150deg, #0d2136 0%, var(--teal) 100%); 
-        }
 
-        /* Logo Element */
+        /* Logo Element - Scaled Down */
         .logo {
-            width: 250px; /* Adjust this if your logo needs to be bigger/smaller */
+            width: 200px; /* Max width to prevent it from getting too big */
+            max-height: 180px; /* Safety restraint on height */
             height: auto;
             align-self: center;
-            margin-bottom: 80px;
+            margin-bottom: 50px; /* Reduced gap under logo */
+            object-fit: contain;
+            background-color: transparent; /* Ensures no background fills in */
         }
 
-        /* Typography Scaled for 1080x1350 */
+        /* Typography */
         .eyebrow {
             font-family: var(--font-wide);
-            font-size: 2rem;
+            font-size: 1.5rem; /* Scaled down slightly */
             color: var(--light-aqua);
             letter-spacing: 4px;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
             text-transform: uppercase;
-        }
-
-        .heading-adriana {
-            font-family: var(--font-adriana);
-            font-size: 6.5rem;
-            line-height: 1.1;
-            color: var(--white);
-            margin: 0 0 50px 0;
-            font-weight: 500;
         }
 
         .heading-wide {
             font-family: var(--font-wide);
-            font-size: 4.5rem;
-            line-height: 1.25;
+            font-size: 4rem; /* Scaled down slightly */
+            line-height: 1.2;
             color: var(--white);
-            margin: 0 0 50px 0;
+            margin: 0 0 40px 0;
             text-transform: uppercase;
         }
 
@@ -143,46 +122,18 @@
 
         .paragraph {
             font-family: var(--font-body);
-            font-size: 2.5rem;
-            line-height: 1.6;
-            color: var(--off-white);
-            font-weight: 300;
-            margin-bottom: 50px;
-        }
-
-        /* Services List Styling */
-        .service-list {
-            display: flex;
-            flex-direction: column;
-            gap: 50px;
-        }
-
-        .service-item {
-            border-left: 6px solid var(--bright-cyan);
-            padding-left: 40px;
-        }
-
-        .service-title {
-            font-family: var(--font-adriana);
-            font-size: 3.5rem;
-            color: var(--light-aqua);
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .service-desc {
-            font-family: var(--font-body);
-            font-size: 2.2rem;
-            color: var(--off-white);
+            font-size: 2.1rem; /* Reduced to ensure no cut-offs */
             line-height: 1.5;
+            color: var(--off-white);
             font-weight: 300;
+            margin-bottom: 35px; /* Reduced spacing between paragraphs */
         }
 
         /* Footer Text */
         .footer-action {
-            margin-top: auto;
+            margin-top: auto; /* Pushes element to the very bottom securely */
             font-family: var(--font-wide);
-            font-size: 2rem;
+            font-size: 1.6rem; /* Scaled down slightly */
             color: var(--bright-cyan);
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -190,10 +141,10 @@
             align-items: center;
             justify-content: space-between;
             border-top: 2px solid rgba(255,255,255,0.1);
-            padding-top: 40px;
+            padding-top: 35px;
         }
 
-        /* Decorative Elements */
+        /* Decorative Background Glow */
         .glow {
             position: absolute;
             top: -150px;
@@ -217,19 +168,21 @@
 </head>
 <body>
 
-    <div class="controls">
-        <button onclick="downloadPoster('slide1', 'Sybix_Slide1.png')">⬇ Download Slide 1</button>
-        <button onclick="downloadPoster('slide2', 'Sybix_Slide2.png')">⬇ Download Slide 2</button>
-    </div>
+    <button onclick="downloadPoster('slide1', 'Sybix_Slide1.png')">⬇ Download Slide 1</button>
 
-    <div class="preview-container">
-        <!-- SLIDE 1: Who We Are -->
-        <div class="poster bg-slide-1" id="slide1">
+    <div class="preview-wrapper">
+        <!-- POSTER START -->
+        <div class="poster" id="slide1">
+            <!-- Decorative Glow -->
             <div class="glow"></div>
             
             <div class="content">
-                <!-- LOGO GOES HERE -->
-                <img src="logo.jpg" alt="Sybix Secure" class="logo">
+                
+                <!-- ========================================== -->
+                <!-- PASTE YOUR TRANSPARENT LOGO IMAGE URL BELOW -->
+                <!-- ========================================== -->
+                <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Secure" class="logo" style="border: 2px dashed #38a4b8; padding: 20px; box-sizing: border-box; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><text x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'20\' fill=\'%2366e3e7\' text-anchor=\'middle\' alignment-baseline=\'middle\'>PASTE LOGO URL HERE</text></svg>');">
+                
 
                 <div class="eyebrow">Who We Are</div>
                 
@@ -242,61 +195,38 @@
                     We are a passionate collective dedicated to bringing human-first support to the modern victim. We bring the expertise to stop threats, and the empathy to support you through it.
                 </p>
 
-                <!-- Bottom Action -->
+                <!-- Bottom Swipe Text -->
                 <div class="footer-action">
                     <span>Swipe to see what we do</span>
                     <span>&rarr;</span>
                 </div>
+
             </div>
         </div>
-
-        <!-- SLIDE 2: What We Do -->
-        <div class="poster bg-slide-2" id="slide2">
-            <div class="content">
-                <!-- LOGO GOES HERE -->
-                <img src="logo.jpg" alt="Sybix Secure" class="logo">
-
-                <div class="eyebrow">What We Do</div>
-                
-                <h1 class="heading-adriana">Reclaiming your digital life.</h1>
-                
-                <div class="service-list">
-                    <!-- Service 1 -->
-                    <div class="service-item">
-                        <div class="service-title">Account Recovery</div>
-                        <div class="service-desc">Gentle, step-by-step guidance to reclaim your hijacked social, email, or banking accounts.</div>
-                    </div>
-
-                    <!-- Service 2 -->
-                    <div class="service-item">
-                        <div class="service-title">Malware Removal</div>
-                        <div class="service-desc">Easy-to-follow help to clean harmful software from your personal devices.</div>
-                    </div>
-
-                    <!-- Service 3 -->
-                    <div class="service-item">
-                        <div class="service-title">Content Takedown</div>
-                        <div class="service-desc">Fast, discreet removal of sensitive leaked content. We fight to restore your privacy.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- POSTER END -->
     </div>
 
-    <!-- Script to handle downloading -->
+    <!-- Script to handle downloading at exactly 1080x1350 resolution -->
     <script>
         function downloadPoster(elementId, filename) {
             const element = document.getElementById(elementId);
             
+            // Remove the placeholder dashed border just in case before downloading
+            const logoEl = element.querySelector('.logo');
+            logoEl.style.border = 'none';
+
             html2canvas(element, {
-                scale: 1, // Ensures it captures at exactly 1080x1350
-                useCORS: true,
+                scale: 1, // Ensures output is exactly 1080x1350, ignoring the CSS scale preview
+                useCORS: true, // Allows loading the external logo URL
                 backgroundColor: null
             }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = filename;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
+                
+                // Put border back for preview if desired
+                logoEl.style.border = '2px dashed #38a4b8'; 
             });
         }
     </script>
