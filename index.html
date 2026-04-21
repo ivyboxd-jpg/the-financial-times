@@ -2,164 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sybix Secure - Slide 2 (Background Matched)</title>
-    
+    <title>Sybix Secure - Slide 1 (Safe Wording)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --dark-navy: #0b1325;
-            --teal: #1a5e78;
-            --bright-cyan: #38a4b8;
-            --light-aqua: #66e3e7;
-            --white: #ffffff;
-            --off-white: #e0e6ed;
-            --font-wide: 'Syncopate', sans-serif;
-            --font-adriana: 'Playfair Display', serif;
-            --font-body: 'Lato', sans-serif;
+            --dark-navy: #0b1325; --teal: #1a5e78; --bright-cyan: #38a4b8;
+            --light-aqua: #66e3e7; --white: #ffffff; --off-white: #e0e6ed;
+            --font-wide: 'Syncopate', sans-serif; --font-body: 'Lato', sans-serif;
         }
-
         * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-        
-        body {
-            background-color: #111822;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-        }
-
-        .preview-scale {
-            transform: scale(0.6); 
-            transform-origin: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* LOCKED 1080x1350 - Background matched to Slide 1 */
+        body { background-color: #111822; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        .preview-scale { transform: scale(0.6); transform-origin: center; display: flex; justify-content: center; align-items: center; }
         .poster {
-            width: 1080px;
-            height: 1350px;
-            /* EXACT BACKGROUND FROM SLIDE 1 */
-            background: linear-gradient(150deg, var(--dark-navy) 0%, #0d2136 100%); 
-            padding: 60px 90px; 
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
+            width: 1080px; height: 1350px;
+            background: linear-gradient(150deg, var(--dark-navy) 0%, #0d2136 100%);
+            padding: 90px; display: flex; flex-direction: column; position: relative; overflow: hidden;
         }
-
-        .content {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        /* Logo - Locked at 450px */
-        .logo {
-            width: 450px; 
-            height: auto;
-            align-self: center;
-            margin-bottom: 30px;
-        }
-
-        .eyebrow {
-            font-family: var(--font-wide);
-            font-size: 1.4rem;
-            color: var(--light-aqua);
-            letter-spacing: 5px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .heading-adriana {
-            font-family: var(--font-adriana);
-            font-size: 4.5rem;
-            line-height: 1.1;
-            color: var(--white);
-            margin: 0 0 40px 0;
-            font-weight: 500;
-        }
-
-        /* Service List */
-        .service-list {
-            display: flex;
-            flex-direction: column;
-            gap: 25px; 
-        }
-
-        .service-item {
-            border-left: 6px solid var(--bright-cyan);
-            padding-left: 30px;
-        }
-
-        .service-title {
-            font-family: var(--font-wide);
-            font-size: 1.5rem;
-            color: var(--light-aqua);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        .service-desc {
-            font-family: var(--font-body);
-            font-size: 1.75rem;
-            color: var(--off-white);
-            line-height: 1.4;
-            font-weight: 300;
-        }
-
-        @media print {
-            body { background: white; overflow: visible; }
-            .preview-scale { transform: none; width: 1080px; height: 1350px; }
-            .poster { box-shadow: none; border: none; }
-        }
+        .content { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; }
+        .logo { width: 450px; height: auto; align-self: center; margin-bottom: 60px; }
+        .eyebrow { font-family: var(--font-wide); font-size: 1.5rem; color: var(--light-aqua); letter-spacing: 5px; margin-bottom: 30px; text-transform: uppercase; }
+        .heading-wide { font-family: var(--font-wide); font-size: 4rem; line-height: 1.1; color: var(--white); margin: 0 0 40px 0; text-transform: uppercase; }
+        .heading-wide span { color: var(--light-aqua); }
+        .paragraph { font-family: var(--font-body); font-size: 2rem; line-height: 1.6; color: var(--off-white); font-weight: 300; margin: 0 0 35px 0; }
+        .footer-action { margin-top: auto; font-family: var(--font-wide); font-size: 1.8rem; color: var(--bright-cyan); letter-spacing: 3px; text-transform: uppercase; display: flex; align-items: center; justify-content: space-between; border-top: 3px solid rgba(255,255,255,0.1); padding-top: 40px; padding-bottom: 20px; }
+        .arrow { font-size: 3rem; }
     </style>
 </head>
 <body>
-
     <div class="preview-scale">
-        <div class="poster" id="slide2">
+        <div class="poster">
             <div class="content">
-                
-                <!-- Logo -->
                 <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Secure" class="logo">
-                
-                <div class="eyebrow">How we help</div>
-                
-                <h1 class="heading-adriana">Reclaiming your <br>digital peace.</h1>
-                
-                <div class="service-list">
-                    <!-- Point 1 -->
-                    <div class="service-item">
-                        <div class="service-title">Getting you back in</div>
-                        <div class="service-desc">Losing access to your accounts is incredibly stressful. We help you navigate the recovery process and reclaim your identity.</div>
-                    </div>
-
-                    <!-- Point 2 -->
-                    <div class="service-item">
-                        <div class="service-title">Cleaning the noise</div>
-                        <div class="service-desc">We identify and remove hidden threats, ensuring your personal devices feel safe, private, and like home again.</div>
-                    </div>
-
-                    <!-- Point 3 -->
-                    <div class="service-item">
-                        <div class="service-title">Defending your privacy</div>
-                        <div class="service-desc">If your private life has been compromised, we fight to remove the content and help you restore your personal boundaries.</div>
-                    </div>
+                <div class="eyebrow">Who We Are</div>
+                <h1 class="heading-wide">TECH SUPPORT WITH A <span>HEARTBEAT.</span></h1>
+                <p class="paragraph">Losing access to your account can feel overwhelming. We get it. You shouldn't have to face it alone, and cybersecurity shouldn't feel like a privilege.</p>
+                <p class="paragraph">We are a passionate collective dedicated to bringing human-first support to the modern victim. We bring the expertise to address security issues, and the empathy to support you through it.</p>
+                <div class="footer-action">
+                    <span>Swipe to see what we do</span>
+                    <span class="arrow">&rarr;</span>
                 </div>
-
             </div>
         </div>
     </div>
-
 </body>
 </html>
