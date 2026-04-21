@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sybix Secure - Slide 2 (Final Fix)</title>
+    <title>Sybix Secure - Slide 2 (Full View Fixed)</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,12 +42,12 @@
             align-items: center;
         }
 
-        /* 1080x1350 - Alignment matched to Slide 1 */
+        /* LOCKED 1080x1350 */
         .poster {
             width: 1080px;
             height: 1350px;
             background: linear-gradient(150deg, #0d2136 0%, var(--teal) 100%);
-            padding: 80px 90px; /* Standardized padding */
+            padding: 60px 90px; /* Reduced vertical padding to 60px to fit all text */
             display: flex;
             flex-direction: column;
             position: relative;
@@ -62,37 +62,37 @@
             height: 100%;
         }
 
-        /* Logo - Locked at 450px */
+        /* Logo - Keep 450px as requested */
         .logo {
             width: 450px; 
             height: auto;
             align-self: center;
-            margin-bottom: 50px; /* Slightly tightened to save room */
+            margin-bottom: 30px; /* Tightened for space */
         }
 
         .eyebrow {
             font-family: var(--font-wide);
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--light-aqua);
             letter-spacing: 5px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-transform: uppercase;
         }
 
         .heading-adriana {
             font-family: var(--font-adriana);
-            font-size: 5.2rem; /* Adjusted slightly for better fit */
+            font-size: 4.5rem; /* Adjusted to 4.5rem to prevent text cutoff */
             line-height: 1.1;
             color: var(--white);
-            margin: 0 0 45px 0;
+            margin: 0 0 40px 0;
             font-weight: 500;
         }
 
-        /* Service List - Point 3 is now fully visible */
+        /* Service List - Now spaced to ensure all 3 points fit */
         .service-list {
             display: flex;
             flex-direction: column;
-            gap: 30px; /* Balanced gap */
+            gap: 25px; 
         }
 
         .service-item {
@@ -102,7 +102,7 @@
 
         .service-title {
             font-family: var(--font-wide);
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             color: var(--light-aqua);
             margin-bottom: 8px;
             text-transform: uppercase;
@@ -110,17 +110,17 @@
 
         .service-desc {
             font-family: var(--font-body);
-            font-size: 1.85rem; 
+            font-size: 1.75rem; /* Slightly smaller for perfect fit */
             color: var(--off-white);
-            line-height: 1.45;
+            line-height: 1.4;
             font-weight: 300;
         }
 
-        /* Footer - Matches Slide 1 exactly */
+        /* Footer - Matches Slide 1 */
         .footer-action {
             margin-top: auto; 
             font-family: var(--font-wide);
-            font-size: 1.8rem; 
+            font-size: 1.7rem; 
             color: var(--bright-cyan);
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -128,7 +128,7 @@
             align-items: center;
             justify-content: space-between;
             border-top: 3px solid rgba(255,255,255,0.1);
-            padding-top: 35px;
+            padding-top: 30px;
             padding-bottom: 10px;
         }
 
@@ -147,6 +147,7 @@
         <div class="poster" id="slide2">
             <div class="content">
                 
+                <!-- Logo -->
                 <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Secure" class="logo">
                 
                 <div class="eyebrow">How we help</div>
@@ -157,7 +158,31 @@
                     <!-- Point 1 -->
                     <div class="service-item">
                         <div class="service-title">Getting you back in</div>
-                        <div class="service-desc">Losing access to your accounts is incredibly stressful. We help you navigate the recovery process and reclaim your identity.</div>
+                        <div class="service-desc">Losing access to your accounts is stressful. We help you navigate the recovery process and reclaim your identity.</div>
                     </div>
 
                     <!-- Point 2 -->
+                    <div class="service-item">
+                        <div class="service-title">Cleaning the noise</div>
+                        <div class="service-desc">We identify and remove hidden threats, ensuring your personal devices feel safe, private, and like home again.</div>
+                    </div>
+
+                    <!-- Point 3 -->
+                    <div class="service-item">
+                        <div class="service-title">Defending your privacy</div>
+                        <div class="service-desc">If your private life has been compromised, we fight to remove the content and help you restore your personal boundaries.</div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="footer-action">
+                    <span>Swipe for our process</span>
+                    <span class="arrow">&rarr;</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
