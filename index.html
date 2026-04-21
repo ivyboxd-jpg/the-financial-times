@@ -27,7 +27,7 @@
             --font-body: 'Lato', 'Arimo', sans-serif;
         }
 
-        /* Centers the poster perfectly on the screen for screenshots */
+        /* SCREEN STYLES - How it looks on your monitor */
         body {
             background-color: #111822; 
             margin: 0;
@@ -37,23 +37,22 @@
             justify-content: center;
             align-items: center;
             font-family: var(--font-body);
-            overflow: hidden; 
+            overflow: auto; 
         }
 
-        /* Scales the poster so it fits nicely on a standard monitor */
         .preview-wrapper {
-            transform: scale(0.65); /* Keeps it visible on your screen */
+            transform: scale(0.65);
             transform-origin: center;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 50px 0;
         }
 
-        /* ACTUAL POSTER - EXACT 1080x1350 Instagram Portrait Size */
         .poster {
             width: 1080px;
             height: 1350px;
-            padding: 80px 90px; /* Reduced top/bottom padding to give content more room */
+            padding: 80px 90px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -61,25 +60,26 @@
             overflow: hidden;
             box-shadow: 0 40px 80px rgba(0,0,0,0.6); 
             background: linear-gradient(150deg, var(--dark-navy) 0%, #0d2136 100%); 
+            /* Critical for printing colors */
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
-        /* Logo Element - Kept Large, margins reduced */
         .logo {
-            width: 320px; /* Large size */
+            width: 320px;
             max-height: 250px; 
             height: auto;
             align-self: center;
-            margin-bottom: 20px; /* Tightened gap */
+            margin-bottom: 20px;
             object-fit: contain;
         }
 
-        /* Typography */
         .eyebrow {
             font-family: var(--font-wide);
             font-size: 1.4rem;
             color: var(--light-aqua);
             letter-spacing: 4px;
-            margin-bottom: 15px; /* Tightened gap */
+            margin-bottom: 15px;
             text-transform: uppercase;
         }
 
@@ -88,26 +88,23 @@
             font-size: 3.8rem; 
             line-height: 1.2;
             color: var(--white);
-            margin: 0 0 25px 0; /* Tightened gap */
+            margin: 0 0 25px 0;
             text-transform: uppercase;
         }
 
-        .heading-wide span {
-            color: var(--light-aqua);
-        }
+        .heading-wide span { color: var(--light-aqua); }
 
         .paragraph {
             font-family: var(--font-body);
-            font-size: 1.85rem; /* Slightly reduced so it fits nicely on 3 lines */
+            font-size: 1.85rem;
             line-height: 1.5;
             color: var(--off-white);
             font-weight: 300;
-            margin-bottom: 25px; /* Tightened gap */
+            margin-bottom: 25px;
         }
 
-        /* Footer Text */
         .footer-action {
-            margin-top: auto; /* Pushes element to the very bottom */
+            margin-top: auto; 
             font-family: var(--font-wide);
             font-size: 1.6rem; 
             color: var(--bright-cyan);
@@ -117,11 +114,10 @@
             align-items: center;
             justify-content: space-between;
             border-top: 2px solid rgba(255,255,255,0.1);
-            padding-top: 25px; /* Adjusted padding above the text */
-            margin-bottom: 10px; /* Safety margin from the absolute bottom edge */
+            padding-top: 25px;
+            margin-bottom: 10px;
         }
 
-        /* Decorative Background Glow */
         .glow {
             position: absolute;
             top: -150px;
@@ -141,42 +137,66 @@
             flex-direction: column;
             height: 100%;
         }
+
+        /* PRINT STYLES - This triggers when you try to print */
+        @media print {
+            @page {
+                size: auto;
+                margin: 0mm; /* Removes browser header/footer text */
+            }
+
+            body {
+                background: white; /* Clean background for the paper */
+                display: block;
+                overflow: visible;
+            }
+
+            .preview-wrapper {
+                transform: none !important; /* Stop the 0.65 scaling */
+                display: block;
+                padding: 0;
+                margin: 0;
+            }
+
+            .poster {
+                box-shadow: none;
+                width: 100vw;   /* Scale to fit the full width of the paper */
+                height: 100vh;  /* Scale to fit the full height of the paper */
+                page-break-after: always;
+                page-break-inside: avoid;
+                border: none;
+            }
+
+            /* Ensure background colors and images print */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="preview-wrapper">
-        <!-- POSTER START -->
         <div class="poster" id="slide1">
-            
-            <!-- Decorative Glow -->
             <div class="glow"></div>
-            
             <div class="content">
-                
-                <!-- Sybix Logo -->
                 <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Secure" class="logo">
-                
                 <div class="eyebrow">Who We Are</div>
-                
                 <h1 class="heading-wide">TECH SUPPORT WITH A <span>HEARTBEAT.</span></h1>
-                
                 <p class="paragraph">
                     Being hacked or compromised feels terrifying. We get it. You shouldn't have to face it alone, and cybersecurity shouldn't feel like a privilege.
                 </p>
                 <p class="paragraph">
                     We are a passionate collective dedicated to bringing human-first support to the modern victim. We bring the expertise to stop threats, and the empathy to support you through it.
                 </p>
-
-                <!-- Bottom Swipe Text -->
                 <div class="footer-action">
                     <span>Swipe to see what we do</span>
                     <span>&rarr;</span>
                 </div>
-
             </div>
         </div>
-        <!-- POSTER END -->
     </div>
 
 </body>
