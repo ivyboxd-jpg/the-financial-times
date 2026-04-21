@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sybix Secure - Slide 1</title>
+    <title>Sybix Secure - Slide 1 Fixed</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,7 +29,7 @@
 
         /* Centers the poster perfectly on the screen for screenshots */
         body {
-            background-color: #111822; /* Darker background to make poster pop */
+            background-color: #111822; 
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -37,12 +37,12 @@
             justify-content: center;
             align-items: center;
             font-family: var(--font-body);
-            overflow: hidden; /* Prevents scrollbars */
+            overflow: hidden; 
         }
 
         /* Scales the poster so it fits nicely on a standard monitor */
         .preview-wrapper {
-            transform: scale(0.65); /* Adjust this decimal if you need it larger/smaller on your screen */
+            transform: scale(0.65); /* Keeps it visible on your screen */
             transform-origin: center;
             display: flex;
             justify-content: center;
@@ -53,43 +53,42 @@
         .poster {
             width: 1080px;
             height: 1350px;
-            padding: 100px 90px;
+            padding: 80px 90px; /* Reduced top/bottom padding to give content more room */
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.6); /* Deep shadow for contrast against background */
-            /* Gradient Background */
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6); 
             background: linear-gradient(150deg, var(--dark-navy) 0%, #0d2136 100%); 
         }
 
-        /* Logo Element - Size Increased & Box Removed */
+        /* Logo Element - Kept Large, margins reduced */
         .logo {
-            width: 350px; /* Increased size */
-            max-height: 280px; 
+            width: 320px; /* Large size */
+            max-height: 250px; 
             height: auto;
             align-self: center;
-            margin-bottom: 30px; /* Adjusted gap to accommodate larger logo */
+            margin-bottom: 20px; /* Tightened gap */
             object-fit: contain;
         }
 
         /* Typography */
         .eyebrow {
             font-family: var(--font-wide);
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--light-aqua);
             letter-spacing: 4px;
-            margin-bottom: 25px;
+            margin-bottom: 15px; /* Tightened gap */
             text-transform: uppercase;
         }
 
         .heading-wide {
             font-family: var(--font-wide);
-            font-size: 4rem; 
+            font-size: 3.8rem; 
             line-height: 1.2;
             color: var(--white);
-            margin: 0 0 40px 0;
+            margin: 0 0 25px 0; /* Tightened gap */
             text-transform: uppercase;
         }
 
@@ -99,16 +98,16 @@
 
         .paragraph {
             font-family: var(--font-body);
-            font-size: 2rem; /* Adjusted slightly to ensure it never cuts off with the bigger logo */
+            font-size: 1.85rem; /* Slightly reduced so it fits nicely on 3 lines */
             line-height: 1.5;
             color: var(--off-white);
             font-weight: 300;
-            margin-bottom: 35px;
+            margin-bottom: 25px; /* Tightened gap */
         }
 
         /* Footer Text */
         .footer-action {
-            margin-top: auto; /* Pushes element to the very bottom securely */
+            margin-top: auto; /* Pushes element to the very bottom */
             font-family: var(--font-wide);
             font-size: 1.6rem; 
             color: var(--bright-cyan);
@@ -118,7 +117,8 @@
             align-items: center;
             justify-content: space-between;
             border-top: 2px solid rgba(255,255,255,0.1);
-            padding-top: 35px;
+            padding-top: 25px; /* Adjusted padding above the text */
+            margin-bottom: 10px; /* Safety margin from the absolute bottom edge */
         }
 
         /* Decorative Background Glow */
