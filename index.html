@@ -7,12 +7,11 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --dark-navy: #0b1325;
-            --deep-blue: #15324c;
             --teal: #1a5e78;
             --bright-cyan: #38a4b8;
             --light-aqua: #66e3e7;
@@ -22,7 +21,7 @@
             --font-body: 'Lato', sans-serif;
         }
 
-        /* Essential for Printing */
+        /* Prevent 2-page printing */
         @page {
             size: portrait;
             margin: 0;
@@ -45,13 +44,12 @@
             font-family: var(--font-body);
         }
 
-        /* The Poster Container - Uses Aspect Ratio instead of fixed pixels */
+        /* Poster Container */
         .poster {
             background: linear-gradient(150deg, var(--dark-navy) 0%, #0d2136 100%);
-            width: 80vh; /* Scaled based on screen height */
+            width: 80vh; /* Scaled for screen visibility */
             aspect-ratio: 1080 / 1350;
-            max-width: 100%;
-            padding: 6% 8%; /* Percentage padding keeps things relative */
+            padding: 60px 70px; /* Fixed padding for stability */
             display: flex;
             flex-direction: column;
             position: relative;
@@ -61,10 +59,10 @@
 
         .glow {
             position: absolute;
-            top: -10%;
-            right: -10%;
-            width: 60%;
-            height: 50%;
+            top: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
             background: radial-gradient(circle, var(--teal) 0%, rgba(26,94,120,0) 70%);
             opacity: 0.4;
             z-index: 0;
@@ -75,69 +73,82 @@
             z-index: 1;
             display: flex;
             flex-direction: column;
-            height: 100%;
+            height: 100%; /* Important for pushing footer down */
         }
 
+        /* Logo - Increased Size */
         .logo {
-            width: 40%;
-            max-height: 18%;
+            width: 380px; /* Increased from previous */
+            max-width: 80%;
+            height: auto;
             align-self: center;
-            margin-bottom: 5%;
+            margin-bottom: 40px;
             object-fit: contain;
         }
 
         .eyebrow {
             font-family: var(--font-wide);
-            font-size: clamp(1rem, 1.8vh, 1.4rem);
+            font-size: 1.2rem;
             color: var(--light-aqua);
             letter-spacing: 4px;
-            margin-bottom: 3%;
+            margin-bottom: 20px;
             text-transform: uppercase;
         }
 
         .heading-wide {
             font-family: var(--font-wide);
-            font-size: clamp(1.8rem, 4.5vh, 3.8rem); 
-            line-height: 1.2;
+            font-size: 3.2rem; 
+            line-height: 1.1;
             color: var(--white);
-            margin: 0 0 4% 0;
+            margin: 0 0 35px 0;
             text-transform: uppercase;
         }
 
         .heading-wide span { color: var(--light-aqua); }
 
+        /* Paragraphs - Fixed sizing and spacing */
         .paragraph {
-            font-size: clamp(1rem, 2.2vh, 1.85rem);
+            font-size: 1.65rem;
             line-height: 1.5;
             color: var(--off-white);
             font-weight: 300;
-            margin-bottom: 4%;
+            margin: 0 0 25px 0;
         }
 
+        /* Footer - Fixed Visibility */
         .footer-action {
             margin-top: auto; 
             font-family: var(--font-wide);
-            font-size: clamp(1rem, 1.8vh, 1.6rem);
+            font-size: 1.4rem; 
             color: var(--bright-cyan);
             letter-spacing: 2px;
             text-transform: uppercase;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 4%;
-            margin-bottom: 2%;
+            border-top: 2px solid rgba(255,255,255,0.1);
+            padding-top: 25px;
+            padding-bottom: 10px;
         }
 
-        /* PRINT OVERRIDE: Force the poster to fill the page */
+        .arrow {
+            font-size: 2rem;
+            line-height: 0;
+        }
+
+        /* Print Settings */
         @media print {
             body { background: none; }
             .poster {
                 width: 100vw;
                 height: 100vh;
                 box-shadow: none;
-                page-break-after: always;
+                padding: 80px 90px;
             }
+            /* Scales font specifically for the printed page size */
+            .heading-wide { font-size: 4rem; }
+            .paragraph { font-size: 2rem; }
+            .footer-action { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -146,12 +157,14 @@
     <div class="poster">
         <div class="glow"></div>
         <div class="content">
+            <!-- Increased Logo size slightly -->
             <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Secure" class="logo">
             
             <div class="eyebrow">Who We Are</div>
             
             <h1 class="heading-wide">TECH SUPPORT WITH A <span>HEARTBEAT.</span></h1>
             
+            <!-- Paragraphs restored to full legibility -->
             <p class="paragraph">
                 Being hacked or compromised feels terrifying. We get it. You shouldn't have to face it alone, and cybersecurity shouldn't feel like a privilege.
             </p>
@@ -159,9 +172,10 @@
                 We are a passionate collective dedicated to bringing human-first support to the modern victim. We bring the expertise to stop threats, and the empathy to support you through it.
             </p>
 
+            <!-- Bottom Swipe Action Visible -->
             <div class="footer-action">
                 <span>Swipe to see what we do</span>
-                <span>&rarr;</span>
+                <span class="arrow">&rarr;</span>
             </div>
         </div>
     </div>
