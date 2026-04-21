@@ -9,9 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
-    
-    <!-- html2canvas library to enable downloading -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
@@ -30,77 +27,57 @@
             --font-body: 'Lato', 'Arimo', sans-serif;
         }
 
+        /* Centers the poster perfectly on the screen for screenshots */
         body {
-            background-color: #1a2530;
+            background-color: #111822; /* Darker background to make poster pop */
             margin: 0;
-            padding: 40px;
-            font-family: var(--font-body);
+            padding: 0;
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 30px;
+            font-family: var(--font-body);
+            overflow: hidden; /* Prevents scrollbars */
         }
 
-        /* Download Button */
-        button {
-            background-color: var(--light-aqua);
-            color: var(--dark-navy);
-            border: none;
-            padding: 15px 40px;
-            font-family: var(--font-wide);
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(102, 227, 231, 0.3);
-            transition: all 0.2s;
-            z-index: 10;
-        }
-
-        button:hover {
-            transform: scale(1.05);
-            background-color: var(--bright-cyan);
-            color: var(--white);
-        }
-
-        /* Wrapper scales the massive 1080x1350 poster down so you can see it on your monitor */
+        /* Scales the poster so it fits nicely on a standard monitor */
         .preview-wrapper {
-            transform: scale(0.5); /* Scales it down 50% for previewing */
-            transform-origin: top center;
-            height: 675px; /* 50% of 1350 */
-            width: 540px;  /* 50% of 1080 */
+            transform: scale(0.65); /* Adjust this decimal if you need it larger/smaller on your screen */
+            transform-origin: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* ACTUAL POSTER - 1080x1350 Instagram Portrait Size */
+        /* ACTUAL POSTER - EXACT 1080x1350 Instagram Portrait Size */
         .poster {
             width: 1080px;
             height: 1350px;
-            padding: 100px 90px; /* Adjusted padding to give text more room */
+            padding: 100px 90px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6); /* Deep shadow for contrast against background */
             /* Gradient Background */
             background: linear-gradient(150deg, var(--dark-navy) 0%, #0d2136 100%); 
         }
 
-        /* Logo Element - Scaled Down */
+        /* Logo Element - Size Increased & Box Removed */
         .logo {
-            width: 200px; /* Max width to prevent it from getting too big */
-            max-height: 180px; /* Safety restraint on height */
+            width: 350px; /* Increased size */
+            max-height: 280px; 
             height: auto;
             align-self: center;
-            margin-bottom: 50px; /* Reduced gap under logo */
+            margin-bottom: 30px; /* Adjusted gap to accommodate larger logo */
             object-fit: contain;
-            background-color: transparent; /* Ensures no background fills in */
         }
 
         /* Typography */
         .eyebrow {
             font-family: var(--font-wide);
-            font-size: 1.5rem; /* Scaled down slightly */
+            font-size: 1.5rem;
             color: var(--light-aqua);
             letter-spacing: 4px;
             margin-bottom: 25px;
@@ -109,7 +86,7 @@
 
         .heading-wide {
             font-family: var(--font-wide);
-            font-size: 4rem; /* Scaled down slightly */
+            font-size: 4rem; 
             line-height: 1.2;
             color: var(--white);
             margin: 0 0 40px 0;
@@ -122,18 +99,18 @@
 
         .paragraph {
             font-family: var(--font-body);
-            font-size: 2.1rem; /* Reduced to ensure no cut-offs */
+            font-size: 2rem; /* Adjusted slightly to ensure it never cuts off with the bigger logo */
             line-height: 1.5;
             color: var(--off-white);
             font-weight: 300;
-            margin-bottom: 35px; /* Reduced spacing between paragraphs */
+            margin-bottom: 35px;
         }
 
         /* Footer Text */
         .footer-action {
             margin-top: auto; /* Pushes element to the very bottom securely */
             font-family: var(--font-wide);
-            font-size: 1.6rem; /* Scaled down slightly */
+            font-size: 1.6rem; 
             color: var(--bright-cyan);
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -168,22 +145,18 @@
 </head>
 <body>
 
-    <button onclick="downloadPoster('slide1', 'Sybix_Slide1.png')">⬇ Download Slide 1</button>
-
     <div class="preview-wrapper">
         <!-- POSTER START -->
         <div class="poster" id="slide1">
+            
             <!-- Decorative Glow -->
             <div class="glow"></div>
             
             <div class="content">
                 
-                <!-- ========================================== -->
-                <!-- PASTE YOUR TRANSPARENT LOGO IMAGE URL BELOW -->
-                <!-- ========================================== -->
-                <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Secure" class="logo" style="border: 2px dashed #38a4b8; padding: 20px; box-sizing: border-box; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><text x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'20\' fill=\'%2366e3e7\' text-anchor=\'middle\' alignment-baseline=\'middle\'>PASTE LOGO URL HERE</text></svg>');">
+                <!-- Sybix Logo -->
+                <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Secure" class="logo">
                 
-
                 <div class="eyebrow">Who We Are</div>
                 
                 <h1 class="heading-wide">TECH SUPPORT WITH A <span>HEARTBEAT.</span></h1>
@@ -205,31 +178,6 @@
         </div>
         <!-- POSTER END -->
     </div>
-
-    <!-- Script to handle downloading at exactly 1080x1350 resolution -->
-    <script>
-        function downloadPoster(elementId, filename) {
-            const element = document.getElementById(elementId);
-            
-            // Remove the placeholder dashed border just in case before downloading
-            const logoEl = element.querySelector('.logo');
-            logoEl.style.border = 'none';
-
-            html2canvas(element, {
-                scale: 1, // Ensures output is exactly 1080x1350, ignoring the CSS scale preview
-                useCORS: true, // Allows loading the external logo URL
-                backgroundColor: null
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = filename;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-                
-                // Put border back for preview if desired
-                logoEl.style.border = '2px dashed #38a4b8'; 
-            });
-        }
-    </script>
 
 </body>
 </html>
