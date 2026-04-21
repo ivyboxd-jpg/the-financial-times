@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sybix Secure - Fixed Poster</title>
+    <title>Sybix Secure - Slide 2</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -17,6 +17,7 @@
             --white: #ffffff;
             --off-white: #e0e6ed;
             --font-wide: 'Syncopate', sans-serif;
+            --font-adriana: 'Playfair Display', serif;
             --font-body: 'Lato', sans-serif;
         }
 
@@ -36,40 +37,29 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden; /* Prevents scrollbars from messing up the view */
+            overflow: hidden;
         }
 
-        /* This wrapper ensures it fits your monitor without changing the poster size */
+        /* Scales preview for your monitor */
         .preview-scale {
-            transform: scale(0.6); /* Adjust this if it's too big/small for your screen */
+            transform: scale(0.6); 
             transform-origin: center;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* THE POSTER - LOCKED DIMENSIONS */
+        /* THE POSTER - LOCKED 1080x1350 */
         .poster {
             width: 1080px;
             height: 1350px;
-            background: linear-gradient(150deg, var(--dark-navy) 0%, #0d2136 100%);
+            background: linear-gradient(150deg, #0d2136 0%, var(--teal) 100%);
             padding: 90px;
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
             box-shadow: 0 0 100px rgba(0,0,0,0.8);
-        }
-
-        .glow {
-            position: absolute;
-            top: -150px;
-            right: -150px;
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, var(--teal) 0%, rgba(26,94,120,0) 70%);
-            opacity: 0.5;
-            z-index: 0;
         }
 
         .content {
@@ -80,9 +70,9 @@
             height: 100%;
         }
 
-        /* LOGO - LARGER AS REQUESTED */
+        /* LOGO - LARGE SIZE */
         .logo {
-            width: 450px; /* Increased size */
+            width: 450px; 
             height: auto;
             align-self: center;
             margin-bottom: 60px;
@@ -97,25 +87,43 @@
             text-transform: uppercase;
         }
 
-        .heading-wide {
-            font-family: var(--font-wide);
-            font-size: 4rem; 
+        /* SLIDE 2 HEADING */
+        .heading-adriana {
+            font-family: var(--font-adriana);
+            font-size: 6rem;
             line-height: 1.1;
             color: var(--white);
-            margin: 0 0 40px 0;
+            margin: 0 0 50px 0;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        /* SERVICES LIST */
+        .service-list {
+            display: flex;
+            flex-direction: column;
+            gap: 45px;
+        }
+
+        .service-item {
+            border-left: 8px solid var(--bright-cyan);
+            padding-left: 40px;
+        }
+
+        .service-title {
+            font-family: var(--font-wide);
+            font-size: 1.8rem;
+            color: var(--light-aqua);
+            margin-bottom: 10px;
             text-transform: uppercase;
         }
 
-        .heading-wide span { color: var(--light-aqua); }
-
-        /* PARAGRAPHS - VISIBLE AND SPACED */
-        .paragraph {
+        .service-desc {
             font-family: var(--font-body);
-            font-size: 2rem;
-            line-height: 1.6;
+            font-size: 1.85rem;
             color: var(--off-white);
+            line-height: 1.5;
             font-weight: 300;
-            margin: 0 0 35px 0;
         }
 
         /* FOOTER - PINNED TO BOTTOM */
@@ -129,7 +137,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-top: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid rgba(255,255,255,0.2);
             padding-top: 40px;
             padding-bottom: 20px;
         }
@@ -138,7 +146,7 @@
             font-size: 3rem;
         }
 
-        /* PRINT OVERRIDE - NO SCALING */
+        /* PRINT OVERRIDE */
         @media print {
             body { background: white; overflow: visible; }
             .preview-scale { transform: none; width: 1080px; height: 1350px; }
@@ -149,25 +157,39 @@
 <body>
 
     <div class="preview-scale">
-        <div class="poster">
-            <div class="glow"></div>
+        <div class="poster" id="slide2">
             <div class="content">
                 
+                <!-- Logo -->
                 <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Secure" class="logo">
                 
-                <div class="eyebrow">Who We Are</div>
+                <div class="eyebrow">What We Do</div>
                 
-                <h1 class="heading-wide">TECH SUPPORT WITH A <span>HEARTBEAT.</span></h1>
+                <h1 class="heading-adriana">Reclaiming your digital life.</h1>
                 
-                <p class="paragraph">
-                    Being hacked or compromised feels terrifying. We get it. You shouldn't have to face it alone, and cybersecurity shouldn't feel like a privilege.
-                </p>
-                <p class="paragraph">
-                    We are a passionate collective dedicated to bringing human-first support to the modern victim. We bring the expertise to stop threats, and the empathy to support you through it.
-                </p>
+                <div class="service-list">
+                    <!-- Service 1 -->
+                    <div class="service-item">
+                        <div class="service-title">Account Recovery</div>
+                        <div class="service-desc">Gentle, step-by-step guidance to reclaim your hijacked social, email, or banking accounts.</div>
+                    </div>
 
+                    <!-- Service 2 -->
+                    <div class="service-item">
+                        <div class="service-title">Malware Removal</div>
+                        <div class="service-desc">Easy-to-follow help to clean harmful software from your personal devices.</div>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="service-item">
+                        <div class="service-title">Content Takedown</div>
+                        <div class="service-desc">Fast, discreet removal of sensitive leaked content. We fight to restore your privacy.</div>
+                    </div>
+                </div>
+
+                <!-- Footer Action -->
                 <div class="footer-action">
-                    <span>Swipe to see what we do</span>
+                    <span>Swipe for our process</span>
                     <span class="arrow">&rarr;</span>
                 </div>
 
