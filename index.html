@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sybix Secure - Slide 2 Enhanced</title>
+    <title>Sybix Secure - Slide 2 (Fixed Height)</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,8 +23,6 @@
 
         * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         
-        @page { size: 1080px 1350px; margin: 0; }
-
         body {
             background-color: #111822;
             margin: 0;
@@ -36,6 +34,7 @@
             overflow: hidden;
         }
 
+        /* Scaled for screen preview - doesn't affect print/screenshot dimensions */
         .preview-scale {
             transform: scale(0.6); 
             transform-origin: center;
@@ -44,26 +43,27 @@
             align-items: center;
         }
 
+        /* LOCKED AT 1080x1350 */
         .poster {
             width: 1080px;
             height: 1350px;
-            background: linear-gradient(160deg, #0b1325 0%, #1a5e78 100%);
-            padding: 80px 90px;
+            background: linear-gradient(160deg, #0b1325 0%, #15324c 100%);
+            padding: 60px 80px; /* Reduced vertical padding to prevent cut-off */
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
         }
 
-        /* Subtle background glow for visual depth */
-        .poster::before {
+        /* Background visual flair */
+        .poster::after {
             content: "";
             position: absolute;
-            bottom: -10%;
-            left: -10%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(102, 227, 231, 0.1) 0%, transparent 70%);
+            top: 20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(56, 164, 184, 0.15) 0%, transparent 70%);
             z-index: 0;
         }
 
@@ -76,57 +76,55 @@
         }
 
         .logo {
-            width: 450px; 
+            width: 400px; /* Big, but balanced for height */
             height: auto;
             align-self: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px; /* Tightened gap */
         }
 
         .eyebrow {
             font-family: var(--font-wide);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--light-aqua);
-            letter-spacing: 6px;
-            margin-bottom: 20px;
+            letter-spacing: 5px;
+            margin-bottom: 15px;
             text-transform: uppercase;
         }
 
         .heading-adriana {
             font-family: var(--font-adriana);
-            font-size: 5.5rem;
+            font-size: 4.8rem; /* Slightly smaller to prevent overflow */
             line-height: 1.1;
             color: var(--white);
-            margin: 0 0 50px 0;
+            margin: 0 0 40px 0;
             font-weight: 500;
         }
 
-        /* Visual Service Cards */
         .service-list {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 25px; /* Tightened gap between cards */
         }
 
+        /* Visual Card Style */
         .service-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-left: 6px solid var(--bright-cyan);
-            padding: 35px 40px;
-            border-radius: 0 15px 15px 0;
-            transition: background 0.3s ease;
+            background: rgba(255, 255, 255, 0.04);
+            border-left: 5px solid var(--light-aqua);
+            padding: 30px 35px;
+            border-radius: 0 12px 12px 0;
         }
 
         .service-title {
             font-family: var(--font-wide);
-            font-size: 1.5rem;
-            color: var(--light-aqua);
-            margin-bottom: 12px;
+            font-size: 1.4rem;
+            color: var(--bright-cyan);
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
 
         .service-desc {
             font-family: var(--font-body);
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             color: var(--off-white);
             line-height: 1.4;
             font-weight: 300;
@@ -135,24 +133,24 @@
         .footer-action {
             margin-top: auto; 
             font-family: var(--font-wide);
-            font-size: 1.6rem; 
+            font-size: 1.5rem; 
             color: var(--bright-cyan);
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-top: 2px solid rgba(255,255,255,0.1);
-            padding-top: 35px;
+            padding-top: 30px;
             padding-bottom: 10px;
         }
 
-        .arrow { font-size: 3rem; }
+        .arrow { font-size: 2.5rem; }
 
         @media print {
-            body { background: white; overflow: visible; }
+            body { background: white; }
             .preview-scale { transform: none; width: 1080px; height: 1350px; }
-            .poster { box-shadow: none; border: none; }
+            .poster { box-shadow: none; }
         }
     </style>
 </head>
@@ -162,7 +160,7 @@
         <div class="poster" id="slide2">
             <div class="content">
                 
-                <!-- Large Logo -->
+                <!-- Logo -->
                 <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Secure" class="logo">
                 
                 <div class="eyebrow">How we help</div>
@@ -170,25 +168,34 @@
                 <h1 class="heading-adriana">Reclaiming your <br>digital peace.</h1>
                 
                 <div class="service-list">
-                    <!-- Humane Service 1 -->
+                    <!-- Service 1 -->
                     <div class="service-item">
                         <div class="service-title">Getting you back in</div>
-                        <div class="service-desc">Losing an account feels like losing your voice. We walk beside you through the technical maze to reclaim your digital identity.</div>
+                        <div class="service-desc">Losing access feels like losing your voice. We help you navigate the maze to reclaim your digital identity.</div>
                     </div>
 
-                    <!-- Humane Service 2 -->
+                    <!-- Service 2 -->
                     <div class="service-item">
                         <div class="service-title">Cleaning the noise</div>
-                        <div class="service-desc">We help you sweep away harmful software and hidden threats, making your personal devices feel safe and like home again.</div>
+                        <div class="service-desc">We sweep away harmful software and hidden threats, making your devices feel safe and like home again.</div>
                     </div>
 
-                    <!-- Humane Service 3 -->
+                    <!-- Service 3 -->
                     <div class="service-item">
                         <div class="service-title">Protecting your story</div>
-                        <div class="service-desc">Your private life should stay private. We work discreetly and tirelessly to remove leaked content and restore your boundaries.</div>
+                        <div class="service-desc">Your private life should stay private. We work tirelessly to remove leaked content and restore your boundaries.</div>
                     </div>
                 </div>
 
-                <!-- Footer -->
+                <!-- Footer Action -->
                 <div class="footer-action">
                     <span>Swipe to see our process</span>
+                    <span class="arrow">&rarr;</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
