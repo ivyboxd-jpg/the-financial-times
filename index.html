@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sybix Secure - Poster</title>
+    <title>Sybix Secure - Fixed Poster</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,50 +20,55 @@
             --font-body: 'Lato', sans-serif;
         }
 
-        /* Prevent 2-page printing */
+        /* RESET & PRINT DEFAULTS */
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        
         @page {
-            size: portrait;
+            size: 1080px 1350px;
             margin: 0;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-        }
-
         body {
-            background-color: #111822; 
+            background-color: #111822;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: var(--font-body);
+            overflow: hidden; /* Prevents scrollbars from messing up the view */
         }
 
-        /* Poster Container */
+        /* This wrapper ensures it fits your monitor without changing the poster size */
+        .preview-scale {
+            transform: scale(0.6); /* Adjust this if it's too big/small for your screen */
+            transform-origin: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* THE POSTER - LOCKED DIMENSIONS */
         .poster {
+            width: 1080px;
+            height: 1350px;
             background: linear-gradient(150deg, var(--dark-navy) 0%, #0d2136 100%);
-            width: 80vh; /* Scaled for screen visibility */
-            aspect-ratio: 1080 / 1350;
-            padding: 60px 70px; /* Fixed padding for stability */
+            padding: 90px;
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+            box-shadow: 0 0 100px rgba(0,0,0,0.8);
         }
 
         .glow {
             position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 500px;
-            height: 500px;
+            top: -150px;
+            right: -150px;
+            width: 700px;
+            height: 700px;
             background: radial-gradient(circle, var(--teal) 0%, rgba(26,94,120,0) 70%);
-            opacity: 0.4;
+            opacity: 0.5;
             z-index: 0;
         }
 
@@ -73,109 +77,100 @@
             z-index: 1;
             display: flex;
             flex-direction: column;
-            height: 100%; /* Important for pushing footer down */
+            height: 100%;
         }
 
-        /* Logo - Increased Size */
+        /* LOGO - LARGER AS REQUESTED */
         .logo {
-            width: 380px; /* Increased from previous */
-            max-width: 80%;
+            width: 450px; /* Increased size */
             height: auto;
             align-self: center;
-            margin-bottom: 40px;
-            object-fit: contain;
+            margin-bottom: 60px;
         }
 
         .eyebrow {
             font-family: var(--font-wide);
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             color: var(--light-aqua);
-            letter-spacing: 4px;
-            margin-bottom: 20px;
+            letter-spacing: 5px;
+            margin-bottom: 30px;
             text-transform: uppercase;
         }
 
         .heading-wide {
             font-family: var(--font-wide);
-            font-size: 3.2rem; 
+            font-size: 4rem; 
             line-height: 1.1;
             color: var(--white);
-            margin: 0 0 35px 0;
+            margin: 0 0 40px 0;
             text-transform: uppercase;
         }
 
         .heading-wide span { color: var(--light-aqua); }
 
-        /* Paragraphs - Fixed sizing and spacing */
+        /* PARAGRAPHS - VISIBLE AND SPACED */
         .paragraph {
-            font-size: 1.65rem;
-            line-height: 1.5;
+            font-family: var(--font-body);
+            font-size: 2rem;
+            line-height: 1.6;
             color: var(--off-white);
             font-weight: 300;
-            margin: 0 0 25px 0;
+            margin: 0 0 35px 0;
         }
 
-        /* Footer - Fixed Visibility */
+        /* FOOTER - PINNED TO BOTTOM */
         .footer-action {
             margin-top: auto; 
             font-family: var(--font-wide);
-            font-size: 1.4rem; 
+            font-size: 1.8rem; 
             color: var(--bright-cyan);
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-top: 2px solid rgba(255,255,255,0.1);
-            padding-top: 25px;
-            padding-bottom: 10px;
+            border-top: 3px solid rgba(255,255,255,0.1);
+            padding-top: 40px;
+            padding-bottom: 20px;
         }
 
         .arrow {
-            font-size: 2rem;
-            line-height: 0;
+            font-size: 3rem;
         }
 
-        /* Print Settings */
+        /* PRINT OVERRIDE - NO SCALING */
         @media print {
-            body { background: none; }
-            .poster {
-                width: 100vw;
-                height: 100vh;
-                box-shadow: none;
-                padding: 80px 90px;
-            }
-            /* Scales font specifically for the printed page size */
-            .heading-wide { font-size: 4rem; }
-            .paragraph { font-size: 2rem; }
-            .footer-action { font-size: 1.6rem; }
+            body { background: white; overflow: visible; }
+            .preview-scale { transform: none; width: 1080px; height: 1350px; }
+            .poster { box-shadow: none; border: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="poster">
-        <div class="glow"></div>
-        <div class="content">
-            <!-- Increased Logo size slightly -->
-            <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Secure" class="logo">
-            
-            <div class="eyebrow">Who We Are</div>
-            
-            <h1 class="heading-wide">TECH SUPPORT WITH A <span>HEARTBEAT.</span></h1>
-            
-            <!-- Paragraphs restored to full legibility -->
-            <p class="paragraph">
-                Being hacked or compromised feels terrifying. We get it. You shouldn't have to face it alone, and cybersecurity shouldn't feel like a privilege.
-            </p>
-            <p class="paragraph">
-                We are a passionate collective dedicated to bringing human-first support to the modern victim. We bring the expertise to stop threats, and the empathy to support you through it.
-            </p>
+    <div class="preview-scale">
+        <div class="poster">
+            <div class="glow"></div>
+            <div class="content">
+                
+                <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Secure" class="logo">
+                
+                <div class="eyebrow">Who We Are</div>
+                
+                <h1 class="heading-wide">TECH SUPPORT WITH A <span>HEARTBEAT.</span></h1>
+                
+                <p class="paragraph">
+                    Being hacked or compromised feels terrifying. We get it. You shouldn't have to face it alone, and cybersecurity shouldn't feel like a privilege.
+                </p>
+                <p class="paragraph">
+                    We are a passionate collective dedicated to bringing human-first support to the modern victim. We bring the expertise to stop threats, and the empathy to support you through it.
+                </p>
 
-            <!-- Bottom Swipe Action Visible -->
-            <div class="footer-action">
-                <span>Swipe to see what we do</span>
-                <span class="arrow">&rarr;</span>
+                <div class="footer-action">
+                    <span>Swipe to see what we do</span>
+                    <span class="arrow">&rarr;</span>
+                </div>
+
             </div>
         </div>
     </div>
