@@ -2,83 +2,146 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sybix - Slide 2 (Text Fixed)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+    <title>Sybix - Slide 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@500;600&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --dark-navy: #0b1325; 
-            --bright-cyan: #38a4b8; 
-            --light-aqua: #66e3e7; 
-            --white: #ffffff; 
-            --light-grey: #e2e8f0; 
-            --font-wide: 'Syncopate', sans-serif; 
-            --font-adriana: 'Playfair Display', serif; 
-            --font-body: 'Lato', sans-serif; 
+        /* 1. THE BASICS */
+        body {
+            background-color: #050a12;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-family: 'Lato', sans-serif;
         }
 
-        * { box-sizing: border-box; }
-        
-        body { 
-            background-color: #050a12; 
-            margin: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-        }
-
-        .preview-scale { transform: scale(0.6); transform-origin: center; }
-        
+        /* 2. THE POSTER - 1080x1350 */
         .poster {
-            width: 1080px; 
-            height: 1350px; 
-            background-color: var(--dark-navy);
-            padding: 90px; 
-            display: flex; 
-            flex-direction: column; 
+            width: 1080px;
+            height: 1350px;
+            background-color: #0b1325; /* Solid Navy */
             position: relative;
+            padding: 100px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #1a2a3a;
         }
 
-        /* Simplified Background visual - No banding, No interference with text */
+        /* 3. VISUALS - Grid & Subtle Glow */
         .poster::before {
-            content: ""; position: absolute; top: 0; right: 0; width: 600px; height: 600px;
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(56, 164, 184, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        .glow {
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            width: 800px;
+            height: 800px;
             background: radial-gradient(circle, rgba(26, 94, 120, 0.3) 0%, transparent 70%);
         }
 
-        .logo { 
-            width: 410px; 
-            height: auto; 
-            align-self: center; 
-            margin-bottom: 50px; 
-            position: relative;
-        }
-        
-        .eyebrow { 
-            font-family: var(--font-wide); 
-            font-size: 1.5rem; 
-            color: var(--light-aqua); 
-            letter-spacing: 6px; 
-            margin-bottom: 30px; 
-            text-transform: uppercase;
-            position: relative;
-        }
-        
-        .heading-adriana { 
-            font-family: var(--font-adriana); 
-            font-size: 5.5rem; 
-            line-height: 1.1; 
-            color: var(--white); 
-            margin: 0 0 60px 0; 
-            font-weight: 500;
-            position: relative;
-        }
-        
-        .service-list { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 30px; 
+        /* 4. LOGO */
+        .logo {
+            width: 420px;
+            height: auto;
+            align-self: center;
+            margin-bottom: 60px;
             position: relative;
         }
 
-        .service-card {
-            background: rgba(255, 255, 255, 0.05); /* Slight lift
+        /* 5. TEXT STYLES */
+        .eyebrow {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 24px;
+            color: #66e3e7;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 85px;
+            line-height: 1.1;
+            color: #ffffff;
+            margin: 0 0 60px 0;
+            font-weight: 500;
+            position: relative;
+        }
+
+        /* 6. THE 3 POINTS (VISUAL CARDS) */
+        .points-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            position: relative;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 8px solid #38a4b8;
+            padding: 40px;
+            border-radius: 0 15px 15px 0;
+        }
+
+        .card-title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 24px;
+            color: #66e3e7;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .card-text {
+            font-family: 'Lato', sans-serif;
+            font-size: 32px;
+            color: #e2e8f0; /* Lighter Grey */
+            line-height: 1.4;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- THE POSTER -->
+    <div class="poster">
+        <div class="glow"></div>
+
+        <!-- Logo -->
+        <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" alt="Sybix Logo" class="logo">
+
+        <!-- Header -->
+        <div class="eyebrow">How we help</div>
+        <h1 class="heading">Reclaiming your <br>digital peace.</h1>
+
+        <!-- The 3 Points -->
+        <div class="points-container">
+            
+            <div class="card">
+                <div class="card-title">Getting you back in</div>
+                <div class="card-text">Losing access to your accounts is overwhelming. We help you navigate the recovery process and reclaim your identity.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Cleaning the noise</div>
+                <div class="card-text">We identify and help reduce hidden risks, ensuring your personal devices feel safe, private, and like home again.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Defending your privacy</div>
+                <div class="card-text">If your privacy has been affected, we fight to remove the content and help you restore your personal boundaries.</div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
