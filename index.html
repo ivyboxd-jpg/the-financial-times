@@ -2,48 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sybix - Slide 2 (Punchy)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+    <title>Sybix - Slide 1 (Anti-Banding)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root { --dark-navy: #0b1325; --bright-cyan: #38a4b8; --light-aqua: #66e3e7; --white: #ffffff; --off-white: #e0e6ed; --font-wide: 'Syncopate', sans-serif; --font-adriana: 'Playfair Display', serif; --font-body: 'Lato', sans-serif; }
+        :root { 
+            --dark-navy: #0b1325; 
+            --bright-cyan: #38a4b8; 
+            --light-aqua: #66e3e7; 
+            --white: #ffffff; 
+            --muted-grey: #a0a7b1; /* Darker, more professional grey */
+            --font-wide: 'Syncopate', sans-serif; 
+            --font-body: 'Lato', sans-serif; 
+        }
         * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-        body { background-color: #111822; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        body { background-color: #050a12; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
         .preview-scale { transform: scale(0.6); transform-origin: center; display: flex; justify-content: center; align-items: center; }
+        
         .poster {
             width: 1080px; height: 1350px;
-            background: linear-gradient(150deg, var(--dark-navy) 0%, #0d2136 100%);
+            background-color: var(--dark-navy); /* Solid background to prevent banding */
             padding: 100px; display: flex; flex-direction: column; position: relative;
         }
-        .logo { width: 450px; align-self: center; margin-bottom: 60px; }
+
+        /* Subtle glow that doesn't cause banding */
+        .poster::after {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 80% 20%, rgba(26, 94, 120, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .content { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; }
+        .logo { width: 450px; align-self: center; margin-bottom: 80px; }
         .eyebrow { font-family: var(--font-wide); font-size: 1.5rem; color: var(--light-aqua); letter-spacing: 6px; margin-bottom: 30px; text-transform: uppercase; }
-        .heading-adriana { font-family: var(--font-adriana); font-size: 5.5rem; line-height: 1.1; color: var(--white); margin: 0 0 60px 0; font-weight: 500; }
-        .service-list { display: flex; flex-direction: column; gap: 40px; }
-        .service-item { border-left: 6px solid var(--bright-cyan); padding-left: 30px; }
-        .service-title { font-family: var(--font-wide); font-size: 1.8rem; color: var(--light-aqua); margin-bottom: 10px; text-transform: uppercase; }
-        .service-desc { font-family: var(--font-body); font-size: 2.2rem; color: var(--off-white); font-weight: 300; }
+        .heading-wide { font-family: var(--font-wide); font-size: 4.2rem; line-height: 1.1; color: var(--white); margin: 0 0 50px 0; text-transform: uppercase; }
+        .heading-wide span { color: var(--light-aqua); }
+        
+        .paragraph { 
+            font-family: var(--font-body); 
+            font-size: 2.4rem; 
+            line-height: 1.5; 
+            color: var(--muted-grey); /* Darker grey */
+            font-weight: 400; 
+            max-width: 850px; 
+            margin-bottom: 35px;
+        }
+
+        .footer-action { margin-top: auto; font-family: var(--font-wide); font-size: 1.8rem; color: var(--bright-cyan); letter-spacing: 3px; text-transform: uppercase; display: flex; align-items: center; justify-content: space-between; border-top: 3px solid rgba(255,255,255,0.05); padding-top: 40px; }
     </style>
 </head>
 <body>
     <div class="preview-scale">
         <div class="poster">
-            <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" class="logo">
-            <div class="eyebrow">How we help</div>
-            <h1 class="heading-adriana">Reclaiming your <br>digital peace.</h1>
-            <div class="service-list">
-                <div class="service-item">
-                    <div class="service-title">Getting you back in</div>
-                    <div class="service-desc">Reclaiming your accounts and identity.</div>
-                </div>
-                <div class="service-item">
-                    <div class="service-title">Cleaning the noise</div>
-                    <div class="service-desc">Identifying and reducing hidden risks.</div>
-                </div>
-                <div class="service-item">
-                    <div class="service-title">Defending your privacy</div>
-                    <div class="service-desc">Restoring your digital boundaries.</div>
+            <div class="content">
+                <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" class="logo">
+                <div class="eyebrow">Who We Are</div>
+                <h1 class="heading-wide">TECH SUPPORT WITH A <span>HEARTBEAT.</span></h1>
+                <p class="paragraph">Losing access to your account can feel overwhelming. You shouldn't have to face it alone.</p>
+                <p class="paragraph">We provide human-first support to help you resolve security issues with empathy and expertise.</p>
+                <div class="footer-action">
+                    <span>Swipe to see what we do</span>
+                    <span>&rarr;</span>
                 </div>
             </div>
         </div>
     </div>
 </body>
-</html> 
+</html>
