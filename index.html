@@ -2,66 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sybix - Slide 1 (Anti-Banding)</title>
+    <title>Sybix - Slide 1 (Safe & Visual)</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --dark-navy: #0b1325; 
-            --bright-cyan: #38a4b8; 
-            --light-aqua: #66e3e7; 
-            --white: #ffffff; 
-            --muted-grey: #a0a7b1; /* Darker, more professional grey */
-            --font-wide: 'Syncopate', sans-serif; 
-            --font-body: 'Lato', sans-serif; 
+            --dark-navy: #0b1325; --bright-cyan: #38a4b8; --light-aqua: #66e3e7; 
+            --white: #ffffff; --light-grey: #cbd5e0; /* Lighter grey for better reflection */
+            --font-wide: 'Syncopate', sans-serif; --font-body: 'Lato', sans-serif; 
         }
         * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         body { background-color: #050a12; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
-        .preview-scale { transform: scale(0.6); transform-origin: center; display: flex; justify-content: center; align-items: center; }
-        
+        .preview-scale { transform: scale(0.6); transform-origin: center; }
+
         .poster {
             width: 1080px; height: 1350px;
-            background-color: var(--dark-navy); /* Solid background to prevent banding */
-            padding: 100px; display: flex; flex-direction: column; position: relative;
+            background-color: var(--dark-navy);
+            padding: 90px; display: flex; flex-direction: column; position: relative;
+            overflow: hidden;
         }
 
-        /* Subtle glow that doesn't cause banding */
-        .poster::after {
-            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 80% 20%, rgba(26, 94, 120, 0.2) 0%, transparent 50%);
-            pointer-events: none;
+        /* VISUALS: Tech Grid & Glow Orbs */
+        .poster::before {
+            content: ""; position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(56, 164, 184, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px; /* Tech Grid */
+            z-index: 0;
         }
+        .glow-1 { position: absolute; top: -10%; right: -10%; width: 700px; height: 700px; background: radial-gradient(circle, rgba(26, 94, 120, 0.4) 0%, transparent 70%); z-index: 1; }
+        .glow-2 { position: absolute; bottom: -5%; left: -5%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(56, 164, 184, 0.15) 0%, transparent 70%); z-index: 1; }
 
-        .content { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; }
-        .logo { width: 450px; align-self: center; margin-bottom: 80px; }
+        .content { position: relative; z-index: 2; display: flex; flex-direction: column; height: 100%; }
+        .logo { width: 450px; align-self: center; margin-bottom: 70px; }
         .eyebrow { font-family: var(--font-wide); font-size: 1.5rem; color: var(--light-aqua); letter-spacing: 6px; margin-bottom: 30px; text-transform: uppercase; }
         .heading-wide { font-family: var(--font-wide); font-size: 4.2rem; line-height: 1.1; color: var(--white); margin: 0 0 50px 0; text-transform: uppercase; }
         .heading-wide span { color: var(--light-aqua); }
         
         .paragraph { 
-            font-family: var(--font-body); 
-            font-size: 2.4rem; 
-            line-height: 1.5; 
-            color: var(--muted-grey); /* Darker grey */
-            font-weight: 400; 
-            max-width: 850px; 
-            margin-bottom: 35px;
+            font-family: var(--font-body); font-size: 2.2rem; line-height: 1.5; 
+            color: var(--light-grey); font-weight: 400; max-width: 850px; margin-bottom: 35px;
         }
 
-        .footer-action { margin-top: auto; font-family: var(--font-wide); font-size: 1.8rem; color: var(--bright-cyan); letter-spacing: 3px; text-transform: uppercase; display: flex; align-items: center; justify-content: space-between; border-top: 3px solid rgba(255,255,255,0.05); padding-top: 40px; }
+        /* FOOTER: Back to the original integrated style */
+        .footer-action { 
+            margin-top: auto; font-family: var(--font-wide); font-size: 1.8rem; 
+            color: var(--bright-cyan); letter-spacing: 3px; text-transform: uppercase; 
+            display: flex; align-items: center; justify-content: space-between; 
+            border-top: 2px solid rgba(255,255,255,0.1); padding-top: 40px; padding-bottom: 10px;
+        }
+        .arrow { font-size: 3rem; }
     </style>
 </head>
 <body>
     <div class="preview-scale">
         <div class="poster">
+            <div class="glow-1"></div>
+            <div class="glow-2"></div>
             <div class="content">
                 <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" class="logo">
                 <div class="eyebrow">Who We Are</div>
                 <h1 class="heading-wide">TECH SUPPORT WITH A <span>HEARTBEAT.</span></h1>
                 <p class="paragraph">Losing access to your account can feel overwhelming. You shouldn't have to face it alone.</p>
-                <p class="paragraph">We provide human-first support to help you resolve security issues with empathy and expertise.</p>
+                <p class="paragraph">We bring the expertise to address security issues and the empathy to support you through it.</p>
                 <div class="footer-action">
                     <span>Swipe to see what we do</span>
-                    <span>&rarr;</span>
+                    <span class="arrow">&rarr;</span>
                 </div>
             </div>
         </div>
