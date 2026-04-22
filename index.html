@@ -2,15 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sybix Secure - Slide 2 Visual</title>
+    <title>Sybix Secure - Slide 2 (Consistency Match)</title>
+    
+    <!-- Exact Fonts from Slide 1 -->
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,500;0,600&display=swap" rel="stylesheet">
+    
     <style>
         :root { 
             --dark-navy: #0b1325; 
             --bright-cyan: #38a4b8; 
             --light-aqua: #66e3e7; 
             --white: #ffffff; 
-            --light-grey: #e2e8f0; /* Lightened grey for reflection */
+            --light-grey: #e2e8f0; 
             --font-wide: 'Syncopate', sans-serif; 
             --font-adriana: 'Playfair Display', serif; 
             --font-body: 'Lato', sans-serif; 
@@ -19,49 +22,51 @@
         * { box-sizing: border-box; }
         body { background-color: #050a12; margin: 0; display: flex; justify-content: center; padding: 20px; }
         
-        /* THE POSTER - 1080x1350 */
+        /* THE POSTER - LOCKED 1080x1350 */
         .poster {
             width: 1080px; height: 1350px;
             background-color: var(--dark-navy);
-            padding: 80px 100px;
+            padding: 90px;
             display: flex; flex-direction: column;
             position: relative; overflow: hidden;
         }
 
-        /* VISUAL BACKGROUND: Subtle Tech Grid */
+        /* Consistent Visual Background */
         .poster::before {
             content: ""; position: absolute; inset: 0;
-            background-image: radial-gradient(rgba(56, 164, 184, 0.1) 1px, transparent 1px);
+            background-image: radial-gradient(rgba(56, 164, 184, 0.08) 1px, transparent 1px);
             background-size: 50px 50px;
         }
 
-        /* LOGO - Locked at 400px for safety */
-        .logo { width: 400px; align-self: center; margin-bottom: 50px; position: relative; }
+        /* Logo - Matched to Slide 1 */
+        .logo { width: 420px; align-self: center; margin-bottom: 60px; position: relative; }
 
+        /* Eyebrow - Matched to Slide 1 Size */
         .eyebrow { 
-            font-family: var(--font-wide); font-size: 1.4rem; color: var(--light-aqua); 
-            letter-spacing: 6px; margin-bottom: 20px; text-transform: uppercase; position: relative;
+            font-family: var(--font-wide); font-size: 1.5rem; color: var(--light-aqua); 
+            letter-spacing: 6px; margin-bottom: 30px; text-transform: uppercase; position: relative;
         }
 
+        /* Heading - Refined Size */
         .heading-adriana { 
-            font-family: var(--font-adriana); font-size: 5rem; line-height: 1.1; 
+            font-family: var(--font-adriana); font-size: 4.8rem; line-height: 1.1; 
             color: var(--white); margin: 0 0 70px 0; font-weight: 500; position: relative;
         }
 
-        /* THE VISUAL TIMELINE */
+        /* THE VISUAL PATH */
         .service-path {
             position: relative;
             display: flex;
             flex-direction: column;
-            gap: 60px; /* Spacing between points */
+            gap: 55px; 
             padding-left: 60px;
         }
 
-        /* The vertical line connecting points */
+        /* Vertical Connector */
         .service-path::after {
-            content: ""; position: absolute; left: 14px; top: 10px; bottom: 10px;
+            content: ""; position: absolute; left: 11px; top: 10px; bottom: 10px;
             width: 2px; background: linear-gradient(to bottom, var(--bright-cyan), transparent);
-            opacity: 0.3;
+            opacity: 0.2;
         }
 
         .step {
@@ -70,75 +75,75 @@
             position: relative;
         }
 
-        /* The glowing dot for each point */
+        /* Point Node */
         .node {
-            position: absolute; left: -60px; top: 10px;
-            width: 30px; height: 30px;
+            position: absolute; left: -60px; top: 8px;
+            width: 24px; height: 24px;
             background-color: var(--dark-navy);
             border: 3px solid var(--light-aqua);
             border-radius: 50%;
-            box-shadow: 0 0 15px var(--light-aqua);
+            box-shadow: 0 0 15px rgba(102, 227, 231, 0.4);
             z-index: 2;
         }
 
-        .step-content {
-            display: flex;
-            flex-direction: column;
-        }
-
+        /* SERVICE TEXT - Lessened and Matched to Slide 1 Paragraphs */
         .step-title {
             font-family: var(--font-wide);
-            font-size: 1.7rem;
+            font-size: 1.5rem; /* Matches eyebrow for consistency */
             color: var(--light-aqua);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
         .step-desc {
             font-family: var(--font-body);
-            font-size: 2.1rem;
+            font-size: 1.85rem; /* Matches Slide 1 refined body text */
             color: var(--light-grey);
             font-weight: 300;
-            line-height: 1.4;
-            max-width: 750px;
+            line-height: 1.5;
+            max-width: 780px;
         }
     </style>
 </head>
 <body>
 
     <div class="poster">
-        <!-- Logo -->
+        <!-- Consistent Logo -->
         <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" class="logo">
 
         <div class="eyebrow">How we help</div>
         <h1 class="heading-adriana">Reclaiming your <br>digital peace.</h1>
 
-        <!-- THE VISUAL SECTION: 3 CLEAR POINTS -->
+        <!-- REFINED 3 POINTS -->
         <div class="service-path">
             
-            <!-- Point 1 -->
             <div class="step">
                 <div class="node"></div>
                 <div class="step-content">
                     <div class="step-title">Getting you back in</div>
-                    <div class="step-desc">Reclaiming your accounts and identity through calm, guided recovery.</div>
+                    <div class="step-desc">Helping you navigate the recovery process and reclaim your identity.</div>
                 </div>
             </div>
 
-            <!-- Point 2 -->
             <div class="step">
                 <div class="node"></div>
                 <div class="step-content">
                     <div class="step-title">Cleaning the noise</div>
-                    <div class="step-desc">Identifying and helping reduce hidden risks across your devices.</div>
+                    <div class="step-desc">Identifying and helping reduce hidden risks across your personal devices.</div>
                 </div>
             </div>
 
-            <!-- Point 3 -->
             <div class="step">
                 <div class="node"></div>
                 <div class="step-content">
                     <div class="step-title">Defending your privacy</div>
-                    <div class="step-desc">Restoring boundaries and your peace of mind if your privacy is affected.</div>
+                    <div class="step-desc">Restoring your digital boundaries and peace of mind if your privacy is affected.</div>
                 </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
