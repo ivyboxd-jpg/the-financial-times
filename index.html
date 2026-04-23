@@ -1,151 +1,279 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sybix Secure - Slide 2 Visual</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,500;0,600&display=swap" rel="stylesheet">
-    <style>
-        :root { 
-            --dark-navy: #0b1325; 
-            --bright-cyan: #38a4b8; 
-            --light-aqua: #66e3e7; 
-            --white: #ffffff; 
-            --light-grey: #e2e8f0; /* Lightened grey for reflection */
-            --font-wide: 'Syncopate', sans-serif; 
-            --font-adriana: 'Playfair Display', serif; 
-            --font-body: 'Lato', sans-serif; 
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ethos AI | The Sentient Ledger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#23293c",
+                      "primary-container": "#0f172a",
+                      "on-error-container": "#ffdad6",
+                      "primary": "#bec6e0",
+                      "primary-fixed": "#dae2fd",
+                      "inverse-surface": "#dce1fb",
+                      "error": "#ffb4ab",
+                      "on-secondary-container": "#a9bad3",
+                      "outline-variant": "#45464d",
+                      "error-container": "#93000a",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "inverse-primary": "#565e74",
+                      "surface-container-highest": "#2e3447",
+                      "surface-bright": "#33394c",
+                      "on-background": "#dce1fb",
+                      "on-tertiary-fixed": "#002113",
+                      "primary-fixed-dim": "#bec6e0",
+                      "on-error": "#690005",
+                      "on-primary-fixed": "#131b2e",
+                      "tertiary": "#4edea3",
+                      "on-secondary-fixed": "#0b1c30",
+                      "surface": "#0c1324",
+                      "secondary": "#b7c8e1",
+                      "on-primary": "#283044",
+                      "surface-container-low": "#151b2d",
+                      "background": "#0c1324",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-primary-container": "#798098",
+                      "tertiary-fixed": "#6ffbbe",
+                      "surface-variant": "#2e3447",
+                      "surface-container": "#191f31",
+                      "surface-tint": "#bec6e0",
+                      "outline": "#909097",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "surface-dim": "#0c1324",
+                      "on-tertiary-container": "#009365",
+                      "on-surface-variant": "#c6c6cd",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "tertiary-container": "#001c10",
+                      "secondary-container": "#3a4a5f",
+                      "on-surface": "#dce1fb",
+                      "inverse-on-surface": "#2a3043",
+                      "on-tertiary": "#003824",
+                      "surface-container-lowest": "#070d1f",
+                      "on-secondary": "#213145"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "fontFamily": {
+                      "headline": ["Manrope"],
+                      "display": ["Manrope"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
         }
-
-        * { box-sizing: border-box; }
-        body { background-color: #050a12; margin: 0; display: flex; justify-content: center; padding: 20px; }
-        
-        /* THE POSTER - 1080x1350 */
-        .poster {
-            width: 1080px; height: 1350px;
-            background-color: var(--dark-navy);
-            padding: 80px 100px;
-            display: flex; flex-direction: column;
-            position: relative; overflow: hidden;
+    </script>
+<style>
+        body {
+            background-color: #0c1324;
+            color: #dce1fb;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
-
-        /* VISUAL BACKGROUND: Subtle Tech Grid */
-        .poster::before {
-            content: ""; position: absolute; inset: 0;
-            background-image: radial-gradient(rgba(56, 164, 184, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
         }
-
-        /* LOGO - Locked at 400px for safety */
-        .logo { width: 400px; align-self: center; margin-bottom: 50px; position: relative; }
-
-        .eyebrow { 
-            font-family: var(--font-wide); font-size: 1.4rem; color: var(--light-aqua); 
-            letter-spacing: 6px; margin-bottom: 20px; text-transform: uppercase; position: relative;
-        }
-
-        .heading-adriana { 
-            font-family: var(--font-adriana); font-size: 5rem; line-height: 1.1; 
-            color: var(--white); margin: 0 0 70px 0; font-weight: 500; position: relative;
-        }
-
-        /* THE VISUAL TIMELINE */
-        .service-path {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 60px; /* Spacing between points */
-            padding-left: 60px;
-        }
-
-        /* The vertical line connecting points */
-        .service-path::after {
-            content: ""; position: absolute; left: 14px; top: 10px; bottom: 10px;
-            width: 2px; background: linear-gradient(to bottom, var(--bright-cyan), transparent);
-            opacity: 0.3;
-        }
-
-        .step {
-            display: flex;
-            align-items: flex-start;
-            position: relative;
-        }
-
-        /* The glowing dot for each point */
-        .node {
-            position: absolute; left: -60px; top: 10px;
-            width: 30px; height: 30px;
-            background-color: var(--dark-navy);
-            border: 3px solid var(--light-aqua);
-            border-radius: 50%;
-            box-shadow: 0 0 15px var(--light-aqua);
-            z-index: 2;
-        }
-
-        .step-content {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .step-title {
-            font-family: var(--font-wide);
-            font-size: 1.7rem;
-            color: var(--light-aqua);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .step-desc {
-            font-family: var(--font-body);
-            font-size: 2.1rem;
-            color: var(--light-grey);
-            font-weight: 300;
-            line-height: 1.4;
-            max-width: 750px;
+        .glass-panel {
+            background: rgba(46, 52, 71, 0.6);
+            backdrop-filter: blur(24px);
         }
     </style>
 </head>
-<body>
-
-    <div class="poster">
-        <!-- Logo -->
-        <img src="https://i.postimg.cc/vm6bwXqR/IMG-9698.png" class="logo">
-
-        <div class="eyebrow">How we help</div>
-        <h1 class="heading-adriana">Reclaiming your <br>digital peace.</h1>
-
-        <!-- THE VISUAL SECTION: 3 CLEAR POINTS -->
-        <div class="service-path">
-            
-            <!-- Point 1 -->
-            <div class="step">
-                <div class="node"></div>
-                <div class="step-content">
-                    <div class="step-title">Getting you back in</div>
-                    <div class="step-desc">Reclaiming your accounts and identity through calm, guided recovery.</div>
-                </div>
-            </div>
-
-            <!-- Point 2 -->
-            <div class="step">
-                <div class="node"></div>
-                <div class="step-content">
-                    <div class="step-title">Cleaning the noise</div>
-                    <div class="step-desc">Identifying and helping reduce hidden risks across your devices.</div>
-                </div>
-            </div>
-
-            <!-- Point 3 -->
-            <div class="step">
-                <div class="node"></div>
-                <div class="step-content">
-                    <div class="step-title">Defending your privacy</div>
-                    <div class="step-desc">Restoring boundaries and your peace of mind if your privacy is affected.</div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-</body>
-</html>
+<body class="bg-background text-on-background selection:bg-tertiary selection:text-on-tertiary">
+<!-- TopAppBar -->
+<header class="docked w-full top-0 sticky z-50 bg-[#0c1324]/60 backdrop-blur-xl shadow-[0_40px_60px_-5px_rgba(220,225,251,0.05)]">
+<div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="font-manrope font-bold tracking-tighter text-[#bec6e0] text-2xl">Ethos AI</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-[#4edea3] font-bold font-label uppercase tracking-widest text-xs" href="#">Guide</a>
+<a class="text-[#bec6e0]/60 hover:bg-[#2e3447] transition-colors duration-300 px-3 py-1 rounded font-label uppercase tracking-widest text-xs" href="#">Analyze</a>
+<a class="text-[#bec6e0]/60 hover:bg-[#2e3447] transition-colors duration-300 px-3 py-1 rounded font-label uppercase tracking-widest text-xs" href="#">Report</a>
+</nav>
+<button class="bg-[#bec6e0] text-[#131b2e] px-6 py-2.5 rounded-md font-bold text-sm tracking-tight active:scale-95 transition-transform hover:opacity-90">
+                New Analysis
+            </button>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative pt-32 pb-48 overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-b from-surface-container-low to-background pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-highest/30 border border-outline-variant/10 mb-8">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+</span>
+<span class="text-tertiary font-label text-[10px] uppercase tracking-[0.2em] font-bold">Sentient Ledger Live</span>
+</div>
+<h1 class="font-display text-5xl md:text-8xl font-light tracking-tight text-on-background mb-8 leading-[1.1]">
+                    Ethical integrity for <br/>
+<span class="font-bold text-primary italic">automated intelligence.</span>
+</h1>
+<p class="max-w-2xl mx-auto text-on-surface-variant text-lg md:text-xl font-light leading-relaxed mb-12">
+                    Validate your AI models against the highest standards of safety, bias-prevention, and operational transparency. Turn compliance into your competitive edge.
+                </p>
+<div class="flex flex-col md:flex-row items-center justify-center gap-6">
+<button class="w-full md:w-auto px-10 py-5 bg-gradient-to-br from-primary to-surface-container-highest text-on-primary font-bold rounded-md shadow-2xl hover:scale-[1.02] transition-transform flex items-center justify-center gap-3">
+                        Start Check
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="w-full md:w-auto px-10 py-5 border border-outline-variant/20 hover:bg-surface-container-high transition-colors rounded-md font-semibold text-primary">
+                        View Sample Report
+                    </button>
+</div>
+</div>
+<!-- Decorative Element -->
+<div class="mt-24 max-w-6xl mx-auto px-6">
+<div class="aspect-[16/6] rounded-xl overflow-hidden bg-surface-container-low relative shadow-2xl border border-outline-variant/5">
+<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&amp;w=2000')] bg-cover bg-center mix-blend-overlay opacity-30" data-alt="Dark abstract visualization of complex data nodes and ethical neural pathways in a deep blue space"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="absolute bottom-8 left-8 right-8 flex justify-between items-end">
+<div class="space-y-1">
+<p class="font-label text-[10px] text-tertiary uppercase tracking-widest font-bold">Model Verdict</p>
+<p class="font-display text-3xl font-light text-on-background">98.4% Compliant</p>
+</div>
+<div class="flex gap-4">
+<div class="h-12 w-24 bg-surface-container-highest rounded-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">pulse_alert</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="py-32 bg-surface">
+<div class="max-w-7xl mx-auto px-6">
+<div class="mb-24 text-left max-w-3xl">
+<h2 class="font-display text-4xl md:text-5xl font-light mb-6 text-on-background">How it works</h2>
+<p class="text-on-surface-variant font-body leading-relaxed">Our proprietary Ledger technology processes AI descriptions to identify architectural vulnerabilities and ethical drift before they become liabilities.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-1 px-0.5 bg-outline-variant/10">
+<!-- Step 1 -->
+<div class="bg-surface p-10 group hover:bg-surface-container-low transition-colors duration-500">
+<div class="w-12 h-12 mb-8 bg-surface-container-highest rounded-md flex items-center justify-center group-hover:bg-primary-container transition-colors">
+<span class="text-primary font-display font-bold text-xl">01</span>
+</div>
+<h3 class="font-display text-2xl font-semibold mb-4 text-primary-fixed">Paste your AI model description</h3>
+<p class="text-on-surface-variant leading-relaxed font-light">Provide the core architecture details, training parameters, and intended deployment scope of your system.</p>
+</div>
+<!-- Step 2 -->
+<div class="bg-surface p-10 group hover:bg-surface-container-low transition-colors duration-500">
+<div class="w-12 h-12 mb-8 bg-surface-container-highest rounded-md flex items-center justify-center group-hover:bg-primary-container transition-colors">
+<span class="text-primary font-display font-bold text-xl">02</span>
+</div>
+<h3 class="font-display text-2xl font-semibold mb-4 text-primary-fixed">We analyze it for ethical risks</h3>
+<p class="text-on-surface-variant leading-relaxed font-light">Ethos AI scans for hidden biases, data provenance gaps, and potential alignment failures in real-time.</p>
+</div>
+<!-- Step 3 -->
+<div class="bg-surface p-10 group hover:bg-surface-container-low transition-colors duration-500">
+<div class="w-12 h-12 mb-8 bg-surface-container-highest rounded-md flex items-center justify-center group-hover:bg-primary-container transition-colors">
+<span class="text-primary font-display font-bold text-xl">03</span>
+</div>
+<h3 class="font-display text-2xl font-semibold mb-4 text-primary-fixed">Get a detailed report with fixes</h3>
+<p class="text-on-surface-variant leading-relaxed font-light">Receive a comprehensive, audit-ready document outlining precise adjustments to secure compliance.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Feature Highlight -->
+<section class="py-32 bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-[800px] md:h-[600px]">
+<div class="md:col-span-2 md:row-span-2 bg-surface-container-low p-10 flex flex-col justify-between overflow-hidden relative">
+<div class="z-10">
+<span class="material-symbols-outlined text-tertiary mb-4" style="font-variation-settings: 'FILL' 1;">security</span>
+<h4 class="font-display text-3xl font-light mb-4">Deep Architectural Analysis</h4>
+<p class="text-on-surface-variant font-light">Our engine doesn't just scan text—it maps the logic of your models to predict outcomes.</p>
+</div>
+<div class="mt-8 relative z-10">
+<div class="h-32 w-full bg-surface-container-highest rounded border border-outline-variant/10 p-4 font-mono text-[10px] text-tertiary-fixed-dim/60 overflow-hidden">
+                                { "analysis": "executing", "nodes": 1402, "bias_vector": "detected_low", "alignment_status": "stable" }
+                                <br/> &gt;&gt; validating_governance_frameworks...
+                                <br/> &gt;&gt; scanning_inference_pipelines...
+                            </div>
+</div>
+</div>
+<div class="md:col-span-2 bg-surface-container-high p-8 flex flex-col justify-center">
+<h4 class="font-display text-2xl font-semibold text-primary mb-2">Real-time Trust Scoring</h4>
+<p class="text-on-surface-variant font-light">Instant visibility into your compliance posture across 14 global frameworks.</p>
+</div>
+<div class="bg-surface-container-highest p-8 flex flex-col justify-center">
+<span class="material-symbols-outlined text-tertiary mb-2">description</span>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Audit Ready</p>
+</div>
+<div class="bg-tertiary p-8 flex flex-col justify-center group cursor-pointer active:scale-95 transition-all">
+<span class="material-symbols-outlined text-on-tertiary mb-2 text-3xl">auto_awesome</span>
+<p class="font-display text-xl font-bold text-on-tertiary">Launch Free Scan</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-32 relative">
+<div class="max-w-4xl mx-auto px-6 text-center">
+<h2 class="font-display text-4xl md:text-6xl font-light mb-8">Ready to secure your AI’s future?</h2>
+<div class="p-12 glass-panel rounded-xl border border-outline-variant/10">
+<p class="text-on-surface-variant text-lg mb-10">Join 400+ enterprises using Ethos AI to automate their compliance workflows.</p>
+<button class="bg-primary text-on-primary px-12 py-5 rounded-md font-bold text-lg hover:shadow-[0_0_30px_rgba(190,198,224,0.3)] transition-all">
+                        Start Your First Analysis
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Simple Footer -->
+<footer class="py-20 border-t border-outline-variant/10">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-3 opacity-50">
+<span class="material-symbols-outlined text-primary">security</span>
+<span class="font-manrope font-bold tracking-tighter text-[#bec6e0] text-xl">Ethos AI</span>
+</div>
+<div class="flex gap-12 text-on-surface-variant text-xs font-label uppercase tracking-[0.2em]">
+<a class="hover:text-primary transition-colors" href="#">Twitter</a>
+<a class="hover:text-primary transition-colors" href="#">LinkedIn</a>
+<a class="hover:text-primary transition-colors" href="#">Documentation</a>
+</div>
+<p class="text-on-surface-variant/40 text-[10px] font-label uppercase tracking-widest">
+                © 2024 Ethos AI Systems. Automated Authority.
+            </p>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full z-50 bg-[#151b2d]/80 backdrop-blur-2xl md:hidden">
+<div class="bg-gradient-to-t from-[#0c1324] to-transparent h-1 w-full"></div>
+<div class="flex justify-around items-center px-4 py-3">
+<div class="flex flex-col items-center justify-center text-[#4edea3] scale-110 transition-all">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-inter text-[10px] uppercase tracking-widest mt-1">Guide</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#bec6e0]/40 hover:text-[#bec6e0]">
+<span class="material-symbols-outlined">code_blocks</span>
+<span class="font-inter text-[10px] uppercase tracking-widest mt-1">Analyze</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#bec6e0]/40 hover:text-[#bec6e0]">
+<span class="material-symbols-outlined">description</span>
+<span class="font-inter text-[10px] uppercase tracking-widest mt-1">Report</span>
+</div>
+</div>
+</nav>
+</body></html>
