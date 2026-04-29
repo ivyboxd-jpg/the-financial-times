@@ -1,279 +1,477 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open When... | For Aaradhya</title>
+    
+    <!-- Google Fonts: 1 Serif for UI, 11 different Handwritten Fonts for letters -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Amatic+SC:wght@700&family=Caveat:wght@500&family=Dancing+Script:wght@600&family=Indie+Flower&family=Kalam:wght@400&family=Nanum+Pen+Script&family=Neucha&family=Pacifico&family=Patrick+Hand&family=Shadows+Into+Light&family=Homemade+Apple&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #F4EFEA;
+            --text-color: #2C2A29;
+            --envelope-base: #E8DFD5;
+            --envelope-flap: #E1D7CB;
+            --envelope-shadow: #CFC2B2;
+            --paper-color: #FCFBF9;
+            --seal-color: #792A2A;
+        }
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Ethos AI | The Sentient Ledger</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "surface-container-high": "#23293c",
-                      "primary-container": "#0f172a",
-                      "on-error-container": "#ffdad6",
-                      "primary": "#bec6e0",
-                      "primary-fixed": "#dae2fd",
-                      "inverse-surface": "#dce1fb",
-                      "error": "#ffb4ab",
-                      "on-secondary-container": "#a9bad3",
-                      "outline-variant": "#45464d",
-                      "error-container": "#93000a",
-                      "tertiary-fixed-dim": "#4edea3",
-                      "secondary-fixed-dim": "#b7c8e1",
-                      "inverse-primary": "#565e74",
-                      "surface-container-highest": "#2e3447",
-                      "surface-bright": "#33394c",
-                      "on-background": "#dce1fb",
-                      "on-tertiary-fixed": "#002113",
-                      "primary-fixed-dim": "#bec6e0",
-                      "on-error": "#690005",
-                      "on-primary-fixed": "#131b2e",
-                      "tertiary": "#4edea3",
-                      "on-secondary-fixed": "#0b1c30",
-                      "surface": "#0c1324",
-                      "secondary": "#b7c8e1",
-                      "on-primary": "#283044",
-                      "surface-container-low": "#151b2d",
-                      "background": "#0c1324",
-                      "on-secondary-fixed-variant": "#38485d",
-                      "secondary-fixed": "#d3e4fe",
-                      "on-primary-container": "#798098",
-                      "tertiary-fixed": "#6ffbbe",
-                      "surface-variant": "#2e3447",
-                      "surface-container": "#191f31",
-                      "surface-tint": "#bec6e0",
-                      "outline": "#909097",
-                      "on-tertiary-fixed-variant": "#005236",
-                      "surface-dim": "#0c1324",
-                      "on-tertiary-container": "#009365",
-                      "on-surface-variant": "#c6c6cd",
-                      "on-primary-fixed-variant": "#3f465c",
-                      "tertiary-container": "#001c10",
-                      "secondary-container": "#3a4a5f",
-                      "on-surface": "#dce1fb",
-                      "inverse-on-surface": "#2a3043",
-                      "on-tertiary": "#003824",
-                      "surface-container-lowest": "#070d1f",
-                      "on-secondary": "#213145"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "fontFamily": {
-                      "headline": ["Manrope"],
-                      "display": ["Manrope"],
-                      "body": ["Inter"],
-                      "label": ["Inter"]
-              }
-            },
-          },
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-    </script>
-<style>
+
         body {
-            background-color: #0c1324;
-            color: #dce1fb;
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Cormorant Garamond', serif;
+            overflow: hidden; /* Prevents vertical scroll on body */
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            /* Subtle paper texture background */
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
         }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+
+        header {
+            text-align: center;
+            padding: 5vh 20px 2vh;
+            animation: fadeIn 1.5s ease;
         }
-        .glass-panel {
-            background: rgba(46, 52, 71, 0.6);
-            backdrop-filter: blur(24px);
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            color: #3A352F;
+        }
+
+        header p {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #666;
+            letter-spacing: 0.5px;
+        }
+
+        /* Horizontal Carousel */
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            align-items: center;
+            height: 100%;
+            padding: 0 50vw; 
+            gap: 6vw;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .carousel::-webkit-scrollbar {
+            display: none; 
+        }
+
+        .envelope-wrapper {
+            scroll-snap-align: center;
+            position: relative;
+            width: 320px;
+            height: 220px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .envelope-wrapper:hover {
+            transform: translateY(-8px);
+        }
+
+        /* Realistic Envelope Construction */
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: var(--envelope-base);
+            border-radius: 2px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.06), inset 0 0 40px rgba(0,0,0,0.02);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .front-flap {
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 110px 160px;
+            border-color: transparent var(--envelope-flap) var(--envelope-base) var(--envelope-flap);
+            z-index: 3;
+            border-radius: 0 0 2px 2px;
+            filter: drop-shadow(0 -2px 2px rgba(0,0,0,0.03));
+        }
+
+        .top-flap {
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 110px 160px;
+            border-color: var(--envelope-shadow) transparent transparent transparent;
+            z-index: 4;
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.2s;
+            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.05));
+        }
+
+        /* Realistic Wax Seal */
+        .seal {
+            position: absolute;
+            top: 110px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 45px;
+            height: 45px;
+            background: radial-gradient(circle at 30% 30%, #9C3838, #6B2323);
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 0 8px rgba(0,0,0,0.4);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Irregular edges for wax seal */
+        .seal::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%;
+            z-index: -1;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* SVG inside seal */
+        .seal svg {
+            width: 20px;
+            height: 20px;
+            fill: #E8DFD5;
+            opacity: 0.8;
+            filter: drop-shadow(0 1px 1px rgba(0,0,0,0.5));
+        }
+
+        /* Paper Sticker Label */
+        .envelope-label {
+            position: absolute;
+            bottom: 25px;
+            z-index: 6;
+            font-size: 1.1rem;
+            color: #333;
+            background: #FFFDF8;
+            padding: 8px 16px;
+            border: 1px solid #D5C9B8;
+            box-shadow: 1px 2px 4px rgba(0,0,0,0.05);
+            pointer-events: none;
+            text-align: center;
+            width: 85%;
+            /* Allows text to wrap beautifully */
+            white-space: normal;
+            line-height: 1.2;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+
+        /* The Paper / Letter */
+        .letter {
+            position: absolute;
+            top: 5px;
+            width: 92%;
+            height: 92%;
+            background-color: var(--paper-color);
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            border-radius: 1px;
+            z-index: 2;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .letter-content {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            transition-delay: 0.5s;
+            overflow-y: auto;
+            padding-right: 15px;
+            height: 100%;
+            color: #2b2b2b;
+        }
+
+        .letter-content::-webkit-scrollbar { width: 5px; }
+        .letter-content::-webkit-scrollbar-track { background: transparent; }
+        .letter-content::-webkit-scrollbar-thumb { background: #D5C9B8; border-radius: 10px; }
+
+        .letter p {
+            line-height: 1.6;
+            white-space: pre-line;
+            margin-bottom: 20px;
+        }
+
+        /* Action button to close */
+        .close-btn {
+            margin-top: auto;
+            padding: 8px 24px;
+            background: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            cursor: pointer;
+            align-self: flex-start;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(244, 239, 234, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 99;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        /* ANIMATION STATES (When opened) */
+        .envelope-wrapper.open {
+            cursor: default;
+        }
+        .envelope-wrapper.open .top-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+        .envelope-wrapper.open .seal {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+        .envelope-wrapper.open .envelope-label {
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .envelope-wrapper.open .letter {
+            opacity: 1;
+            pointer-events: all;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90vw;
+            max-width: 480px;
+            height: 80vh;
+            max-height: 650px;
+            z-index: 100;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+        .envelope-wrapper.open .letter-content {
+            opacity: 1;
+        }
+        body.reading-mode .overlay {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* 11 distinct handwritten fonts */
+        .font-1 { font-family: 'Caveat', cursive; font-size: 1.7rem; }
+        .font-2 { font-family: 'Dancing Script', cursive; font-size: 1.5rem; }
+        .font-3 { font-family: 'Indie Flower', cursive; font-size: 1.4rem; }
+        .font-4 { font-family: 'Shadows Into Light', cursive; font-size: 1.4rem; }
+        .font-5 { font-family: 'Amatic SC', cursive; font-size: 1.9rem; letter-spacing: 1px; font-weight: 700; }
+        .font-6 { font-family: 'Pacifico', cursive; font-size: 1.2rem; line-height: 1.9; }
+        .font-7 { font-family: 'Nanum Pen Script', cursive; font-size: 1.8rem; }
+        .font-8 { font-family: 'Kalam', cursive; font-size: 1.3rem; }
+        .font-9 { font-family: 'Patrick Hand', cursive; font-size: 1.4rem; }
+        .font-10 { font-family: 'Neucha', cursive; font-size: 1.5rem; }
+        .font-11 { font-family: 'Homemade Apple', cursive; font-size: 1rem; line-height: 2.2; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Mobile Layout */
+        @media (max-width: 600px) {
+            .carousel { gap: 15vw; padding: 0 15vw; }
+            .envelope-wrapper { width: 280px; height: 190px; }
+            .front-flap, .top-flap { border-width: 95px 140px; }
+            .seal { top: 95px; width: 40px; height: 40px; }
+            .envelope-label { font-size: 1rem; bottom: 20px; padding: 6px 12px; }
         }
     </style>
 </head>
-<body class="bg-background text-on-background selection:bg-tertiary selection:text-on-tertiary">
-<!-- TopAppBar -->
-<header class="docked w-full top-0 sticky z-50 bg-[#0c1324]/60 backdrop-blur-xl shadow-[0_40px_60px_-5px_rgba(220,225,251,0.05)]">
-<div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">security</span>
-<span class="font-manrope font-bold tracking-tighter text-[#bec6e0] text-2xl">Ethos AI</span>
-</div>
-<nav class="hidden md:flex items-center gap-8">
-<a class="text-[#4edea3] font-bold font-label uppercase tracking-widest text-xs cursor-pointer" href="#">Guide</a>
-<a class="text-[#bec6e0]/60 hover:bg-[#2e3447] transition-colors duration-300 px-3 py-1 rounded font-label uppercase tracking-widest text-xs cursor-pointer" href="#">Analyze</a>
-<a class="text-[#bec6e0]/60 hover:bg-[#2e3447] transition-colors duration-300 px-3 py-1 rounded font-label uppercase tracking-widest text-xs cursor-pointer" href="#">Report</a>
-</nav>
-<button class="bg-[#bec6e0] text-[#131b2e] px-6 py-2.5 rounded-md font-bold text-sm tracking-tight active:scale-95 transition-all hover:bg-[#bec6e0]/90 focus:outline-none focus:ring-2 focus:ring-primary/50 cursor-pointer" onclick="window.location.href='#analyze'">
-                New Analysis
-            </button>
-</div>
-</header>
-<main>
-<!-- Hero Section -->
-<section class="relative pt-32 pb-48 overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-b from-surface-container-low to-background pointer-events-none"></div>
-<div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
-<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-highest/30 border border-outline-variant/10 mb-8">
-<span class="relative flex h-2 w-2">
-<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
-</span>
-<span class="text-tertiary font-label text-[10px] uppercase tracking-[0.2em] font-bold">Sentient Ledger Live</span>
-</div>
-<h1 class="font-display text-5xl md:text-8xl font-light tracking-tight text-on-background mb-8 leading-[1.1]">
-                    Ethical integrity for <br/>
-<span class="font-bold text-primary italic">automated intelligence.</span>
-</h1>
-<p class="max-w-2xl mx-auto text-on-surface-variant text-lg md:text-xl font-light leading-relaxed mb-12">
-                    Validate your AI models against the highest standards of safety, bias-prevention, and operational transparency. Turn compliance into your competitive edge.
-                </p>
-<div class="flex flex-col md:flex-row items-center justify-center gap-6">
-<button class="w-full md:w-auto px-10 py-5 bg-gradient-to-br from-primary to-surface-container-highest text-on-primary font-bold rounded-md shadow-2xl hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-3 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50" onclick="window.location.href='#analyze'">
-                        Start Check
-                        <span class="material-symbols-outlined">arrow_forward</span>
-</button>
-<button class="w-full md:w-auto px-10 py-5 border border-outline-variant/20 hover:bg-surface-container-high transition-all rounded-md font-semibold text-primary cursor-pointer hover:border-primary active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary/50">
-                        View Sample Report
-                    </button>
-</div>
-</div>
-<!-- Decorative Element -->
-<div class="mt-24 max-w-6xl mx-auto px-6">
-<div class="aspect-[16/6] rounded-xl overflow-hidden bg-surface-container-low relative shadow-2xl border border-outline-variant/5">
-<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&amp;w=2000')] bg-cover bg-center mix-blend-overlay opacity-30" data-alt="Dark abstract visualization of complex data nodes and ethical neural pathways in a deep blue space"></div>
-<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
-<div class="absolute bottom-8 left-8 right-8 flex justify-between items-end">
-<div class="space-y-1">
-<p class="font-label text-[10px] text-tertiary uppercase tracking-widest font-bold">Model Verdict</p>
-<p class="font-display text-3xl font-light text-on-background">98.4% Compliant</p>
-</div>
-<div class="flex gap-4">
-<div class="h-12 w-24 bg-surface-container-highest rounded-sm flex items-center justify-center">
-<span class="material-symbols-outlined text-tertiary">pulse_alert</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- How It Works Section -->
-<section class="py-32 bg-surface">
-<div class="max-w-7xl mx-auto px-6">
-<div class="mb-24 text-left max-w-3xl">
-<h2 class="font-display text-4xl md:text-5xl font-light mb-6 text-on-background">How it works</h2>
-<p class="text-on-surface-variant font-body leading-relaxed">Our proprietary Ledger technology processes AI descriptions to identify architectural vulnerabilities and ethical drift before they become liabilities.</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-1 px-0.5 bg-outline-variant/10">
-<!-- Step 1 -->
-<div class="bg-surface p-10 group hover:bg-surface-container-low transition-colors duration-500">
-<div class="w-12 h-12 mb-8 bg-surface-container-highest rounded-md flex items-center justify-center group-hover:bg-primary-container transition-colors">
-<span class="text-primary font-display font-bold text-xl">01</span>
-</div>
-<h3 class="font-display text-2xl font-semibold mb-4 text-primary-fixed">Paste your AI model description</h3>
-<p class="text-on-surface-variant leading-relaxed font-light">Provide the core architecture details, training parameters, and intended deployment scope of your system.</p>
-</div>
-<!-- Step 2 -->
-<div class="bg-surface p-10 group hover:bg-surface-container-low transition-colors duration-500">
-<div class="w-12 h-12 mb-8 bg-surface-container-highest rounded-md flex items-center justify-center group-hover:bg-primary-container transition-colors">
-<span class="text-primary font-display font-bold text-xl">02</span>
-</div>
-<h3 class="font-display text-2xl font-semibold mb-4 text-primary-fixed">We analyze it for ethical risks</h3>
-<p class="text-on-surface-variant leading-relaxed font-light">Ethos AI scans for hidden biases, data provenance gaps, and potential alignment failures in real-time.</p>
-</div>
-<!-- Step 3 -->
-<div class="bg-surface p-10 group hover:bg-surface-container-low transition-colors duration-500">
-<div class="w-12 h-12 mb-8 bg-surface-container-highest rounded-md flex items-center justify-center group-hover:bg-primary-container transition-colors">
-<span class="text-primary font-display font-bold text-xl">03</span>
-</div>
-<h3 class="font-display text-2xl font-semibold mb-4 text-primary-fixed">Get a detailed report with fixes</h3>
-<p class="text-on-surface-variant leading-relaxed font-light">Receive a comprehensive, audit-ready document outlining precise adjustments to secure compliance.</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Bento Grid Feature Highlight -->
-<section class="py-32 bg-surface-container-lowest">
-<div class="max-w-7xl mx-auto px-6">
-<div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-[800px] md:h-[600px]">
-<div class="md:col-span-2 md:row-span-2 bg-surface-container-low p-10 flex flex-col justify-between overflow-hidden relative">
-<div class="z-10">
-<span class="material-symbols-outlined text-tertiary mb-4" style="font-variation-settings: 'FILL' 1;">security</span>
-<h4 class="font-display text-3xl font-light mb-4">Deep Architectural Analysis</h4>
-<p class="text-on-surface-variant font-light">Our engine doesn't just scan text—it maps the logic of your models to predict outcomes.</p>
-</div>
-<div class="mt-8 relative z-10">
-<div class="h-32 w-full bg-surface-container-highest rounded border border-outline-variant/10 p-4 font-mono text-[10px] text-tertiary-fixed-dim/60 overflow-hidden">
-                                { "analysis": "executing", "nodes": 1402, "bias_vector": "detected_low", "alignment_status": "stable" }
-                                <br/> &gt;&gt; validating_governance_frameworks...
-                                <br/> &gt;&gt; scanning_inference_pipelines...
+<body>
+
+    <div class="overlay" id="overlay"></div>
+
+    <header>
+        <h1>Open When...</h1>
+        <p>Swipe to view. Tap an envelope to break the seal.</p>
+    </header>
+
+    <div class="carousel" id="carousel">
+        <!-- Javascript will inject the 11 envelopes here -->
+    </div>
+
+    <script>
+        // Minimalist botanical SVG for the wax seal
+        const sealSVG = `<svg viewBox="0 0 24 24"><path d="M12 22s-4-6-4-12c0-2.2 1.8-4 4-4s4 1.8 4 4c0 6-4 12-4 12zm0-18c-1.1 0-2 .9-2 2 0 4.4 2.5 8.4 3.5 10 .8-1.5 2.5-5.6 2.5-10 0-1.1-.9-2-2-2z"/><path d="M12 6.5v9M9.5 10.5l2.5-2M14.5 12.5l-2.5-2"/></svg>`;
+
+        // Humanized, hyper-specific content
+        const lettersData = [
+            {
+                label: "Open when you forget that I love you",
+                content: "Wait, how could you actually forget? \n\nI literally have like 800 of your voice notes saved on my phone. They take up half my storage and I refuse to delete a single one. 10 months down and 10,000 texts later, and I'm still just crazy about you. \n\nYou're beautiful, you're entirely brilliant, and you are totally stuck with me. I love you, Aaradhya. So much.",
+                fontClass: "font-1"
+            },
+            {
+                label: "Open when you need to know that I'm proud of you",
+                content: "I know how your brain works. I know you hold yourself to these completely insane standards. But you really need to hear this: I am so incredibly proud of you.\n\nNot just because you're smart. But because of *how* you care. You don't just study to pass exams; you genuinely want to understand the science behind things. You're a poet and a scientist. Whatever grade you get, I'm just insanely proud to be your boyfriend.",
+                fontClass: "font-2"
+            },
+            {
+                label: "Open when you need to feel appreciated",
+                content: "I appreciate you. All of you.\n\nI appreciate your brilliant brain. I appreciate your 2 AM ramblings about Saccharomyces cerevisiae and pizza toppings when you're exhausted. I appreciate that you're so kind, but you still hold your boundaries. I appreciate that you let me see the messy, stressed-out parts of you, not just the perfect parts. \n\nYou do a lot, baby. And I notice all of it.",
+                fontClass: "font-3"
+            },
+            {
+                label: "Open when it's exam time",
+                content: "Okay, stop what you're doing. Put the pen down. Drink some actual water (no, Diet Coke doesn't count right now, put it down).\n\nThe NEET and CUET are just exams. They do not define your existence. You already have the most fascinating mind I've ever encountered. \n\nTake a deep breath. You're going to crush this, but please don't break yourself in the process. I believe in you.",
+                fontClass: "font-4"
+            },
+            {
+                label: "Open when you miss me",
+                content: "Trust me, I hate the 2,083 kilometers between us just as much as you do. \n\nSitting here in Gandhidham, I would honestly give anything to just pull you into a hug right now instead of looking at a screen. But then I remember that 47-minute FaceTime lipstick tutorial we did, and I just smile. \n\nThe distance is temporary, pretty girl. I'm right here. I'm yours.",
+                fontClass: "font-5"
+            },
+            {
+                label: "Open when you want to know why I love you",
+                content: "Because you refuse to choose between art and science. \n\nBecause you feel things so deeply but still manage to carry it all. Because you let me make completely ridiculous legal documents for you after we bicker. Because you're breathtakingly gorgeous and somehow you still don't make a big deal out of it. \n\nYou're just... you. Complex, stubborn, wonderful. That's why.",
+                fontClass: "font-6"
+            },
+            {
+                label: "Open when everything feels like it's falling apart",
+                content: "Breathe. Just breathe for a second.\n\nI know you carry so much weight on your shoulders, and right now it probably feels way too heavy. But you don't have to fix everything today. Let it be messy. \n\nYou're allowed to be upset. You're allowed to cry. You never have to apologize to me for having emotions. Just lean on me. I've got you.",
+                fontClass: "font-7"
+            },
+            {
+                label: "Open when you feel like you're not enough",
+                content: "Stop being mean to my girlfriend. Seriously.\n\nYou are enough exactly as you are right now. Not 'you'll be enough when you pass this exam' or 'you'll be enough when you fix this flaw'. Right now. \n\nExhausted you. Stressed you. The you that processes emotions internally before sharing them. All of it is enough for me. Give yourself a break, please.",
+                fontClass: "font-8"
+            },
+            {
+                label: "Open when you feel alone",
+                content: "Look, I know I'm physically far away. But you are never actually alone. \n\nI am fiercely in your corner. Whenever you feel isolated, just remember there's a guy 2,000 kilometers away who is constantly checking his phone hoping your name pops up. \n\nI'm literally a text or a call away. Always.",
+                fontClass: "font-9"
+            },
+            {
+                label: "Open when you feel bad about yourself",
+                content: "I'm just gonna state the facts here:\n\nYou are unfairly, distractingly gorgeous. Like, it's actually crazy how pretty you are. And on top of that, you have a mind that fascinates me every single day. \n\nSo whatever dumb lies your brain is trying to tell you right now? Ignore them. I see you, and to me, you're perfect.",
+                fontClass: "font-10"
+            },
+            {
+                label: "Open when you need a reminder about why this relationship is what you deserve",
+                content: "Yeah, we might fight sometimes. I might have to draft up ridiculous 'Terms and Conditions' just to make you feel secure again. \n\nBut this relationship is a completely safe space for your whole, complex self. My commitment to you is not conditional. You deserve someone who stays, someone who doesn't need you to be simple in order to love you. \n\nI am not going anywhere, Aaradhya. You're my person.",
+                fontClass: "font-11"
+            }
+        ];
+
+        const carousel = document.getElementById('carousel');
+        let openEnvelope = null;
+
+        // Injecting the 11 envelopes
+        lettersData.forEach((letter) => {
+            const envelopeHTML = `
+                <div class="envelope-wrapper" onclick="toggleLetter(this, event)">
+                    <div class="envelope">
+                        <div class="front-flap"></div>
+                        <div class="top-flap"></div>
+                        <div class="seal">${sealSVG}</div>
+                        <div class="envelope-label">${letter.label}</div>
+                        <div class="letter">
+                            <div class="letter-content ${letter.fontClass}">
+                                <p>${letter.content}</p>
+                                <button class="close-btn" onclick="closeLetter(event, this)">Fold & Seal</button>
                             </div>
-</div>
-</div>
-<div class="md:col-span-2 bg-surface-container-high p-8 flex flex-col justify-center">
-<h4 class="font-display text-2xl font-semibold text-primary mb-2">Real-time Trust Scoring</h4>
-<p class="text-on-surface-variant font-light">Instant visibility into your compliance posture across 14 global frameworks.</p>
-</div>
-<div class="bg-surface-container-highest p-8 flex flex-col justify-center">
-<span class="material-symbols-outlined text-tertiary mb-2">description</span>
-<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Audit Ready</p>
-</div>
-<div class="bg-tertiary p-8 flex flex-col justify-center group cursor-pointer active:scale-95 transition-all hover:brightness-105 focus-within:ring-2 focus-within:ring-on-tertiary/50 outline-none">
-<span class="material-symbols-outlined text-on-tertiary mb-2 text-3xl">auto_awesome</span>
-<p class="font-display text-xl font-bold text-on-tertiary">Launch Free Scan</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Final CTA -->
-<section class="py-32 relative">
-<div class="max-w-4xl mx-auto px-6 text-center">
-<h2 class="font-display text-4xl md:text-6xl font-light mb-8">Ready to secure your AI’s future?</h2>
-<div class="p-12 glass-panel rounded-xl border border-outline-variant/10">
-<p class="text-on-surface-variant text-lg mb-10"><div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-10"><span class="text-primary font-label text-[10px] uppercase tracking-[0.2em] font-bold">Ethos AI MVP</span></div></p>
-<button class="w-full md:w-auto bg-primary text-on-primary px-12 py-5 rounded-md font-bold text-lg hover:shadow-[0_0_30px_rgba(190,198,224,0.3)] hover:brightness-110 active:scale-95 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50" onclick="window.location.href='#analyze'">
-                        Start Your First Analysis
-                    </button>
-</div>
-</div>
-</section>
-</main>
-<!-- Simple Footer -->
-<footer class="py-20 border-t border-outline-variant/10">
-<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-<div class="flex items-center gap-3 opacity-50">
-<span class="material-symbols-outlined text-primary">security</span>
-<span class="font-manrope font-bold tracking-tighter text-[#bec6e0] text-xl">Ethos AI</span>
-</div>
-<div class="flex gap-12 text-on-surface-variant text-xs font-label uppercase tracking-[0.2em]">
-<a class="hover:text-primary transition-colors cursor-pointer" href="#">Twitter</a>
-<a class="hover:text-primary transition-colors cursor-pointer" href="#">LinkedIn</a>
-<a class="hover:text-primary transition-colors cursor-pointer" href="#">Documentation</a>
-</div>
-<p class="text-on-surface-variant/40 text-[10px] font-label uppercase tracking-widest">
-                © 2024 Ethos AI Systems. Automated Authority.
-            </p>
-</div>
-</footer>
-<!-- BottomNavBar (Mobile Only) -->
-<nav class="fixed bottom-0 w-full z-50 bg-[#151b2d]/80 backdrop-blur-2xl md:hidden">
-<div class="bg-gradient-to-t from-[#0c1324] to-transparent h-1 w-full"></div>
-<div class="flex justify-around items-center px-4 py-3">
-<div class="flex flex-col items-center justify-center text-[#4edea3] scale-110 transition-all">
-<span class="material-symbols-outlined">auto_awesome</span>
-<span class="font-inter text-[10px] uppercase tracking-widest mt-1">Guide</span>
-</div>
-<div class="flex flex-col items-center justify-center text-[#bec6e0]/40 hover:text-[#bec6e0]">
-<span class="material-symbols-outlined">code_blocks</span>
-<span class="font-inter text-[10px] uppercase tracking-widest mt-1">Analyze</span>
-</div>
-<div class="flex flex-col items-center justify-center text-[#bec6e0]/40 hover:text-[#bec6e0]">
-<span class="material-symbols-outlined">description</span>
-<span class="font-inter text-[10px] uppercase tracking-widest mt-1">Report</span>
-</div>
-</div>
-</nav>
-</body></html>
+                        </div>
+                    </div>
+                </div>
+            `;
+            carousel.insertAdjacentHTML('beforeend', envelopeHTML);
+        });
+
+        // Open animation function
+        function toggleLetter(element, event) {
+            // Prevent re-triggering if already open
+            if (element.classList.contains('open')) return;
+            
+            // Close any currently open letter first
+            if (openEnvelope && openEnvelope !== element) {
+                forceClose(openEnvelope);
+            }
+
+            element.classList.add('open');
+            document.body.classList.add('reading-mode');
+            openEnvelope = element;
+        }
+
+        // Close via button
+        function closeLetter(event, btnElement) {
+            event.stopPropagation(); 
+            const wrapper = btnElement.closest('.envelope-wrapper');
+            forceClose(wrapper);
+        }
+
+        // Reset logic
+        function forceClose(wrapper) {
+            wrapper.classList.remove('open');
+            document.body.classList.remove('reading-mode');
+            openEnvelope = null;
+            
+            // Scroll letter back to top so it's ready for next time
+            setTimeout(() => {
+                const content = wrapper.querySelector('.letter-content');
+                if(content) content.scrollTop = 0;
+            }, 500);
+        }
+
+        // Close by clicking the blurred background
+        document.getElementById('overlay').addEventListener('click', () => {
+            if (openEnvelope) {
+                forceClose(openEnvelope);
+            }
+        });
+
+    </script>
+</body>
+</html>
