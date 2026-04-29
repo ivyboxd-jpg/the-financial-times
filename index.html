@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open When... | For Aaradhya</title>
+    <title>open when... | for aaradhya</title>
     
     <!-- Google Fonts: 1 Serif for UI, 11 different Handwritten Fonts for letters -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Amatic+SC:wght@700&family=Caveat:wght@500&family=Dancing+Script:wght@600&family=Indie+Flower&family=Kalam:wght@400&family=Nanum+Pen+Script&family=Neucha&family=Pacifico&family=Patrick+Hand&family=Shadows+Into+Light&family=Homemade+Apple&display=swap" rel="stylesheet">
@@ -25,15 +25,19 @@
             box-sizing: border-box;
         }
 
+        /* FORCE EVERYTHING TO BE LOWERCASE */
+        body, h1, p, div, button {
+            text-transform: lowercase !important;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: 'Cormorant Garamond', serif;
-            overflow: hidden; /* Prevents vertical scroll on body */
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             height: 100vh;
-            /* Subtle paper texture background */
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
         }
 
@@ -41,6 +45,7 @@
             text-align: center;
             padding: 5vh 20px 2vh;
             animation: fadeIn 1.5s ease;
+            flex-shrink: 0;
         }
 
         header h1 {
@@ -58,21 +63,21 @@
             letter-spacing: 0.5px;
         }
 
-        /* Horizontal Carousel */
+        /* Centered Horizontal Carousel */
         .carousel {
             display: flex;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             align-items: center;
-            height: 100%;
-            padding: 0 50vw; 
-            gap: 6vw;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+            flex-grow: 1;
+            /* 160px is exactly half of the 320px envelope width, this centers the first and last items perfectly */
+            padding: 0 calc(50vw - 160px); 
+            gap: 60px;
+            scrollbar-width: none; /* Firefox */
         }
         
         .carousel::-webkit-scrollbar {
-            display: none; 
+            display: none; /* Chrome/Safari */
         }
 
         .envelope-wrapper {
@@ -89,7 +94,7 @@
             transform: translateY(-8px);
         }
 
-        /* Realistic Envelope Construction */
+        /* Envelope Construction */
         .envelope {
             position: relative;
             width: 100%;
@@ -129,7 +134,7 @@
             filter: drop-shadow(0 4px 4px rgba(0,0,0,0.05));
         }
 
-        /* Realistic Wax Seal */
+        /* Wax Seal */
         .seal {
             position: absolute;
             top: 110px;
@@ -147,7 +152,6 @@
             align-items: center;
         }
 
-        /* Irregular edges for wax seal */
         .seal::before {
             content: '';
             position: absolute;
@@ -159,7 +163,6 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
-        /* SVG inside seal */
         .seal svg {
             width: 20px;
             height: 20px;
@@ -168,7 +171,7 @@
             filter: drop-shadow(0 1px 1px rgba(0,0,0,0.5));
         }
 
-        /* Paper Sticker Label */
+        /* Label */
         .envelope-label {
             position: absolute;
             bottom: 25px;
@@ -182,89 +185,14 @@
             pointer-events: none;
             text-align: center;
             width: 85%;
-            /* Allows text to wrap beautifully */
             white-space: normal;
             line-height: 1.2;
             border-radius: 2px;
             font-weight: 600;
+            transition: opacity 0.3s ease;
         }
 
-        /* The Paper / Letter */
-        .letter {
-            position: absolute;
-            top: 5px;
-            width: 92%;
-            height: 92%;
-            background-color: var(--paper-color);
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-            border-radius: 1px;
-            z-index: 2;
-            padding: 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .letter-content {
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            transition-delay: 0.5s;
-            overflow-y: auto;
-            padding-right: 15px;
-            height: 100%;
-            color: #2b2b2b;
-        }
-
-        .letter-content::-webkit-scrollbar { width: 5px; }
-        .letter-content::-webkit-scrollbar-track { background: transparent; }
-        .letter-content::-webkit-scrollbar-thumb { background: #D5C9B8; border-radius: 10px; }
-
-        .letter p {
-            line-height: 1.6;
-            white-space: pre-line;
-            margin-bottom: 20px;
-        }
-
-        /* Action button to close */
-        .close-btn {
-            margin-top: auto;
-            padding: 8px 24px;
-            background: transparent;
-            border: 1px solid var(--text-color);
-            color: var(--text-color);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
-            font-style: italic;
-            cursor: pointer;
-            align-self: flex-start;
-            transition: all 0.3s ease;
-        }
-
-        .close-btn:hover {
-            background: var(--text-color);
-            color: var(--bg-color);
-        }
-
-        /* Overlay */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(244, 239, 234, 0.85);
-            backdrop-filter: blur(5px);
-            z-index: 99;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-
-        /* ANIMATION STATES (When opened) */
+        /* Envelope Open State */
         .envelope-wrapper.open {
             cursor: default;
         }
@@ -278,31 +206,91 @@
         }
         .envelope-wrapper.open .envelope-label {
             opacity: 0;
-            transition: opacity 0.2s;
         }
-        .envelope-wrapper.open .letter {
-            opacity: 1;
-            pointer-events: all;
+
+        /* READING MODAL (Fixes the content not loading bug) */
+        .modal-overlay {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90vw;
-            max-width: 480px;
-            height: 80vh;
-            max-height: 650px;
-            z-index: 100;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(244, 239, 234, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 99;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
         }
-        .envelope-wrapper.open .letter-content {
-            opacity: 1;
-        }
-        body.reading-mode .overlay {
+
+        .modal-overlay.active {
             opacity: 1;
             pointer-events: all;
         }
 
-        /* 11 distinct handwritten fonts */
+        .modal-paper {
+            width: 90vw;
+            max-width: 500px;
+            height: 80vh;
+            max-height: 650px;
+            background-color: var(--paper-color);
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            border-radius: 2px;
+            padding: 35px 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: 0.2s; /* Wait for flap to open */
+        }
+
+        .modal-overlay.active .modal-paper {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-content-scroll {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 15px;
+            color: #2b2b2b;
+        }
+
+        .modal-content-scroll::-webkit-scrollbar { width: 5px; }
+        .modal-content-scroll::-webkit-scrollbar-track { background: transparent; }
+        .modal-content-scroll::-webkit-scrollbar-thumb { background: #D5C9B8; border-radius: 10px; }
+
+        .modal-content-scroll p {
+            line-height: 1.6;
+            white-space: pre-line;
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            margin-top: 20px;
+            padding: 8px 24px;
+            background: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            cursor: pointer;
+            align-self: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        /* 11 Handwritten Fonts */
         .font-1 { font-family: 'Caveat', cursive; font-size: 1.7rem; }
         .font-2 { font-family: 'Dancing Script', cursive; font-size: 1.5rem; }
         .font-3 { font-family: 'Indie Flower', cursive; font-size: 1.4rem; }
@@ -313,162 +301,175 @@
         .font-8 { font-family: 'Kalam', cursive; font-size: 1.3rem; }
         .font-9 { font-family: 'Patrick Hand', cursive; font-size: 1.4rem; }
         .font-10 { font-family: 'Neucha', cursive; font-size: 1.5rem; }
-        .font-11 { font-family: 'Homemade Apple', cursive; font-size: 1rem; line-height: 2.2; }
+        .font-11 { font-family: 'Homemade Apple', cursive; font-size: 1.1rem; line-height: 2; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive Mobile Layout */
+        /* Mobile Adjustments */
         @media (max-width: 600px) {
-            .carousel { gap: 15vw; padding: 0 15vw; }
+            .carousel { 
+                /* 140px is half of the mobile envelope width (280px) */
+                padding: 0 calc(50vw - 140px); 
+                gap: 40px; 
+            }
             .envelope-wrapper { width: 280px; height: 190px; }
             .front-flap, .top-flap { border-width: 95px 140px; }
             .seal { top: 95px; width: 40px; height: 40px; }
             .envelope-label { font-size: 1rem; bottom: 20px; padding: 6px 12px; }
+            .modal-paper { padding: 25px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="overlay" id="overlay"></div>
-
     <header>
-        <h1>Open When...</h1>
-        <p>Swipe to view. Tap an envelope to break the seal.</p>
+        <h1>open when...</h1>
+        <p>swipe to view. tap an envelope to break the seal.</p>
     </header>
 
     <div class="carousel" id="carousel">
-        <!-- Javascript will inject the 11 envelopes here -->
+        <!-- JS will inject envelopes here -->
+    </div>
+
+    <!-- Global Reading Modal (Fixes the content loading issue) -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-paper">
+            <div class="modal-content-scroll" id="modal-content">
+                <!-- Text gets injected here -->
+            </div>
+            <button class="close-btn" onclick="closeModal(event)">fold & seal</button>
+        </div>
     </div>
 
     <script>
-        // Minimalist botanical SVG for the wax seal
         const sealSVG = `<svg viewBox="0 0 24 24"><path d="M12 22s-4-6-4-12c0-2.2 1.8-4 4-4s4 1.8 4 4c0 6-4 12-4 12zm0-18c-1.1 0-2 .9-2 2 0 4.4 2.5 8.4 3.5 10 .8-1.5 2.5-5.6 2.5-10 0-1.1-.9-2-2-2z"/><path d="M12 6.5v9M9.5 10.5l2.5-2M14.5 12.5l-2.5-2"/></svg>`;
 
-        // Humanized, hyper-specific content
         const lettersData = [
             {
-                label: "Open when you forget that I love you",
-                content: "Wait, how could you actually forget? \n\nI literally have like 800 of your voice notes saved on my phone. They take up half my storage and I refuse to delete a single one. 10 months down and 10,000 texts later, and I'm still just crazy about you. \n\nYou're beautiful, you're entirely brilliant, and you are totally stuck with me. I love you, Aaradhya. So much.",
+                label: "open when you forget that i love you",
+                content: "wait, how could you actually forget? \n\ni literally have like 800 of your voice notes saved on my phone. they take up half my storage and i refuse to delete a single one. 10 months down and 10,000 texts later, and i'm still just crazy about you. \n\nyou're beautiful, you're entirely brilliant, and you are totally stuck with me. i love you, aaradhya. so much.",
                 fontClass: "font-1"
             },
             {
-                label: "Open when you need to know that I'm proud of you",
-                content: "I know how your brain works. I know you hold yourself to these completely insane standards. But you really need to hear this: I am so incredibly proud of you.\n\nNot just because you're smart. But because of *how* you care. You don't just study to pass exams; you genuinely want to understand the science behind things. You're a poet and a scientist. Whatever grade you get, I'm just insanely proud to be your boyfriend.",
+                label: "open when you need to know that i'm proud of you",
+                content: "i know how your brain works. i know you hold yourself to these completely insane standards. but you really need to hear this: i am so incredibly proud of you.\n\nnot just because you're smart. but because of how you care. you don't just study to pass exams; you genuinely want to understand the science behind things. you're a poet and a scientist. whatever grade you get, i'm just insanely proud to be your boyfriend.",
                 fontClass: "font-2"
             },
             {
-                label: "Open when you need to feel appreciated",
-                content: "I appreciate you. All of you.\n\nI appreciate your brilliant brain. I appreciate your 2 AM ramblings about Saccharomyces cerevisiae and pizza toppings when you're exhausted. I appreciate that you're so kind, but you still hold your boundaries. I appreciate that you let me see the messy, stressed-out parts of you, not just the perfect parts. \n\nYou do a lot, baby. And I notice all of it.",
+                label: "open when you need to feel appreciated",
+                content: "i appreciate you. all of you.\n\ni appreciate your brilliant brain. i appreciate your 2 am ramblings about saccharomyces cerevisiae and pizza toppings when you're exhausted. i appreciate that you're so kind, but you still hold your boundaries. i appreciate that you let me see the messy, stressed-out parts of you, not just the perfect parts. \n\nyou do a lot, baby. and i notice all of it.",
                 fontClass: "font-3"
             },
             {
-                label: "Open when it's exam time",
-                content: "Okay, stop what you're doing. Put the pen down. Drink some actual water (no, Diet Coke doesn't count right now, put it down).\n\nThe NEET and CUET are just exams. They do not define your existence. You already have the most fascinating mind I've ever encountered. \n\nTake a deep breath. You're going to crush this, but please don't break yourself in the process. I believe in you.",
+                label: "open when it's exam time",
+                content: "okay, stop what you're doing. put the pen down. drink some actual water (no, diet coke doesn't count right now, put it down).\n\nthe neet and cuet are just exams. they do not define your existence. you already have the most fascinating mind i've ever encountered. \n\ntake a deep breath. you're going to crush this, but please don't break yourself in the process. i believe in you.",
                 fontClass: "font-4"
             },
             {
-                label: "Open when you miss me",
-                content: "Trust me, I hate the 2,083 kilometers between us just as much as you do. \n\nSitting here in Gandhidham, I would honestly give anything to just pull you into a hug right now instead of looking at a screen. But then I remember that 47-minute FaceTime lipstick tutorial we did, and I just smile. \n\nThe distance is temporary, pretty girl. I'm right here. I'm yours.",
+                label: "open when you miss me",
+                content: "trust me, i hate the 2,083 kilometers between us just as much as you do. \n\nsitting here in gandhidham, i would honestly give anything to just pull you into a hug right now instead of looking at a screen. but then i remember that 47-minute facetime lipstick tutorial we did, and i just smile. \n\nthe distance is temporary, pretty girl. i'm right here. i'm yours.",
                 fontClass: "font-5"
             },
             {
-                label: "Open when you want to know why I love you",
-                content: "Because you refuse to choose between art and science. \n\nBecause you feel things so deeply but still manage to carry it all. Because you let me make completely ridiculous legal documents for you after we bicker. Because you're breathtakingly gorgeous and somehow you still don't make a big deal out of it. \n\nYou're just... you. Complex, stubborn, wonderful. That's why.",
+                label: "open when you want to know why i love you",
+                content: "because you refuse to choose between art and science. \n\nbecause you feel things so deeply but still manage to carry it all. because you let me make completely ridiculous legal documents for you after we bicker. because you're breathtakingly gorgeous and somehow you still don't make a big deal out of it. \n\nyou're just... you. complex, stubborn, wonderful. that's why.",
                 fontClass: "font-6"
             },
             {
-                label: "Open when everything feels like it's falling apart",
-                content: "Breathe. Just breathe for a second.\n\nI know you carry so much weight on your shoulders, and right now it probably feels way too heavy. But you don't have to fix everything today. Let it be messy. \n\nYou're allowed to be upset. You're allowed to cry. You never have to apologize to me for having emotions. Just lean on me. I've got you.",
+                label: "open when everything feels like it's falling apart",
+                content: "breathe. just breathe for a second.\n\ni know you carry so much weight on your shoulders, and right now it probably feels way too heavy. but you don't have to fix everything today. let it be messy. \n\nyou're allowed to be upset. you're allowed to cry. you never have to apologize to me for having emotions. just lean on me. i've got you.",
                 fontClass: "font-7"
             },
             {
-                label: "Open when you feel like you're not enough",
-                content: "Stop being mean to my girlfriend. Seriously.\n\nYou are enough exactly as you are right now. Not 'you'll be enough when you pass this exam' or 'you'll be enough when you fix this flaw'. Right now. \n\nExhausted you. Stressed you. The you that processes emotions internally before sharing them. All of it is enough for me. Give yourself a break, please.",
+                label: "open when you feel like you're not enough",
+                content: "stop being mean to my girlfriend. seriously.\n\nyou are enough exactly as you are right now. not 'you'll be enough when you pass this exam' or 'you'll be enough when you fix this flaw'. right now. \n\nexhausted you. stressed you. the you that processes emotions internally before sharing them. all of it is enough for me. give yourself a break, please.",
                 fontClass: "font-8"
             },
             {
-                label: "Open when you feel alone",
-                content: "Look, I know I'm physically far away. But you are never actually alone. \n\nI am fiercely in your corner. Whenever you feel isolated, just remember there's a guy 2,000 kilometers away who is constantly checking his phone hoping your name pops up. \n\nI'm literally a text or a call away. Always.",
+                label: "open when you feel alone",
+                content: "look, i know i'm physically far away. but you are never actually alone. \n\ni am fiercely in your corner. whenever you feel isolated, just remember there's a guy 2,000 kilometers away who is constantly checking his phone hoping your name pops up. \n\ni'm literally a text or a call away. always.",
                 fontClass: "font-9"
             },
             {
-                label: "Open when you feel bad about yourself",
-                content: "I'm just gonna state the facts here:\n\nYou are unfairly, distractingly gorgeous. Like, it's actually crazy how pretty you are. And on top of that, you have a mind that fascinates me every single day. \n\nSo whatever dumb lies your brain is trying to tell you right now? Ignore them. I see you, and to me, you're perfect.",
+                label: "open when you feel bad about yourself",
+                content: "i'm just gonna state the facts here:\n\nyou are unfairly, distractingly gorgeous. like, it's actually crazy how pretty you are. and on top of that, you have a mind that fascinates me every single day. \n\nso whatever dumb lies your brain is trying to tell you right now? ignore them. i see you, and to me, you're perfect.",
                 fontClass: "font-10"
             },
             {
-                label: "Open when you need a reminder about why this relationship is what you deserve",
-                content: "Yeah, we might fight sometimes. I might have to draft up ridiculous 'Terms and Conditions' just to make you feel secure again. \n\nBut this relationship is a completely safe space for your whole, complex self. My commitment to you is not conditional. You deserve someone who stays, someone who doesn't need you to be simple in order to love you. \n\nI am not going anywhere, Aaradhya. You're my person.",
+                label: "open when you need a reminder about why this relationship is what you deserve",
+                content: "yeah, we might fight sometimes. i might have to draft up ridiculous 'terms and conditions' just to make you feel secure again. \n\nbut this relationship is a completely safe space for your whole, complex self. my commitment to you is not conditional. you deserve someone who stays, someone who doesn't need you to be simple in order to love you. \n\ni am not going anywhere, aaradhya. you're my person.",
                 fontClass: "font-11"
             }
         ];
 
         const carousel = document.getElementById('carousel');
-        let openEnvelope = null;
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalContent = document.getElementById('modal-content');
+        
+        let activeEnvelope = null;
 
-        // Injecting the 11 envelopes
-        lettersData.forEach((letter) => {
+        // Render Envelopes
+        lettersData.forEach((letter, index) => {
             const envelopeHTML = `
-                <div class="envelope-wrapper" onclick="toggleLetter(this, event)">
+                <div class="envelope-wrapper" id="env-${index}" onclick="openLetter(${index})">
                     <div class="envelope">
                         <div class="front-flap"></div>
                         <div class="top-flap"></div>
                         <div class="seal">${sealSVG}</div>
                         <div class="envelope-label">${letter.label}</div>
-                        <div class="letter">
-                            <div class="letter-content ${letter.fontClass}">
-                                <p>${letter.content}</p>
-                                <button class="close-btn" onclick="closeLetter(event, this)">Fold & Seal</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             `;
             carousel.insertAdjacentHTML('beforeend', envelopeHTML);
         });
 
-        // Open animation function
-        function toggleLetter(element, event) {
-            // Prevent re-triggering if already open
-            if (element.classList.contains('open')) return;
+        function openLetter(index) {
+            const envelope = document.getElementById(`env-${index}`);
             
-            // Close any currently open letter first
-            if (openEnvelope && openEnvelope !== element) {
-                forceClose(openEnvelope);
+            // Prevent reopening the same one
+            if (envelope.classList.contains('open')) return;
+            
+            // If another is open, close it first
+            if (activeEnvelope) {
+                activeEnvelope.classList.remove('open');
             }
 
-            element.classList.add('open');
-            document.body.classList.add('reading-mode');
-            openEnvelope = element;
-        }
+            activeEnvelope = envelope;
+            envelope.classList.add('open');
 
-        // Close via button
-        function closeLetter(event, btnElement) {
-            event.stopPropagation(); 
-            const wrapper = btnElement.closest('.envelope-wrapper');
-            forceClose(wrapper);
-        }
-
-        // Reset logic
-        function forceClose(wrapper) {
-            wrapper.classList.remove('open');
-            document.body.classList.remove('reading-mode');
-            openEnvelope = null;
+            // Setup the modal content
+            const letter = lettersData[index];
+            modalContent.innerHTML = `<p class="${letter.fontClass}">${letter.content}</p>`;
             
-            // Scroll letter back to top so it's ready for next time
+            // Wait for flap to visually open, then show the reading modal
             setTimeout(() => {
-                const content = wrapper.querySelector('.letter-content');
-                if(content) content.scrollTop = 0;
-            }, 500);
+                modalOverlay.classList.add('active');
+                modalContent.scrollTop = 0; // reset scroll
+            }, 300);
         }
 
-        // Close by clicking the blurred background
-        document.getElementById('overlay').addEventListener('click', () => {
-            if (openEnvelope) {
-                forceClose(openEnvelope);
+        function closeModal(event) {
+            if (event) event.stopPropagation();
+            
+            // Hide the modal
+            modalOverlay.classList.remove('active');
+            
+            // After modal fades out, close the envelope flap
+            setTimeout(() => {
+                if (activeEnvelope) {
+                    activeEnvelope.classList.remove('open');
+                    activeEnvelope = null;
+                }
+            }, 400);
+        }
+
+        // Close if clicking the blurred background outside the paper
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                closeModal();
             }
         });
 
