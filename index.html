@@ -17,6 +17,7 @@
             --envelope-shadow: #CFC2B2;
             --paper-color: #FCFBF9;
             --seal-color: #792A2A;
+            --accent-glow: rgba(232, 223, 213, 0.5);
         }
 
         * {
@@ -36,18 +37,52 @@
             font-family: 'Cormorant Garamond', serif;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+            align-items: center; /* mathematically centers the carousel vertically */
+            justify-content: center;
+            min-height: 100dvh; /* dvh fixes mobile address bar layout issues */
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
         }
 
+        /* Ambient floating particles container */
+        #particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: #D5C9B8;
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            20% { opacity: 0.4; }
+            80% { opacity: 0.4; }
+            100% { transform: translateY(-20vh) translateX(20px); opacity: 0; }
+        }
+
+        /* Header taken out of flow so envelopes center perfectly */
         header {
+            position: absolute;
+            top: 6vh;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
-            padding: 6vh 20px 0;
-            animation: fadeIn 1.5s ease;
-            flex-shrink: 0;
+            width: 100%;
             max-width: 800px;
-            margin: 0 auto;
+            padding: 0 20px;
+            animation: fadeIn 1.5s ease;
+            z-index: 10;
+            pointer-events: none; /* lets you click through if needed */
         }
 
         header h1 {
@@ -73,13 +108,9 @@
             margin-top: 15px;
         }
 
-        /* perfectly centered horizontal carousel */
         .carousel-wrapper {
-            flex-grow: 1;
-            display: flex;
-            align-items: center; 
-            justify-content: center;
-            width: 100%;
+            width: 100vw;
+            z-index: 5;
         }
 
         .carousel {
@@ -88,10 +119,10 @@
             scroll-snap-type: x mandatory;
             align-items: center;
             width: 100%;
-            height: 100%;
-            padding: 0 calc(50vw - 160px); /* half the envelope width to center perfectly */
+            padding: 0 calc(50vw - 160px); 
             gap: 60px;
             scrollbar-width: none; 
+            padding-bottom: 30px; /* shadow room */
         }
         
         .carousel::-webkit-scrollbar {
@@ -105,11 +136,30 @@
             height: 250px;
             cursor: pointer;
             flex-shrink: 0;
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Add a subtle aesthetic glow behind envelope on hover */
+        .envelope-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 90%;
+            height: 80%;
+            background: var(--accent-glow);
+            filter: blur(20px);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
         }
 
         .envelope-wrapper:hover {
             transform: translateY(-10px);
+        }
+
+        .envelope-wrapper:hover::after {
+            opacity: 1;
         }
 
         .envelope {
@@ -221,8 +271,11 @@
         .envelope-wrapper.open .envelope-label {
             opacity: 0;
         }
+        .envelope-wrapper.open::after {
+            opacity: 0; /* hides glow when open */
+        }
 
-        /* --- REDESIGNED MODAL TO FIX BUTTON VISIBILITY --- */
+        /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -246,16 +299,15 @@
         }
 
         .modal-paper {
+            position: relative;
             width: 90vw;
             max-width: 600px;
-            height: 80vh; /* slightly shorter to ensure it never gets cut off by mobile address bars */
+            height: 80vh; 
             max-height: 800px;
             background-color: var(--paper-color);
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
             border-radius: 4px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            display: flex;
-            flex-direction: column; /* absolute lifesaver for pinned footer */
             transform: translateY(30px);
             opacity: 0;
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -263,16 +315,58 @@
             overflow: hidden; 
         }
 
+        /* Vintage aesthetic corners on the paper */
+        .modal-paper::before, .modal-paper::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #D5C9B8;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .modal-paper::before {
+            top: 15px; left: 15px;
+            border-right: none; border-bottom: none;
+        }
+        .modal-paper::after {
+            bottom: 15px; right: 15px;
+            border-left: none; border-top: none;
+        }
+
         .modal-overlay.active .modal-paper {
             transform: translateY(0);
             opacity: 1;
         }
 
+        /* The minimalist "X" Close Button */
+        .close-x {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            font-size: 2.2rem;
+            color: #8C8274;
+            cursor: pointer;
+            z-index: 50;
+            transition: color 0.3s ease, transform 0.3s ease;
+            font-family: sans-serif;
+            font-weight: 200;
+            line-height: 1;
+            padding: 5px;
+        }
+        .close-x:hover {
+            color: var(--text-color);
+            transform: scale(1.1);
+        }
+
         /* content scroll area */
         .modal-content-scroll {
-            flex: 1 1 auto; /* takes up all available space */
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
             overflow-y: auto;
-            padding: 35px 35px 10px 35px;
+            padding: 55px 40px 40px 40px; /* extra top padding so text doesn't hit the X */
             color: #2b2b2b;
         }
 
@@ -286,38 +380,6 @@
             line-height: 2.4;
             white-space: pre-line;
             letter-spacing: 0.5px;
-            padding-bottom: 20px;
-        }
-
-        /* pinned footer area so button is ALWAYS visible */
-        .modal-footer {
-            flex: 0 0 auto; /* prevents this area from shrinking */
-            padding: 15px 35px 25px 35px;
-            background: linear-gradient(to top, var(--paper-color) 80%, rgba(252, 251, 249, 0) 100%);
-            display: flex;
-            justify-content: center;
-            border-top: 1px solid rgba(0,0,0,0.03);
-        }
-
-        .close-btn {
-            padding: 10px 35px;
-            background-color: #E8DFD5; /* distinct background color now */
-            border: 1px solid #CFC2B2;
-            color: var(--text-color);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            font-style: italic;
-            font-weight: 600;
-            border-radius: 25px; /* softer look */
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .close-btn:hover {
-            background-color: var(--text-color);
-            color: var(--paper-color);
-            border-color: var(--text-color);
         }
 
         @keyframes fadeIn {
@@ -326,9 +388,11 @@
         }
 
         @media (max-width: 600px) {
-            header { padding: 4vh 15px 0; }
-            header h1 { font-size: 2.2rem; }
-            header p.subtitle { font-size: 1.1rem; }
+            header { top: 4vh; padding: 0 15px; }
+            header h1 { font-size: 2.2rem; margin-bottom: 5px; }
+            header p.subtitle { font-size: 1rem; }
+            header p.instruction { display: none; /* clean up mobile screen real estate */ }
+            
             .carousel { 
                 padding: 0 calc(50vw - 140px); 
                 gap: 40px; 
@@ -339,15 +403,16 @@
             .envelope-label { font-size: 1rem; bottom: 12px; padding: 6px 10px; }
             
             .modal-paper { height: 85vh; width: 92vw; }
-            .modal-content-scroll { padding: 25px 20px 10px 20px; }
-            .modal-footer { padding: 15px 20px 20px 20px; }
-            
+            .modal-content-scroll { padding: 45px 25px 30px 25px; }
+            .close-x { top: 10px; right: 15px; font-size: 2rem; }
             .handwritten-text { font-size: 1rem; line-height: 2.2; }
-            .close-btn { padding: 8px 30px; font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
+
+    <!-- aesthetic background particles -->
+    <div id="particles-container"></div>
 
     <header>
         <h1>open when...</h1>
@@ -363,20 +428,30 @@
 
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-paper">
+            <button class="close-x" onclick="closeModal(event)">×</button>
             <div class="modal-content-scroll" id="modal-content">
                 <!-- text gets injected here -->
-            </div>
-            <!-- dedicated footer guarantees the button never gets hidden -->
-            <div class="modal-footer">
-                <button class="close-btn" onclick="closeModal(event)">go back</button>
             </div>
         </div>
     </div>
 
     <script>
+        // generate aesthetic particles
+        const particlesContainer = document.getElementById('particles-container');
+        for(let i=0; i<30; i++) {
+            let p = document.createElement('div');
+            p.className = 'particle';
+            let size = Math.random() * 4 + 1;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+            p.style.animationDelay = (Math.random() * 10) + 's';
+            particlesContainer.appendChild(p);
+        }
+
         const sealSVG = `<svg viewBox="0 0 24 24"><path d="M12 22s-4-6-4-12c0-2.2 1.8-4 4-4s4 1.8 4 4c0 6-4 12-4 12zm0-18c-1.1 0-2 .9-2 2 0 4.4 2.5 8.4 3.5 10 .8-1.5 2.5-5.6 2.5-10 0-1.1-.9-2-2-2z"/><path d="M12 6.5v9M9.5 10.5l2.5-2M14.5 12.5l-2.5-2"/></svg>`;
 
-        // exactly the same text you loved, just with beautiful p.s. paragraphs added at the very end
         const lettersData = [
             {
                 label: "open when you forget that i love you",
@@ -479,7 +554,6 @@
         }
 
         modalOverlay.addEventListener('click', function(e) {
-            // only closes if clicking the blurry background
             if (e.target === modalOverlay) {
                 closeModal();
             }
