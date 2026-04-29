@@ -27,7 +27,7 @@
         }
 
         /* absolutely everything forced to lowercase */
-        body, h1, p, div, button {
+        body, h1, p, div, button, footer {
             text-transform: lowercase !important;
         }
 
@@ -37,13 +37,13 @@
             font-family: 'Cormorant Garamond', serif;
             overflow: hidden;
             display: flex;
-            align-items: center; /* mathematically centers the carousel vertically */
-            justify-content: center;
-            min-height: 100dvh; /* dvh fixes mobile address bar layout issues */
+            flex-direction: column;
+            justify-content: space-between; /* perfectly distributes header, carousel, and footer */
+            min-height: 100dvh; 
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
         }
 
-        /* Ambient floating particles container */
+        /* ambient floating particles */
         #particles-container {
             position: absolute;
             top: 0;
@@ -70,19 +70,16 @@
             100% { transform: translateY(-20vh) translateX(20px); opacity: 0; }
         }
 
-        /* Header taken out of flow so envelopes center perfectly */
+        /* fixed header layout so it fades in perfectly without glitching */
         header {
-            position: absolute;
-            top: 6vh;
-            left: 50%;
-            transform: translateX(-50%);
+            position: relative;
             text-align: center;
             width: 100%;
             max-width: 800px;
+            margin: 6vh auto 0;
             padding: 0 20px;
             animation: fadeIn 1.5s ease;
             z-index: 10;
-            pointer-events: none; /* lets you click through if needed */
         }
 
         header h1 {
@@ -108,7 +105,11 @@
             margin-top: 15px;
         }
 
+        /* carousel wrapper fills exact middle space */
         .carousel-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
             width: 100vw;
             z-index: 5;
         }
@@ -122,7 +123,6 @@
             padding: 0 calc(50vw - 160px); 
             gap: 60px;
             scrollbar-width: none; 
-            padding-bottom: 30px; /* shadow room */
         }
         
         .carousel::-webkit-scrollbar {
@@ -139,14 +139,12 @@
             transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* Add a subtle aesthetic glow behind envelope on hover */
+        /* envelope glow */
         .envelope-wrapper::after {
             content: '';
             position: absolute;
-            top: 10%;
-            left: 5%;
-            width: 90%;
-            height: 80%;
+            top: 10%; left: 5%;
+            width: 90%; height: 80%;
             background: var(--accent-glow);
             filter: blur(20px);
             opacity: 0;
@@ -257,31 +255,43 @@
             transition: opacity 0.3s ease;
         }
 
-        .envelope-wrapper.open {
-            cursor: default;
-        }
-        .envelope-wrapper.open .top-flap {
-            transform: rotateX(180deg);
-            z-index: 1;
-        }
-        .envelope-wrapper.open .seal {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.5);
-        }
-        .envelope-wrapper.open .envelope-label {
-            opacity: 0;
-        }
-        .envelope-wrapper.open::after {
-            opacity: 0; /* hides glow when open */
+        .envelope-wrapper.open { cursor: default; }
+        .envelope-wrapper.open .top-flap { transform: rotateX(180deg); z-index: 1; }
+        .envelope-wrapper.open .seal { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+        .envelope-wrapper.open .envelope-label { opacity: 0; }
+        .envelope-wrapper.open::after { opacity: 0; }
+
+        /* new footer to fill empty space */
+        footer {
+            position: relative;
+            text-align: center;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto 5vh;
+            padding: 0 20px;
+            animation: fadeIn 2s ease;
+            z-index: 10;
         }
 
-        /* Modal Overlay */
+        footer p.footer-text {
+            font-size: 1.15rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        footer p.signature {
+            font-size: 1.4rem;
+            color: #3A352F;
+            font-weight: 600;
+        }
+
+        /* letter modal fixes */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             background: rgba(244, 239, 234, 0.85);
             backdrop-filter: blur(5px);
             z-index: 99;
@@ -298,12 +308,13 @@
             pointer-events: all;
         }
 
+        /* paper layout fixed to prevent clipping */
         .modal-paper {
             position: relative;
             width: 90vw;
             max-width: 600px;
             height: 80vh; 
-            max-height: 800px;
+            max-height: 750px;
             background-color: var(--paper-color);
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
             border-radius: 4px;
@@ -312,15 +323,20 @@
             opacity: 0;
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             transition-delay: 0.2s; 
-            overflow: hidden; 
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Vintage aesthetic corners on the paper */
+        .modal-overlay.active .modal-paper {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* corners stuck structurally to paper */
         .modal-paper::before, .modal-paper::after {
             content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 20px; height: 20px;
             border: 1px solid #D5C9B8;
             pointer-events: none;
             z-index: 10;
@@ -334,16 +350,10 @@
             border-left: none; border-top: none;
         }
 
-        .modal-overlay.active .modal-paper {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        /* The minimalist "X" Close Button */
+        /* close button stuck to paper */
         .close-x {
             position: absolute;
-            top: 15px;
-            right: 20px;
+            top: 15px; right: 15px;
             background: transparent;
             border: none;
             font-size: 2.2rem;
@@ -361,13 +371,13 @@
             transform: scale(1.1);
         }
 
-        /* content scroll area */
+        /* perfectly contained scrolling area inside paper */
         .modal-content-scroll {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            flex: 1;
             overflow-y: auto;
-            padding: 55px 40px 40px 40px; /* extra top padding so text doesn't hit the X */
+            padding: 55px 40px 40px 40px; 
             color: #2b2b2b;
+            border-radius: 4px;
         }
 
         .modal-content-scroll::-webkit-scrollbar { width: 5px; }
@@ -388,23 +398,24 @@
         }
 
         @media (max-width: 600px) {
-            header { top: 4vh; padding: 0 15px; }
+            header { margin-top: 4vh; padding: 0 15px; }
             header h1 { font-size: 2.2rem; margin-bottom: 5px; }
-            header p.subtitle { font-size: 1rem; }
-            header p.instruction { display: none; /* clean up mobile screen real estate */ }
+            header p.subtitle { font-size: 1.1rem; }
+            header p.instruction { display: none; }
             
-            .carousel { 
-                padding: 0 calc(50vw - 140px); 
-                gap: 40px; 
-            }
+            .carousel { padding: 0 calc(50vw - 140px); gap: 40px; }
             .envelope-wrapper { width: 280px; height: 220px; }
             .front-flap, .top-flap { border-width: 110px 140px; }
             .seal { top: 110px; width: 40px; height: 40px; }
             .envelope-label { font-size: 1rem; bottom: 12px; padding: 6px 10px; }
             
+            footer { margin-bottom: 3vh; }
+            footer p.footer-text { font-size: 1.05rem; margin-bottom: 10px; }
+            footer p.signature { font-size: 1.25rem; }
+
             .modal-paper { height: 85vh; width: 92vw; }
             .modal-content-scroll { padding: 45px 25px 30px 25px; }
-            .close-x { top: 10px; right: 15px; font-size: 2rem; }
+            .close-x { top: 10px; right: 10px; font-size: 2rem; }
             .handwritten-text { font-size: 1rem; line-height: 2.2; }
         }
     </style>
@@ -425,6 +436,12 @@
             <!-- javascript injects the envelopes here -->
         </div>
     </div>
+
+    <!-- beautifully written footer text to fill the bottom -->
+    <footer>
+        <p class="footer-text">this is more than just a countdown until the distance closes. it is a reminder that even 2,083 kilometers away, you are actively, deliberately chosen every single day. read these when you forget.</p>
+        <p class="signature">with love, niv.<br>for aaradhya.</p>
+    </footer>
 
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-paper">
