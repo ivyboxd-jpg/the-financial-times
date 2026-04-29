@@ -101,7 +101,6 @@
         .envelope-wrapper {
             scroll-snap-align: center;
             position: relative;
-            /* slightly taller envelope to prevent label from blocking seal */
             width: 320px;
             height: 250px;
             cursor: pointer;
@@ -152,7 +151,6 @@
             filter: drop-shadow(0 4px 4px rgba(0,0,0,0.05));
         }
 
-        /* wax seal pushed slightly up */
         .seal {
             position: absolute;
             top: 125px;
@@ -189,7 +187,6 @@
             filter: drop-shadow(0 1px 1px rgba(0,0,0,0.5));
         }
 
-        /* paper sticker label - safely below the seal */
         .envelope-label {
             position: absolute;
             bottom: 15px;
@@ -225,7 +222,7 @@
             opacity: 0;
         }
 
-        /* reading modal layout fixes */
+        /* --- REDESIGNED MODAL TO FIX BUTTON VISIBILITY --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -251,20 +248,19 @@
         .modal-paper {
             width: 90vw;
             max-width: 600px;
-            height: 85vh;
+            height: 80vh; /* slightly shorter to ensure it never gets cut off by mobile address bars */
             max-height: 800px;
             background-color: var(--paper-color);
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-            border-radius: 2px;
-            padding: 40px;
+            border-radius: 4px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.15);
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* absolute lifesaver for pinned footer */
             transform: translateY(30px);
             opacity: 0;
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             transition-delay: 0.2s; 
-            overflow: hidden; /* prevents inner content from breaking the box */
+            overflow: hidden; 
         }
 
         .modal-overlay.active .modal-paper {
@@ -274,11 +270,9 @@
 
         /* content scroll area */
         .modal-content-scroll {
+            flex: 1 1 auto; /* takes up all available space */
             overflow-y: auto;
-            flex-grow: 1;
-            padding-right: 15px;
-            margin-bottom: 20px;
-            min-height: 0; /* essential for flexbox scrolling */
+            padding: 35px 35px 10px 35px;
             color: #2b2b2b;
         }
 
@@ -292,26 +286,38 @@
             line-height: 2.4;
             white-space: pre-line;
             letter-spacing: 0.5px;
+            padding-bottom: 20px;
         }
 
-        /* sticky button visible at the bottom always */
+        /* pinned footer area so button is ALWAYS visible */
+        .modal-footer {
+            flex: 0 0 auto; /* prevents this area from shrinking */
+            padding: 15px 35px 25px 35px;
+            background: linear-gradient(to top, var(--paper-color) 80%, rgba(252, 251, 249, 0) 100%);
+            display: flex;
+            justify-content: center;
+            border-top: 1px solid rgba(0,0,0,0.03);
+        }
+
         .close-btn {
-            flex-shrink: 0;
-            padding: 10px 28px;
-            background: transparent;
-            border: 1px solid var(--text-color);
+            padding: 10px 35px;
+            background-color: #E8DFD5; /* distinct background color now */
+            border: 1px solid #CFC2B2;
             color: var(--text-color);
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.2rem;
             font-style: italic;
+            font-weight: 600;
+            border-radius: 25px; /* softer look */
             cursor: pointer;
-            align-self: center;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         .close-btn:hover {
-            background: var(--text-color);
-            color: var(--bg-color);
+            background-color: var(--text-color);
+            color: var(--paper-color);
+            border-color: var(--text-color);
         }
 
         @keyframes fadeIn {
@@ -320,7 +326,7 @@
         }
 
         @media (max-width: 600px) {
-            header { padding: 5vh 15px 0; }
+            header { padding: 4vh 15px 0; }
             header h1 { font-size: 2.2rem; }
             header p.subtitle { font-size: 1.1rem; }
             .carousel { 
@@ -331,9 +337,13 @@
             .front-flap, .top-flap { border-width: 110px 140px; }
             .seal { top: 110px; width: 40px; height: 40px; }
             .envelope-label { font-size: 1rem; bottom: 12px; padding: 6px 10px; }
-            .modal-paper { padding: 30px 20px; height: 85vh; width: 92vw; }
+            
+            .modal-paper { height: 85vh; width: 92vw; }
+            .modal-content-scroll { padding: 25px 20px 10px 20px; }
+            .modal-footer { padding: 15px 20px 20px 20px; }
+            
             .handwritten-text { font-size: 1rem; line-height: 2.2; }
-            .close-btn { padding: 8px 20px; font-size: 1.1rem; }
+            .close-btn { padding: 8px 30px; font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -356,57 +366,61 @@
             <div class="modal-content-scroll" id="modal-content">
                 <!-- text gets injected here -->
             </div>
-            <button class="close-btn" onclick="closeModal(event)">fold & seal</button>
+            <!-- dedicated footer guarantees the button never gets hidden -->
+            <div class="modal-footer">
+                <button class="close-btn" onclick="closeModal(event)">go back</button>
+            </div>
         </div>
     </div>
 
     <script>
         const sealSVG = `<svg viewBox="0 0 24 24"><path d="M12 22s-4-6-4-12c0-2.2 1.8-4 4-4s4 1.8 4 4c0 6-4 12-4 12zm0-18c-1.1 0-2 .9-2 2 0 4.4 2.5 8.4 3.5 10 .8-1.5 2.5-5.6 2.5-10 0-1.1-.9-2-2-2z"/><path d="M12 6.5v9M9.5 10.5l2.5-2M14.5 12.5l-2.5-2"/></svg>`;
 
+        // exactly the same text you loved, just with beautiful p.s. paragraphs added at the very end
         const lettersData = [
             {
                 label: "open when you forget that i love you",
-                content: "you told me recently that things feel like they are just going on for the sake of it. that it feels like compulsion rather than love. i need to stop you right there, look you in the eyes, and tell you how entirely wrong that is. \n\ni do not love you out of habit. i do not reach for my phone to text you because i feel like i have to. every single message, every single call, every single moment of the last 10 months has been an active, completely deliberate choice. i wake up every morning and i intentionally choose you. i am absolutely obsessed with your mind, your poetry, your stubbornness, and your unbelievably gorgeous face. there is no compulsion here, aaradhya. there is only a guy who is completely, wildly in love with you."
+                content: "you told me recently that things feel like they are just going on for the sake of it. that it feels like compulsion rather than love. i need to stop you right there, look you in the eyes, and tell you how entirely wrong that is. \n\ni do not love you out of habit. i do not reach for my phone to text you because i feel like i have to. every single message, every single call, every single moment of the last 10 months has been an active, completely deliberate choice. i wake up every morning and i intentionally choose you. i am absolutely obsessed with your mind, your poetry, your stubbornness, and your unbelievably gorgeous face. there is no compulsion here, aaradhya. there is only a guy who is completely, wildly in love with you.\n\n---\n\np.s. i literally just checked my phone while writing this, hoping your name popped up. spoiler alert: i am still completely obsessed with you. zero compulsion. just love."
             },
             {
                 label: "open when you need to know that i'm proud of you",
-                content: "i know exactly how your brain works. i know you hold yourself to these completely insane, impossible standards, and i know you beat yourself up when you feel like you fall short. but you really need to hear me say this: i am profoundly, undeniably proud of you.\n\nnot just because you're smart, but because of how deeply intentional you are with everything you do. you don't just study to check a box or pass a test; you genuinely want to understand the intricate mechanisms of the science you read. you carry this incredible intellectual curiosity that constantly leaves me in awe. you handle an overwhelming amount of pressure with so much grace. whatever happens next, nothing changes the fact that i am insanely proud to be the guy you call yours."
+                content: "i know exactly how your brain works. i know you hold yourself to these completely insane, impossible standards, and i know you beat yourself up when you feel like you fall short. but you really need to hear me say this: i am profoundly, undeniably proud of you.\n\nnot just because you're smart, but because of how deeply intentional you are with everything you do. you don't just study to check a box or pass a test; you genuinely want to understand the intricate mechanisms of the science you read. you carry this incredible intellectual curiosity that constantly leaves me in awe. you handle an overwhelming amount of pressure with so much grace. whatever happens next, nothing changes the fact that i am insanely proud to be the guy you call yours.\n\n---\n\np.s. please remember to be gentle with yourself today. you are doing so much better than you give yourself credit for. i'm cheering for you, always."
             },
             {
                 label: "open when you need to feel appreciated",
-                content: "i appreciate you. not just the flawless, perfectly put-together versions of you, but the messy, exhausted, complex reality of who you are.\n\ni appreciate your brilliant brain. i appreciate your completely unhinged 2 am ramblings about saccharomyces cerevisiae, cheese, and mushrooms when you're too tired to form a coherent sentence. i appreciate that you are fiercely kind, but you still hold your boundaries when you need to. i notice the way you refuse to let your analytical, scientific side dull your poetry. \n\nif i could bottle up the exact way your mind works, i would. you carry so much weight, and even when you think you're hiding the effort, i see it. i notice every single bit of it. thank you for being exactly who you are."
+                content: "i appreciate you. not just the flawless, perfectly put-together versions of you, but the messy, exhausted, complex reality of who you are.\n\ni appreciate your brilliant brain. i appreciate your completely unhinged 2 am ramblings about saccharomyces cerevisiae, cheese, and mushrooms when you're too tired to form a coherent sentence. i appreciate that you are fiercely kind, but you still hold your boundaries when you need to. i notice the way you refuse to let your analytical, scientific side dull your poetry. \n\nif i could bottle up the exact way your mind works, i would. you carry so much weight, and even when you think you're hiding the effort, i see it. i notice every single bit of it. thank you for being exactly who you are.\n\n---\n\np.s. i genuinely saved that exact rambling voice note. it is safely stored. it is a masterpiece of exhaustion and i love it."
             },
             {
                 label: "open when it's exam time",
-                content: "i know the neet and cuet are incredibly loud in your mind right now. i know the pressure feels like a physical weight on your chest. \n\nbut i need you to remember who you actually are. you are a scientist. you are a poet. you have one of the most uniquely fascinating minds i have ever encountered. these exams are just paperwork; they are not the ceiling of your potential, and they certainly do not define your worth. \n\ntreat this like an f1 drs zone—just open your rear wing, keep your foot down, and completely breeze past it. you are a literal genius, gorgeous. take a deep breath. you do not have to be perfect; you just have to trust that brilliant brain of yours. i believe in you entirely."
+                content: "i know the neet and cuet are incredibly loud in your mind right now. i know the pressure feels like a physical weight on your chest. \n\nbut i need you to remember who you actually are. you are a scientist. you are a poet. you have one of the most uniquely fascinating minds i have ever encountered. these exams are just paperwork; they are not the ceiling of your potential, and they certainly do not define your worth. \n\ntreat this like an f1 drs zone—just open your rear wing, keep your foot down, and completely breeze past it. you are a literal genius, gorgeous. take a deep breath. you do not have to be perfect; you just have to trust that brilliant brain of yours. i believe in you entirely.\n\n---\n\np.s. once these papers are finally done, you officially owe me a ridiculously long facetime call so i can finally see your face without textbooks in the background. deal? deal."
             },
             {
                 label: "open when you miss me",
-                content: "trust me, i hate the distance between us just as much as you do. probably more.\n\ni would honestly give absolutely anything in the world to just pull you into my arms right now instead of looking at you through a sheet of glass. it drives me crazy that i can't just reach out and hold your hand when you're stressed with studying. \n\nbut this distance? it just proves my point. we aren't doing this out of convenience. keeping a long-distance relationship alive requires intense, daily intentionality. i am here because there is nowhere else i would rather be. the distance is just geography, pretty girl. maybe we need a sequel to that 47-minute facetime lipstick tutorial soon to pass the time? i'm right here. i'm choosing you, across the miles, every single day."
+                content: "trust me, i hate the distance between us just as much as you do. probably more.\n\ni would honestly give absolutely anything in the world to just pull you into my arms right now instead of looking at you through a sheet of glass. it drives me crazy that i can't just reach out and hold your hand when you're stressed with studying. \n\nbut this distance? it just proves my point. we aren't doing this out of convenience. keeping a long-distance relationship alive requires intense, daily intentionality. i am here because there is nowhere else i would rather be. the distance is just geography, pretty girl. maybe we need a sequel to that 47-minute facetime lipstick tutorial soon to pass the time? i'm right here. i'm choosing you, across the miles, every single day.\n\n---\n\n*insert a very long, very tight virtual hug right here*\n\np.s. i am actively counting down the days until this distance is permanently zero. it's going to happen. just hold on a little longer."
             },
             {
                 label: "open when you want to know why i love you",
-                content: "because you absolutely refuse to choose between art and science. you're a poet who understands cellular biology, and that duality is so completely magnetic.\n\nbecause you feel things deeply and process them internally, yet you still manage to carry it all with grace. because you let me draft completely ridiculous legal documents for you after we bicker, just to make you smile. because we can turn nyt cooking recipes into relationship advice. \n\ni love you because you are maddeningly, breathtakingly gorgeous, and somehow you don't even make a big deal out of it. you contain all these massive contradictions without ever needing to resolve them for anyone. you're just you. complex, thoughtful, completely wonderful. that is why."
+                content: "because you absolutely refuse to choose between art and science. you're a poet who understands cellular biology, and that duality is so completely magnetic.\n\nbecause you feel things deeply and process them internally, yet you still manage to carry it all with grace. because you let me draft completely ridiculous legal documents for you after we bicker, just to make you smile. because we can turn nyt cooking recipes into relationship advice. \n\ni love you because you are maddeningly, breathtakingly gorgeous, and somehow you don't even make a big deal out of it. you contain all these massive contradictions without ever needing to resolve them for anyone. you're just you. complex, thoughtful, completely wonderful. that is why.\n\n---\n\np.s. honestly? you are the smartest person in any room you walk into, and somehow also the prettiest. it's a completely unfair combination, but i love it."
             },
             {
                 label: "open when everything feels like it's falling apart",
-                content: "breathe. just breathe for a second with me.\n\ni know you carry so much weight on your shoulders, and right now it probably feels entirely too heavy to hold up. but you do not have to fix everything today. the science will still be there tomorrow. the exams can pause for five minutes. let things be messy.\n\nyou are allowed to be completely overwhelmed. you're allowed to cry. you never, ever have to apologize to me for having emotions or needing space to process them. you do not have to be the tough, high-achieving, perfectly composed girl right now. you're allowed to just be human. i am not asking you to hold it all together. just let go for a minute. i've got you."
+                content: "breathe. just breathe for a second with me.\n\ni know you carry so much weight on your shoulders, and right now it probably feels entirely too heavy to hold up. but you do not have to fix everything today. the science will still be there tomorrow. the exams can pause for five minutes. let things be messy.\n\nyou are allowed to be completely overwhelmed. you're allowed to cry. you never, ever have to apologize to me for having emotions or needing space to process them. you do not have to be the tough, high-achieving, perfectly composed girl right now. you're allowed to just be human. i am not asking you to hold it all together. just let go for a minute. i've got you.\n\n---\n\np.s. it is completely okay if all you accomplished today was surviving. that is enough for me. i'm not going anywhere."
             },
             {
                 label: "open when you feel like you're not enough",
-                content: "stop being mean to my girlfriend. seriously, i will not stand for it.\n\nyou are incredibly self-critical, and it breaks my heart because i am looking at the most exceptional person i've ever met. you are enough exactly as you are in this very second. not 'you'll be enough when you pass this entrance exam' or 'you'll be enough when you fix this tiny flaw'. right now. \n\nexhausted you is enough. stressed you is enough. the you that processes emotions in silence before sharing them is enough. your worth is not conditional on anything you achieve or anything you produce. be gentle with yourself, aaradhya. you are my favorite person in the world."
+                content: "stop being mean to my girlfriend. seriously, i will not stand for it.\n\nyou are incredibly self-critical, and it breaks my heart because i am looking at the most exceptional person i've ever met. you are enough exactly as you are in this very second. not 'you'll be enough when you pass this entrance exam' or 'you'll be enough when you fix this tiny flaw'. right now. \n\nexhausted you is enough. stressed you is enough. the you that processes emotions in silence before sharing them is enough. your worth is not conditional on anything you achieve or anything you produce. be gentle with yourself, aaradhya. you are my favorite person in the world.\n\n---\n\np.s. please go look in the nearest mirror right now. that girl? she is my entire world. be incredibly nice to her today, please."
             },
             {
                 label: "open when you feel alone",
-                content: "look, i know i'm physically far away, and i know the distance makes things feel isolating, especially when the stress gets loud. but you are never actually alone. \n\ni am fiercely, stubbornly in your corner every single day. whenever you feel isolated in your room, just remember there is a guy out there who is constantly looking at his phone, hoping your name pops up on his lock screen. \n\ni am entirely invested in you. i am intentionally holding this space for you. i am always just a text or a call away, ready to listen to whatever stream-of-consciousness thoughts you have. you have me. completely."
+                content: "look, i know i'm physically far away, and i know the distance makes things feel isolating, especially when the stress gets loud. but you are never actually alone. \n\ni am fiercely, stubbornly in your corner every single day. whenever you feel isolated in your room, just remember there is a guy out there who is constantly looking at his phone, hoping your name pops up on his lock screen. \n\ni am entirely invested in you. i am intentionally holding this space for you. i am always just a text or a call away, ready to listen to whatever stream-of-consciousness thoughts you have. you have me. completely.\n\n---\n\np.s. text me. even if it's 3 am. even if it's just a completely random thought about a poetry line or an exam topic. i am always here."
             },
             {
                 label: "open when you feel bad about yourself",
-                content: "i'm just gonna state the absolute, undeniable, scientific facts here:\n\nyou are unfairly, distractingly gorgeous. like, it is genuinely unfair to the rest of the population how pretty you are. if we were an f1 team, you'd be the star driver taking pole position every single weekend, and i'd just be the guy in the pit lane, completely thrilled just to be in your vicinity. \n\nand on top of having that face, you have an intellect that challenges and fascinates me endlessly. you are deeply kind, unapologetically smart, and entirely captivating. so whatever dumb lies your reflection or your brain is trying to feed you right now? ignore them. you are an absolute masterpiece."
+                content: "i'm just gonna state the absolute, undeniable, scientific facts here:\n\nyou are unfairly, distractingly gorgeous. like, it is genuinely unfair to the rest of the population how pretty you are. if we were an f1 team, you'd be the star driver taking pole position every single weekend, and i'd just be the guy in the pit lane, completely thrilled just to be in your vicinity. \n\nand on top of having that face, you have an intellect that challenges and fascinates me endlessly. you are deeply kind, unapologetically smart, and entirely captivating. so whatever dumb lies your reflection or your brain is trying to feed you right now? ignore them. you are an absolute masterpiece.\n\n---\n\np.s. 10/10. literally flawless. there are zero notes. you are perfect to me."
             },
             {
                 label: "open when you need a reminder about why this relationship is what you deserve",
-                content: "you recently voiced a fear that this is just going on out of compulsion. that it’s just happening for the sake of it. please, read this very carefully: i am here entirely out of love, and absolutely nothing else. \n\nwe had a fight. we bickered. and i literally sat down and drafted up a legal 'terms and conditions' document just to prove to you that my commitment is permanent. you do not do that out of compulsion. you do that because you are fiercely fighting for the girl you love. \n\nthis relationship is a completely safe space for your whole, complex self. my commitment to you is not passive; it is an active, daily choice. you deserve someone who loves your brilliant brain and your beautiful face equally. you deserve someone who stays unconditionally. 11 months is just the beginning. i choose you, aaradhya. today, tomorrow, and intentionally, forever."
+                content: "you recently voiced a fear that this is just going on out of compulsion. that it’s just happening for the sake of it. please, read this very carefully: i am here entirely out of love, and absolutely nothing else. \n\nwe had a fight. we bickered. and i literally sat down and drafted up a legal 'terms and conditions' document just to prove to you that my commitment is permanent. you do not do that out of compulsion. you do that because you are fiercely fighting for the girl you love. \n\nthis relationship is a completely safe space for your whole, complex self. my commitment to you is not passive; it is an active, daily choice. you deserve someone who loves your brilliant brain and your beautiful face equally. you deserve someone who stays unconditionally. 11 months is just the beginning. i choose you, aaradhya. today, tomorrow, and intentionally, forever.\n\n---\n\np.s. please refer to the official terms and conditions. section 4, clause b: 'aaradhya is entirely loved, intentionally and unconditionally, for the rest of time.'"
             }
         ];
 
@@ -465,7 +479,7 @@
         }
 
         modalOverlay.addEventListener('click', function(e) {
-            // only close if clicking the blurry background outside the paper
+            // only closes if clicking the blurry background
             if (e.target === modalOverlay) {
                 closeModal();
             }
@@ -473,4 +487,4 @@
 
     </script>
 </body>
-</html> 
+</html>
