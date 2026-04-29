@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>open when... | for aaradhya</title>
     
-    <!-- Google Fonts -->
+    <!-- google fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Homemade+Apple&display=swap" rel="stylesheet">
     
     <style>
@@ -25,7 +25,7 @@
             box-sizing: border-box;
         }
 
-        /* force everything to be lowercase */
+        /* absolutely everything forced to lowercase */
         body, h1, p, div, button {
             text-transform: lowercase !important;
         }
@@ -37,14 +37,13 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* pushes header up and carousel down */
             height: 100vh;
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
         }
 
         header {
             text-align: center;
-            padding: 8vh 20px 2vh;
+            padding: 6vh 20px 0;
             animation: fadeIn 1.5s ease;
             flex-shrink: 0;
             max-width: 800px;
@@ -55,7 +54,7 @@
             font-size: 2.8rem;
             font-weight: 400;
             letter-spacing: 2px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: #3A352F;
         }
 
@@ -63,7 +62,7 @@
             font-size: 1.25rem;
             color: #555;
             line-height: 1.6;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         header p.instruction {
@@ -71,16 +70,24 @@
             font-size: 1rem;
             color: #888;
             letter-spacing: 0.5px;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
-        /* Carousel anchored to the bottom */
+        /* perfectly centered horizontal carousel */
+        .carousel-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center; /* this vertically centers the envelopes in the remaining space */
+            width: 100%;
+        }
+
         .carousel {
             display: flex;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            align-items: flex-end; /* bottom alignment */
-            padding: 0 calc(50vw - 160px) 8vh; /* center padding + bottom spacing */
+            align-items: center;
+            width: 100%;
+            padding: 0 calc(50vw - 160px); /* 160px is half the envelope width, perfectly centering the first/last items */
             gap: 60px;
             scrollbar-width: none; 
         }
@@ -103,7 +110,7 @@
             transform: translateY(-10px);
         }
 
-        /* Envelope Construction */
+        /* realistic envelope construction */
         .envelope {
             position: relative;
             width: 100%;
@@ -143,7 +150,7 @@
             filter: drop-shadow(0 4px 4px rgba(0,0,0,0.05));
         }
 
-        /* Wax Seal */
+        /* wax seal */
         .seal {
             position: absolute;
             top: 110px;
@@ -180,7 +187,7 @@
             filter: drop-shadow(0 1px 1px rgba(0,0,0,0.5));
         }
 
-        /* Label */
+        /* paper sticker label */
         .envelope-label {
             position: absolute;
             bottom: 25px;
@@ -201,7 +208,7 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Envelope Open State */
+        /* open states */
         .envelope-wrapper.open {
             cursor: default;
         }
@@ -217,7 +224,7 @@
             opacity: 0;
         }
 
-        /* Reading Modal */
+        /* reading modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -242,13 +249,13 @@
 
         .modal-paper {
             width: 90vw;
-            max-width: 550px;
+            max-width: 600px;
             height: 85vh;
-            max-height: 750px;
+            max-height: 800px;
             background-color: var(--paper-color);
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
             border-radius: 2px;
-            padding: 40px 35px;
+            padding: 45px 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.15);
             display: flex;
             flex-direction: column;
@@ -266,7 +273,7 @@
         .modal-content-scroll {
             overflow-y: auto;
             flex-grow: 1;
-            padding-right: 15px;
+            padding-right: 20px;
             color: #2b2b2b;
         }
 
@@ -274,11 +281,11 @@
         .modal-content-scroll::-webkit-scrollbar-track { background: transparent; }
         .modal-content-scroll::-webkit-scrollbar-thumb { background: #D5C9B8; border-radius: 10px; }
 
-        /* Unified Handwritten Font for all letters */
+        /* unified handwritten font for all letters */
         .handwritten-text {
             font-family: 'Homemade Apple', cursive;
             font-size: 1.15rem;
-            line-height: 2.2;
+            line-height: 2.4;
             white-space: pre-line;
             margin-bottom: 20px;
             letter-spacing: 0.5px;
@@ -286,12 +293,12 @@
 
         .close-btn {
             margin-top: 25px;
-            padding: 8px 24px;
+            padding: 10px 28px;
             background: transparent;
             border: 1px solid var(--text-color);
             color: var(--text-color);
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-style: italic;
             cursor: pointer;
             align-self: center;
@@ -309,19 +316,20 @@
         }
 
         @media (max-width: 600px) {
-            header { padding: 5vh 15px 2vh; }
+            header { padding: 5vh 15px 0; }
             header h1 { font-size: 2.2rem; }
             header p.subtitle { font-size: 1.1rem; }
             .carousel { 
-                padding: 0 calc(50vw - 140px) 5vh; 
+                padding: 0 calc(50vw - 140px); 
                 gap: 40px; 
             }
             .envelope-wrapper { width: 280px; height: 190px; }
             .front-flap, .top-flap { border-width: 95px 140px; }
             .seal { top: 95px; width: 40px; height: 40px; }
             .envelope-label { font-size: 1rem; bottom: 20px; padding: 6px 12px; }
-            .modal-paper { padding: 30px 20px; height: 85vh; }
-            .handwritten-text { font-size: 1.05rem; line-height: 2.1; }
+            .modal-paper { padding: 30px 20px; height: 85vh; width: 92vw; }
+            .handwritten-text { font-size: 1rem; line-height: 2.2; }
+            .close-btn { padding: 8px 20px; font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -333,67 +341,71 @@
         <p class="instruction">swipe horizontally. tap an envelope to break the seal.</p>
     </header>
 
-    <div class="carousel" id="carousel">
-        <!-- JS injects envelopes here -->
+    <div class="carousel-wrapper">
+        <div class="carousel" id="carousel">
+            <!-- javascript injects the envelopes here -->
+        </div>
     </div>
 
-    <!-- Reading Modal -->
+    <!-- reading modal -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-paper">
             <div class="modal-content-scroll" id="modal-content">
-                <!-- Text gets injected here -->
+                <!-- text gets injected here -->
             </div>
             <button class="close-btn" onclick="closeModal(event)">fold & seal</button>
         </div>
     </div>
 
     <script>
+        // minimalist botanical svg for the wax seal
         const sealSVG = `<svg viewBox="0 0 24 24"><path d="M12 22s-4-6-4-12c0-2.2 1.8-4 4-4s4 1.8 4 4c0 6-4 12-4 12zm0-18c-1.1 0-2 .9-2 2 0 4.4 2.5 8.4 3.5 10 .8-1.5 2.5-5.6 2.5-10 0-1.1-.9-2-2-2z"/><path d="M12 6.5v9M9.5 10.5l2.5-2M14.5 12.5l-2.5-2"/></svg>`;
 
+        // beautifully extended, hyper-specific content
         const lettersData = [
             {
                 label: "open when you forget that i love you",
-                content: "wait, how could you actually forget? \n\ni literally have over 800 of your voice notes saved on my phone. you take up 60% of my storage, and i am fully prepared to buy more icloud space just to keep hearing you ramble about absolutely nothing. 10 months down, 10,000 texts exchanged, and i'm still just out of my mind crazy about you. \n\ni even have a legal documentation center drawn up for this relationship. you are contractually obligated to let me love you. you're gorgeous, you're entirely brilliant, and you are totally stuck with me. i love you, aaradhya. more than anything."
+                content: "wait, how could you actually forget? \n\ni literally have over 800 of your voice notes saved on my phone. you currently take up 60% of my storage, and i am fully prepared to buy the absolute maximum icloud space just to keep hearing you ramble about absolutely nothing at 2 am. \n\nwe’ve exchanged over 10,000 texts, and honestly, i still get that stupid, ridiculous flutter in my chest every single time your name pops up on my screen. i wake up every day in gandhidham, and the first thing my brain does is reach for you. i even drafted up a whole legal documentation center for this relationship—warranty, terms and conditions, the whole thing. you are legally, contractually, and emotionally bound to me. you're unfairly gorgeous, you're entirely brilliant, and you are totally stuck with me. i love you, aaradhya. more than i actually know how to put into words."
             },
             {
                 label: "open when you need to know that i'm proud of you",
-                content: "i know exactly how your brain works. i know you hold yourself to these completely insane, impossible standards. but you really need to pause and hear this: i am so incredibly proud of you.\n\nnot just because you're smart, but because of how deeply you care. you don't just study to pass exams; you genuinely want to understand the science behind things. you're out here understanding the intricate mechanisms of human biology, while i'm just trying to understand how someone can look that pretty while they're stressed out. whatever score you get, i'm just insanely proud to be the guy you call yours."
+                content: "i know exactly how your brain works. i know you hold yourself to these completely insane, impossible standards, and i know you beat yourself up when you fall short of them. but you really need to pause and hear me say this: i am so incredibly, unconditionally proud of you.\n\nnot just because you're smart, but because of how deeply you care. you don't just study to pass exams; you genuinely want to understand the science behind things. you're out here understanding the intricate mechanisms of human biology, while i'm just trying to understand how someone can look that ridiculously pretty while they're stressed out. \n\nyou handle pressure so well, even when i know you're carrying a terrifying amount of it. whatever score you get, whatever happens next, nothing changes the fact that i am insanely proud to be the guy you call yours."
             },
             {
                 label: "open when you need to feel appreciated",
-                content: "i appreciate you. all of you. not just the perfect parts, but the beautiful, messy complexity of who you are.\n\ni appreciate your brilliant brain. i appreciate your 2 am ramblings about saccharomyces cerevisiae and pizza toppings when you're utterly exhausted. i appreciate that you are endlessly kind, but you still fiercely hold your boundaries. i notice the way you refuse to let your smarts dull your poetry. if i could bottle up the way your mind works, i would. \n\nyou do a lot, baby. you carry a lot. and i notice every single bit of it."
+                content: "i appreciate you. all of you. not just the perfect parts, but the beautiful, messy, exhausted complexity of who you are.\n\ni appreciate your brilliant brain. i appreciate your completely unhinged 2 am ramblings about saccharomyces cerevisiae, pizza toppings, cheese, and mushrooms when you're too tired to form a coherent sentence. i appreciate that you are endlessly kind, but you still fiercely hold your boundaries when you need to. i notice the way you refuse to let your analytical side dull your poetry. \n\nif i could bottle up the exact way your mind works, i would. you do a lot, baby. you carry a lot of weight. and even if you think you're hiding it well, i notice every single bit of it. thank you for being exactly who you are."
             },
             {
                 label: "open when it's exam time",
-                content: "okay, stop what you're doing. put the pen down. go drink some actual water. and no, diet coke doesn't count—i am officially staging a long-distance intervention. your sexy brain needs hydration, not aspartame.\n\nthe neet, the cuet, the cs exam... they are just papers. they do not define your existence. treat this exam like an f1 drs zone—just open your rear wing and breeze right past it. you already have the most fascinating mind i've ever encountered. take a deep breath. you're a genius, gorgeous. now go crush it."
+                content: "okay, stop what you're doing right now. put the pen down. go drink a glass of actual water. and no, diet coke does not count—i am officially staging a long-distance intervention. your incredibly sexy brain needs hydration, not an alarming amount of aspartame.\n\ni know the neet and the cuet are hanging over your head. but listen to me: they are just pieces of paper. they do not define your existence or your worth. treat this exam like an f1 drs zone—just open your rear wing, keep your foot down, and breeze right past it. \n\nyou literally write poetry and study advanced biology simultaneously. you already have the most fascinating mind i've ever encountered. take a deep breath. you're a genius, gorgeous. now go crush it, and call me when you're done."
             },
             {
                 label: "open when you miss me",
-                content: "trust me, i hate the 2,083 kilometers between us just as much as you do. probably more.\n\nsitting here in gandhidham, i would honestly give anything to just pull you into my arms right now instead of looking at you through a screen. but then i remember that deeply educational 47-minute facetime lipstick tutorial you gave me, and i can't help but smile like an idiot. \n\nthe distance is just a temporary glitch in the system, pretty girl. maybe we need a sequel to the tutorial soon? i'm right here. i'm yours. always."
+                content: "trust me, i hate the 2,083 kilometers between us just as much as you do. probably more.\n\nsitting here in gandhidham, i would honestly give anything in the world to just pull you into my arms right now instead of looking at you through a sheet of glass. it drives me crazy that i can't just reach out and hold your hand when you're stressed studying. \n\nbut then i sit back and remember that deeply educational 47-minute facetime lipstick tutorial you gave me, and i can't help but smile like an absolute idiot. the distance is just a temporary glitch in the system, pretty girl. it's just geography. maybe we need a sequel to the makeup tutorial soon? i'm right here. i'm yours. always."
             },
             {
                 label: "open when you want to know why i love you",
-                content: "because you refuse to choose between art and science. you're a poet who understands biology. \n\nbecause you feel things so deeply, yet you still manage to carry it all with so much grace. because you actually let me make completely ridiculous legal documents for you after we bicker. because we can turn nyt cooking recipes into relationship advice. \n\nand honestly? because you are maddeningly, breathtakingly gorgeous, and somehow you don't even make a big deal out of it. you're just you. complex, stubborn, wonderful. that's why."
+                content: "do you have an hour? because i could write a thesis on this.\n\ni love you because you absolutely refuse to choose between art and science. you're a poet who understands cellular biology. you feel things so deeply, yet you still manage to carry it all with so much grace. i love that you let me make completely ridiculous legal documents for you after we bicker. i love that we can turn nyt cooking recipes into relationship advice. \n\ni love the way your voice sounds when you leave me voice notes. and honestly? i love you because you are maddeningly, breathtakingly gorgeous, and somehow you don't even make a big deal out of it. you contain all these massive contradictions without ever needing to resolve them. you're just you. complex, stubborn, completely wonderful. that's why."
             },
             {
                 label: "open when everything feels like it's falling apart",
-                content: "breathe. just breathe for a second with me.\n\ni know you carry so much weight on your shoulders, and right now it probably feels entirely too heavy. but you don't have to fix everything today. saccharomyces cerevisiae can take a break. let things be messy for a minute. \n\nyou are allowed to be upset. you're allowed to cry. you never, ever have to apologize to me for having emotions or needing space. you don't have to be the tough, perfect scientist today. just lean on me. i've got you."
+                content: "breathe. just breathe for a second with me.\n\ni know you carry so much weight on your shoulders, and right now it probably feels entirely too heavy to hold up. but you do not have to fix everything today. the yeast will survive without your supervision. the exams can pause for five minutes. let things be messy.\n\nyou are allowed to be completely upset. you're allowed to cry. you never, ever have to apologize to me for having emotions or needing space. you do not have to be the tough, perfect, highly-achieving scientist today. you're allowed to just be a girl who is overwhelmed. i'm not asking you to hold it together. just lean on me. i've got you."
             },
             {
                 label: "open when you feel like you're not enough",
-                content: "stop being mean to my girlfriend. seriously, i won't stand for it.\n\nyou are self-critical, and it drives me crazy because i am looking at the most perfect girl ever. you are enough exactly as you are right now. not 'you'll be enough when you pass this exam' or 'you'll be enough when you fix this flaw'. right now. \n\nexhausted you. stressed you. the you that processes emotions internally before sharing them. you are my favorite person to debate with. all of you is enough for me. be gentle with yourself, please."
+                content: "stop being mean to my girlfriend. seriously, i won't stand for it.\n\nyou are incredibly self-critical, and it drives me crazy because i am looking at the most perfect girl i've ever met. you are enough exactly as you are right now. not 'you'll be enough when you pass this entrance exam' or 'you'll be enough when you fix this tiny flaw'. right now. \n\nexhausted you is enough. stressed you is enough. the you that processes emotions internally before sharing them is enough. you are my absolute favorite person to talk to. your worth is not conditional on anything you achieve. be gentle with yourself, please. i love every single version of you."
             },
             {
                 label: "open when you feel alone",
-                content: "look, i know i'm physically far away, but you are never actually alone. \n\ni am entirely obsessed with you, and i am fiercely in your corner. whenever you feel isolated, just remember there's a guy 2,000 kilometers away who is constantly checking his phone, hoping your name pops up. \n\ni'm literally right here, probably sitting around thinking about how pretty your eyes are, or waiting for voice note number 802. i'm a text or a call away. i'm not going anywhere."
+                content: "look, i know i'm physically far away, and i know the long distance makes things feel isolating sometimes. but you are never actually alone. \n\ni am entirely obsessed with you, and i am fiercely in your corner every single day. whenever you feel isolated, just remember there's a guy 2,000 kilometers away who is constantly checking his phone, hoping your name pops up on the lock screen. \n\ni'm literally right here. i'm probably sitting around thinking about how pretty your eyes are, or scrolling back to listen to voice note number 312. i am always just a text or a call away. i'm not going anywhere, ever."
             },
             {
                 label: "open when you feel bad about yourself",
-                content: "i'm just gonna state the absolute, undeniable facts here:\n\nyou are unfairly, distractingly gorgeous. like, it's actually unfair to the rest of the population how pretty you are. if we were an f1 team, you'd be the star driver taking pole position, and i'd just be the guy changing your tires, completely thrilled just to be near you. \n\nand on top of that face, you have a mind that fascinates me every single day. so whatever dumb lies your brain is trying to tell you right now? ignore them. you are a literal masterpiece."
+                content: "i'm just gonna state the absolute, undeniable, scientific facts here:\n\nyou are unfairly, distractingly gorgeous. like, it's actually unfair to the rest of the population how pretty you are. if we were an f1 team, you'd be the star driver taking pole position every weekend, and i'd just be the guy changing your tires, completely thrilled just to be in your vicinity. \n\nand on top of having that face, you have a mind that fascinates and challenges me every single day. you are intellectually curious, deeply kind, and completely captivating. so whatever dumb lies your brain is trying to tell you in the mirror right now? ignore them. you are a literal masterpiece."
             },
             {
                 label: "open when you need a reminder about why this relationship is what you deserve",
-                content: "yeah, we might bicker sometimes. i might have to draft up ridiculous 'terms and conditions' and faq pages just to make you feel secure again. but that right there is top-tier commitment. \n\nthis relationship is a completely safe space for your whole, complex self. my commitment to you is completely unconditional. you deserve someone who loves your brilliant brain and your beautiful face equally. you deserve someone who stays. \n\n11 months is just the warm-up lap, aaradhya. i am absolutely not leaving. you are my person."
+                content: "yeah, we had a fight on march 14th. we bickered, and i literally had to draft up ridiculous 'terms and conditions' and faq pages just to make you feel secure again. but honestly? that right there is top-tier commitment. \n\nthis relationship is a completely safe space for your whole, complex self. my commitment to you is completely unconditional. you deserve someone who loves your brilliant brain and your beautiful face equally. you deserve someone who doesn't need you to be simple in order to love you. you deserve someone who stays, especially when things are hard. \n\n11 months is just the warm-up lap, aaradhya. the distance will close. i am absolutely not leaving. you are my person, forever."
             }
         ];
 
@@ -403,7 +415,7 @@
         
         let activeEnvelope = null;
 
-        // Render Envelopes
+        // render envelopes
         lettersData.forEach((letter, index) => {
             const envelopeHTML = `
                 <div class="envelope-wrapper" id="env-${index}" onclick="openLetter(${index})">
@@ -418,6 +430,7 @@
             carousel.insertAdjacentHTML('beforeend', envelopeHTML);
         });
 
+        // function to handle opening
         function openLetter(index) {
             const envelope = document.getElementById(`env-${index}`);
             
@@ -431,15 +444,15 @@
             envelope.classList.add('open');
 
             const letter = lettersData[index];
-            // using the unified handwritten class for all letters
             modalContent.innerHTML = `<p class="handwritten-text">${letter.content}</p>`;
             
             setTimeout(() => {
                 modalOverlay.classList.add('active');
                 modalContent.scrollTop = 0; 
-            }, 300);
+            }, 350);
         }
 
+        // function to close modal
         function closeModal(event) {
             if (event) event.stopPropagation();
             
@@ -453,6 +466,7 @@
             }, 400);
         }
 
+        // close if clicking outside the paper
         modalOverlay.addEventListener('click', function(e) {
             if (e.target === modalOverlay) {
                 closeModal();
