@@ -6,24 +6,25 @@
 <title>orbiter — for aaradhya</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<!-- Three.js for true 3D rendering -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --void: #020206; 
+  --void: #020205; 
   --moon-glow: #e6e3da;
   --text: #ccc8bc;
   --text-dim: rgba(200,196,184,0.45);
   --text-mid: rgba(200,196,184,0.85);
   --accent: #c8aa84;
-  --orbit-line: rgba(255,255,255,0.06);
 }
 
-/* Removed the custom cursor, back to auto so it feels natural and doesn't glitch */
-html, body { width:100%; height:100%; background:var(--void); overflow:hidden; cursor:auto; }
+html, body { width:100%; height:100%; background:var(--void); overflow:hidden; font-family:'EB Garamond', serif; }
 
-/* CANVAS */
-#cv { position:fixed; inset:0; width:100%; height:100%; z-index:0; }
+/* 3D CANVAS */
+#cv { position:fixed; inset:0; width:100%; height:100%; z-index:0; cursor: pointer; }
 
 /* INTRO */
 #intro {
@@ -82,96 +83,38 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* SCENE */
-#scene {
+/* UI OVERLAY */
+#ui-layer {
   position:fixed; inset:0; z-index:10;
   opacity:0; pointer-events:none;
   transition: opacity 1.8s ease;
 }
-#scene.on { opacity:1; pointer-events:all; }
+#ui-layer.on { opacity:1; pointer-events:none; } 
 
-/* ORBIT RINGS */
-.oring {
-  position:absolute; top:50%; left:50%;
-  border-radius:50%; border:1px dashed var(--orbit-line);
-  transform:translate(-50%,-50%);
-  pointer-events:none;
-}
-.oring.a { width:min(460px,66vw); height:min(380px,44vh); animation:ringBreath 7s ease-in-out infinite; border: 1px solid var(--orbit-line); }
-.oring.b { width:min(640px,90vw); height:min(520px,60vh); border-color:rgba(255,255,255,0.03); animation:ringBreath 10s ease-in-out infinite 1.5s; }
-.oring.c { width:min(820px,115vw); height:min(660px,76vh); border-color:rgba(255,255,255,0.02); }
-
-/* REALISTIC MOON */
-#mc {
-  position:absolute; top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  width:clamp(160px,22vw,240px); height:clamp(160px,22vw,240px);
-}
-#moon {
-  width:100%; height:100%; border-radius:50%;
-  background-image: url('https://assets.codepen.io/141041/moon-transparent.png');
-  background-size: cover;
-  background-position: center;
-  box-shadow:
-    inset -30px -30px 40px rgba(0,0,0,0.85),
-    inset 10px 10px 20px rgba(255,255,255,0.3),
-    0 0 60px 15px rgba(234,230,218,0.15),
-    0 0 120px 40px rgba(234,230,218,0.05);
-  cursor:pointer; position:relative;
-  animation: moonDrift 12s ease-in-out infinite, moonSpin 240s linear infinite;
-  transition: box-shadow 0.6s ease;
-}
-#moon:hover {
-  box-shadow:
-    inset -30px -30px 40px rgba(0,0,0,0.85),
-    inset 10px 10px 20px rgba(255,255,255,0.4),
-    0 0 80px 25px rgba(234,230,218,0.25),
-    0 0 160px 60px rgba(234,230,218,0.1);
-}
-.moon-name {
-  position:absolute; inset:0; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
+/* MOON TEXT OVERLAY */
+#moon-name {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
   font-family:'EB Garamond',serif; font-style:italic;
-  font-size:clamp(0.7rem,1.8vw,0.9rem);
-  color:rgba(255,255,255,0.8);
-  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-  opacity:0; transition:opacity 0.5s ease;
-  pointer-events:none; z-index: 5;
-}
-#moon:hover .moon-name { opacity:1; }
-
-/* REALISTIC ASTRONAUT - Using highly reliable Wikimedia NASA image */
-#astr { position:absolute; top:50%; left:50%; width:0; height:0; pointer-events:none; z-index: 12; }
-#ab {
-  position:absolute; width:65px; height:65px;
-  transform:translate(-50%,-50%);
-  filter:drop-shadow(0 0 12px rgba(200,196,184,0.5));
-  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Astronaut_EVA_cutout.png/480px-Astronaut_EVA_cutout.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  font-size:clamp(0.8rem,1.8vw,1rem);
+  color:rgba(255,255,255,0.7); text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+  pointer-events:none; transition: opacity 0.4s ease; opacity: 0;
 }
 
 /* LYRIC LAYER */
-#ll { position:fixed; inset:0; pointer-events:none; z-index:20; }
 .lf {
   position:absolute;
   font-family:'EB Garamond',serif; font-style:italic;
   color:var(--text-dim); pointer-events:none;
   opacity:0; line-height:1.6;
-  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+  text-shadow: 0 0 10px rgba(0,0,0,0.8);
   transition: opacity 1.4s ease;
 }
 .lf.show { opacity:1; }
 
 /* PANELS */
 #lp {
-  position:fixed; left:2.5rem; top:50%;
-  transform:translateY(-50%);
-  z-index:30; pointer-events:none;
-  opacity:0; transition:opacity 1s ease 0.5s;
+  position:absolute; left:2.5rem; top:50%; transform:translateY(-50%);
 }
-#lp.show { opacity:1; }
 .lp-line {
   font-family:'DM Mono',monospace; font-weight:300;
   font-size:0.55rem; letter-spacing:0.22em;
@@ -181,23 +124,15 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
 .lp-line span { color:var(--accent); text-shadow: 0 0 8px rgba(200, 170, 132, 0.3); }
 
 #rp {
-  position:fixed; right:2.5rem; bottom:2.8rem;
-  z-index:30; pointer-events:none; text-align:right;
-  opacity:0; transition:opacity 1s ease 0.8s;
+  position:absolute; right:2.5rem; bottom:2.8rem; text-align:right;
 }
-#rp.show { opacity:1; }
 .rp-hint {
   font-family:'EB Garamond',serif; font-style:italic;
   font-size:0.9rem; color:var(--text-dim); line-height:1.7;
 }
 
 /* ORBIT COUNT */
-#oc {
-  position:fixed; top:2rem; right:2.5rem;
-  z-index:30; text-align:right; pointer-events:none;
-  opacity:0; transition:opacity 0.6s ease;
-}
-#oc.show { opacity:1; }
+#oc { position:absolute; top:2rem; right:2.5rem; text-align:right; }
 .oc-n {
   font-family:'Instrument Serif',serif; font-style:italic;
   font-size:3.2rem; color:var(--moon-glow); line-height:1; display:block;
@@ -213,57 +148,54 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
 #modal {
   position:fixed; inset:0; z-index:200;
   display:flex; align-items:center; justify-content:center; padding:1.5rem;
-  background:rgba(2,2,6,0.88);
-  backdrop-filter:blur(24px) saturate(0.8);
+  background:rgba(2,2,6,0.85);
+  backdrop-filter:blur(15px) saturate(0.8);
   opacity:0; pointer-events:none;
   transition:opacity 0.5s ease;
 }
 #modal.on { opacity:1; pointer-events:all; }
 
 .mcard {
-  width:min(560px,94%);
+  width:min(520px,94%);
   border:1px solid rgba(255,255,255,0.08);
-  background:rgba(6,6,12,0.85);
+  background:rgba(8,8,14,0.9);
   box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-  padding:clamp(2.5rem,5vw,4rem);
+  padding:clamp(2.5rem,5vw,3.5rem);
   position:relative;
-  transform:translateY(28px) scale(0.97);
-  transition:transform 0.65s cubic-bezier(0.16,1,0.3,1);
+  transform:translateY(20px) scale(0.98);
+  transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);
 }
 #modal.on .mcard { transform:translateY(0) scale(1); }
-.mcard::before {
-  content:''; position:absolute;
-  top:0; left:10%; right:10%; height:1px;
-  background:linear-gradient(90deg, transparent, rgba(200,196,184,0.3), transparent);
-}
 
+/* PROPER CLOSE BUTTON */
 .m-close {
-  position:absolute; top:1.4rem; right:1.6rem;
-  background:none; border:none; cursor:pointer;
-  font-family:'DM Mono',monospace; font-size:0.58rem;
-  letter-spacing:0.2em; color:var(--text-dim);
-  transition:color 0.2s;
+  position:absolute; top:1.2rem; right:1.2rem;
+  width: 32px; height: 32px;
+  background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+  border-radius:50%; cursor:pointer;
+  display: flex; align-items: center; justify-content: center;
+  color:var(--text-dim); font-size: 0.8rem;
+  transition:all 0.3s ease;
 }
-.m-close:hover { color:var(--moon-glow); }
+.m-close:hover { background:var(--moon-glow); color:#000; border-color:var(--moon-glow); transform: rotate(90deg); }
 
 .m-lyric {
   font-family:'Instrument Serif',serif; font-style:italic;
   font-size:clamp(1.4rem,3.5vw,1.9rem); color:var(--moon-glow);
   line-height:1.35; margin-bottom:1.6rem;
   opacity:0; transform:translateY(10px);
-  transition:opacity 0.55s ease 0.1s, transform 0.55s ease 0.1s;
+  transition:opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
 }
 #modal.on .m-lyric { opacity:1; transform:translateY(0); }
 
 .m-div {
-  width:28px; height:1px; background:var(--accent);
+  width:35px; height:1px; background:var(--accent);
   opacity:0; margin-bottom:1.8rem;
   transition:opacity 0.4s ease 0.3s;
 }
 #modal.on .m-div { opacity:0.6; box-shadow: 0 0 8px var(--accent); }
 
 .m-body {
-  font-family:'EB Garamond',serif;
   font-size:clamp(1rem,2vw,1.1rem); color:var(--text-mid);
   line-height:1.8; margin-bottom:2.5rem; white-space:pre-line;
   opacity:0; transform:translateY(8px);
@@ -273,7 +205,7 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
 
 .m-nav {
   display:flex; justify-content:space-between; align-items:center;
-  opacity:0; transition:opacity 0.4s ease 0.45s;
+  opacity:0; transition:opacity 0.4s ease 0.3s;
 }
 #modal.on .m-nav { opacity:1; }
 
@@ -281,8 +213,8 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
   background:none; border:1px solid rgba(255,255,255,0.15);
   color:var(--text-dim); font-family:'DM Mono',monospace;
   font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase;
-  padding:0.55rem 1.1rem; cursor:pointer;
-  transition:all 0.2s ease;
+  padding:0.6rem 1.2rem; cursor:pointer;
+  transition:all 0.2s ease; border-radius: 4px;
 }
 .m-btn:hover { border-color:var(--moon-glow); color:var(--moon-glow); box-shadow: 0 0 10px rgba(255,255,255,0.1); }
 .m-btn:disabled { opacity:0.15; pointer-events:none; }
@@ -301,22 +233,9 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
   white-space:nowrap;
 }
 
-/* KEYFRAMES */
 @keyframes riseIn {
   from { opacity:0; transform:translateY(14px); }
   to   { opacity:1; transform:translateY(0); }
-}
-@keyframes moonDrift {
-  0%,100% { transform:translateY(0) rotate(0deg); }
-  50%      { transform:translateY(-12px) rotate(2deg); }
-}
-@keyframes moonSpin {
-  from { background-position: 0% center; transform: rotate(0deg); }
-  to   { background-position: 100% center; transform: rotate(360deg); }
-}
-@keyframes ringBreath {
-  0%,100% { opacity:0.8; transform:translate(-50%,-50%) scale(1); }
-  50%      { opacity:0.2; transform:translate(-50%,-50%) scale(1.02); }
 }
 @keyframes expandRing {
   0%   { width:12px; height:12px; opacity:0.7; }
@@ -337,6 +256,7 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
 </head>
 <body>
 
+<!-- 3D Scene Container -->
 <canvas id="cv"></canvas>
 
 <!-- INTRO -->
@@ -350,58 +270,46 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
   </div>
 </div>
 
-<!-- SCENE -->
-<div id="scene">
-  <div class="oring c"></div>
-  <div class="oring b"></div>
-  <div class="oring a"></div>
-
-  <div id="mc">
-    <div id="moon">
-      <div class="moon-name">aaradhya</div>
-    </div>
-  </div>
-
-  <div id="astr"><div id="ab"></div></div>
+<!-- UI LAYER (On top of 3D Canvas) -->
+<div id="ui-layer">
+  
+  <div id="moon-name">aaradhya</div>
 
   <div id="ll">
-    <div class="lf" id="lf1" style="top:12%;left:6%;font-size:clamp(0.8rem,1.4vw,1rem);">
+    <div class="lf" id="lf1" style="top:15%;left:8%;font-size:clamp(0.85rem,1.4vw,1.1rem);">
       "I'm an astronaut,<br>you're the Moon"
     </div>
-    <div class="lf" id="lf2" style="top:14%;right:6%;font-size:clamp(0.75rem,1.3vw,0.9rem);text-align:right;">
+    <div class="lf" id="lf2" style="top:18%;right:8%;font-size:clamp(0.8rem,1.3vw,1rem);text-align:right;">
       "I stare at you,<br>I sing to you"
     </div>
-    <div class="lf" id="lf3" style="bottom:18%;left:6%;font-size:clamp(0.75rem,1.3vw,0.9rem);">
+    <div class="lf" id="lf3" style="bottom:22%;left:8%;font-size:clamp(0.8rem,1.3vw,1rem);">
       "this is hard,<br>but I feel less far"
     </div>
-    <div class="lf" id="lf4" style="bottom:20%;right:6%;font-size:clamp(0.7rem,1.2vw,0.85rem);text-align:right;">
+    <div class="lf" id="lf4" style="bottom:25%;right:8%;font-size:clamp(0.75rem,1.2vw,0.9rem);text-align:right;">
       "I circle you"
     </div>
   </div>
-</div>
 
-<!-- LEFT PANEL -->
-<div id="lp">
-  <div class="lp-line">DISTANCE &nbsp;<span>2,083 KM</span></div>
-  <div class="lp-line">MONTHS &nbsp;&nbsp;<span>ELEVEN</span></div>
-  <div class="lp-line">SIGNAL &nbsp;&nbsp;&nbsp;<span>STRONG</span></div>
-</div>
+  <div id="lp">
+    <div class="lp-line">STATUS &nbsp;&nbsp;<span>STABLE ORBIT</span></div>
+    <div class="lp-line">MONTHS &nbsp;&nbsp;<span>ELEVEN</span></div>
+    <div class="lp-line">GRAVITY &nbsp;<span>IRRESISTIBLE</span></div>
+  </div>
 
-<!-- RIGHT HINT -->
-<div id="rp">
-  <p class="rp-hint">click the moon</p>
-</div>
+  <div id="rp">
+    <p class="rp-hint">click the moon</p>
+  </div>
 
-<!-- ORBIT COUNT -->
-<div id="oc">
-  <span class="oc-n" id="ocn">0</span>
-  <span class="oc-l">orbits</span>
+  <div id="oc">
+    <span class="oc-n" id="ocn">0</span>
+    <span class="oc-l">orbits</span>
+  </div>
 </div>
 
 <!-- MODAL -->
 <div id="modal">
   <div class="mcard">
-    <button class="m-close" id="mClose">[ close ]</button>
+    <button class="m-close" id="mClose">✕</button>
     <p class="m-lyric" id="mLyric"></p>
     <div class="m-div"></div>
     <p class="m-body" id="mBody"></p>
@@ -414,205 +322,219 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
 </div>
 
 <script>
-// CANVAS (More Realistic Deep Space)
-const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
-let W,H,stars=[],nebulae=[],shooters=[];
+// --- THREE.JS 3D SCENE SETUP ---
+const canvas = document.getElementById('cv');
+const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-function resize(){ W=cv.width=window.innerWidth; H=cv.height=window.innerHeight; }
-resize(); window.addEventListener('resize',resize);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 22; // Distance from center
 
-function initSpace(){
-  stars=[];
-  for(let i=0;i<400;i++) {
-    const colorChance = Math.random();
-    let r=255, g=255, b=255;
-    if(colorChance > 0.8) { r=180; g=200; b=255; }
-    else if(colorChance < 0.2) { r=255; g=200; b=180; }
-    
-    stars.push({
-      x:Math.random()*W, y:Math.random()*H,
-      r:Math.random()*1.0+0.1, 
-      a:Math.random()*0.8+0.1,
-      tw:Math.random()*Math.PI*2,
-      ts:Math.random()*0.015+0.005,
-      rCol: r, gCol: g, bCol: b
-    });
-  }
-  nebulae=[];
-  [[.2,.2],[.8,.3],[.4,.7],[.25,.8],[.9,.7]].forEach(([px,py])=>{
-    nebulae.push({
-      x:px*W, y:py*H,
-      r:Math.random()*300+200,
-      h:Math.floor(Math.random()*60)+200, 
-      a:Math.random()*0.04+0.01
-    });
-  });
+// Lighting for realism
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.1); // Dark space
+scene.add(ambientLight);
+const sunLight = new THREE.DirectionalLight(0xffefd5, 1.5); // Warm sun color
+sunLight.position.set(15, 5, 10);
+scene.add(sunLight);
+
+// --- 1. THE MOON ---
+// Using highly reliable github raw texture
+const textureLoader = new THREE.TextureLoader();
+const moonGeometry = new THREE.SphereGeometry(4.5, 64, 64);
+const moonMaterial = new THREE.MeshStandardMaterial({
+  color: 0xcccccc,
+  roughness: 0.9,
+  metalness: 0.1,
+  map: textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/moon_1024.jpg')
+});
+const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+scene.add(moon);
+
+// --- 2. THE 3D ASTRONAUT (Procedurally generated so it never breaks!) ---
+const astronaut = new THREE.Group();
+
+// Suit material
+const suitMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4 });
+// Gold reflective visor material
+const visorMat = new THREE.MeshStandardMaterial({ color: 0xcc9933, roughness: 0.1, metalness: 1.0 });
+// Dark details material
+const darkMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.8 });
+
+// Body
+const body = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.4, 0.9, 16), suitMat);
+astronaut.add(body);
+// Head/Helmet
+const helmet = new THREE.Mesh(new THREE.SphereGeometry(0.45, 32, 32), suitMat);
+helmet.position.y = 0.7;
+astronaut.add(helmet);
+// Visor
+const visor = new THREE.Mesh(new THREE.SphereGeometry(0.35, 32, 32, 0, Math.PI*2, 0, Math.PI/2.2), visorMat);
+visor.position.set(0, 0.7, 0.15);
+visor.rotation.x = Math.PI / 2;
+astronaut.add(visor);
+// Backpack
+const pack = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.8, 0.4), suitMat);
+pack.position.set(0, 0.1, -0.4);
+astronaut.add(pack);
+// Arms
+const armGeo = new THREE.CapsuleGeometry(0.12, 0.4, 8, 8);
+const leftArm = new THREE.Mesh(armGeo, suitMat);
+leftArm.position.set(-0.5, 0.1, 0);
+leftArm.rotation.z = Math.PI / 6;
+astronaut.add(leftArm);
+const rightArm = new THREE.Mesh(armGeo, suitMat);
+rightArm.position.set(0.5, 0.1, 0);
+rightArm.rotation.z = -Math.PI / 6;
+astronaut.add(rightArm);
+
+// Add the astronaut to the scene and shrink him slightly
+astronaut.scale.set(0.8, 0.8, 0.8);
+scene.add(astronaut);
+
+// --- 3. STARS (Realistic particle system) ---
+const starGeo = new THREE.BufferGeometry();
+const starCount = 1500;
+const starPos = new Float32Array(starCount * 3);
+for(let i=0; i<starCount*3; i++) {
+  // Spread stars far out in background
+  starPos[i] = (Math.random() - 0.5) * 200; 
 }
-initSpace();
+starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.12, transparent: true, opacity: 0.8 });
+const stars = new THREE.Points(starGeo, starMat);
+scene.add(stars);
 
-function spawnShooter(){
-  shooters.push({
-    x:Math.random()*W*.6+W*.2,
-    y:Math.random()*H*.35,
-    len:Math.random()*150+80,
-    spd:Math.random()*9+6,
-    a:1, ang:Math.PI/4+(Math.random()-.5)*.4
-  });
-}
-setInterval(()=>{ if(Math.random()<0.4) spawnShooter(); },6000);
+// --- 4. ORBIT RING ---
+const ringGeo = new THREE.RingGeometry(11.9, 12, 64);
+const ringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide, transparent: true, opacity: 0.05 });
+const ring = new THREE.Mesh(ringGeo, ringMat);
+ring.rotation.x = Math.PI / 2;
+ring.rotation.y = 0.2; // Slight tilt
+scene.add(ring);
 
-let t=0;
-function draw(){
-  ctx.clearRect(0,0,W,H);
-  
-  ctx.globalCompositeOperation = 'screen';
-  nebulae.forEach(n=>{
-    const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r);
-    g.addColorStop(0,`hsla(${n.h}, 50%, 15%, ${n.a})`);
-    g.addColorStop(1,'transparent');
-    ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
-    ctx.fillStyle=g; ctx.fill();
-  });
-  ctx.globalCompositeOperation = 'source-over';
-
-  stars.forEach(s=>{
-    const tw=Math.sin(t*s.ts+s.tw)*.35+.65;
-    ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(${s.rCol},${s.gCol},${s.bCol},${s.a*tw})`; 
-    ctx.fill();
-  });
-
-  shooters=shooters.filter(s=>s.a>0.03);
-  shooters.forEach(s=>{
-    const tx2=s.x-Math.cos(s.ang)*s.len,ty2=s.y+Math.sin(s.ang)*s.len;
-    const g=ctx.createLinearGradient(tx2,ty2,s.x,s.y);
-    g.addColorStop(0,'transparent');
-    g.addColorStop(1,`rgba(255,255,255,${s.a})`);
-    ctx.beginPath(); ctx.moveTo(tx2,ty2); ctx.lineTo(s.x,s.y);
-    ctx.strokeStyle=g; ctx.lineWidth=1.5; ctx.stroke();
-    s.x+=Math.cos(s.ang)*s.spd; s.y+=Math.sin(s.ang)*s.spd; s.a*=0.97;
-  });
-  t++; requestAnimationFrame(draw);
-}
-draw();
-
-// INTRO
-const intro=document.getElementById('intro');
-const scene=document.getElementById('scene');
-
-function enter(){
-  intro.classList.add('out');
-  setTimeout(()=>{
-    intro.style.display='none';
-    scene.classList.add('on');
-    document.getElementById('lp').classList.add('show');
-    document.getElementById('rp').classList.add('show');
-    document.getElementById('oc').classList.add('show');
-    ['lf1','lf2','lf3','lf4'].forEach((id,i)=>{
-      setTimeout(()=>document.getElementById(id).classList.add('show'),700+i*380);
-    });
-    startOrbit();
-  },1600);
-}
-
-document.getElementById('iEnter').addEventListener('click',enter);
-document.addEventListener('keydown',e=>{ if(e.key===' '||e.key==='Enter') enter(); },{once:true});
-document.addEventListener('touchstart',enter,{once:true});
-
-// ASTRONAUT & PHYSICS
-const ab=document.getElementById('ab');
-let ang=0,orbits=0,totalA=0;
-const ocn=document.getElementById('ocn');
-const orbitSpeed=0.004;
-
-function rx(){ return Math.min(260,window.innerWidth*.35); }
-function ry(){ return Math.min(180,window.innerHeight*.25); }
-const cx=()=>window.innerWidth/2, cy=()=>window.innerHeight/2;
-
-function startOrbit(){ requestAnimationFrame(orbitLoop); }
-
-const floatLines=[
-  '"I circle you"',
-  '"you\'re the Moon"',
-  '"I feel less far"',
-  '"I sing to you"',
-  '"I stare at you"',
-  '"I look back and you laugh"',
-];
-
-function floatLyric(ax,ay){
-  const el=document.createElement('span');
-  el.className='fly';
-  el.textContent=floatLines[Math.floor(Math.random()*floatLines.length)];
-  el.style.cssText=`left:${ax+20}px;top:${ay-15}px;opacity:0;transform:translateY(0);transition:opacity 0.8s ease,transform 2.5s ease-out;`;
-  document.body.appendChild(el);
-  requestAnimationFrame(()=>{
-    el.style.opacity='0.6';
-    setTimeout(()=>{
-      el.style.opacity='0';
-      el.style.transform='translateY(-30px)';
-      setTimeout(()=>el.remove(),2600);
-    },2000);
-  });
-}
-
-function orbitLoop(){
-  ang+=orbitSpeed;
-  let x=cx()+rx()*Math.cos(ang);
-  let y=cy()+ry()*Math.sin(ang);
-  
-  const bobbingX = Math.sin(t * 0.02) * 8;
-  const bobbingY = Math.cos(t * 0.015) * 8;
-  
-  document.getElementById('astr').style.transform=`translate(${x-cx() + bobbingX}px,${y-cy() + bobbingY}px)`;
-  
-  const rot= (Math.atan2(Math.cos(ang),-Math.sin(ang))*180/Math.PI) + (Math.sin(t * 0.01) * 15);
-  ab.style.transform=`translate(-50%,-50%) rotate(${rot}deg)`;
-  
-  totalA+=orbitSpeed;
-  const newO=Math.floor(totalA/(Math.PI*2));
-  if(newO>orbits){
-    orbits=newO; ocn.textContent=orbits;
-    ocn.style.color='var(--accent)';
-    ocn.style.textShadow='0 0 25px rgba(200, 170, 132, 0.8)';
-    setTimeout(()=>{
-      ocn.style.color='var(--moon-glow)';
-      ocn.style.textShadow='0 0 15px rgba(230, 227, 218, 0.2)';
-    },800);
-    spawnShooter();
-  }
-  if(Math.random()<0.0015) floatLyric(x,y);
-  requestAnimationFrame(orbitLoop);
-}
-
-// MOON PARALLAX
-document.addEventListener('mousemove',e=>{
-  if(!scene.classList.contains('on')) return;
-  const xf=(e.clientX/W-.5)*2, yf=(e.clientY/H-.5)*2;
-  document.getElementById('mc').style.transform=
-    `translate(calc(-50% + ${xf*15}px), calc(-50% + ${yf*15}px))`;
-  document.querySelector('.oring.a').style.transform=
-    `translate(calc(-50% + ${xf*8}px), calc(-50% + ${yf*8}px))`;
-  document.querySelector('.oring.b').style.transform=
-    `translate(calc(-50% + ${xf*4}px), calc(-50% + ${yf*4}px))`;
+// --- RESIZE HANDLER ---
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// HUMAN, AI-PROOF, FLIRTY TRANSMISSIONS
+// --- INTERACTION & LOGIC ---
+const intro = document.getElementById('intro');
+const uiLayer = document.getElementById('ui-layer');
+let isRunning = false;
+let t = 0; // Time for orbit
+let orbits = 0;
+const ocn = document.getElementById('ocn');
+
+function startExperience() {
+  intro.classList.add('out');
+  setTimeout(() => {
+    intro.style.display = 'none';
+    uiLayer.classList.add('on');
+    ['lf1','lf2','lf3','lf4'].forEach((id,i) => {
+      setTimeout(()=>document.getElementById(id).classList.add('show'), 800+i*300);
+    });
+    isRunning = true;
+  }, 1600);
+}
+
+document.getElementById('iEnter').addEventListener('click', startExperience);
+
+// Raycaster for Moon Click
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+window.addEventListener('mousemove', (e) => {
+  // Reveal name on hover
+  if(!isRunning || modal.classList.contains('on')) return;
+  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObject(moon);
+  
+  if(intersects.length > 0) {
+    document.body.style.cursor = 'pointer';
+    document.getElementById('moon-name').style.opacity = '1';
+  } else {
+    document.body.style.cursor = 'default';
+    document.getElementById('moon-name').style.opacity = '0';
+  }
+});
+
+window.addEventListener('click', (e) => {
+  if(!isRunning || modal.classList.contains('on')) return;
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObject(moon);
+  if(intersects.length > 0) {
+    document.getElementById('moon-name').style.opacity = '0';
+    cur_tx = 0; 
+    openModal(0);
+  }
+});
+
+// --- ANIMATION LOOP ---
+function animate() {
+  requestAnimationFrame(animate);
+  
+  // Slowly rotate the stars and moon
+  stars.rotation.y -= 0.0002;
+  moon.rotation.y += 0.001;
+  
+  if (isRunning) {
+    t += 0.004; // Speed of orbit
+    
+    // Calculate orbit path (ellipse with a slight tilt)
+    const radiusX = 12;
+    const radiusZ = 12;
+    
+    astronaut.position.x = Math.cos(t) * radiusX;
+    astronaut.position.z = Math.sin(t) * radiusZ;
+    // Gentle floating/bobbing up and down
+    astronaut.position.y = Math.sin(t * 2) * 1.5; 
+    
+    // Astronaut always faces the direction of travel
+    const nextX = Math.cos(t + 0.1) * radiusX;
+    const nextZ = Math.sin(t + 0.1) * radiusZ;
+    const nextY = Math.sin((t + 0.1) * 2) * 1.5;
+    astronaut.lookAt(nextX, nextY, nextZ);
+    
+    // Add a slight tumble to make it look like zero gravity
+    astronaut.rotation.z += Math.sin(t*0.5) * 0.5;
+
+    // Track Orbits
+    const newOrbits = Math.floor(t / (Math.PI * 2));
+    if (newOrbits > orbits) {
+      orbits = newOrbits;
+      ocn.textContent = orbits;
+      ocn.style.color = 'var(--accent)';
+      setTimeout(() => ocn.style.color = 'var(--moon-glow)', 800);
+    }
+  }
+
+  renderer.render(scene, camera);
+}
+animate();
+
+// --- HUMAN, FLIRTY, AI-PROOF TEXT ---
 const transmissions=[
   {
     lyric: '"I\'m an astronaut, you\'re the Moon.\nI stare at you, I sing to you.\nI circle you."',
-    body: `I've always thought of myself as just floating around out here, kinda aimless. And then there's you. My literal center of gravity.\n\n2,083 kilometers is a stupid amount of distance to have between us, but honestly? I'm perfectly happy being caught in your pull. You could drag me across the whole galaxy and I'd probably just let it happen.`
+    body: `You ever think about how lucky it is that out of the entire universe, I ended up caught in your orbit? I’m completely stuck in your gravity and honestly... I wouldn’t want it any other way.\n\nYou're kinda the center of everything for me right now.`
   },
   {
     lyric: '"I look back and you laugh —\nand this is hard, but I feel less far."',
-    body: `I'm not gonna pretend the distance doesn't suck. It does.\n\nBut then I'll be having the most chaotic, stressful day, and I get a text from you, or you look at me on FaceTime and laugh. Instantly? The whole universe just shuts up. It's wild how you can make me feel like you're sitting right next to me when you're literally states away.`
+    body: `Sometimes I'll be right in the middle of doing something stressful, and a thought of you just pops into my head. Or you text me, and the whole world just kind of goes quiet for a second.\n\nIt's pretty wild how effortlessly you can fix my day without even trying.`
   },
   {
     lyric: '"I circle you."',
-    body: `So yeah, I circle you. And I'm gonna keep doing it. Not just until we close the gap, but like... always.\n\nYou're the prettiest moon I've ever seen, and I’m pretty damn lucky to be your astronaut. Happy eleven months, Aaradhya. Keep that orbit steady for me, because I'm planning to land sooner than you think. 😉`
+    body: `So yeah, I'm going to keep circling you. Because you’re the most beautiful thing in my sky, and I'm pretty damn lucky I get to be your guy.\n\nHappy eleven months, Aaradhya. I love you.`
   }
 ];
 
+// --- MODAL LOGIC ---
 let cur_tx=0;
 const modal=document.getElementById('modal');
 
@@ -628,15 +550,11 @@ function openModal(i){
   modal.classList.add('on');
 }
 
-document.getElementById('moon').addEventListener('click',()=>{
-  cur_tx=0; openModal(0);
-  spawnShooter(); spawnShooter();
-});
 document.getElementById('mClose').addEventListener('click',()=>modal.classList.remove('on'));
 modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('on'); });
 document.getElementById('mNext').addEventListener('click',()=>{ if(cur_tx<transmissions.length-1) openModal(++cur_tx); });
 document.getElementById('mPrev').addEventListener('click',()=>{ if(cur_tx>0) openModal(--cur_tx); });
-</script>
 
+</script>
 </body>
 </html>
