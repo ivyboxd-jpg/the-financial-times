@@ -97,28 +97,12 @@ html, body {
   opacity: 0; transition: opacity 2s ease;
 }
 .fixed-ui.show { opacity: 1; }
-
-/* Sleek Orbit Counter */
-#oc { 
-  position: absolute; top: 2rem; right: 2rem; 
-  background: rgba(255,255,255,0.03); 
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  padding: 0.6rem 1.4rem; border-radius: 30px;
-  border: 1px solid rgba(255,255,255,0.05);
-  display: flex; align-items: baseline; gap: 0.6rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-}
-.oc-n {
-  font-family: 'Instrument Serif', serif; font-style: italic;
-  font-size: 2.2rem; color: var(--moon-glow); line-height: 1;
-  transition: color 0.6s ease;
-}
-.oc-l { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.3em; color: var(--text-dim); }
+.fixed-ui.fade-out { opacity: 0 !important; transition: opacity 2.5s ease; }
 
 /* Floating Lyrics */
 .lf {
   position: absolute; font-family: 'EB Garamond', serif; font-style: italic;
-  color: var(--text-dim); pointer-events: none; line-height: 1.6; 
+  color: rgba(234, 232, 225, 0.3); pointer-events: none; line-height: 1.6; 
   text-shadow: 0 2px 15px rgba(0,0,0,0.9);
 }
 
@@ -127,8 +111,10 @@ html, body {
   position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
   z-index: 10; overflow-y: auto; overflow-x: hidden;
   display: none; scroll-behavior: smooth;
+  transition: opacity 2.5s ease;
 }
 #scroll-container.on { display: block; }
+#scroll-container.fade-out { opacity: 0; pointer-events: none; }
 
 .hero-section {
   height: 100vh; position: relative;
@@ -151,52 +137,70 @@ html, body {
   padding: 2rem 1.5rem;
 }
 
-/* Glassmorphism background ensures text is always readable over stars */
+/* Upgraded Floating "Transmission" Style */
 .text-block {
-  max-width: 600px; text-align: center;
-  background: rgba(4, 4, 8, 0.45);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  padding: 2.5rem; border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  position: relative;
+  max-width: 550px; width: 100%;
+  text-align: center;
+  padding: 2.5rem 0;
   opacity: 0; transform: translateY(40px);
   transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .text-block.visible { opacity: 1; transform: translateY(0); }
 
-.body-text {
-  font-size: clamp(1.15rem, 3vw, 1.35rem); 
-  color: var(--text-main); 
-  line-height: 1.85; 
-  text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+/* Delicate UI elements to make it look premium */
+.text-block::before {
+  content: ''; position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 1px; height: 20px; background: var(--accent); opacity: 0.5;
 }
+.text-block::after {
+  content: ''; position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 1px; height: 20px; background: var(--accent); opacity: 0.5;
+}
+.log-header {
+  font-family: 'DM Mono', monospace; font-size: 0.55rem;
+  letter-spacing: 0.4em; color: var(--accent);
+  margin-bottom: 1.5rem; opacity: 0.7;
+}
+
+.body-text {
+  font-size: clamp(1.15rem, 3.5vw, 1.4rem); 
+  color: var(--text-main); 
+  line-height: 1.8; 
+  /* Heavy layered shadows ensure perfect readability over bright stars without a box */
+  text-shadow: 0 4px 20px rgba(0,0,0,0.9), 0 2px 5px rgba(0,0,0,0.8), 0 0 30px rgba(0,0,0,0.6);
+}
+.body-text i { color: var(--moon-glow); font-family: 'Instrument Serif', serif; font-size: 1.15em; }
 
 /* Interactive Ping Button */
 .ping-btn {
   margin-top: 3.5rem;
-  background: transparent;
+  background: rgba(2, 2, 5, 0.4);
+  backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(253, 252, 248, 0.25);
-  color: var(--text-dim);
+  color: var(--text-main);
   font-family: 'DM Mono', monospace;
   font-size: 0.65rem;
   letter-spacing: 0.3em;
-  padding: 1rem 2rem;
+  padding: 1.2rem 2.2rem;
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.4s ease;
-  pointer-events: auto; /* Required to click inside scrolling div */
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
 }
 .ping-btn:hover {
   border-color: var(--moon-glow);
-  color: var(--moon-glow);
-  box-shadow: 0 0 20px rgba(253,252,248,0.15);
-  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(253,252,248,0.15);
+  transform: translateY(-3px);
 }
 .ping-btn.active {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--accent); color: var(--accent);
   box-shadow: 0 0 30px rgba(216, 188, 163, 0.2);
-  pointer-events: none;
+  pointer-events: none; transform: translateY(0);
 }
 
 /* KEYFRAMES */
@@ -218,9 +222,8 @@ html, body {
 }
 
 @media (max-width: 600px) {
-  #oc { top: 1.2rem; right: 1.2rem; padding: 0.5rem 1rem; }
-  .text-block { padding: 2rem 1.5rem; }
-  .lf { font-size: clamp(0.75rem, 1.4vw, 0.85rem) !important; }
+  .text-block { padding: 2rem 0; width: 92%; }
+  .lf { font-size: clamp(0.7rem, 1.2vw, 0.8rem) !important; opacity: 0.2; }
 }
 </style>
 </head>
@@ -241,12 +244,6 @@ html, body {
 
 <!-- FIXED UI -->
 <div class="fixed-ui" id="fixed-ui">
-  
-  <div id="oc">
-    <span class="oc-n" id="ocn">0</span>
-    <span class="oc-l">orbits</span>
-  </div>
-
   <div class="lf" style="top:15%; left:6%; font-size:clamp(0.9rem,1.5vw,1.1rem);">
     "i'm an astronaut,<br>you're the moon"
   </div>
@@ -270,26 +267,42 @@ html, body {
 
   <div class="text-section">
     <div class="text-block">
-      <p class="body-text">there are billions of celestial bodies out there, but somehow i got caught in the prettiest orbit. i'm entirely pulled in by your gravity—and honestly, i wouldn't have it any other way. you're the absolute center of my universe right now.</p>
+      <div class="log-header">LOG // 001</div>
+      <p class="body-text">there are billions of celestial bodies out there, but somehow i ended up caught in the prettiest orbit. i’m completely pulled in by your gravity, and honestly? i wouldn’t have it any other way. you're kinda the absolute center of my universe right now.</p>
     </div>
   </div>
 
   <div class="text-section">
     <div class="text-block">
-      <p class="body-text">the best part of my day is when the noise of the world just fades out because you crossed my mind. it's wild how just one message from you can shift my entire atmosphere. you make everything feel a little lighter, a little more magical.</p>
+      <div class="log-header">LOG // 002</div>
+      <p class="body-text">i still find it hilarious how we can go from having deep, 2am conversations about life to aggressively debating what to eat for dinner within a ten-minute window. you're an absolute menace when you're hungry, but you're <i>my</i> menace. i wouldn't trade our chaotic little moments for anything.</p>
     </div>
   </div>
 
-  <!-- Added Section for deeper pacing -->
   <div class="text-section">
     <div class="text-block">
-      <p class="body-text">i don't even need a telescope to know you're the rarest thing out here. even when we're just existing together—quietly sitting on a call, going about our days—it feels like we're sharing our own little spaceship. you make the vast, dark unknown feel exactly like home.</p>
+      <div class="log-header">LOG // 003</div>
+      <p class="body-text">and you have this incredibly unfair superpower where you can just look at me a certain way and completely short-circuit my brain. eleven months in, and i'm still out here folding like a lawn chair every single time you smile at me. it’s actually embarrassing. (but also, please don't ever stop).</p>
+    </div>
+  </div>
+
+  <div class="text-section">
+    <div class="text-block">
+      <div class="log-header">LOG // 004</div>
+      <p class="body-text">did you know the astronaut reid wiseman looked down at earth from the space station, found a massive crater shaped exactly like a heart, and immediately named it after his wife? i finally get it now. because honestly, if i was up here alone, i’d probably try to name the whole damn galaxy after you.</p>
+    </div>
+  </div>
+
+  <div class="text-section">
+    <div class="text-block">
+      <div class="log-header">LOG // 005</div>
+      <p class="body-text">even when we're just existing together—quietly sitting on a call, going about our days—it feels like we're sharing our own little spaceship. you make the vast, dark, overwhelming unknown feel exactly like home.</p>
     </div>
   </div>
 
   <div class="text-section" style="padding-bottom: 25vh;">
-    <div class="text-block">
-      <p class="body-text">so yeah, i'm perfectly happy floating out here, just orbiting you. you're the brightest thing in my sky, and i'm beyond lucky to be the astronaut that gets to stare.<br><br><span style="color:var(--moon-glow); font-style:italic; font-family:'Instrument Serif',serif; font-size:1.4em; display:block; margin-top:1rem;">happy eleven months, aaradhya. i love you.</span></p>
+    <div class="text-block" style="padding-bottom: 0; border: none;">
+      <p class="body-text">so yeah, i'm perfectly happy floating out here, just orbiting you. you're the brightest thing in my sky, and i'm pretty damn lucky to be the astronaut that gets to stare.<br><br><span style="color:var(--moon-glow); font-style:italic; font-family:'Instrument Serif',serif; font-size:1.4em; display:block; margin-top:2rem;">happy eleven months, aaradhya. i love you.</span></p>
       
       <!-- Interactive Finale -->
       <button class="ping-btn" id="pingBtn">transmit a signal to the moon</button>
@@ -309,9 +322,9 @@ const scene = new THREE.Scene();
 
 // Dynamic Camera
 const isMobile = window.innerWidth < 600;
-const cameraZ = isMobile ? 35 : 22; 
+const defaultCameraZ = isMobile ? 35 : 22; 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 0, cameraZ); 
+camera.position.set(0, 0, defaultCameraZ); 
 
 // Lighting
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
@@ -379,7 +392,7 @@ astronaut.add(legR);
 
 astronaut.scale.set(1.4, 1.4, 1.4);
 
-// Wrapper allows astronaut to lookAt moon while still freely rotating internally (for the twirl!)
+// Wrapper allows astronaut to lookAt moon while still freely rotating internally (for the happy flips!)
 const astroWrapper = new THREE.Group();
 astroWrapper.add(astronaut);
 scene.add(astroWrapper);
@@ -397,35 +410,35 @@ const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.15, transpar
 const stars = new THREE.Points(starGeo, starMat);
 scene.add(stars);
 
-// RESIZE HANDLER
-window.addEventListener('resize', () => {
-  const mobile = window.innerWidth < 600;
-  camera.position.z = mobile ? 35 : 22;
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
 // --- STATE, SCROLL & PARALLAX ---
 const intro = document.getElementById('intro');
 const scrollContainer = document.getElementById('scroll-container');
 const fixedUi = document.getElementById('fixed-ui');
 const hero = document.getElementById('hero');
-const ocn = document.getElementById('ocn');
 const pingBtn = document.getElementById('pingBtn');
 
 let isRunning = false;
 let t = 0; 
-let orbits = 0;
 
-// Parallax tracking variables
+// Camera states
 let targetCamX = 0;
 let targetCamY = 0;
 let scrollTargetY = 0;
+let cinematicMode = false;
 
-// Twirl Mechanic Variables
+// Excited Astronaut Mechanics
 let isTwirling = false;
 let twirlAngle = 0;
+
+// RESIZE HANDLER
+window.addEventListener('resize', () => {
+  if (!cinematicMode) {
+    camera.position.z = window.innerWidth < 600 ? 35 : 22;
+  }
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
 
 function startExperience() {
   if (isRunning) return; 
@@ -444,24 +457,39 @@ document.getElementById('iEnter').addEventListener('click', startExperience);
 
 // Smooth Scroll Tracking
 scrollContainer.addEventListener('scroll', () => {
-  if(!isRunning) return;
+  if(!isRunning || cinematicMode) return;
   scrollTargetY = -(scrollContainer.scrollTop * 0.003); 
 });
 
 // Immersive Mouse Tracking
 document.addEventListener('mousemove', (e) => {
-  if(!isRunning) return;
+  if(!isRunning || cinematicMode) return;
   targetCamX = (e.clientX / window.innerWidth) * 2 - 1;
   targetCamY = -(e.clientY / window.innerHeight) * 2 + 1;
 });
 
-// Interactive Button Logic
+// Cinematic Final Event
 pingBtn.addEventListener('click', function() {
-  if(isTwirling) return;
-  this.textContent = "signal received. your moon loves you back.";
+  if(cinematicMode) return;
+  
+  // Update button state
+  this.textContent = "signal received. she loves you back.";
   this.classList.add('active');
+  
+  // Trigger astronaut excited jump & flip
   isTwirling = true;
-  twirlAngle = 0; // Trigger the barrel roll
+  twirlAngle = 0; 
+  
+  // Trigger cinematic camera swoop
+  cinematicMode = true;
+  
+  // Fade out UI
+  fixedUi.classList.add('fade-out');
+  
+  // Delay scroll container fade slightly so they can read the button change
+  setTimeout(() => {
+    scrollContainer.classList.add('fade-out');
+  }, 1200);
 });
 
 // FADE TEXT IN ON SCROLL
@@ -483,13 +511,24 @@ function animate() {
   moon.rotation.y += 0.001;
   
   if (isRunning) {
-    // Elegant Camera Parallax (Blending scroll depth with mouse movement)
-    camera.position.x += (targetCamX * 2.5 - camera.position.x) * 0.05;
-    const finalCamY = scrollTargetY + (targetCamY * 2.5);
-    camera.position.y += (finalCamY - camera.position.y) * 0.05;
-    camera.lookAt(0, 0, 0); // Always stay locked on the center void
+    
+    // CAMERA LOGIC
+    if (cinematicMode) {
+      // Cinematic Swoop: Smoothly push camera in close to the moon
+      const targetZoom = isMobile ? 14 : 11; 
+      camera.position.x += (0 - camera.position.x) * 0.02;
+      camera.position.y += (0 - camera.position.y) * 0.02;
+      camera.position.z += (targetZoom - camera.position.z) * 0.015;
+      camera.lookAt(0, 0, 0);
+    } else {
+      // Normal Parallax
+      camera.position.x += (targetCamX * 2.5 - camera.position.x) * 0.05;
+      const finalCamY = scrollTargetY + (targetCamY * 2.5);
+      camera.position.y += (finalCamY - camera.position.y) * 0.05;
+      camera.lookAt(0, 0, 0); 
+    }
 
-    // Orbit Speed
+    // ASTRONAUT ORBIT LOGIC
     t -= 0.0035; 
     
     const radius = isMobile ? 8.5 : 9.5; 
@@ -500,24 +539,19 @@ function animate() {
     // Makes the astronaut stare directly at the moon while orbiting
     astroWrapper.lookAt(moon.position);
 
-    // Track Orbits
-    const newOrbits = Math.floor(Math.abs(t) / (Math.PI * 2));
-    if (newOrbits > orbits) {
-      orbits = newOrbits;
-      ocn.textContent = orbits;
-      ocn.style.color = 'var(--accent)';
-      setTimeout(() => ocn.style.color = 'var(--moon-glow)', 800);
-    }
-
-    // Playful Barrel Roll Animation when "Pinged"
+    // EXCITED ASTRONAUT ANIMATION (Happy Flips & Bounces)
     if (isTwirling) {
-      const rollSpeed = 0.08;
-      if (twirlAngle < Math.PI * 2) {
-        astronaut.rotation.z += rollSpeed;
+      const rollSpeed = 0.12; 
+      if (twirlAngle < Math.PI * 4) { // Two full spins
+        astronaut.rotation.x += rollSpeed; // Front flip
+        astronaut.rotation.y += rollSpeed * 0.5; // Barrel twist
+        astronaut.position.y = Math.sin(twirlAngle) * 0.8; // Happy bounce up and down
         twirlAngle += rollSpeed;
       } else {
-        astronaut.rotation.z = 0; // Snap perfectly back
-        isTwirling = false;
+        astronaut.rotation.x = 0; 
+        astronaut.rotation.y = 0;
+        astronaut.position.y = 0; 
+        isTwirling = false; // Stops after finishing the celebration
       }
     }
   }
