@@ -91,18 +91,17 @@ html, body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* FIXED UI */
+/* FIXED UI (Lyrics) */
 .fixed-ui {
   position: fixed; z-index: 5; inset: 0; pointer-events: none;
   opacity: 0; transition: opacity 2s ease;
 }
 .fixed-ui.show { opacity: 1; }
-.fixed-ui.fade-out { opacity: 0 !important; transition: opacity 2.5s ease; }
 
 /* Floating Lyrics */
 .lf {
   position: absolute; font-family: 'EB Garamond', serif; font-style: italic;
-  color: rgba(234, 232, 225, 0.3); pointer-events: none; line-height: 1.6; 
+  color: var(--text-dim); pointer-events: none; line-height: 1.6; 
   text-shadow: 0 2px 15px rgba(0,0,0,0.9);
 }
 
@@ -223,7 +222,7 @@ html, body {
 
 @media (max-width: 600px) {
   .text-block { padding: 2rem 0; width: 92%; }
-  .lf { font-size: clamp(0.7rem, 1.2vw, 0.8rem) !important; opacity: 0.2; }
+  .lf { font-size: clamp(0.75rem, 2.5vw, 0.85rem) !important; }
 }
 </style>
 </head>
@@ -242,7 +241,7 @@ html, body {
   </div>
 </div>
 
-<!-- FIXED UI -->
+<!-- FIXED UI (Lyrics now stay visible during zoom) -->
 <div class="fixed-ui" id="fixed-ui">
   <div class="lf" style="top:15%; left:6%; font-size:clamp(0.9rem,1.5vw,1.1rem);">
     "i'm an astronaut,<br>you're the moon"
@@ -413,7 +412,6 @@ scene.add(stars);
 // --- STATE, SCROLL & PARALLAX ---
 const intro = document.getElementById('intro');
 const scrollContainer = document.getElementById('scroll-container');
-const fixedUi = document.getElementById('fixed-ui');
 const hero = document.getElementById('hero');
 const pingBtn = document.getElementById('pingBtn');
 
@@ -447,7 +445,7 @@ function startExperience() {
   setTimeout(() => {
     intro.style.display = 'none';
     scrollContainer.classList.add('on');
-    fixedUi.classList.add('show');
+    document.getElementById('fixed-ui').classList.add('show');
     hero.classList.add('active');
     isRunning = true;
   }, 1600);
@@ -483,10 +481,7 @@ pingBtn.addEventListener('click', function() {
   // Trigger cinematic camera swoop
   cinematicMode = true;
   
-  // Fade out UI
-  fixedUi.classList.add('fade-out');
-  
-  // Delay scroll container fade slightly so they can read the button change
+  // Fade out only the scroll content, NOT the lyrics
   setTimeout(() => {
     scrollContainer.classList.add('fade-out');
   }, 1200);
@@ -514,8 +509,8 @@ function animate() {
     
     // CAMERA LOGIC
     if (cinematicMode) {
-      // Cinematic Swoop: Smoothly push camera in close to the moon
-      const targetZoom = isMobile ? 14 : 11; 
+      // Cinematic Swoop: Zooms in beautifully but stays far enough back to see the astronaut's full orbit and flips
+      const targetZoom = isMobile ? 26 : 18; 
       camera.position.x += (0 - camera.position.x) * 0.02;
       camera.position.y += (0 - camera.position.y) * 0.02;
       camera.position.z += (targetZoom - camera.position.z) * 0.015;
