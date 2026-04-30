@@ -10,34 +10,17 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --void: #020206; /* Deeper black for realistic space */
+  --void: #020206; 
   --moon-glow: #e6e3da;
   --text: #ccc8bc;
   --text-dim: rgba(200,196,184,0.45);
-  --text-mid: rgba(200,196,184,0.7);
+  --text-mid: rgba(200,196,184,0.85);
   --accent: #c8aa84;
   --orbit-line: rgba(255,255,255,0.06);
-  --your-voice: rgba(196,168,120,0.85);
 }
 
-html, body { width:100%; height:100%; background:var(--void); overflow:hidden; cursor:none; }
-
-/* CURSOR */
-#cur {
-  position:fixed; width:6px; height:6px;
-  background:var(--moon-glow); border-radius:50%;
-  pointer-events:none; z-index:9999;
-  transform:translate(-50%,-50%);
-  mix-blend-mode:screen;
-  box-shadow: 0 0 10px rgba(255,255,255,0.8);
-}
-#cur-ring {
-  position:fixed; width:28px; height:28px;
-  border:1px solid rgba(234,230,218,0.3); border-radius:50%;
-  pointer-events:none; z-index:9998;
-  transform:translate(-50%,-50%);
-  transition: left 0.1s ease, top 0.1s ease, width 0.3s, height 0.3s, border-color 0.3s;
-}
+/* Removed the custom cursor, back to auto so it feels natural and doesn't glitch */
+html, body { width:100%; height:100%; background:var(--void); overflow:hidden; cursor:auto; }
 
 /* CANVAS */
 #cv { position:fixed; inset:0; width:100%; height:100%; z-index:0; }
@@ -76,6 +59,7 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
   align-items:center; gap:1rem; cursor:pointer;
   opacity:0; animation: riseIn 0.8s ease forwards 2.4s;
 }
+.i-enter:hover .i-dot { box-shadow: 0 0 20px rgba(234,230,218,0.9); transform:scale(1.1); }
 .i-enter-txt {
   font-family:'DM Mono',monospace; font-size:0.58rem;
   letter-spacing:0.35em; color:var(--text-dim); text-transform:uppercase;
@@ -95,6 +79,7 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
   border-radius:50%; z-index:1;
   box-shadow: 0 0 15px rgba(234,230,218,0.6);
   animation: dotPulse 2.4s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* SCENE */
@@ -124,11 +109,9 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
 }
 #moon {
   width:100%; height:100%; border-radius:50%;
-  /* High resolution transparent moon texture */
   background-image: url('https://assets.codepen.io/141041/moon-transparent.png');
   background-size: cover;
   background-position: center;
-  /* Realistic 3D lighting shadow (dark side and lit edge) */
   box-shadow:
     inset -30px -30px 40px rgba(0,0,0,0.85),
     inset 10px 10px 20px rgba(255,255,255,0.3),
@@ -157,14 +140,13 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
 }
 #moon:hover .moon-name { opacity:1; }
 
-/* REALISTIC ASTRONAUT */
+/* REALISTIC ASTRONAUT - Using highly reliable Wikimedia NASA image */
 #astr { position:absolute; top:50%; left:50%; width:0; height:0; pointer-events:none; z-index: 12; }
 #ab {
-  position:absolute; width:55px; height:55px; /* Slightly larger for image detail */
+  position:absolute; width:65px; height:65px;
   transform:translate(-50%,-50%);
-  /* Realistic spacesuit glow */
-  filter:drop-shadow(0 0 12px rgba(200,196,184,0.4));
-  background-image: url('https://assets.codepen.io/141041/astronaut.png');
+  filter:drop-shadow(0 0 12px rgba(200,196,184,0.5));
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Astronaut_EVA_cutout.png/480px-Astronaut_EVA_cutout.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -243,7 +225,7 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
   border:1px solid rgba(255,255,255,0.08);
   background:rgba(6,6,12,0.85);
   box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-  padding:clamp(2rem,5vw,3.5rem);
+  padding:clamp(2.5rem,5vw,4rem);
   position:relative;
   transform:translateY(28px) scale(0.97);
   transition:transform 0.65s cubic-bezier(0.16,1,0.3,1);
@@ -275,40 +257,19 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
 
 .m-div {
   width:28px; height:1px; background:var(--accent);
-  opacity:0; margin-bottom:1.5rem;
+  opacity:0; margin-bottom:1.8rem;
   transition:opacity 0.4s ease 0.3s;
 }
 #modal.on .m-div { opacity:0.6; box-shadow: 0 0 8px var(--accent); }
 
 .m-body {
   font-family:'EB Garamond',serif;
-  font-size:clamp(0.95rem,2vw,1.05rem); color:var(--text-mid);
-  line-height:1.92; margin-bottom:1.8rem; white-space:pre-line;
+  font-size:clamp(1rem,2vw,1.1rem); color:var(--text-mid);
+  line-height:1.8; margin-bottom:2.5rem; white-space:pre-line;
   opacity:0; transform:translateY(8px);
   transition:opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
 }
 #modal.on .m-body { opacity:1; transform:translateY(0); }
-
-/* YOUR VOICE */
-.m-yours {
-  font-family:'EB Garamond',serif; font-style:italic;
-  font-size:clamp(0.9rem,1.9vw,1rem);
-  color:var(--your-voice);
-  border-left:1px solid rgba(196,168,120,0.35);
-  padding-left:1.1rem; margin-bottom:2rem;
-  line-height:1.9; white-space:pre-line;
-  opacity:0; transform:translateY(6px);
-  transition:opacity 0.5s ease 0.35s, transform 0.5s ease 0.35s;
-}
-#modal.on .m-yours { opacity:1; transform:translateY(0); }
-.m-yours::before {
-  content:'your words';
-  display:block;
-  font-family:'DM Mono',monospace; font-style:normal;
-  font-size:0.5rem; letter-spacing:0.28em;
-  color:rgba(196,168,120,0.4); text-transform:uppercase;
-  margin-bottom:0.55rem;
-}
 
 .m-nav {
   display:flex; justify-content:space-between; align-items:center;
@@ -376,8 +337,6 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="cur-ring"></div>
 <canvas id="cv"></canvas>
 
 <!-- INTRO -->
@@ -446,7 +405,6 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
     <p class="m-lyric" id="mLyric"></p>
     <div class="m-div"></div>
     <p class="m-body" id="mBody"></p>
-    <div class="m-yours" id="mYours"></div >
     <div class="m-nav">
       <button class="m-btn" id="mPrev">← prev</button>
       <span class="m-ct" id="mCt">1 / 3</span>
@@ -456,15 +414,6 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; c
 </div>
 
 <script>
-// CURSOR
-const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
-let mx=0,my=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX; my=e.clientY;
-  cur.style.left=mx+'px'; cur.style.top=my+'px';
-  setTimeout(()=>{ ring.style.left=mx+'px'; ring.style.top=my+'px'; },90);
-});
-
 // CANVAS (More Realistic Deep Space)
 const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
 let W,H,stars=[],nebulae=[],shooters=[];
@@ -475,15 +424,14 @@ resize(); window.addEventListener('resize',resize);
 function initSpace(){
   stars=[];
   for(let i=0;i<400;i++) {
-    // Generate realistic star colors (blueish, white, orangeish)
     const colorChance = Math.random();
     let r=255, g=255, b=255;
-    if(colorChance > 0.8) { r=180; g=200; b=255; } // Blue stars
-    else if(colorChance < 0.2) { r=255; g=200; b=180; } // Orange stars
+    if(colorChance > 0.8) { r=180; g=200; b=255; }
+    else if(colorChance < 0.2) { r=255; g=200; b=180; }
     
     stars.push({
       x:Math.random()*W, y:Math.random()*H,
-      r:Math.random()*1.0+0.1, // Smaller, sharper stars
+      r:Math.random()*1.0+0.1, 
       a:Math.random()*0.8+0.1,
       tw:Math.random()*Math.PI*2,
       ts:Math.random()*0.015+0.005,
@@ -492,7 +440,6 @@ function initSpace(){
   }
   nebulae=[];
   [[.2,.2],[.8,.3],[.4,.7],[.25,.8],[.9,.7]].forEach(([px,py])=>{
-    // Darker, richer nebula hues (deep blues and purples)
     nebulae.push({
       x:px*W, y:py*H,
       r:Math.random()*300+200,
@@ -518,7 +465,6 @@ let t=0;
 function draw(){
   ctx.clearRect(0,0,W,H);
   
-  // Draw Nebulae
   ctx.globalCompositeOperation = 'screen';
   nebulae.forEach(n=>{
     const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r);
@@ -529,15 +475,13 @@ function draw(){
   });
   ctx.globalCompositeOperation = 'source-over';
 
-  // Draw Stars
   stars.forEach(s=>{
-    const tw=Math.sin(t*s.ts+s.tw)*.35+.65; // Twinkle effect
+    const tw=Math.sin(t*s.ts+s.tw)*.35+.65;
     ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
     ctx.fillStyle=`rgba(${s.rCol},${s.gCol},${s.bCol},${s.a*tw})`; 
     ctx.fill();
   });
 
-  // Draw Shooting Stars
   shooters=shooters.filter(s=>s.a>0.03);
   shooters.forEach(s=>{
     const tx2=s.x-Math.cos(s.ang)*s.len,ty2=s.y+Math.sin(s.ang)*s.len;
@@ -579,7 +523,7 @@ document.addEventListener('touchstart',enter,{once:true});
 const ab=document.getElementById('ab');
 let ang=0,orbits=0,totalA=0;
 const ocn=document.getElementById('ocn');
-const orbitSpeed=0.004; // Slightly slower for realistic scale
+const orbitSpeed=0.004;
 
 function rx(){ return Math.min(260,window.innerWidth*.35); }
 function ry(){ return Math.min(180,window.innerHeight*.25); }
@@ -614,18 +558,14 @@ function floatLyric(ax,ay){
 
 function orbitLoop(){
   ang+=orbitSpeed;
-  
-  // Calculate basic orbit
   let x=cx()+rx()*Math.cos(ang);
   let y=cy()+ry()*Math.sin(ang);
   
-  // Add realistic Zero-G bobbing/floating physics
   const bobbingX = Math.sin(t * 0.02) * 8;
   const bobbingY = Math.cos(t * 0.015) * 8;
   
   document.getElementById('astr').style.transform=`translate(${x-cx() + bobbingX}px,${y-cy() + bobbingY}px)`;
   
-  // Astronaut rotation tracking the orbit, but slowed down so it looks like floating
   const rot= (Math.atan2(Math.cos(ang),-Math.sin(ang))*180/Math.PI) + (Math.sin(t * 0.01) * 15);
   ab.style.transform=`translate(-50%,-50%) rotate(${rot}deg)`;
   
@@ -657,22 +597,19 @@ document.addEventListener('mousemove',e=>{
     `translate(calc(-50% + ${xf*4}px), calc(-50% + ${yf*4}px))`;
 });
 
-// TRANSMISSIONS
+// HUMAN, AI-PROOF, FLIRTY TRANSMISSIONS
 const transmissions=[
   {
     lyric: '"I\'m an astronaut, you\'re the Moon.\nI stare at you, I sing to you.\nI circle you."',
-    body: `The song is about orbiting someone — not reaching them, not landing, just circling endlessly, held in place by something you can't see. Just gravity. Just the pull of one specific person in an otherwise alien universe.\n\nThat's the only way I know how to describe this. You're 2,083 km away and you're still the thing everything points to.`,
-    yours: `[ your first line here.\nsomething small. something true. ]`
+    body: `I've always thought of myself as just floating around out here, kinda aimless. And then there's you. My literal center of gravity.\n\n2,083 kilometers is a stupid amount of distance to have between us, but honestly? I'm perfectly happy being caught in your pull. You could drag me across the whole galaxy and I'd probably just let it happen.`
   },
   {
     lyric: '"I look back and you laugh —\nand this is hard, but I feel less far."',
-    body: `In the middle of everything loud and disorienting, one laughing glance cuts through and closes the distance. Not fixes it. Not erases it. Just makes it smaller.\n\nThat's what you do from 2,083 km. I'll be in the middle of something hard and you'll say the right thing, or nothing at all, and everything gets quieter.`,
-    yours: `[ your second line here.\nwhen do you feel less far from her? ]`
+    body: `I'm not gonna pretend the distance doesn't suck. It does.\n\nBut then I'll be having the most chaotic, stressful day, and I get a text from you, or you look at me on FaceTime and laugh. Instantly? The whole universe just shuts up. It's wild how you can make me feel like you're sitting right next to me when you're literally states away.`
   },
   {
     lyric: '"I circle you."',
-    body: `That's it. No asterisk. Not "when things are easy" or "when the exams are done" or "when the distance closes."\n\nJust: I circle you. Present tense. Ongoing.\n\nHappy anniversary, aaradhya.`,
-    yours: `[ your third line here.\nhow do you want to end it? ]`
+    body: `So yeah, I circle you. And I'm gonna keep doing it. Not just until we close the gap, but like... always.\n\nYou're the prettiest moon I've ever seen, and I’m pretty damn lucky to be your astronaut. Happy eleven months, Aaradhya. Keep that orbit steady for me, because I'm planning to land sooner than you think. 😉`
   }
 ];
 
@@ -683,7 +620,6 @@ function openModal(i){
   const d=transmissions[i];
   document.getElementById('mLyric').textContent=d.lyric;
   document.getElementById('mBody').textContent=d.body;
-  document.getElementById('mYours').textContent=d.yours;
   document.getElementById('mCt').textContent=`${i+1} / ${transmissions.length}`;
   document.getElementById('mPrev').disabled=(i===0);
   document.getElementById('mNext').disabled=(i===transmissions.length-1);
