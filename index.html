@@ -171,6 +171,34 @@ html, body {
   text-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
+/* Interactive Ping Button */
+.ping-btn {
+  margin-top: 3.5rem;
+  background: transparent;
+  border: 1px solid rgba(253, 252, 248, 0.25);
+  color: var(--text-dim);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  pointer-events: auto; /* Required to click inside scrolling div */
+}
+.ping-btn:hover {
+  border-color: var(--moon-glow);
+  color: var(--moon-glow);
+  box-shadow: 0 0 20px rgba(253,252,248,0.15);
+  transform: translateY(-2px);
+}
+.ping-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 30px rgba(216, 188, 163, 0.2);
+  pointer-events: none;
+}
+
 /* KEYFRAMES */
 @keyframes riseIn {
   from { opacity: 0; transform: translateY(15px); }
@@ -252,9 +280,19 @@ html, body {
     </div>
   </div>
 
+  <!-- Added Section for deeper pacing -->
+  <div class="text-section">
+    <div class="text-block">
+      <p class="body-text">i don't even need a telescope to know you're the rarest thing out here. even when we're just existing together—quietly sitting on a call, going about our days—it feels like we're sharing our own little spaceship. you make the vast, dark unknown feel exactly like home.</p>
+    </div>
+  </div>
+
   <div class="text-section" style="padding-bottom: 25vh;">
     <div class="text-block">
       <p class="body-text">so yeah, i'm perfectly happy floating out here, just orbiting you. you're the brightest thing in my sky, and i'm beyond lucky to be the astronaut that gets to stare.<br><br><span style="color:var(--moon-glow); font-style:italic; font-family:'Instrument Serif',serif; font-size:1.4em; display:block; margin-top:1rem;">happy eleven months, aaradhya. i love you.</span></p>
+      
+      <!-- Interactive Finale -->
+      <button class="ping-btn" id="pingBtn">transmit a signal to the moon</button>
     </div>
   </div>
 
@@ -269,13 +307,13 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 const scene = new THREE.Scene();
 
-// Dynamic Camera (Zooms out on mobile so everything fits beautifully)
+// Dynamic Camera
 const isMobile = window.innerWidth < 600;
 const cameraZ = isMobile ? 35 : 22; 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(0, 0, cameraZ); 
 
-// Lighting (Crucial for the 3D meshes)
+// Lighting
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
 scene.add(ambientLight);
 const sunLight = new THREE.DirectionalLight(0xffefd5, 1.2);
@@ -300,7 +338,6 @@ scene.add(moon);
 
 
 // --- 2. THE 100% RELIABLE 3D ASTRONAUT ---
-// We build it from simple geometries so it NEVER fails to load and looks awesome
 const astronaut = new THREE.Group();
 
 const suitMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.7 });
@@ -314,7 +351,7 @@ astronaut.add(head);
 // Visor
 const visor = new THREE.Mesh(new THREE.SphereGeometry(0.35, 32, 32), visorMat);
 visor.position.set(0, 0.62, 0.15);
-visor.scale.set(1, 0.85, 0.85); // Flatten slightly
+visor.scale.set(1, 0.85, 0.85); 
 astronaut.add(visor);
 // Body
 const body = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.8, 16), suitMat);
@@ -341,7 +378,11 @@ legR.position.set(0.2, -0.6, 0);
 astronaut.add(legR);
 
 astronaut.scale.set(1.4, 1.4, 1.4);
-scene.add(astronaut);
+
+// Wrapper allows astronaut to lookAt moon while still freely rotating internally (for the twirl!)
+const astroWrapper = new THREE.Group();
+astroWrapper.add(astronaut);
+scene.add(astroWrapper);
 
 
 // --- 3. STARS ---
@@ -365,16 +406,26 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// --- STATE AND SCROLL PARALLAX ---
+// --- STATE, SCROLL & PARALLAX ---
 const intro = document.getElementById('intro');
 const scrollContainer = document.getElementById('scroll-container');
 const fixedUi = document.getElementById('fixed-ui');
 const hero = document.getElementById('hero');
 const ocn = document.getElementById('ocn');
+const pingBtn = document.getElementById('pingBtn');
 
 let isRunning = false;
 let t = 0; 
 let orbits = 0;
+
+// Parallax tracking variables
+let targetCamX = 0;
+let targetCamY = 0;
+let scrollTargetY = 0;
+
+// Twirl Mechanic Variables
+let isTwirling = false;
+let twirlAngle = 0;
 
 function startExperience() {
   if (isRunning) return; 
@@ -391,11 +442,26 @@ function startExperience() {
 
 document.getElementById('iEnter').addEventListener('click', startExperience);
 
-// Drift camera gently on scroll
+// Smooth Scroll Tracking
 scrollContainer.addEventListener('scroll', () => {
   if(!isRunning) return;
-  const scrollY = scrollContainer.scrollTop;
-  camera.position.y = -(scrollY * 0.003); 
+  scrollTargetY = -(scrollContainer.scrollTop * 0.003); 
+});
+
+// Immersive Mouse Tracking
+document.addEventListener('mousemove', (e) => {
+  if(!isRunning) return;
+  targetCamX = (e.clientX / window.innerWidth) * 2 - 1;
+  targetCamY = -(e.clientY / window.innerHeight) * 2 + 1;
+});
+
+// Interactive Button Logic
+pingBtn.addEventListener('click', function() {
+  if(isTwirling) return;
+  this.textContent = "signal received. your moon loves you back.";
+  this.classList.add('active');
+  isTwirling = true;
+  twirlAngle = 0; // Trigger the barrel roll
 });
 
 // FADE TEXT IN ON SCROLL
@@ -417,24 +483,42 @@ function animate() {
   moon.rotation.y += 0.001;
   
   if (isRunning) {
-    // We decrease 't' so the astronaut moves perfectly in sync visually with the moon's surface spin
-    t -= 0.0035; // Orbit Speed
+    // Elegant Camera Parallax (Blending scroll depth with mouse movement)
+    camera.position.x += (targetCamX * 2.5 - camera.position.x) * 0.05;
+    const finalCamY = scrollTargetY + (targetCamY * 2.5);
+    camera.position.y += (finalCamY - camera.position.y) * 0.05;
+    camera.lookAt(0, 0, 0); // Always stay locked on the center void
+
+    // Orbit Speed
+    t -= 0.0035; 
     
     const radius = isMobile ? 8.5 : 9.5; 
-    astronaut.position.x = Math.cos(t) * radius;
-    astronaut.position.z = Math.sin(t) * radius;
-    astronaut.position.y = Math.sin(t * 1.5) * 1.2;
+    astroWrapper.position.x = Math.cos(t) * radius;
+    astroWrapper.position.z = Math.sin(t) * radius;
+    astroWrapper.position.y = Math.sin(t * 1.5) * 1.2;
 
     // Makes the astronaut stare directly at the moon while orbiting
-    astronaut.lookAt(moon.position);
+    astroWrapper.lookAt(moon.position);
 
-    // Track Orbits (Using Math.abs since we flipped direction mapping to sync the visual movement)
+    // Track Orbits
     const newOrbits = Math.floor(Math.abs(t) / (Math.PI * 2));
     if (newOrbits > orbits) {
       orbits = newOrbits;
       ocn.textContent = orbits;
       ocn.style.color = 'var(--accent)';
       setTimeout(() => ocn.style.color = 'var(--moon-glow)', 800);
+    }
+
+    // Playful Barrel Roll Animation when "Pinged"
+    if (isTwirling) {
+      const rollSpeed = 0.08;
+      if (twirlAngle < Math.PI * 2) {
+        astronaut.rotation.z += rollSpeed;
+        twirlAngle += rollSpeed;
+      } else {
+        astronaut.rotation.z = 0; // Snap perfectly back
+        isTwirling = false;
+      }
     }
   }
 
