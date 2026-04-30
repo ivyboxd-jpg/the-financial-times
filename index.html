@@ -6,23 +6,27 @@
 <title>orbiter — for aaradhya</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<!-- Three.js for true 3D rendering (Stable Version) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* force all text to lowercase */
+* { margin: 0; padding: 0; box-sizing: border-box; text-transform: lowercase; }
 
 :root {
   --void: #020205; 
   --moon-glow: #e6e3da;
   --text: #ccc8bc;
-  --text-dim: rgba(200,196,184,0.45);
-  --text-mid: rgba(200,196,184,0.85);
+  --text-dim: rgba(200,196,184,0.6);
   --accent: #c8aa84;
-  --orbit-line: rgba(255,255,255,0.08);
 }
 
-html, body { width:100%; height:100%; background:var(--void); overflow:hidden; font-family:'EB Garamond', serif; }
+/* body locks scroll initially until they enter */
+html, body { width:100%; height:100%; background:var(--void); font-family:'EB Garamond', serif; overflow: hidden; }
+body.can-scroll { overflow-y: auto; overflow-x: hidden; }
 
-/* CANVAS BACKGROUND */
-#cv { position:fixed; inset:0; width:100%; height:100%; z-index:0; }
+/* 3D CANVAS BACKGROUND */
+#cv { position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events: none; }
 
 /* INTRO SCREEN */
 #intro {
@@ -36,19 +40,18 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; f
 
 .i-tag {
   font-family:'DM Mono',monospace; font-size:0.6rem; font-weight:300;
-  letter-spacing:0.4em; color:var(--text-dim); text-transform:uppercase;
+  letter-spacing:0.4em; color:var(--text-dim);
   margin-bottom:2.2rem;
   opacity:0; animation: riseIn 1s ease forwards 0.4s;
 }
 .i-title {
   font-family:'Instrument Serif',serif; font-style:italic;
-  font-size:clamp(5rem,15vw,10rem); color:var(--moon-glow);
+  font-size:clamp(4rem,15vw,8rem); color:var(--moon-glow);
   line-height:0.88; letter-spacing:-0.02em;
   opacity:0; animation: riseIn 1.2s ease forwards 0.9s;
   text-shadow: 0 0 40px rgba(230, 227, 218, 0.15);
 }
 .i-by {
-  font-family:'EB Garamond',serif; font-style:italic;
   font-size:clamp(0.85rem,1.8vw,1.1rem); color:var(--text-dim);
   margin-top:1.8rem; letter-spacing:0.1em;
   opacity:0; animation: riseIn 1s ease forwards 1.6s;
@@ -61,7 +64,7 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; f
 .i-enter:hover .i-dot { box-shadow: 0 0 20px rgba(234,230,218,0.9); transform:scale(1.1); }
 .i-enter-txt {
   font-family:'DM Mono',monospace; font-size:0.58rem;
-  letter-spacing:0.35em; color:var(--text-dim); text-transform:uppercase;
+  letter-spacing:0.35em; color:var(--text-dim);
 }
 .i-ring {
   width:52px; height:52px; position:relative;
@@ -81,246 +84,85 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; f
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* 3D SCENE CONTAINER */
-#scene-wrapper {
-  position:fixed; inset:0; z-index:10;
-  perspective: 1200px; /* This creates the 3D depth */
-  opacity:0; pointer-events:none;
-  transition: opacity 1.8s ease;
+/* SCROLL CONTENT */
+#scroll-container {
+  position: absolute; top: 0; left: 0; width: 100%;
+  z-index: 10; display: none;
 }
-#scene-wrapper.on { opacity:1; pointer-events:all; }
+#scroll-container.on { display: block; }
 
-#scene {
-  width: 100%; height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.1s ease-out; /* Smooth 3D mouse tracking */
+/* The first section is mostly empty so you just see the moon */
+.hero-section {
+  height: 100vh; position: relative;
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  padding-bottom: 2rem;
 }
 
-/* ORBIT RINGS */
-.oring {
-  position:absolute; top:50%; left:50%;
-  border-radius:50%; border:1px dashed var(--orbit-line);
-  transform:translate(-50%,-50%) translateZ(-50px);
-  pointer-events:none;
+.scroll-hint {
+  font-family: 'DM Mono', monospace; font-size: 0.55rem;
+  letter-spacing: 0.25em; color: var(--text-dim);
+  animation: bounce 2s infinite; opacity: 0;
+  transition: opacity 1.5s ease 2s; /* Fades in slowly after enter */
 }
-.oring.a { width:min(460px,66vw); height:min(380px,44vh); animation:ringBreath 7s ease-in-out infinite; border: 1px solid var(--orbit-line); }
-.oring.b { width:min(640px,90vw); height:min(520px,60vh); border-color:rgba(255,255,255,0.04); animation:ringBreath 10s ease-in-out infinite 1.5s; transform:translate(-50%,-50%) translateZ(-100px); }
+.hero-section.active .scroll-hint { opacity: 0.8; }
 
-/* REALISTIC MOON */
-#mc {
-  position:absolute; top:50%; left:50%;
-  width:clamp(160px,22vw,240px); height:clamp(160px,22vw,240px);
-  /* The moon is pushed slightly forward in 3D space */
-  transform:translate(-50%,-50%) translateZ(40px);
-}
-#moon {
-  width:100%; height:100%; border-radius:50%;
-  /* Solid background color so background stars NEVER bleed through the dark part of the moon */
-  background-color: #020205; 
-  background-image: url('https://assets.codepen.io/141041/moon-transparent.png');
-  background-size: cover;
-  background-position: center;
-  box-shadow:
-    inset -30px -30px 40px rgba(0,0,0,0.9),
-    inset 10px 10px 20px rgba(255,255,255,0.25),
-    0 0 60px 15px rgba(234,230,218,0.15);
-  cursor:pointer; position:relative;
-  animation: moonSpin 240s linear infinite;
-  transition: box-shadow 0.6s ease, transform 0.3s ease;
-}
-#moon:hover {
-  box-shadow:
-    inset -30px -30px 40px rgba(0,0,0,0.9),
-    inset 10px 10px 20px rgba(255,255,255,0.35),
-    0 0 90px 30px rgba(234,230,218,0.2);
-  transform: scale(1.02);
-}
-.moon-name {
-  position:absolute; inset:0; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-family:'EB Garamond',serif; font-style:italic;
-  font-size:clamp(0.7rem,1.8vw,0.9rem);
-  color:rgba(255,255,255,0.9);
-  text-shadow: 0 2px 10px rgba(0,0,0,1);
-  opacity:0; transition:opacity 0.5s ease;
-  pointer-events:none; z-index: 5;
-}
-#moon:hover .moon-name { opacity:1; }
-
-/* REALISTIC ASTRONAUT */
-#astr { 
-  position:absolute; top:0; left:0; 
-  width:0; height:0; pointer-events:none; 
-  /* Pushed closest to the screen in 3D space */
-  transform-style: preserve-3d;
-}
-#ab {
-  position:absolute; width:60px; height:60px;
-  filter:drop-shadow(-8px 10px 12px rgba(0,0,0,0.6)) drop-shadow(0 0 10px rgba(255,255,255,0.2));
-  /* Extremely reliable image source */
-  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Astronaut_EVA_cutout.png/480px-Astronaut_EVA_cutout.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+/* Text Sections */
+.text-section {
+  min-height: 80vh; 
+  display: flex; align-items: center; justify-content: center;
+  padding: 2rem 1.5rem;
 }
 
-/* LYRIC LAYER */
-#ll { position:fixed; inset:0; pointer-events:none; z-index:20; }
-.lf {
-  position:absolute;
-  font-family:'EB Garamond',serif; font-style:italic;
-  color:var(--text-dim); pointer-events:none;
-  opacity:0; line-height:1.6;
-  text-shadow: 0 0 10px rgba(0,0,0,0.8);
-  transition: opacity 1.4s ease;
+.text-block {
+  max-width: 600px; text-align: center;
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out;
 }
-.lf.show { opacity:1; }
 
-/* PANELS */
-#lp {
-  position:fixed; left:2.5rem; top:50%;
-  transform:translateY(-50%);
-  z-index:30; pointer-events:none;
-  opacity:0; transition:opacity 1s ease 0.5s;
+.text-block.visible {
+  opacity: 1; transform: translateY(0);
 }
-#lp.show { opacity:1; }
-.lp-line {
-  font-family:'DM Mono',monospace; font-weight:300;
-  font-size:0.55rem; letter-spacing:0.22em;
-  color:var(--text-dim); text-transform:uppercase;
-  line-height:2.4; white-space:nowrap;
-}
-.lp-line span { color:var(--accent); text-shadow: 0 0 8px rgba(200, 170, 132, 0.3); }
 
-#rp {
-  position:fixed; right:2.5rem; bottom:2.8rem;
-  z-index:30; pointer-events:none; text-align:right;
-  opacity:0; transition:opacity 1s ease 0.8s;
+.lyric-quote {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: clamp(1.8rem, 4vw, 2.5rem); color: var(--moon-glow);
+  line-height: 1.2; margin-bottom: 2rem;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.8);
 }
-#rp.show { opacity:1; }
-.rp-hint {
-  font-family:'EB Garamond',serif; font-style:italic;
-  font-size:0.9rem; color:var(--text-dim); line-height:1.7;
+
+.body-text {
+  font-size: clamp(1.1rem, 2vw, 1.3rem); color: var(--text-mid);
+  line-height: 1.8; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+/* BACKGROUND UI ELEMENTS */
+.fixed-ui {
+  position: fixed; z-index: 5; pointer-events: none;
+  opacity: 0; transition: opacity 2s ease;
+}
+.fixed-ui.show { opacity: 1; }
+
+.moon-label {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-family: 'EB Garamond', serif; font-style: italic;
+  font-size: 0.9rem; color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
 }
 
 /* ORBIT COUNT */
-#oc {
-  position:fixed; top:2rem; right:2.5rem;
-  z-index:30; text-align:right; pointer-events:none;
-  opacity:0; transition:opacity 0.6s ease;
-}
-#oc.show { opacity:1; }
+#oc { position: fixed; top: 2rem; right: 2.5rem; text-align: right; }
 .oc-n {
-  font-family:'Instrument Serif',serif; font-style:italic;
-  font-size:3.2rem; color:var(--moon-glow); line-height:1; display:block;
-  transition: color 0.6s ease, text-shadow 0.6s ease;
-  text-shadow: 0 0 15px rgba(230, 227, 218, 0.2);
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: 2.8rem; color: var(--moon-glow); line-height: 1; display: block;
+  transition: color 0.6s ease;
 }
-.oc-l {
-  font-family:'DM Mono',monospace; font-size:0.52rem;
-  letter-spacing:0.28em; color:var(--text-dim); text-transform:uppercase;
-}
+.oc-l { font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 0.28em; color: var(--text-dim); }
 
-/* MODAL - WITH PROPER CLOSE BUTTON */
-#modal {
-  position:fixed; inset:0; z-index:200;
-  display:flex; align-items:center; justify-content:center; padding:1.5rem;
-  background:rgba(2,2,6,0.85);
-  backdrop-filter:blur(15px) saturate(0.8);
-  opacity:0; pointer-events:none;
-  transition:opacity 0.5s ease;
-}
-#modal.on { opacity:1; pointer-events:all; }
-
-.mcard {
-  width:min(540px,94%);
-  border:1px solid rgba(255,255,255,0.08);
-  background:rgba(8,8,14,0.9);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-  padding:clamp(2.5rem,5vw,3.5rem);
-  position:relative;
-  transform:translateY(20px) scale(0.98);
-  transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);
-}
-#modal.on .mcard { transform:translateY(0) scale(1); }
-
-/* PROPER CROSS CLOSE BUTTON */
-.m-close {
-  position:absolute; top:1.2rem; right:1.2rem;
-  width: 32px; height: 32px;
-  background:rgba(255,255,255,0.05); 
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:50%; cursor:pointer;
-  display: flex; align-items: center; justify-content: center;
-  color:var(--text-dim); font-size: 0.9rem;
-  transition:all 0.3s ease;
-}
-.m-close:hover { 
-  background:var(--moon-glow); 
-  color:#000; 
-  border-color:var(--moon-glow); 
-  transform: rotate(90deg); 
-}
-
-.m-lyric {
-  font-family:'Instrument Serif',serif; font-style:italic;
-  font-size:clamp(1.4rem,3.5vw,1.9rem); color:var(--moon-glow);
-  line-height:1.35; margin-bottom:1.6rem;
-  opacity:0; transform:translateY(10px);
-  transition:opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
-}
-#modal.on .m-lyric { opacity:1; transform:translateY(0); }
-
-.m-div {
-  width:35px; height:1px; background:var(--accent);
-  opacity:0; margin-bottom:1.8rem;
-  transition:opacity 0.4s ease 0.3s;
-}
-#modal.on .m-div { opacity:0.6; box-shadow: 0 0 8px var(--accent); }
-
-.m-body {
-  font-family:'EB Garamond',serif;
-  font-size:clamp(1rem,2vw,1.1rem); color:var(--text-mid);
-  line-height:1.8; margin-bottom:2.5rem; white-space:pre-line;
-  opacity:0; transform:translateY(8px);
-  transition:opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
-}
-#modal.on .m-body { opacity:1; transform:translateY(0); }
-
-.m-nav {
-  display:flex; justify-content:space-between; align-items:center;
-  opacity:0; transition:opacity 0.4s ease 0.3s;
-}
-#modal.on .m-nav { opacity:1; }
-
-.m-btn {
-  background:none; border:1px solid rgba(255,255,255,0.15);
-  color:var(--text-dim); font-family:'DM Mono',monospace;
-  font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase;
-  padding:0.6rem 1.2rem; cursor:pointer;
-  transition:all 0.2s ease; border-radius: 4px;
-}
-.m-btn:hover { border-color:var(--moon-glow); color:var(--moon-glow); box-shadow: 0 0 10px rgba(255,255,255,0.1); }
-.m-btn:disabled { opacity:0.15; pointer-events:none; }
-
-.m-ct {
-  font-family:'DM Mono',monospace; font-size:0.55rem;
-  letter-spacing:0.25em; color:var(--text-dim);
-}
 
 /* KEYFRAMES */
 @keyframes riseIn {
   from { opacity:0; transform:translateY(14px); }
   to   { opacity:1; transform:translateY(0); }
-}
-@keyframes moonSpin {
-  from { background-position: 0% center; transform: rotate(0deg); }
-  to   { background-position: 100% center; transform: rotate(360deg); }
-}
-@keyframes ringBreath {
-  0%,100% { opacity:0.8; transform:translate(-50%,-50%) scale(1) translateZ(-50px); }
-  50%      { opacity:0.3; transform:translate(-50%,-50%) scale(1.02) translateZ(-50px); }
 }
 @keyframes expandRing {
   0%   { width:12px; height:12px; opacity:0.7; }
@@ -330,18 +172,20 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; f
   0%,100% { transform:scale(1); }
   50%      { transform:scale(0.7); opacity:0.5; }
 }
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
 
 @media (max-width:600px) {
-  #lp { display:none; }
-  .lf { font-size:0.75rem !important; }
-  .mcard { padding:2rem 1.6rem; }
-  .m-lyric { font-size:1.3rem; }
+  #oc { top: 1.5rem; right: 1.5rem; }
+  .text-section { min-height: 70vh; }
 }
 </style>
 </head>
 <body>
 
-<!-- CANVAS BACKGROUND -->
+<!-- 3D SCENE CONTAINER -->
 <canvas id="cv"></canvas>
 
 <!-- INTRO -->
@@ -355,225 +199,191 @@ html, body { width:100%; height:100%; background:var(--void); overflow:hidden; f
   </div>
 </div>
 
-<!-- 3D SCENE -->
-<div id="scene-wrapper">
-  <div id="scene">
-    <div class="oring b"></div>
-    <div class="oring a"></div>
-
-    <div id="mc">
-      <div id="moon">
-        <div class="moon-name">aaradhya</div>
-      </div>
-    </div>
-
-    <div id="astr"><div id="ab"></div></div>
-  </div>
-
-  <div id="ll">
-    <div class="lf" id="lf1" style="top:12%;left:6%;font-size:clamp(0.8rem,1.4vw,1rem);">
-      "I'm an astronaut,<br>you're the Moon"
-    </div>
-    <div class="lf" id="lf2" style="top:14%;right:6%;font-size:clamp(0.75rem,1.3vw,0.9rem);text-align:right;">
-      "I stare at you,<br>I sing to you"
-    </div>
-    <div class="lf" id="lf3" style="bottom:18%;left:6%;font-size:clamp(0.75rem,1.3vw,0.9rem);">
-      "this is hard,<br>but I feel less far"
-    </div>
-    <div class="lf" id="lf4" style="bottom:20%;right:6%;font-size:clamp(0.7rem,1.2vw,0.85rem);text-align:right;">
-      "I circle you"
-    </div>
+<!-- FIXED UI (Always visible over canvas) -->
+<div class="fixed-ui" id="fixed-ui">
+  <div class="moon-label">aaradhya</div>
+  <div id="oc">
+    <span class="oc-n" id="ocn">0</span>
+    <span class="oc-l">orbits</span>
   </div>
 </div>
 
-<!-- UI PANELS -->
-<div id="lp">
-  <div class="lp-line">STATUS &nbsp;&nbsp;<span>STABLE ORBIT</span></div>
-  <div class="lp-line">MONTHS &nbsp;&nbsp;<span>ELEVEN</span></div>
-  <div class="lp-line">GRAVITY &nbsp;<span>IRRESISTIBLE</span></div>
-</div>
+<!-- SCROLLING CONTENT -->
+<div id="scroll-container">
+  
+  <div class="hero-section" id="hero">
+    <div class="scroll-hint">scroll gently ↓</div>
+  </div>
 
-<div id="rp">
-  <p class="rp-hint">click the moon</p>
-</div>
-
-<div id="oc">
-  <span class="oc-n" id="ocn">0</span>
-  <span class="oc-l">orbits</span>
-</div>
-
-<!-- MODAL -->
-<div id="modal">
-  <div class="mcard">
-    <button class="m-close" id="mClose">✕</button>
-    <p class="m-lyric" id="mLyric"></p>
-    <div class="m-div"></div>
-    <p class="m-body" id="mBody"></p>
-    <div class="m-nav">
-      <button class="m-btn" id="mPrev">← prev</button>
-      <span class="m-ct" id="mCt">1 / 3</span>
-      <button class="m-btn" id="mNext">next →</button>
+  <div class="text-section">
+    <div class="text-block">
+      <p class="lyric-quote">"i'm an astronaut,<br>you're the moon."</p>
+      <p class="body-text">you ever think about how lucky it is that out of the entire universe, i ended up caught in your orbit? i’m completely stuck in your gravity, and honestly... i wouldn’t want it any other way. you're kinda the center of everything for me right now.</p>
     </div>
   </div>
+
+  <div class="text-section">
+    <div class="text-block">
+      <p class="lyric-quote">"i stare at you,<br>i sing to you."</p>
+      <p class="body-text">sometimes i'll be right in the middle of doing something stressful, and a thought of you just pops into my head. or you text me, and the whole world just kind of goes quiet for a second. it's pretty wild how effortlessly you can fix my day without even trying.</p>
+    </div>
+  </div>
+
+  <div class="text-section" style="padding-bottom: 20vh;">
+    <div class="text-block">
+      <p class="lyric-quote">"i circle you."</p>
+      <p class="body-text">so yeah, i'm going to keep circling you. because you’re the most beautiful thing in my sky, and i'm pretty damn lucky i get to be your guy.<br><br>happy eleven months, aaradhya. i love you.</p>
+    </div>
+  </div>
+
 </div>
 
 <script>
-// SPACE CANVAS
-const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
-let W,H,stars=[];
+// --- THREE.JS 3D ENGINE ---
+const canvas = document.getElementById('cv');
+const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-function resize(){ W=cv.width=window.innerWidth; H=cv.height=window.innerHeight; }
-resize(); window.addEventListener('resize',resize);
+const scene = new THREE.Scene();
 
-function initSpace(){
-  stars=[];
-  for(let i=0;i<400;i++) {
-    const colorChance = Math.random();
-    let r=255, g=255, b=255;
-    if(colorChance > 0.8) { r=180; g=200; b=255; }
-    else if(colorChance < 0.2) { r=255; g=200; b=180; }
-    
-    stars.push({
-      x:Math.random()*W, y:Math.random()*H,
-      r:Math.random()*1.2+0.2, 
-      a:Math.random()*0.8+0.1,
-      tw:Math.random()*Math.PI*2,
-      ts:Math.random()*0.015+0.005,
-      rCol: r, gCol: g, bCol: b
-    });
-  }
+// Camera setup (Detects mobile to zoom out)
+const isMobile = window.innerWidth < 600;
+const cameraZ = isMobile ? 32 : 22; 
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 0, cameraZ); 
+camera.lookAt(0, 0, 0);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+scene.add(ambientLight);
+const sunLight = new THREE.DirectionalLight(0xffefd5, 1.2);
+sunLight.position.set(10, 5, 15);
+scene.add(sunLight);
+
+// --- 1. THE 3D MOON ---
+const textureLoader = new THREE.TextureLoader();
+const moonGeometry = new THREE.SphereGeometry(4.5, 64, 64);
+const moonMaterial = new THREE.MeshStandardMaterial({
+  color: 0xdddddd,
+  roughness: 0.9,
+  map: textureLoader.load('https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/textures/planets/moon_1024.jpg')
+});
+const moon = new THREE.Mesh(moonGeometry, moonMaterial);
+scene.add(moon);
+
+// --- 2. THE 3D ASTRONAUT SPRITE (Highly reliable source) ---
+const astroTexture = textureLoader.load('https://assets.codepen.io/141041/astronaut.png');
+const astroMaterial = new THREE.SpriteMaterial({ map: astroTexture, color: 0xffffff });
+const astronaut = new THREE.Sprite(astroMaterial);
+// Make astronaut bigger on mobile so it's easy to see
+astronaut.scale.set(isMobile ? 4.5 : 3.5, isMobile ? 4.5 : 3.5, 1); 
+scene.add(astronaut);
+
+// --- 3. STARS ---
+const starGeo = new THREE.BufferGeometry();
+const starCount = 1000;
+const starPos = new Float32Array(starCount * 3);
+for(let i=0; i<starCount*3; i++) {
+  starPos[i] = (Math.random() - 0.5) * 200; 
 }
-initSpace();
+starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1, transparent: true, opacity: 0.6 });
+const stars = new THREE.Points(starGeo, starMat);
+scene.add(stars);
 
-let t_canvas=0;
-function drawCanvas(){
-  ctx.clearRect(0,0,W,H);
-  stars.forEach(s=>{
-    const tw=Math.sin(t_canvas*s.ts+s.tw)*.35+.65;
-    ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(${s.rCol},${s.gCol},${s.bCol},${s.a*tw})`; 
-    ctx.fill();
-  });
-  t_canvas++; requestAnimationFrame(drawCanvas);
-}
-drawCanvas();
+// RESIZE HANDLER
+window.addEventListener('resize', () => {
+  const mobile = window.innerWidth < 600;
+  camera.position.z = mobile ? 32 : 22;
+  astronaut.scale.set(mobile ? 4.5 : 3.5, mobile ? 4.5 : 3.5, 1);
 
-// INTRO LOGIC
-const intro=document.getElementById('intro');
-const sceneWrapper=document.getElementById('scene-wrapper');
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
 
-function enter(){
+// --- STATE AND SCROLL PARALLAX ---
+const intro = document.getElementById('intro');
+const scrollContainer = document.getElementById('scroll-container');
+const fixedUi = document.getElementById('fixed-ui');
+const hero = document.getElementById('hero');
+
+let isRunning = false;
+let t = 0; 
+let orbits = 0;
+const ocn = document.getElementById('ocn');
+
+// Trigger on enter
+function startExperience() {
+  if (isRunning) return; 
   intro.classList.add('out');
-  setTimeout(()=>{
-    intro.style.display='none';
-    sceneWrapper.classList.add('on');
-    document.getElementById('lp').classList.add('show');
-    document.getElementById('rp').classList.add('show');
-    document.getElementById('oc').classList.add('show');
-    ['lf1','lf2','lf3','lf4'].forEach((id,i)=>{
-      setTimeout(()=>document.getElementById(id).classList.add('show'),700+i*380);
-    });
-    startOrbit();
-  },1600);
+  
+  setTimeout(() => {
+    intro.style.display = 'none';
+    scrollContainer.classList.add('on');
+    fixedUi.classList.add('show');
+    hero.classList.add('active');
+    document.body.classList.add('can-scroll'); // Unlocks scrolling
+    isRunning = true;
+  }, 1600);
 }
 
-document.getElementById('iEnter').addEventListener('click',enter);
-document.addEventListener('keydown',e=>{ if(e.key===' '||e.key==='Enter') enter(); },{once:true});
+document.getElementById('iEnter').addEventListener('click', startExperience);
 
-// CSS 3D PARALLAX (Tracks mouse to tilt the universe)
-const sceneObj = document.getElementById('scene');
-document.addEventListener('mousemove', e => {
-  if(!sceneWrapper.classList.contains('on')) return;
-  const x = (e.clientX / W - 0.5) * 2; // -1 to 1
-  const y = (e.clientY / H - 0.5) * 2; // -1 to 1
-  // Tilts the scene slightly based on mouse position
-  sceneObj.style.transform = `rotateX(${y * -10}deg) rotateY(${x * 10}deg)`;
+// As you scroll, the camera pans slightly for a 3D effect
+window.addEventListener('scroll', () => {
+  if(!isRunning) return;
+  const scrollY = window.scrollY;
+  // Move camera down slowly as you scroll down
+  camera.position.y = -(scrollY * 0.005);
 });
 
-// ASTRONAUT ORBIT LOGIC
-const astr=document.getElementById('astr');
-const ab=document.getElementById('ab');
-let ang=0, orbits=0, totalA=0;
-const ocn=document.getElementById('ocn');
-const orbitSpeed=0.0035;
+// SCROLL ANIMATION (Fade text in/out)
+const textBlocks = document.querySelectorAll('.text-block');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.3 });
 
-function rx(){ return Math.min(260, W*.35); }
-function ry(){ return Math.min(180, H*.25); }
-const cx=()=>W/2, cy=()=>H/2;
+textBlocks.forEach(block => observer.observe(block));
 
-function startOrbit(){ requestAnimationFrame(orbitLoop); }
+// --- ANIMATION LOOP ---
+function animate() {
+  requestAnimationFrame(animate);
+  
+  // Natural rotation of stars and moon
+  stars.rotation.y -= 0.0001;
+  moon.rotation.y += 0.001;
+  
+  if (isRunning) {
+    t += 0.004; // Orbit Speed
+    
+    // The astronaut circles the moon
+    const radius = isMobile ? 8 : 9; // slightly tighter orbit on mobile
+    astronaut.position.x = Math.cos(t) * radius;
+    astronaut.position.z = Math.sin(t) * radius;
+    
+    // Very subtle up/down bobbing motion
+    astronaut.position.y = Math.sin(t * 1.5) * 0.8;
 
-let t=0;
-function orbitLoop(){
-  ang += orbitSpeed;
-  t += 0.02;
-  
-  // Calculate ellipse path
-  let x = cx() + rx() * Math.cos(ang);
-  let y = cy() + ry() * Math.sin(ang);
-  
-  // Apply position to wrapper
-  astr.style.transform = `translate(${x}px, ${y}px) translateZ(80px)`;
-  
-  // The astronaut gently floats and wobbles (much more realistic than turning like a car)
-  const bobbing = Math.sin(t) * 12; // Gently floats up and down
-  const wobble = Math.sin(t * 0.7) * 15; // Gently rocks back and forth
-  
-  ab.style.transform = `translate(-50%, calc(-50% + ${bobbing}px)) rotate(${wobble}deg)`;
-  
-  // Track orbits
-  totalA += orbitSpeed;
-  const newO = Math.floor(totalA / (Math.PI*2));
-  if(newO > orbits){
-    orbits = newO; 
-    ocn.textContent = orbits;
-    ocn.style.color = 'var(--accent)';
-    setTimeout(()=>{ ocn.style.color = 'var(--moon-glow)'; }, 800);
+    // Track Orbits
+    const newOrbits = Math.floor(t / (Math.PI * 2));
+    if (newOrbits > orbits) {
+      orbits = newOrbits;
+      ocn.textContent = orbits;
+      ocn.style.color = 'var(--accent)';
+      setTimeout(() => ocn.style.color = 'var(--moon-glow)', 800);
+    }
   }
-  
-  requestAnimationFrame(orbitLoop);
+
+  renderer.render(scene, camera);
 }
-
-// HUMAN, FLIRTY TEXT
-const transmissions=[
-  {
-    lyric: '"I\'m an astronaut, you\'re the Moon.\nI stare at you, I sing to you.\nI circle you."',
-    body: `You ever think about how lucky it is that out of the entire universe, I ended up caught in your orbit? I’m completely stuck in your gravity and honestly... I wouldn’t want it any other way.\n\nYou're kinda the center of everything for me right now.`
-  },
-  {
-    lyric: '"I look back and you laugh —\nand this is hard, but I feel less far."',
-    body: `Sometimes I'll be right in the middle of doing something stressful, and a thought of you just pops into my head. Or you text me, and the whole world just kind of goes quiet for a second.\n\nIt's pretty wild how effortlessly you can fix my day without even trying.`
-  },
-  {
-    lyric: '"I circle you."',
-    body: `So yeah, I'm going to keep circling you. Because you’re the most beautiful thing in my sky, and I'm pretty damn lucky I get to be your guy.\n\nHappy eleven months, Aaradhya. I love you.`
-  }
-];
-
-// MODAL LOGIC
-let cur_tx=0;
-const modal=document.getElementById('modal');
-
-function openModal(i){
-  const d=transmissions[i];
-  document.getElementById('mLyric').textContent=d.lyric;
-  document.getElementById('mBody').textContent=d.body;
-  document.getElementById('mCt').textContent=`${i+1} / ${transmissions.length}`;
-  document.getElementById('mPrev').disabled=(i===0);
-  document.getElementById('mNext').disabled=(i===transmissions.length-1);
-  modal.classList.remove('on');
-  void modal.offsetWidth;
-  modal.classList.add('on');
-}
-
-document.getElementById('moon').addEventListener('click',()=>{
-  cur_tx=0; openModal(0);
-});
-document.getElementById('mClose').addEventListener('click',()=>modal.classList.remove('on'));
-modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('on'); });
-document.getElementById('mNext').addEventListener('click',()=>{ if(cur_tx<transmissions.length-1) openModal(++cur_tx); });
-document.getElementById('mPrev').addEventListener('click',()=>{ if(cur_tx>0) openModal(--cur_tx); });
+animate();
 
 </script>
 </body>
-</html> 
+</html>
