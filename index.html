@@ -10,20 +10,28 @@
 
     <style>
         :root {
-            --paper: #fcfaf7;
-            --ink: #111111;
-            --ink-mid: #3d3d3d;
+            --paper: #fdfcfb;
+            --ink: #121212;
+            --ink-mid: #3a3a3a;
             --accent: #b85c38;
             --ig-purple: #6c3fc5;
-            --ig-gray: #121212;
+            --ig-gray: #1a1a1a;
             --col-width: 720px;
         }
 
-        /* 11:11 Global State - Glows the whole page */
+        /* 11:11 Atmosphere */
         body.eleven-active {
-            background-color: #fff9f0;
-            transition: background-color 2s ease;
+            background-color: #fffaf0;
+            transition: background-color 3s ease;
         }
+        body.eleven-active::after {
+            content: "";
+            position: fixed; inset: 0;
+            background: radial-gradient(circle at center, rgba(184, 92, 56, 0.05) 0%, transparent 80%);
+            pointer-events: none; z-index: 9998;
+            animation: glowPulse 4s infinite alternate;
+        }
+        @keyframes glowPulse { from { opacity: 0.3; } to { opacity: 1; } }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -35,7 +43,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Paper Grain Overlay */
+        /* Paper Texture */
         body::before {
             content: "";
             position: fixed; inset: 0;
@@ -44,83 +52,97 @@
         }
 
         #progress {
-            position: fixed; top: 0; left: 0; width: 100%; height: 3px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 4px;
             background: var(--ink); transform-origin: left; transform: scaleX(0); z-index: 10001;
         }
 
-        /* --- THE CELESTIAL BEACON (11:11 Visual) --- */
-        .beacon-wrap {
-            height: 400px; display: flex; align-items: center; justify-content: center;
-            flex-direction: column; margin: 4rem 0; position: relative;
+        /* --- VISUAL 11:11 BEACON --- */
+        .beacon-container {
+            margin: 8rem 0; text-align: center; position: relative;
         }
-        .orb {
-            width: 120px; height: 120px;
-            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-            border-radius: 50%; filter: blur(20px);
-            opacity: 0.2; transition: all 2s ease;
+        .beacon-orb {
+            width: 180px; height: 180px;
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 50%; margin: 0 auto;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; transition: 2s all ease;
         }
-        .eleven-active .orb {
-            opacity: 1; transform: scale(2);
-            filter: blur(40px); background: radial-gradient(circle, #ff9d00 0%, transparent 70%);
+        .beacon-flare {
+            position: absolute; width: 100%; height: 100%;
+            border-radius: 50%; background: var(--accent);
+            filter: blur(40px); opacity: 0; transition: 2s all ease;
         }
-        .beacon-status {
-            font-family: 'JetBrains Mono'; font-size: 0.6rem; letter-spacing: 0.4em;
-            text-transform: uppercase; margin-top: 2rem; color: var(--ink-light);
-        }
+        .eleven-active .beacon-flare { opacity: 0.3; transform: scale(1.5); }
+        .beacon-text { font-family: 'Fraunces'; font-size: 4rem; font-style: italic; z-index: 2; }
+        .beacon-label { font-family: 'JetBrains Mono'; font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; margin-top: 1.5rem; color: #aaa; }
 
-        /* --- TYPOGRAPHY --- */
-        .container { width: 90%; max-width: var(--col-width); margin: 0 auto; padding-bottom: 10rem; }
+        /* --- CONTENT --- */
+        .container { width: 90%; max-width: var(--col-width); margin: 0 auto; padding-bottom: 5rem; }
         header { padding: 10rem 0 6rem; text-align: center; }
         .kicker { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.7rem; letter-spacing: 0.5em; margin-bottom: 2rem; display: block; }
-        h1 { font-family: 'Fraunces', serif; font-size: clamp(4rem, 15vw, 8rem); font-weight: 900; font-style: italic; line-height: 0.8; letter-spacing: -0.05em; }
-        h1 span { display: block; -webkit-text-stroke: 1.2px var(--ink); color: transparent; }
+        h1 { font-family: 'Fraunces', serif; font-size: clamp(4.5rem, 15vw, 9.5rem); font-weight: 900; font-style: italic; line-height: 0.8; letter-spacing: -0.05em; }
+        h1 span { display: block; -webkit-text-stroke: 1.5px var(--ink); color: transparent; }
 
-        .prose { font-size: clamp(1.25rem, 4vw, 1.55rem); margin-bottom: 6rem; opacity: 0; transform: translateY(30px); transition: 1s all ease; }
+        .prose { font-size: clamp(1.3rem, 4vw, 1.6rem); margin-bottom: 8rem; opacity: 0; transform: translateY(30px); transition: 1s all ease; }
         .prose.visible { opacity: 1; transform: translateY(0); }
-        .prose p { margin-bottom: 2.5rem; }
+        .prose p { margin-bottom: 3rem; }
 
-        /* --- ANNOTATIONS (THE SCRIBBLES) --- */
-        .annotation {
-            font-family: 'Caveat', cursive; color: var(--accent); font-size: 1.6rem;
-            position: absolute; pointer-events: none; opacity: 0;
-            transition: opacity 1s ease 0.5s; z-index: 100; line-height: 1.1;
+        /* --- THE POEM (lowercase) --- */
+        .poem-box {
+            margin: 10rem 0; padding: 4rem 2rem; position: relative; border-left: 1px solid rgba(184, 92, 56, 0.2);
         }
-        .annotation.visible { opacity: 1; }
-        .arrow-svg { position: absolute; fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round; }
+        .dancing-light {
+            position: absolute; top: 0; right: -10%; width: 60%; height: 100%;
+            background: radial-gradient(circle, rgba(255,245,210,0.4) 0%, transparent 70%);
+            filter: blur(60px); animation: kitchenLight 8s infinite alternate; pointer-events: none;
+        }
+        @keyframes kitchenLight { from { opacity: 0.2; transform: translateX(0); } to { opacity: 0.6; transform: translateX(-40px); } }
+        .poem-text { font-family: 'Cormorant Garamond'; font-size: 1.55rem; line-height: 1.8; font-style: italic; color: var(--ink-mid); text-transform: lowercase; }
 
         /* --- INSTAGRAM UI --- */
-        .dm-block { margin: 8rem 0; position: relative; }
-        .dm-window { background: #000; border-radius: 30px; overflow: hidden; max-width: 400px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 80px rgba(0,0,0,0.2); }
-        .dm-header { padding: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 1rem; }
-        .dm-pfp { width: 36px; height: 36px; border-radius: 50%; background: #333; overflow: hidden; }
+        .dm-block { margin: 10rem 0; position: relative; }
+        .dm-window { background: #000; border-radius: 35px; overflow: hidden; max-width: 420px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 50px 100px rgba(0,0,0,0.3); }
+        .dm-header { padding: 1.2rem 1.5rem; display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid #1a1a1a; }
+        .dm-pfp { width: 38px; height: 38px; border-radius: 50%; background: #222; overflow: hidden; border: 1px solid #333; }
         .dm-pfp img { width: 100%; height: 100%; object-fit: cover; }
-        .dm-chat { padding: 2rem 1.2rem; display: flex; flex-direction: column; gap: 0.8rem; }
-        .bubble { max-width: 85%; padding: 0.8rem 1.1rem; border-radius: 20px; font-family: 'Inter', sans-serif; font-size: 0.95rem; line-height: 1.4; opacity: 0; transform: translateY(15px); transition: 0.8s all ease; }
+        .dm-chat { padding: 2.5rem 1.2rem; display: flex; flex-direction: column; gap: 0.8rem; }
+        
+        .bubble { max-width: 88%; padding: 0.9rem 1.2rem; border-radius: 22px; font-family: 'Inter', sans-serif; font-size: 0.95rem; opacity: 0; transform: translateY(20px); transition: 0.8s all cubic-bezier(0.16, 1, 0.3, 1); }
         .her { align-self: flex-start; background: #262626; color: #fff; border-bottom-left-radius: 4px; }
         .you { align-self: flex-end; background: var(--ig-purple); color: #fff; border-bottom-right-radius: 4px; }
         .bubble.show { opacity: 1; transform: translateY(0); }
-        .reply-meta { font-size: 0.75rem; opacity: 0.5; border-left: 2px solid #fff; padding-left: 0.6rem; margin-bottom: 0.4rem; }
+        .reply-meta { font-size: 0.75rem; opacity: 0.4; border-left: 2px solid #fff; padding-left: 0.7rem; margin-bottom: 0.5rem; }
 
-        /* --- POEM (LOWERCASE + DANCING LIGHT) --- */
-        .poem-wrap {
-            margin: 8rem 0; padding: 4rem 2rem; position: relative;
-            background: rgba(255,255,255,0.3); border-radius: 20px;
-        }
-        .poem-text { 
-            font-family: 'Cormorant Garamond'; font-size: 1.5rem; line-height: 1.8; font-style: italic;
-            text-transform: lowercase; color: var(--ink-mid);
-            animation: textFlicker 5s infinite alternate;
-        }
-        @keyframes textFlicker {
-            0% { opacity: 0.8; } 100% { opacity: 1; text-shadow: 0 0 10px rgba(184, 92, 56, 0.1); }
-        }
+        /* --- ANNOTATIONS --- */
+        .annotation { font-family: 'Caveat', cursive; color: var(--accent); font-size: 1.7rem; position: absolute; pointer-events: none; line-height: 1.1; z-index: 100; opacity: 0; transition: 1s opacity ease 1s; }
+        .annotation.visible { opacity: 1; }
+        .annotation svg { position: absolute; width: 50px; height: 40px; fill: none; stroke: var(--accent); stroke-width: 1.5; }
 
-        footer { margin-top: 10rem; padding: 8rem 2rem; background: var(--ink); color: var(--paper); display: flex; justify-content: space-between; align-items: flex-end; }
-        .footer-logo { font-family: 'Fraunces'; font-size: 3rem; font-style: italic; font-weight: 900; }
+        /* --- ANNIVERSARY NOTE --- */
+        .anniversary-note {
+            text-align: center; margin: 8rem 0; padding: 4rem 2rem; 
+            border-top: 1px solid rgba(0,0,0,0.05); border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .anniversary-note h3 { font-family: 'Fraunces'; font-style: italic; font-size: 2.2rem; margin-bottom: 1.5rem; }
+        .anniversary-note p { font-size: 1.3rem; color: var(--ink-mid); max-width: 500px; margin: 0 auto; }
+
+        /* --- PRETTY FOOTER --- */
+        footer {
+            margin-top: 10rem; padding: 10rem 3rem 6rem; background: var(--ink); color: #fff;
+            display: flex; justify-content: space-between; align-items: flex-end; position: relative;
+        }
+        footer::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+        }
+        .footer-logo { font-family: 'Fraunces'; font-size: 4rem; font-style: italic; font-weight: 900; letter-spacing: -0.05em; }
+        .footer-details { font-family: 'JetBrains Mono'; font-size: 0.65rem; text-align: right; line-height: 2.5; letter-spacing: 0.2em; opacity: 0.6; }
+        .made-with { font-family: 'Caveat'; color: var(--accent); font-size: 1.2rem; margin-top: 1rem; }
 
         @media (max-width: 768px) {
             .annotation { display: none; }
-            .dm-window { max-width: 100%; }
+            footer { flex-direction: column; align-items: flex-start; gap: 4rem; }
+            .footer-details { text-align: left; }
         }
     </style>
 </head>
@@ -128,33 +150,34 @@
 
 <div id="progress"></div>
 
-<nav style="padding: 1.5rem 2rem; font-family: 'JetBrains Mono'; font-size: 0.6rem; letter-spacing: 0.2em; display: flex; justify-content: space-between;">
+<nav>
     <span>niv on aaradhya</span>
-    <span>april 19, 2026</span>
+    <span style="opacity: 0.4;">volume 01 // the eleven month archive</span>
+    <span>2026</span>
 </nav>
 
 <div class="container">
     <header>
-        <span class="kicker">An Anniversary Collection</span>
+        <span class="kicker">an anniversary personal essay</span>
         <h1>down<span>bad</span></h1>
     </header>
 
     <div class="prose scroll-anim">
-        <p>i’m going to be completely honest: i am a hater. i spent years telling anyone who’d listen that harry potter was overrated. it was my personality. i stood my ground like a man with principles.</p>
+        <p>i used to think i was too cool for most things. seriously. i had this whole personality built around finding the "overrated" stuff and staying as far away as possible. i thought harry potter was for kids who liked marketing more than magic. i told you that, probably with a lot of unnecessary confidence.</p>
         <p>and then you happened. you asked me to watch *the sorcerer’s stone* and i sat through the entire thing—nearly three hours of wizards and wands—not because the plot finally got to me, but because i’d watch a screen of literal static if it meant i got to be near you. i’m finished. i folded my entire personality because you asked me a question.</p>
         <p>that was the moment. one <b>"niv?"</b> in my notifications and everything i thought i knew about myself just resets. i don't care about being right anymore. i just want to hear my name in your voice.</p>
     </div>
 
-    <!-- DM BLOCK 1: THE NAME -->
+    <!-- DM 1: THE NAME -->
     <div class="dm-block">
-        <div class="annotation visible" style="top: -40px; left: -140px; width: 180px;">
-            this was the exact moment i was finished.
-            <svg class="arrow-svg" style="bottom: -20px; right: 10px; width: 40px; height: 30px;"><path d="M0,0 Q20,20 40,5" /></svg>
+        <div class="annotation visible" style="top: -60px; left: -120px; width: 220px; transform: rotate(-4deg);">
+            the boy who lived (only to see this notification).
+            <svg style="bottom: -25px; right: 20px;"><path d="M0,0 C10,20 30,20 50,5" stroke-dasharray="2,2"/></svg>
         </div>
         <div class="dm-window">
             <div class="dm-header">
                 <div class="dm-pfp"><img src="[HER_PFP_URL_HERE]" alt="A"></div>
-                <div style="color:white; font-family:'Inter'; font-size:0.85rem; font-weight:600;">aaradhya</div>
+                <div style="color:white; font-family:'Inter'; font-size:0.9rem; font-weight:600;">aaradhya</div>
             </div>
             <div class="dm-chat">
                 <div class="bubble her">niv?</div>
@@ -166,24 +189,24 @@
         <p>and then you sent the spotify blend link. no "hey do you want to share music," just a link dropped like a gauntlet. you followed it up with <b>"stamped and sealed,"</b> and i realized then that you notarize your feelings. you take the messy parts of us and you give them a home, a category, and a stamp. i've never been more happy to be legally bound to someone's frequency.</p>
     </div>
 
-    <!-- DM BLOCK 2: THE BLEND -->
+    <!-- DM 2: THE BLEND -->
     <div class="dm-block">
-        <div class="annotation visible" style="bottom: 0; right: -160px; width: 160px;">
-            she notarized the vibes. i had no choice.
-            <svg class="arrow-svg" style="top: -20px; left: -20px; transform: scaleX(-1);"><path d="M0,0 Q20,20 40,5" /></svg>
+        <div class="annotation visible" style="bottom: 10px; right: -170px; width: 190px; transform: rotate(3deg);">
+            she notarized the vibes. i was legally required to fall.
+            <svg style="top: -30px; left: -20px; transform: scaleX(-1);"><path d="M0,0 C10,20 30,20 50,5" stroke-dasharray="2,2"/></svg>
         </div>
         <div class="dm-window">
             <div class="dm-header">
                 <div class="dm-pfp"><img src="[HER_PFP_URL_HERE]" alt="A"></div>
-                <div style="color:white; font-family:'Inter'; font-size:0.85rem; font-weight:600;">aaradhya</div>
+                <div style="color:white; font-family:'Inter'; font-size:0.9rem; font-weight:600;">aaradhya</div>
             </div>
             <div class="dm-chat">
                 <div class="bubble her" style="background:transparent; padding:0; width: 100%;">
-                    <div style="background:#121212; border-radius:14px; padding:1rem; display:flex; align-items:center; gap:1rem; border:1px solid #333;">
-                        <span style="color:#1DB954; font-size: 1.5rem;">♫</span>
+                    <div style="background:#121212; border-radius:14px; padding:1.2rem; display:flex; align-items:center; gap:1rem; border:1px solid #333;">
+                        <span style="color:#1DB954; font-size: 1.8rem;">♫</span>
                         <div>
-                            <div style="color:#1DB954; font-weight:600; font-size:0.75rem;">Join Blend on Spotify</div>
-                            <div style="color:#8e8e8e; font-size:0.65rem;">spotify.link/aaradhya-niv</div>
+                            <div style="color:#1DB954; font-weight:600; font-size:0.8rem;">Join Blend on Spotify</div>
+                            <div style="color:#8e8e8e; font-size:0.7rem;">spotify.link/aaradhya-niv</div>
                         </div>
                     </div>
                 </div>
@@ -192,15 +215,19 @@
         </div>
     </div>
 
-    <!-- THE BEACON (11:11 VISUAL) -->
-    <div class="beacon-wrap">
-        <div class="orb"></div>
-        <div class="beacon-status" id="beacon-text">searching for global 11:11 wishes...</div>
-        <p style="font-size: 0.8rem; color: #aaa; margin-top: 1rem; font-style: italic;">the site flares when it's 11:11 anywhere in the world.</p>
+    <!-- VISUAL 11:11 BEACON -->
+    <div class="beacon-container">
+        <div class="beacon-orb">
+            <div class="beacon-flare"></div>
+            <div class="beacon-text" id="wish-time">11:11</div>
+        </div>
+        <div class="beacon-label" id="wish-status">scanning global timezones...</div>
+        <p style="font-size: 0.8rem; color: #aaa; margin-top: 1.5rem; font-style: italic; max-width: 300px; margin-left: auto; margin-right: auto;">this visual flare activates whenever it's 11:11 anywhere in the world.</p>
     </div>
 
-    <!-- THE POEM (LOWERCASE) -->
-    <div class="poem-wrap scroll-anim">
+    <!-- POEM SECTION -->
+    <div class="poem-box scroll-anim">
+        <div class="dancing-light"></div>
         <div class="poem-text">
             (a + n) you keep the salt in an old gelato jar. the scissors live in the drawer but the tape lives on top of the microwave, and we don’t question it anymore. the bedroom smells of honey, you smell of me. we’ve spent too many nights under the cozy lavender blanket to have any other religion to believe. <br><br>
             we always forget the sugar but somehow remember the cinnamon. there’s dust on the bookshelf and your socks under the table, there’s a postcard from the poland trip on the fridge, sun-bleached at the edges. and i promise i’ll wrap a lasso around the sun and bring it you, inch a little closer, just enough to keep you warm.
@@ -213,15 +240,16 @@
         <p>you called me a liar. you said it was <b>"oddly comforting"</b> that memories and cherishing are infinite. 2,083 kilometers away, and yet you make me feel like we’re just building the architecture of the same house. i don't want to build it with anyone else.</p>
     </div>
 
-    <!-- DM BLOCK 3: THE WOODEN BOX -->
+    <!-- DM 3: THE BOX -->
     <div class="dm-block">
-        <div class="annotation visible" style="bottom: -60px; left: -100px; width: 220px;">
+        <div class="annotation visible" style="bottom: -70px; left: -100px; width: 230px; transform: rotate(-2deg);">
             she called my bluff. i've never been happier to lose a fight.
+            <svg style="top: -20px; right: 0px; transform: scaleX(-1);"><path d="M0,0 C10,30 50,20 100,5" stroke-dasharray="2,2"/></svg>
         </div>
         <div class="dm-window">
             <div class="dm-header">
                 <div class="dm-pfp"><img src="[HER_PFP_URL_HERE]" alt="A"></div>
-                <div style="color:white; font-family:'Inter'; font-size:0.85rem; font-weight:600;">aaradhya</div>
+                <div style="color:white; font-family:'Inter'; font-size:0.9rem; font-weight:600;">aaradhya</div>
             </div>
             <div class="dm-chat">
                 <div class="bubble her">i usually keep my love letters in a wooden box, where shall i give a home to this one?</div>
@@ -239,12 +267,24 @@
             </div>
         </div>
     </div>
+
+    <!-- HAPPY 11 MONTHS -->
+    <div class="anniversary-note scroll-anim">
+        <h3>happy eleven months.</h3>
+        <p>we’ve built so many boxes, but i think we’re just getting started. thank you for the poems, the playlist, and for letting me be the boy who watched a wizard movie for you.</p>
+    </div>
 </div>
 
 <footer>
     <div class="footer-left">
         <div class="footer-logo">niv.</div>
-        <p style="font-family:'Inter'; font-size:0.8rem; opacity:0.4; margin-top:1rem;">for aaradhya // eleven months</p>
+        <div class="made-with">made for my muse</div>
+    </div>
+    <div class="footer-details">
+        eleven months of us<br>
+        2,083 km apart<br>
+        stamped and sealed<br>
+        april 19, 2026
     </div>
 </footer>
 
@@ -256,35 +296,38 @@
     });
 
     // --- 11:11 GLOBAL ENGINE ---
-    // Checks every timezone offset from -12 to +14
+    const cities = [
+        { name: "New York", tz: "America/New_York" },
+        { name: "London", tz: "Europe/London" },
+        { name: "Mumbai", tz: "Asia/Kolkata" },
+        { name: "Tokyo", tz: "Asia/Tokyo" },
+        { name: "Sydney", tz: "Australia/Sydney" }
+    ];
+
     function checkUniversalEleven() {
         const now = new Date();
-        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-        let active = false;
-
-        // Check every half-hour increment (to catch India +5:30 etc)
-        for (let offset = -12; offset <= 14; offset += 0.5) {
-            const tzTime = new Date(utc + (3600000 * offset));
-            if (tzTime.getMinutes() === 11) {
-                active = true;
-                break;
-            }
-        }
+        document.getElementById('wish-time').innerText = now.toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit' });
+        
+        let activeHubs = [];
+        cities.forEach(city => {
+            const timeStr = now.toLocaleString("en-US", {timeZone: city.tz, hour12: false, hour: '2-digit', minute: '2-digit'});
+            const [h, m] = timeStr.split(':');
+            if (m === '11') activeHubs.push(city.name);
+        });
 
         const body = document.body;
-        const statusText = document.getElementById('beacon-text');
+        const status = document.getElementById('wish-status');
         
-        if (active) {
+        if (activeHubs.length > 0) {
             body.classList.add('eleven-active');
-            statusText.innerText = "11:11 active somewhere in the world. making a wish.";
-            statusText.style.color = "var(--accent)";
+            status.innerText = `WISH ACTIVE IN ${activeHubs.join(" & ")}`;
+            status.style.color = "var(--accent)";
         } else {
             body.classList.remove('eleven-active');
-            statusText.innerText = "searching for global 11:11 wishes...";
-            statusText.style.color = "#aaa";
+            status.innerText = "scanning global timezones...";
+            status.style.color = "#aaa";
         }
     }
-
     setInterval(checkUniversalEleven, 1000);
     checkUniversalEleven();
 
@@ -295,7 +338,7 @@
                 if (e.target.classList.contains('scroll-anim')) e.target.classList.add('visible');
                 if (e.target.classList.contains('dm-chat')) {
                     const bubbles = e.target.querySelectorAll('.bubble');
-                    bubbles.forEach((b, i) => setTimeout(() => b.classList.add('show'), i * 400));
+                    bubbles.forEach((b, i) => setTimeout(() => b.classList.add('show'), i * 500));
                 }
                 obs.unobserve(e.target);
             }
