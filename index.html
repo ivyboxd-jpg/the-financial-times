@@ -10,14 +10,19 @@
 
     <style>
         :root {
-            --paper: #fdfcfb;
-            --ink: #121212;
-            --ink-mid: #3a3a3a;
+            --paper: #fcfaf7;
+            --ink: #111111;
+            --ink-mid: #3d3d3d;
             --accent: #b85c38;
             --ig-purple: #6c3fc5;
-            --ig-gray: #1a1a1a;
-            --section-gap: 10rem;
+            --ig-gray: #121212;
             --col-width: 720px;
+        }
+
+        /* 11:11 Global State - Glows the whole page */
+        body.eleven-active {
+            background-color: #fff9f0;
+            transition: background-color 2s ease;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -39,109 +44,82 @@
         }
 
         #progress {
-            position: fixed; top: 0; left: 0; width: 100%; height: 4px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 3px;
             background: var(--ink); transform-origin: left; transform: scaleX(0); z-index: 10001;
         }
 
-        /* --- NAVIGATION --- */
-        nav {
-            padding: 1.5rem 2rem;
-            display: flex; justify-content: space-between; align-items: center;
-            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
-            text-transform: uppercase; letter-spacing: 0.3em;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            position: sticky; top: 0; background: rgba(253, 252, 251, 0.95);
-            backdrop-filter: blur(10px); z-index: 1000;
+        /* --- THE CELESTIAL BEACON (11:11 Visual) --- */
+        .beacon-wrap {
+            height: 400px; display: flex; align-items: center; justify-content: center;
+            flex-direction: column; margin: 4rem 0; position: relative;
         }
-
-        /* --- 11:11 GLOBAL WISH BEACON --- */
-        .wish-beacon {
-            margin: var(--section-gap) 0;
-            text-align: center;
-            position: relative;
-            padding: 4rem 0;
+        .orb {
+            width: 120px; height: 120px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            border-radius: 50%; filter: blur(20px);
+            opacity: 0.2; transition: all 2s ease;
         }
-        .beacon-circle {
-            width: 300px; height: 300px;
-            border: 1px solid rgba(0,0,0,0.05);
-            border-radius: 50%;
-            margin: 0 auto;
-            display: flex; align-items: center; justify-content: center;
-            position: relative;
+        .eleven-active .orb {
+            opacity: 1; transform: scale(2);
+            filter: blur(40px); background: radial-gradient(circle, #ff9d00 0%, transparent 70%);
         }
-        .beacon-pulse {
-            position: absolute;
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            border: 2px solid var(--accent);
-            opacity: 0;
+        .beacon-status {
+            font-family: 'JetBrains Mono'; font-size: 0.6rem; letter-spacing: 0.4em;
+            text-transform: uppercase; margin-top: 2rem; color: var(--ink-light);
         }
-        .beacon-pulse.active { animation: pulseOut 2s infinite; opacity: 1; }
-        @keyframes pulseOut {
-            0% { transform: scale(0.5); opacity: 1; }
-            100% { transform: scale(1.5); opacity: 0; }
-        }
-        .beacon-time { font-family: 'Fraunces'; font-size: 5rem; font-style: italic; position: relative; z-index: 2; }
-        .beacon-city { font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.4em; margin-top: 1rem; text-transform: uppercase; min-height: 1.2rem;}
-        .beacon-desc { font-family: 'Cormorant Garamond'; font-size: 1.1rem; color: #888; font-style: italic; margin-top: 2rem; max-width: 400px; margin-left: auto; margin-right: auto;}
 
         /* --- TYPOGRAPHY --- */
-        .container { width: 90%; max-width: var(--col-width); margin: 0 auto; }
-        header { padding: 8rem 0 4rem; text-align: center; }
+        .container { width: 90%; max-width: var(--col-width); margin: 0 auto; padding-bottom: 10rem; }
+        header { padding: 10rem 0 6rem; text-align: center; }
         .kicker { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.7rem; letter-spacing: 0.5em; margin-bottom: 2rem; display: block; }
-        h1 { font-family: 'Fraunces', serif; font-size: clamp(4rem, 15vw, 9rem); font-weight: 900; font-style: italic; line-height: 0.8; letter-spacing: -0.05em; }
-        h1 span { display: block; -webkit-text-stroke: 1.5px var(--ink); color: transparent; }
+        h1 { font-family: 'Fraunces', serif; font-size: clamp(4rem, 15vw, 8rem); font-weight: 900; font-style: italic; line-height: 0.8; letter-spacing: -0.05em; }
+        h1 span { display: block; -webkit-text-stroke: 1.2px var(--ink); color: transparent; }
 
-        .prose { font-size: clamp(1.3rem, 4vw, 1.6rem); margin-bottom: 6rem; opacity: 0; transform: translateY(30px); transition: 1.2s all ease; }
+        .prose { font-size: clamp(1.25rem, 4vw, 1.55rem); margin-bottom: 6rem; opacity: 0; transform: translateY(30px); transition: 1s all ease; }
         .prose.visible { opacity: 1; transform: translateY(0); }
         .prose p { margin-bottom: 2.5rem; }
 
-        /* --- THE POEM (lowercase) --- */
-        .poem-container {
-            margin: var(--section-gap) 0;
-            padding: 4rem 2rem;
-            position: relative;
-            overflow: hidden;
-            border-left: 1px solid rgba(184, 92, 56, 0.2);
+        /* --- ANNOTATIONS (THE SCRIBBLES) --- */
+        .annotation {
+            font-family: 'Caveat', cursive; color: var(--accent); font-size: 1.6rem;
+            position: absolute; pointer-events: none; opacity: 0;
+            transition: opacity 1s ease 0.5s; z-index: 100; line-height: 1.1;
         }
-        .poem-light {
-            position: absolute; top: 0; right: -10%; width: 50%; height: 100%;
-            background: radial-gradient(circle, rgba(255,245,210,0.4) 0%, transparent 70%);
-            filter: blur(50px); animation: kitchenLight 6s infinite alternate;
-        }
-        @keyframes kitchenLight { from { opacity: 0.2; transform: translateX(0); } to { opacity: 0.5; transform: translateX(-20px); } }
-        .poem-text { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; line-height: 1.8; font-style: italic; color: var(--ink-mid); position: relative; z-index: 2; }
+        .annotation.visible { opacity: 1; }
+        .arrow-svg { position: absolute; fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round; }
 
         /* --- INSTAGRAM UI --- */
         .dm-block { margin: 8rem 0; position: relative; }
-        .dm-window { background: #000; border-radius: 32px; overflow: hidden; max-width: 420px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 80px rgba(0,0,0,0.3); }
-        .dm-header { padding: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 1rem; }
-        .dm-pfp { width: 38px; height: 38px; border-radius: 50%; background: #222; overflow: hidden; }
+        .dm-window { background: #000; border-radius: 30px; overflow: hidden; max-width: 400px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 80px rgba(0,0,0,0.2); }
+        .dm-header { padding: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 1rem; }
+        .dm-pfp { width: 36px; height: 36px; border-radius: 50%; background: #333; overflow: hidden; }
         .dm-pfp img { width: 100%; height: 100%; object-fit: cover; }
-        .dm-chat { padding: 2.5rem 1.2rem; display: flex; flex-direction: column; gap: 0.8rem; }
-        .bubble { max-width: 85%; padding: 0.85rem 1.2rem; border-radius: 22px; font-family: 'Inter', sans-serif; font-size: 0.95rem; line-height: 1.4; opacity: 0; transform: translateY(20px); transition: 0.8s all cubic-bezier(0.16, 1, 0.3, 1); }
-        .her { align-self: flex-start; background: var(--ig-gray); color: #fff; border-bottom-left-radius: 4px; }
+        .dm-chat { padding: 2rem 1.2rem; display: flex; flex-direction: column; gap: 0.8rem; }
+        .bubble { max-width: 85%; padding: 0.8rem 1.1rem; border-radius: 20px; font-family: 'Inter', sans-serif; font-size: 0.95rem; line-height: 1.4; opacity: 0; transform: translateY(15px); transition: 0.8s all ease; }
+        .her { align-self: flex-start; background: #262626; color: #fff; border-bottom-left-radius: 4px; }
         .you { align-self: flex-end; background: var(--ig-purple); color: #fff; border-bottom-right-radius: 4px; }
         .bubble.show { opacity: 1; transform: translateY(0); }
-        .reply-context { font-size: 0.75rem; opacity: 0.4; border-left: 2px solid #fff; padding-left: 0.6rem; margin-bottom: 0.4rem; }
+        .reply-meta { font-size: 0.75rem; opacity: 0.5; border-left: 2px solid #fff; padding-left: 0.6rem; margin-bottom: 0.4rem; }
 
-        /* --- ANNOTATIONS --- */
-        .annotation {
-            font-family: 'Caveat', cursive; color: var(--accent); font-size: 1.7rem;
-            position: absolute; pointer-events: none; opacity: 0; 
-            transition: all 1s ease; transform: rotate(-2deg); z-index: 100;
+        /* --- POEM (LOWERCASE + DANCING LIGHT) --- */
+        .poem-wrap {
+            margin: 8rem 0; padding: 4rem 2rem; position: relative;
+            background: rgba(255,255,255,0.3); border-radius: 20px;
         }
-        .annotation.show { opacity: 1; transform: rotate(-1deg); }
-        .annotation svg { position: absolute; width: 60px; height: 50px; stroke: var(--accent); stroke-width: 1.5; fill: none; }
+        .poem-text { 
+            font-family: 'Cormorant Garamond'; font-size: 1.5rem; line-height: 1.8; font-style: italic;
+            text-transform: lowercase; color: var(--ink-mid);
+            animation: textFlicker 5s infinite alternate;
+        }
+        @keyframes textFlicker {
+            0% { opacity: 0.8; } 100% { opacity: 1; text-shadow: 0 0 10px rgba(184, 92, 56, 0.1); }
+        }
 
-        footer { margin-top: 10rem; padding: 10rem 2rem 6rem; background: var(--ink); color: var(--paper); display: flex; justify-content: space-between; align-items: flex-end; }
-        .footer-logo { font-family: 'Fraunces'; font-size: 4rem; font-style: italic; font-weight: 900; }
+        footer { margin-top: 10rem; padding: 8rem 2rem; background: var(--ink); color: var(--paper); display: flex; justify-content: space-between; align-items: flex-end; }
+        .footer-logo { font-family: 'Fraunces'; font-size: 3rem; font-style: italic; font-weight: 900; }
 
         @media (max-width: 768px) {
             .annotation { display: none; }
-            header { padding: 6rem 0 4rem; }
-            h1 { font-size: 4rem; }
-            .container { width: 85%; }
             .dm-window { max-width: 100%; }
         }
     </style>
@@ -150,33 +128,33 @@
 
 <div id="progress"></div>
 
-<nav>
-    <span>Niv // Aaradhya</span>
-    <span>Eleven Months Later</span>
+<nav style="padding: 1.5rem 2rem; font-family: 'JetBrains Mono'; font-size: 0.6rem; letter-spacing: 0.2em; display: flex; justify-content: space-between;">
+    <span>niv on aaradhya</span>
+    <span>april 19, 2026</span>
 </nav>
 
 <div class="container">
     <header>
-        <span class="kicker">An Anniversary Personal Essay</span>
+        <span class="kicker">An Anniversary Collection</span>
         <h1>down<span>bad</span></h1>
     </header>
 
     <div class="prose scroll-anim">
-        <p>I want to be clear: I am generally a massive hater. I have spent most of my life cultivating a personality built on finding the "overrated" thing and staying precisely 50 feet away from it. I thought Harry Potter was for people who liked marketing more than magic. I told anyone who would listen—including you—that I’d never watch it.</p>
-        <p>And then you asked. And suddenly, I’m sitting through *The Sorcerer's Stone*, watching a boy with glasses and a wand, not because the plot finally made sense, but because I would watch a screen of static for three hours if you were the one sitting next to me. My principles didn't stand a chance against you.</p>
-        <p>That was the moment I realized I was finished. I’m not just a poet; I’m a guy who turned on Instagram notifications for the first time in his life just to see your name. One <b>"niv?"</b> in my chat and the whole world resets. I don't care about being right anymore. I just want to hear my name in your voice.</p>
+        <p>i’m going to be completely honest: i am a hater. i spent years telling anyone who’d listen that harry potter was overrated. it was my personality. i stood my ground like a man with principles.</p>
+        <p>and then you happened. you asked me to watch *the sorcerer’s stone* and i sat through the entire thing—nearly three hours of wizards and wands—not because the plot finally got to me, but because i’d watch a screen of literal static if it meant i got to be near you. i’m finished. i folded my entire personality because you asked me a question.</p>
+        <p>that was the moment. one <b>"niv?"</b> in my notifications and everything i thought i knew about myself just resets. i don't care about being right anymore. i just want to hear my name in your voice.</p>
     </div>
 
     <!-- DM BLOCK 1: THE NAME -->
     <div class="dm-block">
-        <div class="annotation" style="top: -60px; left: -120px; width: 220px;">
-            turned on notifications for the first time in my life.
-            <svg style="bottom: -20px; right: -10px;"><path d="M0,0 Q10,30 50,20" /></svg>
+        <div class="annotation visible" style="top: -40px; left: -140px; width: 180px;">
+            this was the exact moment i was finished.
+            <svg class="arrow-svg" style="bottom: -20px; right: 10px; width: 40px; height: 30px;"><path d="M0,0 Q20,20 40,5" /></svg>
         </div>
         <div class="dm-window">
             <div class="dm-header">
-                <div class="dm-pfp"><img src="[HER_PFP_URL]" alt="A"></div>
-                <div style="color:white; font-family:'Inter'; font-size:0.9rem; font-weight:600;">aaradhya</div>
+                <div class="dm-pfp"><img src="[HER_PFP_URL_HERE]" alt="A"></div>
+                <div style="color:white; font-family:'Inter'; font-size:0.85rem; font-weight:600;">aaradhya</div>
             </div>
             <div class="dm-chat">
                 <div class="bubble her">niv?</div>
@@ -185,27 +163,27 @@
     </div>
 
     <div class="prose scroll-anim">
-        <p>And then there was the Blend. You didn't ask if we should share a playlist—you sent the link and waited. It felt like a gauntlet. And when you followed it up with <b>"stamped and sealed,"</b> it felt more binding than any contract I’ve ever signed. I love that you notarize your feelings. You take the messy, abstract parts of us and you give them a home, a stamp, and a category.</p>
+        <p>and then you sent the spotify blend link. no "hey do you want to share music," just a link dropped like a gauntlet. you followed it up with <b>"stamped and sealed,"</b> and i realized then that you notarize your feelings. you take the messy parts of us and you give them a home, a category, and a stamp. i've never been more happy to be legally bound to someone's frequency.</p>
     </div>
 
     <!-- DM BLOCK 2: THE BLEND -->
     <div class="dm-block">
-        <div class="annotation" style="bottom: -40px; right: -150px; width: 200px;">
+        <div class="annotation visible" style="bottom: 0; right: -160px; width: 160px;">
             she notarized the vibes. i had no choice.
-            <svg style="top: -30px; left: -20px; transform: scaleX(-1);"><path d="M0,0 Q10,30 50,20" /></svg>
+            <svg class="arrow-svg" style="top: -20px; left: -20px; transform: scaleX(-1);"><path d="M0,0 Q20,20 40,5" /></svg>
         </div>
         <div class="dm-window">
             <div class="dm-header">
-                <div class="dm-pfp"><img src="[HER_PFP_URL]" alt="A"></div>
-                <div style="color:white; font-family:'Inter'; font-size:0.9rem; font-weight:600;">aaradhya</div>
+                <div class="dm-pfp"><img src="[HER_PFP_URL_HERE]" alt="A"></div>
+                <div style="color:white; font-family:'Inter'; font-size:0.85rem; font-weight:600;">aaradhya</div>
             </div>
             <div class="dm-chat">
                 <div class="bubble her" style="background:transparent; padding:0; width: 100%;">
-                    <div style="background:#121212; border-radius:14px; padding:1.2rem; display:flex; align-items:center; gap:1rem; border:1px solid #333;">
-                        <span style="color:#1DB954; font-size: 1.8rem;">♫</span>
+                    <div style="background:#121212; border-radius:14px; padding:1rem; display:flex; align-items:center; gap:1rem; border:1px solid #333;">
+                        <span style="color:#1DB954; font-size: 1.5rem;">♫</span>
                         <div>
-                            <div style="color:#1DB954; font-weight:600; font-size:0.85rem;">Join Blend on Spotify</div>
-                            <div style="color:#8e8e8e; font-size:0.75rem;">spotify.link/aaradhya-niv</div>
+                            <div style="color:#1DB954; font-weight:600; font-size:0.75rem;">Join Blend on Spotify</div>
+                            <div style="color:#8e8e8e; font-size:0.65rem;">spotify.link/aaradhya-niv</div>
                         </div>
                     </div>
                 </div>
@@ -214,69 +192,59 @@
         </div>
     </div>
 
-    <!-- 11:11 GLOBAL TRACKER -->
-    <div class="wish-beacon">
-        <div class="beacon-circle">
-            <div class="beacon-pulse" id="pulse-ring"></div>
-            <div class="beacon-time" id="wish-time">11:11</div>
-        </div>
-        <div class="beacon-city" id="wish-city">Scanning Timezones...</div>
-        <div class="beacon-desc">it will show here whenever there's 11:11 anywhere in world.</div>
+    <!-- THE BEACON (11:11 VISUAL) -->
+    <div class="beacon-wrap">
+        <div class="orb"></div>
+        <div class="beacon-status" id="beacon-text">searching for global 11:11 wishes...</div>
+        <p style="font-size: 0.8rem; color: #aaa; margin-top: 1rem; font-style: italic;">the site flares when it's 11:11 anywhere in the world.</p>
     </div>
 
     <!-- THE POEM (LOWERCASE) -->
-    <div class="poem-container scroll-anim">
-        <div class="poem-light"></div>
+    <div class="poem-wrap scroll-anim">
         <div class="poem-text">
             (a + n) you keep the salt in an old gelato jar. the scissors live in the drawer but the tape lives on top of the microwave, and we don’t question it anymore. the bedroom smells of honey, you smell of me. we’ve spent too many nights under the cozy lavender blanket to have any other religion to believe. <br><br>
             we always forget the sugar but somehow remember the cinnamon. there’s dust on the bookshelf and your socks under the table, there’s a postcard from the poland trip on the fridge, sun-bleached at the edges. and i promise i’ll wrap a lasso around the sun and bring it you, inch a little closer, just enough to keep you warm.
         </div>
+        <div class="annotation visible" style="top: -20px; right: -50px; width: 180px;">the kitchen light dancing tells me we're going to be just fine.</div>
     </div>
 
     <div class="prose scroll-anim">
-        <p>The kitchen light dancing tells me we’re going to be just fine. I remember when we talked about the box. You told me you keep your love letters in a wooden home. I tried to be the poet—I told you to "nestle" this one deep inside. I was trying so hard to be smooth, and then I immediately panicked. <i>"Just kidding by the way I’m too bad at this."</i></p>
-        <p>You called me a liar. You said it was <b>"oddly comforting"</b> that memories and cherishing are infinite. 2,083 kilometers away, and yet you make me feel like we’re just building the architecture of the same house. </p>
+        <p>then there was the box. you told me you keep your love letters in a wooden home. i tried to be the smooth poet; i told you to "nestle" this one deep inside. i immediately panicked because i was being too sincere, so i tried to take it back. <i>"just kidding by the way i'm too bad at this."</i></p>
+        <p>you called me a liar. you said it was <b>"oddly comforting"</b> that memories and cherishing are infinite. 2,083 kilometers away, and yet you make me feel like we’re just building the architecture of the same house. i don't want to build it with anyone else.</p>
     </div>
 
-    <!-- DM BLOCK 3: THE BOX (FULL) -->
+    <!-- DM BLOCK 3: THE WOODEN BOX -->
     <div class="dm-block">
-        <div class="annotation" style="bottom: -50px; left: -100px; width: 230px;">
-            she called the bluff. i've never been happier to lose.
+        <div class="annotation visible" style="bottom: -60px; left: -100px; width: 220px;">
+            she called my bluff. i've never been happier to lose a fight.
         </div>
         <div class="dm-window">
             <div class="dm-header">
-                <div class="dm-pfp"><img src="[HER_PFP_URL]" alt="A"></div>
-                <div style="color:white; font-family:'Inter'; font-size:0.9rem; font-weight:600;">aaradhya</div>
+                <div class="dm-pfp"><img src="[HER_PFP_URL_HERE]" alt="A"></div>
+                <div style="color:white; font-family:'Inter'; font-size:0.85rem; font-weight:600;">aaradhya</div>
             </div>
             <div class="dm-chat">
                 <div class="bubble her">i usually keep my love letters in a wooden box, where shall i give a home to this one?</div>
                 <div class="bubble you">nestle it in the wooden box of yours, but make sure there's room for a few more surprises - and if you ever run out of room, i'll make sure there's another box waiting</div>
-                <div class="bubble you" style="font-size:0.8rem; opacity:0.6;">
-                    <div class="reply-context">nestle it in the wooden box...</div>
+                <div class="bubble you" style="font-size: 0.8rem; opacity: 0.7;">
+                    <div class="reply-meta">nestle it in the wooden box...</div>
                     just kidding by the way i'm too bad at this
                 </div>
                 <div class="bubble her">such a liar, you're clearly very good at this and you know it</div>
                 <div class="bubble her">
-                    <div class="reply-context">nestle it in the wooden box of yours, but make sure there's room for a few more surprises - and if you ever run... more</div>
+                    <div class="reply-meta">nestle it in the wooden box of yours... more</div>
                     this is, again, oddly comforting. the fact that memories and cherishing may be so abundant that they may fill up all the space — but there's always more space to fill.
                 </div>
                 <div class="bubble her">watch me write a m again</div>
             </div>
         </div>
     </div>
-
-    <div class="prose scroll-anim" style="text-align: center; margin-top: 8rem;">
-        <p>Happy anniversary, Aaradhya. I’m still down bad. <br>I don't plan on ever recovering.</p>
-    </div>
 </div>
 
 <footer>
     <div class="footer-left">
         <div class="footer-logo">niv.</div>
-        <p style="font-family:'Inter'; font-size:0.8rem; opacity:0.4; margin-top:1rem;">To the Muse // April 2026</p>
-    </div>
-    <div style="text-align:right; font-family:'JetBrains Mono'; font-size:0.6rem; letter-spacing:0.2em; line-height:2.5;">
-        STAMPED AND SEALED<br>THE KITCHEN LIGHT DANCING<br>INFINITE ROOM
+        <p style="font-family:'Inter'; font-size:0.8rem; opacity:0.4; margin-top:1rem;">for aaradhya // eleven months</p>
     </div>
 </footer>
 
@@ -287,41 +255,36 @@
         document.getElementById("progress").style.transform = `scaleX(${scrolled})`;
     });
 
-    // --- 11:11 GLOBAL TRACKER ENGINE ---
-    const cities = [
-        { name: "New York", tz: "America/New_York" },
-        { name: "London", tz: "Europe/London" },
-        { name: "Mumbai", tz: "Asia/Kolkata" },
-        { name: "Tokyo", tz: "Asia/Tokyo" },
-        { name: "Sydney", tz: "Australia/Sydney" },
-        { name: "Paris", tz: "Europe/Paris" },
-        { name: "Dubai", tz: "Asia/Dubai" }
-    ];
-
+    // --- 11:11 GLOBAL ENGINE ---
+    // Checks every timezone offset from -12 to +14
     function checkUniversalEleven() {
         const now = new Date();
-        document.getElementById('wish-time').innerText = now.toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit' });
-        
-        let activeCity = "";
-        cities.forEach(city => {
-            const timeStr = new Date().toLocaleString("en-US", {timeZone: city.tz, hour12: false, hour: '2-digit', minute: '2-digit'});
-            const [h, m] = timeStr.split(':');
-            if (m === '11') activeCity = city.name;
-        });
+        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+        let active = false;
 
-        const status = document.getElementById('wish-city');
-        const pulse = document.getElementById('pulse-ring');
+        // Check every half-hour increment (to catch India +5:30 etc)
+        for (let offset = -12; offset <= 14; offset += 0.5) {
+            const tzTime = new Date(utc + (3600000 * offset));
+            if (tzTime.getMinutes() === 11) {
+                active = true;
+                break;
+            }
+        }
+
+        const body = document.body;
+        const statusText = document.getElementById('beacon-text');
         
-        if (activeCity !== "") {
-            status.innerText = `11:11 in ${activeCity}`;
-            status.style.color = "var(--accent)";
-            pulse.classList.add('active');
+        if (active) {
+            body.classList.add('eleven-active');
+            statusText.innerText = "11:11 active somewhere in the world. making a wish.";
+            statusText.style.color = "var(--accent)";
         } else {
-            status.innerText = "scanning timezones...";
-            status.style.color = "rgba(0,0,0,0.2)";
-            pulse.classList.remove('active');
+            body.classList.remove('eleven-active');
+            statusText.innerText = "searching for global 11:11 wishes...";
+            statusText.style.color = "#aaa";
         }
     }
+
     setInterval(checkUniversalEleven, 1000);
     checkUniversalEleven();
 
@@ -332,10 +295,7 @@
                 if (e.target.classList.contains('scroll-anim')) e.target.classList.add('visible');
                 if (e.target.classList.contains('dm-chat')) {
                     const bubbles = e.target.querySelectorAll('.bubble');
-                    bubbles.forEach((b, i) => setTimeout(() => b.classList.add('show'), i * 500));
-                    
-                    const notes = e.target.parentElement.querySelectorAll('.annotation');
-                    notes.forEach(n => setTimeout(() => n.classList.add('show'), 1500));
+                    bubbles.forEach((b, i) => setTimeout(() => b.classList.add('show'), i * 400));
                 }
                 obs.unobserve(e.target);
             }
