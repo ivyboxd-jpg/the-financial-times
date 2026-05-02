@@ -11,9 +11,9 @@
     <style>
         :root {
             --paper: #fcfaf7;
-            --ink: #111111;
-            --ink-mid: #3d3d3d;
-            --ink-light: #9a9a9a;
+            --ink: #111;
+            --ink-mid: #444;
+            --ink-light: #aaa;
             --accent: #b85c38;
             --ig-purple: #6c3fc5;
             --ig-gray: #121212;
@@ -30,7 +30,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Subtle Grain Overlay */
+        /* Paper Grain */
         body::before {
             content: "";
             position: fixed; inset: 0;
@@ -39,85 +39,98 @@
         }
 
         #progress {
-            position: fixed; top: 0; left: 0; width: 100%; height: 3px;
-            background: var(--ink); transform-origin: left; transform: scaleX(0); z-index: 10001;
+            position: fixed; top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--accent); transform-origin: left; transform: scaleX(0); z-index: 10001;
         }
 
-        /* --- NAVIGATION --- */
+        /* Nav */
         nav {
             padding: 1.5rem 2rem;
             display: flex; justify-content: space-between; align-items: center;
-            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
-            text-transform: uppercase; letter-spacing: 0.25em;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            text-transform: uppercase; letter-spacing: 0.3em;
             border-bottom: 1px solid rgba(0,0,0,0.05);
             position: sticky; top: 0; background: rgba(252, 250, 247, 0.9);
             backdrop-filter: blur(10px); z-index: 1000;
         }
 
-        /* --- TYPOGRAPHY --- */
-        .container { width: 90%; max-width: var(--col-width); margin: 0 auto; padding-bottom: 8rem; }
-        header { padding: 8rem 0 4rem; text-align: center; }
-        .kicker { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.7rem; letter-spacing: 0.5em; margin-bottom: 2rem; display: block; }
-        h1 { font-family: 'Fraunces', serif; font-size: clamp(4rem, 15vw, 8rem); font-weight: 900; font-style: italic; line-height: 0.8; letter-spacing: -0.05em; }
-        h1 span { display: block; -webkit-text-stroke: 1.2px var(--ink); color: transparent; }
+        .container { width: 92%; max-width: var(--col-width); margin: 0 auto; padding-bottom: 10rem; }
 
-        .prose { font-size: clamp(1.3rem, 4vw, 1.55rem); margin-bottom: 6rem; opacity: 0; transform: translateY(30px); transition: 1s all ease; }
+        /* Hero */
+        header { padding: 12rem 0 6rem; text-align: center; position: relative; }
+        .kicker { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.7rem; letter-spacing: 0.6em; margin-bottom: 2rem; display: block; }
+        h1 { font-family: 'Fraunces', serif; font-size: clamp(4.5rem, 18vw, 9.5rem); font-weight: 900; font-style: italic; line-height: 0.8; letter-spacing: -0.05em; }
+        h1 span { display: block; -webkit-text-stroke: 1.5px var(--ink); color: transparent; }
+
+        /* Sections */
+        .prose { font-size: clamp(1.3rem, 4vw, 1.6rem); margin-bottom: 8rem; opacity: 0; transform: translateY(30px); transition: 1.2s all cubic-bezier(0.16, 1, 0.3, 1); }
         .prose.visible { opacity: 1; transform: translateY(0); }
-        .prose p { margin-bottom: 2.5rem; }
-        .prose b { color: var(--ink); font-weight: 700; }
+        .prose p { margin-bottom: 3rem; }
+        .prose b { color: var(--ink); font-weight: 700; border-bottom: 1px solid var(--accent); }
 
-        /* --- THE MAP BOX --- */
-        .map-box { 
-            margin: 6rem 0; background: #000; padding: 4rem 2rem; border-radius: 40px; 
-            text-align: center; color: #fff; position: relative; overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        /* The Wish Pulse (New 11:11 Visual) */
+        .wish-radar {
+            margin: 8rem 0; text-align: center; position: relative;
+            background: #0a0a0a; padding: 6rem 2rem; border-radius: 50% 50% 10px 10px;
+            overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.2);
         }
-        #world-svg { width: 100%; height: auto; fill: #1a1a1a; max-width: 600px; }
-        .map-dot { fill: #333; transition: 0.5s; }
-        .map-dot.on { fill: var(--accent); r: 6; filter: drop-shadow(0 0 12px var(--accent)); animation: mapPulse 2s infinite; }
-        @keyframes mapPulse { 0% { r: 5; opacity: 1; } 100% { r: 15; opacity: 0; } }
-        .city-label { position: absolute; font-family: 'JetBrains Mono'; font-size: 0.55rem; color: var(--accent); opacity: 0; transition: 0.5s; text-transform: uppercase; }
-        .city-label.on { opacity: 1; }
-
-        /* --- THE POEM --- */
-        .poem-block {
-            margin: 8rem 0; padding: 4rem 3rem; background: #fff; border: 1px solid #eee;
-            box-shadow: 15px 15px 0px rgba(184, 92, 56, 0.05);
-            font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; line-height: 1.7; font-style: italic;
-            position: relative;
+        .radar-line {
+            position: absolute; top: 50%; left: 50%; width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(184, 92, 56, 0.1), transparent 30%);
+            transform: translate(-50%, -50%);
+            animation: rotate 4s linear infinite;
         }
-        .poem-block::before { content: "(a + n)"; position: absolute; top: 1.5rem; left: 3rem; font-family: 'JetBrains Mono'; font-size: 0.7rem; font-style: normal; color: var(--accent); opacity: 0.5; }
-        .poem-block p { margin-bottom: 1.5rem; }
-        .poem-highlight { background: rgba(184, 92, 56, 0.08); padding: 0 4px; border-radius: 2px; }
-
-        /* --- INSTAGRAM UI --- */
-        .dm-block { margin: 6rem 0; position: relative; }
-        .dm-window { background: #000; border-radius: 30px; overflow: hidden; max-width: 420px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 100px rgba(0,0,0,0.3); }
-        .dm-header { padding: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 1rem; }
-        .dm-pfp { width: 36px; height: 36px; border-radius: 50%; background: #222; overflow: hidden; border: 1px solid #444; }
-        .dm-pfp img { width: 100%; height: 100%; object-fit: cover; }
-        .dm-chat { padding: 2rem 1rem; display: flex; flex-direction: column; gap: 0.8rem; }
+        @keyframes rotate { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
         
-        .bubble { max-width: 85%; padding: 0.85rem 1.1rem; border-radius: 20px; font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.4; opacity: 0; transform: translateY(15px); transition: 0.8s all cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
+        .wish-hub { position: relative; z-index: 2; font-family: 'JetBrains Mono'; }
+        #wish-time { font-size: 4rem; font-weight: 300; letter-spacing: -0.05em; color: #fff; display: block; }
+        #wish-status { font-size: 0.65rem; color: var(--accent); letter-spacing: 0.4em; text-transform: uppercase; margin-top: 1rem; display: block; }
+
+        /* Lowercase Poem Section */
+        .poem-section {
+            margin: 10rem 0; position: relative; padding: 4rem 0;
+        }
+        .poem-content {
+            font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; line-height: 1.8; font-style: italic;
+            color: var(--ink-mid); text-align: left; max-width: 500px;
+        }
+        .kitchen-light {
+            position: absolute; top: 0; right: 0; width: 300px; height: 100%;
+            background: linear-gradient(135deg, rgba(255,240,200,0.4) 0%, transparent 70%);
+            filter: blur(40px); animation: dance 8s infinite alternate;
+            pointer-events: none;
+        }
+        @keyframes dance { 0% { opacity: 0.3; transform: scale(1); } 100% { opacity: 0.6; transform: scale(1.2); } }
+
+        /* Instagram UI */
+        .dm-block { margin: 10rem 0; position: relative; }
+        .dm-window { background: #000; border-radius: 35px; overflow: hidden; max-width: 420px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 50px 100px rgba(0,0,0,0.4); }
+        .dm-header { padding: 1.2rem 1.5rem; display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid #1a1a1a; }
+        .dm-pfp { width: 38px; height: 38px; border-radius: 50%; background: #222; overflow: hidden; }
+        .dm-pfp img { width: 100%; height: 100%; object-fit: cover; }
+        .dm-user-info h4 { color: white; font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; }
+        .dm-chat { padding: 2.5rem 1.2rem; display: flex; flex-direction: column; gap: 0.8rem; }
+        
+        .bubble { max-width: 88%; padding: 0.9rem 1.2rem; border-radius: 22px; font-family: 'Inter', sans-serif; font-size: 0.95rem; line-height: 1.45; opacity: 0; transform: translateY(20px); transition: 0.8s all cubic-bezier(0.16, 1, 0.3, 1); }
         .her { align-self: flex-start; background: #262626; color: #fff; border-bottom-left-radius: 4px; }
         .you { align-self: flex-end; background: var(--ig-purple); color: #fff; border-bottom-right-radius: 4px; }
         .bubble.show { opacity: 1; transform: translateY(0); }
+        .reply-ref { font-size: 0.75rem; opacity: 0.4; border-left: 2px solid #fff; padding-left: 0.7rem; margin-bottom: 0.5rem; }
 
-        .reply-box { font-size: 0.8rem; opacity: 0.5; border-left: 2px solid rgba(255,255,255,0.3); padding-left: 0.6rem; margin-bottom: 0.5rem; }
-
-        /* --- ANNOTATIONS --- */
-        .note { font-family: 'Caveat', cursive; color: var(--accent); font-size: 1.6rem; position: absolute; pointer-events: none; opacity: 0; transition: 1s opacity ease; z-index: 100; line-height: 1.1; }
+        /* Annotations */
+        .note { font-family: 'Caveat', cursive; color: var(--accent); font-size: 1.6rem; position: absolute; pointer-events: none; opacity: 0; transition: 1s opacity ease 0.6s; z-index: 100; }
         .note.show { opacity: 1; }
-        .note svg { position: absolute; width: 40px; height: 40px; fill: none; stroke: var(--accent); stroke-width: 1.5; }
+        .note svg { position: absolute; width: 50px; height: 40px; fill: none; stroke: var(--accent); stroke-width: 1.2; }
 
-        footer { margin-top: 10rem; padding: 8rem 2rem; background: var(--ink); color: var(--paper); display: flex; justify-content: space-between; align-items: flex-end; }
-        .footer-logo { font-family: 'Fraunces'; font-size: 3rem; font-style: italic; font-weight: 900; }
+        footer { margin-top: 10rem; padding: 10rem 2rem 6rem; background: var(--ink); color: var(--paper); display: flex; justify-content: space-between; align-items: flex-end; }
+        .footer-logo { font-family: 'Fraunces'; font-size: 4rem; font-style: italic; font-weight: 900; }
+        .footer-metrics { font-family: 'JetBrains Mono'; font-size: 0.6rem; text-align: right; line-height: 2.5; letter-spacing: 0.2em; }
 
         @media (max-width: 768px) {
-            header { padding: 6rem 0 4rem; }
+            header { padding: 8rem 0 4rem; }
             .note { display: none; }
-            .poem-block { padding: 3rem 1.5rem; font-size: 1.25rem; }
-            footer { flex-direction: column; align-items: flex-start; gap: 3rem; }
+            .dm-window { max-width: 100%; }
+            footer { flex-direction: column; align-items: flex-start; gap: 4rem; }
         }
     </style>
 </head>
@@ -126,32 +139,32 @@
 <div id="progress"></div>
 
 <nav>
-    <span>Niv // Aaradhya</span>
-    <span>April 19, 2026</span>
+    <span>niv + aaradhya</span>
+    <span>eleven month archive</span>
 </nav>
 
 <div class="container">
     <header>
-        <span class="kicker">An Anniversary Collection</span>
+        <span class="kicker">the anniversary archive // 2026</span>
         <h1>down<span>bad</span></h1>
     </header>
 
     <div class="prose scroll-anim">
-        <p>I’m the kind of person who thinks everything is overrated. If the whole world loves it, I’ve probably spent years explaining why it’s actually quite mid. I hated Harry Potter with a passion I didn’t even earn; I just decided it was too loud, too marketed, too much. I was that guy. </p>
-        <p>And then you asked me to watch *The Sorcerer's Stone*. And I didn't just watch it—I sat through every single frame with the intensity of someone watching their own house burn down. Not because I liked the wizards, but because you were the one showing it to me. I’d watch a twenty-hour documentary on the history of cement if you asked me to.</p>
-        <p>That was the moment I realized I was finished. You made my "opinions" irrelevant. One question mark from you—<b>"niv?"</b>—and my brain just reboots. I don't care about being right anymore. I just want to hear my name in your voice.</p>
+        <p>i used to have this whole thing about being the "hater." i thought harry potter was the most overrated piece of media ever created. i spent years telling anyone who would listen that i’d never watch it. i stood my ground like a man who actually had principles. </p>
+        <p>and then you happened. you asked me to watch *the sorcerer's stone* and i sat there for nearly three hours, watching kids in robes, not because i liked the magic—but because i’m completely finished. i’d watch a documentary on the history of drying paint if it meant i got to hear you comment on it. my "taste" literally vanished the second you said my name.</p>
+        <p>one <b>"niv?"</b> in my notifications and my brain just reboots. i realized i don't want to be the guy with the cool opinions anymore; i just want to be the guy you’re wishing for at 11:11.</p>
     </div>
 
     <!-- DM BLOCK: THE NAME -->
     <div class="dm-block">
-        <div class="note" style="top: -40px; left: -120px; width: 200px; transform: rotate(-5deg);">
-            the boy who lived (just to hear her say his name).
-            <svg style="bottom: -20px; right: 20px;"><path d="M0,0 Q20,20 40,0" /></svg>
+        <div class="note" style="top: -60px; left: -100px; width: 220px; transform: rotate(-4deg);">
+            the boy who lived (only to see this notification).
+            <svg style="bottom: -25px; right: 20px;"><path d="M0,0 C10,20 30,20 50,5" /></svg>
         </div>
         <div class="dm-window">
             <div class="dm-header">
                 <div class="dm-pfp"><img src="[HER_PFP_URL]" alt="A"></div>
-                <div style="color:white; font-family:'Inter'; font-size:0.85rem; font-weight:600;">aaradhya</div>
+                <div class="dm-user-info"><h4>aaradhya</h4></div>
             </div>
             <div class="dm-chat">
                 <div class="bubble her">niv?</div>
@@ -160,157 +173,140 @@
     </div>
 
     <div class="prose scroll-anim">
-        <p>Then came the Blend. You sent the link like a gauntlet. You didn't ask if we should share music; you just invited me into your frequency and waited. And when you followed it up with <b>"stamped and sealed,"</b> it felt like a blood oath. I love that about you—how you notarize your feelings. You take the messy, abstract parts of us and you give them a home, a category, and a stamp.</p>
+        <p>and then you sent the spotify blend. no "hey do you want to share music," just a link dropped like a gauntlet. and when you followed it up with <b>"stamped and sealed,"</b> i knew exactly who i was dealing with. you don't just feel things; you notarize them. you take the messy parts of "us" and you give them a definitive home. i've never been more happy to be legally bound to someone's frequency.</p>
     </div>
 
     <!-- DM BLOCK: THE BLEND -->
     <div class="dm-block">
+        <div class="note" style="bottom: 10px; right: -170px; width: 190px; transform: rotate(3deg);">
+            she notarized the vibes. i was legally required to fall.
+            <svg style="top: -30px; left: -20px; transform: scaleX(-1);"><path d="M0,0 C10,20 30,20 50,5" /></svg>
+        </div>
         <div class="dm-window">
             <div class="dm-header">
-                <div class="dm-pfp"><img src="[HER_PFP_URL]" alt="A"></div>
-                <div style="color:white; font-family:'Inter'; font-size:0.85rem; font-weight:600;">aaradhya</div>
+                <div class="dm-pfp"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aaradhya" alt="A"></div>
+                <div class="dm-user-info"><h4>aaradhya</h4></div>
             </div>
             <div class="dm-chat">
                 <div class="bubble her" style="background:transparent; padding:0; width: 100%;">
-                    <div class="spotify-card" style="background:#121212; border-radius:14px; padding:1rem; display:flex; align-items:center; gap:1rem; border:1px solid #333;">
-                        <span style="color:#1DB954; font-size: 1.5rem;">♫</span>
+                    <div style="background:#121212; border-radius:14px; padding:1.2rem; display:flex; align-items:center; gap:1rem; border:1px solid #333;">
+                        <span style="color:#1DB954; font-size: 1.8rem;">♫</span>
                         <div>
-                            <div style="color:#1DB954; font-weight:600; font-size:0.75rem;">Join Blend on Spotify</div>
-                            <div style="color:#8e8e8e; font-size:0.65rem;">spotify.link/aaradhya-niv</div>
+                            <div style="color:#1DB954; font-weight:600; font-size:0.8rem;">Join Blend on Spotify</div>
+                            <div style="color:#8e8e8e; font-size:0.7rem;">spotify.link/aaradhya-niv</div>
                         </div>
                     </div>
                 </div>
                 <div class="bubble her">stamped and sealed.</div>
             </div>
         </div>
-        <div class="note" style="bottom: 0px; right: -160px; width: 180px; transform: rotate(4deg);">
-            she notarized the vibes. i had no choice.
+    </div>
+
+    <!-- WISH PULSE WIDGET -->
+    <div class="wish-radar scroll-anim">
+        <div class="radar-line"></div>
+        <div class="wish-hub">
+            <span id="wish-time">00:00:00</span>
+            <span id="wish-status">scanning global 11:11 wishes...</span>
         </div>
     </div>
 
-    <!-- THE POEM BLOCK -->
-    <div class="poem-block scroll-anim">
-        <p>You keep the salt in an old gelato jar. The scissors live in the drawer but the tape lives on top of the microwave, and we don’t question it anymore.</p>
-        <p>The bedroom smells of honey, you smell of me. We’ve spent too many nights under the <span class="poem-highlight">cozy lavender blanket</span> to have any other religion to believe.</p>
-        <p>We always forget the sugar but somehow remember the cinnamon. There’s dust on the bookshelf and your socks under the table, there’s a postcard from the poland trip on the fridge, sun-bleached at the edges.</p>
-        <p>And i promise i’ll wrap a lasso around the sun and bring it you, inch a little closer, just enough to keep you warm.</p>
-    </div>
-
-    <!-- MAP SECTION -->
-    <div class="map-box scroll-anim">
-        <div style="font-family:'JetBrains Mono'; font-size:0.65rem; color:var(--accent); letter-spacing:0.4em; margin-bottom:2rem;">GLOBAL WISH TRACKER</div>
-        <svg id="world-svg" viewBox="0 0 600 300">
-            <path d="M50,150 Q150,100 250,150 T450,200 T550,150" fill="none" stroke="#222" stroke-width="1" opacity="0.3"/>
-            <circle cx="100" cy="130" r="4" class="map-dot" id="dot-NYC" />
-            <circle cx="280" cy="100" r="4" class="map-dot" id="dot-LDN" />
-            <circle cx="380" cy="190" r="4" class="map-dot" id="dot-BOM" />
-            <circle cx="500" cy="130" r="4" class="map-dot" id="dot-TKY" />
-            <circle cx="540" cy="250" r="4" class="map-dot" id="dot-SYD" />
-        </svg>
-        <div id="label-NYC" class="city-label" style="top:38%; left:12%;">New York</div>
-        <div id="label-LDN" class="city-label" style="top:28%; left:42%;">London</div>
-        <div id="label-BOM" class="city-label" style="top:58%; left:58%;">Mumbai</div>
-        <div id="label-TKY" class="city-label" style="top:38%; left:78%;">Tokyo</div>
-        <div id="label-SYD" class="city-label" style="top:78%; left:85%;">Sydney</div>
-        
-        <p style="font-family:'JetBrains Mono'; font-size:0.6rem; color:#666; margin-top:2.5rem; line-height:1.8; max-width:420px; margin-left:auto; margin-right:auto;">
-            The kitchen light dancing tells me we’re going to be just fine. Somewhere in the world, it's 11:11, and I am definitely wishing for you.
-        </p>
+    <!-- LOWERCASE POEM SECTION -->
+    <div class="poem-section scroll-anim">
+        <div class="kitchen-light"></div>
+        <div class="poem-content">
+            <span style="font-family:'JetBrains Mono'; font-size:0.6rem; letter-spacing:0.3em; display:block; margin-bottom:2rem; opacity:0.5;">(a + n)</span>
+            you keep the salt in an old gelato jar. the scissors live in the drawer but the tape lives on top of the microwave, and we don’t question it anymore. the bedroom smells of honey, you smell of me. we’ve spent too many nights under the cozy lavender blanket to have any other religion to believe. <br><br>
+            we always forget the sugar but somehow remember the cinnamon. there’s dust on the bookshelf and your socks under the table, there’s a postcard from the poland trip on the fridge, sun-bleached at the edges. and i promise i’ll wrap a lasso around the sun and bring it you, inch a little closer, just enough to keep you warm.
+        </div>
+        <div class="note" style="top: 0; right: 0; width: 180px;">the kitchen light dancing tells me we're going to be just fine.</div>
     </div>
 
     <div class="prose scroll-anim">
-        <p>Then we talked about the box. You told me you keep your love letters in a wooden home. I tried to be the poet; I told you to "nestle" this one deep inside. I was trying so hard to be smooth, and then I immediately panicked. <i>"Just kidding by the way I’m too bad at this."</i></p>
-        <p>You called me a liar. You said it was <b>"oddly comforting"</b> that memories and cherishing are infinite. 2,083 kilometers away, and yet you make me feel like we’re just building the architecture of the same house. </p>
+        <p>then there was the box. you told me you keep your love letters in a wooden home. i tried to be the smooth poet; i told you to "nestle" this one deep inside. i sent it and immediately my heart started doing backflips because i was being too sincere, so i tried to joke it away. <i>"just kidding i'm too bad at this."</i></p>
+        <p>you called me a liar. you said it was <b>"oddly comforting"</b> that cherishing is infinite. 2,083 kilometers away, and yet you make me feel like we’re just building the architecture of the same house. i don't want to build it with anyone else.</p>
     </div>
 
-    <!-- DM BLOCK 3: THE WOODEN BOX (FULL TRANSCRIPTION) -->
+    <!-- DM BLOCK 3: THE BOX -->
     <div class="dm-block">
         <div class="dm-window">
             <div class="dm-header">
-                <div class="dm-pfp"><img src="[HER_PFP_URL]" alt="A"></div>
-                <div style="color:white; font-family:'Inter'; font-size:0.85rem; font-weight:600;">aaradhya</div>
+                <div class="dm-pfp"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aaradhya" alt="A"></div>
+                <div class="dm-user-info"><h4>aaradhya</h4></div>
             </div>
             <div class="dm-chat">
                 <div class="bubble her">i usually keep my love letters in a wooden box, where shall i give a home to this one?</div>
                 <div class="bubble you">nestle it in the wooden box of yours, but make sure there's room for a few more surprises — and if you ever run out of room, i'll make sure there's another box waiting</div>
                 <div class="bubble you" style="font-size:0.8rem; opacity:0.6;">
-                    <div class="reply-box">nestle it in the wooden box...</div>
+                    <div class="reply-ref">nestle it in the wooden box...</div>
                     just kidding by the way i'm too bad at this
                 </div>
                 <div class="bubble her">such a liar, you're clearly very good at this and you know it</div>
                 <div class="bubble her">
-                    <div class="reply-box">nestle it in the wooden box of yours... more</div>
+                    <div class="reply-ref">nestle it in the wooden box of yours... more</div>
                     this is, again, oddly comforting. the fact that memories and cherishing may be so abundant that they may fill up all the space — but there's always more space to fill.
                 </div>
-                <div class="bubble her">watch me write a poem again</div>
+                <div class="bubble her">watch me write a m again</div>
             </div>
         </div>
-        <div class="note" style="bottom: -40px; left: 0px; width: 220px; transform: rotate(-3deg);">
-            she saw through the joke. thank god.
+        <div class="note" style="bottom: -50px; left: 10px; width: 230px; transform: rotate(-2deg);">
+            she called the bluff. i've never been happier to lose a fight.
         </div>
-    </div>
-
-    <div class="prose scroll-anim" style="text-align: center; margin-top: 8rem;">
-        <p>Happy anniversary, Aaradhya. <br>I’m still down bad. I don't plan on ever recovering.</p>
     </div>
 </div>
 
 <footer>
     <div class="footer-left">
         <div class="footer-logo">niv.</div>
-        <p style="font-family:'Inter'; font-size:0.8rem; opacity:0.4; margin-top:1rem;">To the Muse // April 2026</p>
+        <p style="font-family:'Inter'; font-size:0.8rem; opacity:0.4; margin-top:1rem;">To the Muse // 2026</p>
     </div>
-    <div style="text-align:right; font-family:'JetBrains Mono'; font-size:0.6rem; letter-spacing:0.2em; line-height:2.5;">
-        STAMPED AND SEALED<br>THE KITCHEN LIGHT DANCING<br>INFINITE ROOM
+    <div class="footer-metrics">
+        2,083 KM OF FREQUENCY<br>
+        STAMPED AND SEALED<br>
+        ELEVEN MONTHS<br>
+        APRIL 19, 2026
     </div>
 </footer>
 
 <script>
-    // Scroll progress
+    // Scroll Progress
     window.addEventListener('scroll', () => {
         const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight));
         document.getElementById("progress").style.transform = `scaleX(${scrolled})`;
     });
 
-    // --- 11:11 TIME ENGINE ---
-    const cities = [
-        { id: 'NYC', tz: 'America/New_York', name: 'New York' },
-        { id: 'LDN', tz: 'Europe/London', name: 'London' },
-        { id: 'BOM', tz: 'Asia/Kolkata', name: 'Mumbai' },
-        { id: 'TKY', tz: 'Asia/Tokyo', name: 'Tokyo' },
-        { id: 'SYD', tz: 'Australia/Sydney', name: 'Sydney' }
+    // 11:11 Celestial Logic
+    const hubCities = [
+        { name: "Mumbai", tz: "Asia/Kolkata" },
+        { name: "New York", tz: "America/New_York" },
+        { name: "London", tz: "Europe/London" },
+        { name: "Tokyo", tz: "Asia/Tokyo" },
+        { name: "Sydney", tz: "Australia/Sydney" }
     ];
 
-    function checkElevens() {
+    function checkUniversalEleven() {
         const now = new Date();
-        const m = now.getMinutes();
-        const s = now.getSeconds();
+        document.getElementById('wish-time').innerText = now.toLocaleTimeString([], { hour12: false });
         
-        cities.forEach(city => {
-            const timeStr = new Date().toLocaleString("en-US", {timeZone: city.tz, hour12: false, hour: '2-digit', minute: '2-digit'});
-            const [h, min] = timeStr.split(':');
-            
-            // TEST MODE: Pulse NYC if it's anywhere in the 11th, 22nd, 33rd minute etc. for you to see it
-            // Real logic: (min === '11' && (h === '11' || h === '23'))
-            const isEleven = (min === '11'); 
-            
-            const dot = document.getElementById(`dot-${city.id}`);
-            const label = document.getElementById(`label-${city.id}`);
-            
-            if (isEleven) {
-                dot.classList.add('on');
-                label.classList.add('on');
-            } else {
-                dot.classList.remove('on');
-                label.classList.remove('on');
-            }
+        let activeHubs = [];
+        hubCities.forEach(city => {
+            const timeStr = now.toLocaleString("en-US", {timeZone: city.tz, hour12: false, hour: '2-digit', minute: '2-digit'});
+            const [h, m] = timeStr.split(':');
+            if (m === '11') activeHubs.push(city.name);
         });
+
+        const status = document.getElementById('wish-status');
+        if (activeHubs.length > 0) {
+            status.innerText = `WISH ACTIVE: 11:11 IN ${activeHubs.join(" & ")}`;
+            status.style.color = "var(--accent)";
+        } else {
+            status.innerText = "scanning global 11:11 wishes...";
+            status.style.color = "rgba(255,255,255,0.3)";
+        }
     }
+    setInterval(checkUniversalEleven, 1000);
 
-    setInterval(checkElevens, 1000);
-    checkElevens();
-
-    // Intersection Observer
+    // Scroll Observer
     const obs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) {
@@ -318,7 +314,6 @@
                 if (e.target.classList.contains('dm-chat')) {
                     const bubbles = e.target.querySelectorAll('.bubble');
                     bubbles.forEach((b, i) => setTimeout(() => b.classList.add('show'), i * 500));
-                    
                     const notes = e.target.parentElement.querySelectorAll('.note');
                     notes.forEach(n => setTimeout(() => n.classList.add('show'), 1500));
                 }
