@@ -4,1068 +4,367 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aaradhya's IP Quest</title>
-<!-- Elegant Google Fonts -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<!-- Lucide Icons for clean SVGs instead of emojis -->
+
 <script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
   :root {
-    /* Provided Palette */
-    --royal: #334EAC;
-    --moon: #F7F2EB;
-    --china: #7096D1;
-    --asian-pear: #F2F0DE;
-    --midnight: #081F5C;
-    --dawn: #D0E3FF;
-    --jicama: #FFF9F0;
-    --porcelain: #EDF1F6;
-    --sky: #BAD6EB;
-    
-    /* Base UI Colors mapped from palette */
-    --bg: var(--porcelain);
-    --surface: #FFFFFF;
-    --surface-warm: var(--jicama);
-    --text-main: var(--midnight);
-    --text-muted: #5c6c94; /* Derived from midnight for readable lighter text */
-    --border: var(--dawn);
-    
-    /* Semantic Colors (Aesthetic & Muted to match palette) */
-    --correct: #5A9A6E; 
-    --correct-bg: #EEF5F0;
-    --wrong: #C86B6B;
-    --wrong-bg: #FDF3F3;
-    --warning: #D19A55;
-    --warning-bg: #FBF4EB;
-    
-    /* Shadows */
-    --shadow-sm: 0 2px 8px rgba(8, 31, 92, 0.04);
-    --shadow-md: 0 8px 24px rgba(8, 31, 92, 0.08);
-    --shadow-lg: 0 24px 48px rgba(8, 31, 92, 0.12);
+    --royal: #334EAC; --china: #7096D1; --midnight: #081F5C; --dawn: #D0E3FF; --porcelain: #EDF1F6;
+    --bg: var(--porcelain); --surface: #FFFFFF; --text-main: var(--midnight); --text-muted: #5c6c94; --border: var(--dawn);
+    --correct: #5A9A6E; --correct-bg: #EEF5F0; --wrong: #C86B6B; --wrong-bg: #FDF3F3; --warning: #D19A55; --warning-bg: #FBF4EB;
+    --shadow-sm: 0 2px 8px rgba(8, 31, 92, 0.04); --shadow-md: 0 8px 24px rgba(8, 31, 92, 0.08);
   }
-
+  
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-  body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text-main);
-    min-height: 100vh;
-    overflow-x: hidden;
-    line-height: 1.5;
+  
+  /* ANTI-SNOOPING: Prevents text selection and highlighting */
+  body { 
+    font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text-main); 
+    min-height: 100vh; overflow-x: hidden; line-height: 1.5; padding-bottom: 80px;
+    -webkit-user-select: none; -ms-user-select: none; user-select: none; 
   }
 
-  h1, h2, h3, h4, .serif {
-    font-family: 'Playfair Display', serif;
-  }
-
-  .mono {
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  /* ── SCREEN SYSTEM ── */
   .screen { display: none; min-height: 100vh; }
   .screen.active { display: flex; flex-direction: column; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── ICONS ── */
-  .lucide { width: 1.2em; height: 1.2em; stroke-width: 1.8; }
-
-  /* ── SHARED COMPONENTS ── */
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 500;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
+  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 500; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; }
   .badge-easy { background: var(--correct-bg); color: var(--correct); border: 1px solid rgba(90,154,110,0.2); }
   .badge-medium { background: var(--warning-bg); color: var(--warning); border: 1px solid rgba(209,154,85,0.2); }
   .badge-hard { background: var(--wrong-bg); color: var(--wrong); border: 1px solid rgba(200,107,107,0.2); }
-  .badge-primary { background: var(--dawn); color: var(--royal); border: 1px solid var(--sky); }
 
-  .btn-primary {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    padding: 16px 24px;
-    background: var(--royal);
-    color: var(--surface);
-    border: none;
-    border-radius: 12px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(51, 78, 172, 0.2);
-  }
-  .btn-primary:hover:not(:disabled) { 
-    transform: translateY(-2px); 
-    box-shadow: 0 6px 20px rgba(51, 78, 172, 0.3); 
-    background: var(--midnight); 
-  }
-  .btn-primary:active:not(:disabled) { transform: translateY(0); }
+  .btn-primary { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 16px 24px; background: var(--royal); color: white; border: none; border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(51, 78, 172, 0.2); }
+  .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(51, 78, 172, 0.3); background: var(--midnight); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  .btn-secondary {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 16px 24px;
-    background: transparent;
-    color: var(--royal);
-    border: 1px solid var(--china);
-    border-radius: 12px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-secondary:hover { background: var(--dawn); border-color: var(--royal); }
+  /* HOME UI */
+  #home { padding: 40px 28px; }
+  .home-title { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 600; margin-bottom: 24px; color: var(--midnight); line-height: 1.2;}
+  .stats-row { display: flex; gap: 12px; margin-bottom: 32px; }
+  .stat-pill { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 12px; text-align: center; box-shadow: var(--shadow-sm); }
+  .stat-pill-val { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600; color: var(--midnight); margin-bottom: 4px; display: flex; justify-content: center; align-items: center; gap: 6px; }
+  .stat-pill-label { font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; }
+  .chapter-card { display: flex; align-items: center; gap: 16px; padding: 16px; background: white; border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px; cursor: pointer; box-shadow: var(--shadow-sm); transition: all 0.2s; }
+  .chapter-card.selected { border-color: var(--royal); box-shadow: 0 0 0 1px var(--royal); background: var(--dawn); }
 
-  /* ══════════════════════════════
-     HOME SCREEN
-  ══════════════════════════════ */
-  #home { padding: 0; background: var(--bg); }
-
-  .home-top { padding: 56px 28px 32px; position: relative; }
-
-  .home-greeting { display: flex; align-items: center; gap: 14px; margin-bottom: 36px; }
-
-  .avatar-ring {
-    width: 48px; height: 48px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 1px solid var(--dawn);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--royal);
-    flex-shrink: 0;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .greeting-text { display: flex; flex-direction: column; gap: 2px; }
-  .greeting-hey {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .greeting-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--midnight);
-    letter-spacing: -0.01em;
-  }
-
-  .xp-bar-wrap { display: flex; align-items: center; gap: 10px; margin-left: auto; }
-  .xp-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--royal);
-    font-weight: 600;
-  }
-  .xp-bar { width: 60px; height: 4px; background: var(--dawn); border-radius: 4px; overflow: hidden; }
-  .xp-fill { width: 35%; height: 100%; background: var(--royal); border-radius: 4px; }
-
-  .home-hero { margin-bottom: 12px; }
-  .home-eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--china);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .home-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--china); }
-
-  .home-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 40px;
-    font-weight: 600;
-    line-height: 1.15;
-    color: var(--midnight);
-    margin-bottom: 16px;
-  }
-  .home-title em { font-style: italic; color: var(--royal); font-weight: 400; }
-
-  .home-sub { font-size: 15px; color: var(--text-muted); line-height: 1.6; font-weight: 400; max-width: 90%; }
-
-  /* Stats row */
-  .stats-row { display: flex; gap: 12px; margin: 32px 28px 0; }
-  .stat-pill {
-    flex: 1; background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; padding: 16px 12px; text-align: center;
-    box-shadow: var(--shadow-sm);
-  }
-  .stat-pill-val {
-    font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600;
-    color: var(--midnight); margin-bottom: 4px;
-    display: flex; justify-content: center; align-items: center; gap: 6px;
-  }
-  .stat-pill-val .lucide { width: 20px; height: 20px; color: var(--warning); }
-  .stat-pill-label {
-    font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;
-    text-transform: uppercase; letter-spacing: 0.05em;
-  }
-
-  /* Badges row */
-  .badges-section { margin: 32px 28px 0; }
-  .badges-label {
-    font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-muted);
-    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;
-  }
-  .badges-row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .badge-item { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 60px; }
-  .badge-icon {
-    width: 48px; height: 48px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--surface); border: 1px solid var(--border);
-    color: var(--china); box-shadow: var(--shadow-sm);
-    transition: all 0.3s ease;
-  }
-  .badge-icon:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--sky); }
-  .badge-icon.locked { opacity: 0.4; background: transparent; border: 1px dashed var(--china); color: var(--text-muted); box-shadow: none; }
-  .badge-icon.earned { color: var(--royal); background: var(--dawn); border-color: var(--sky); }
-  .badge-name {
-    font-size: 10px; color: var(--text-muted); text-align: center;
-    font-weight: 500; line-height: 1.2;
-  }
-
-  /* Chapters section */
-  .chapters-section { padding: 40px 28px 0; }
-  .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 20px; }
-  .section-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--midnight); }
-  .section-hint { font-size: 12px; color: var(--text-muted); font-style: italic; }
-
-  .chapter-list { display: flex; flex-direction: column; gap: 12px; }
-  .chapter-card {
-    display: flex; align-items: center; gap: 16px; padding: 16px;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; cursor: pointer; transition: all 0.2s ease;
-    box-shadow: var(--shadow-sm);
-  }
-  .chapter-card:hover { border-color: var(--sky); box-shadow: var(--shadow-md); }
-  .chapter-card.selected {
-    border-color: var(--royal); background: var(--surface);
-    box-shadow: 0 0 0 1px var(--royal), var(--shadow-md);
-  }
-
-  .chapter-icon {
-    width: 44px; height: 44px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--dawn); color: var(--royal);
-    flex-shrink: 0; transition: all 0.2s;
-  }
-  .chapter-card.selected .chapter-icon { background: var(--royal); color: var(--surface); }
-
-  .chapter-info { flex: 1; min-width: 0; }
-  .chapter-name { font-size: 15px; font-weight: 600; color: var(--midnight); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .chapter-meta { font-size: 12px; color: var(--text-muted); }
-
-  .chapter-check {
-    width: 20px; height: 20px; border-radius: 50%;
-    border: 1px solid var(--china);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; transition: all 0.2s;
-    color: transparent;
-  }
-  .chapter-card.selected .chapter-check { background: var(--royal); border-color: var(--royal); color: var(--surface); }
-  .chapter-check .lucide { width: 12px; height: 12px; stroke-width: 3; }
-
-  /* Feeling Lucky */
-  .lucky-section { margin: 24px 28px 0; }
-  .lucky-card {
-    background: var(--midnight); border-radius: 16px; padding: 24px;
-    cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;
-    box-shadow: var(--shadow-lg);
-  }
-  .lucky-card:hover { transform: translateY(-2px); }
-
-  .lucky-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-  .lucky-icon { color: var(--asian-pear); animation: float 3s ease-in-out infinite; }
-  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-
-  .lucky-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--surface); letter-spacing: 0.01em; }
-  .lucky-desc { font-size: 14px; color: var(--sky); line-height: 1.5; font-weight: 300; margin-bottom: 16px; max-width: 90%; }
-
-  .lucky-expand { display: none; animation: slideDown 0.3s ease; }
-  .lucky-expand.open { display: block; }
-  @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-  .lucky-divider { height: 1px; background: rgba(186, 214, 235, 0.2); margin-bottom: 16px; }
-  .lucky-info { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-  .lucky-pill {
-    display: flex; align-items: center; gap: 6px; padding: 6px 12px;
-    background: rgba(255, 249, 240, 0.1); border: 1px solid rgba(255, 249, 240, 0.2);
-    border-radius: 6px; font-size: 11px; color: var(--jicama);
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .lucky-pill .lucide { width: 12px; height: 12px; }
-
-  .lucky-btn {
-    width: 100%; padding: 14px; background: var(--jicama); color: var(--midnight);
-    border: none; border-radius: 10px; font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-  .lucky-btn:hover { background: var(--surface); }
-
-  /* Start btn area */
-  .start-area { padding: 32px 28px 48px; display: flex; flex-direction: column; gap: 16px; }
-  .selected-count { text-align: center; font-size: 12px; color: var(--text-muted); }
-  .selected-count span { color: var(--royal); font-weight: 600; }
-
-  /* ══════════════════════════════
-     QUESTION SCREEN
-  ══════════════════════════════ */
-  #quiz { background: var(--surface); }
-
-  .quiz-header {
-    padding: 24px 28px 0; display: flex; flex-direction: column; gap: 20px;
-    position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
-    z-index: 10; padding-bottom: 20px; border-bottom: 1px solid var(--border);
-  }
-
-  .quiz-top-row { display: flex; align-items: center; justify-content: space-between; }
-  .quiz-back {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: var(--bg); border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; color: var(--text-muted); transition: all 0.2s;
-  }
-  .quiz-back:hover { border-color: var(--china); color: var(--royal); }
-
-  .quiz-progress-text { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted); }
-  .quiz-progress-text span { color: var(--midnight); font-weight: 600; }
-
-  .timer-chip {
-    display: flex; align-items: center; gap: 8px; padding: 6px 14px;
-    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
-    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--midnight);
-    font-weight: 500; transition: all 0.3s;
-  }
-  .timer-chip .lucide { width: 14px; height: 14px; color: var(--royal); }
-
-  .progress-track { height: 4px; background: var(--dawn); border-radius: 4px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--royal); border-radius: 4px; transition: width 0.5s ease; }
-
-  /* Question body */
-  .quiz-body { flex: 1; padding: 32px 28px; display: flex; flex-direction: column; gap: 24px; }
-  .q-meta-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .chapter-tag { font-size: 12px; color: var(--text-muted); font-weight: 500; }
-
-  .q-text { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 400; line-height: 1.5; color: var(--midnight); }
-
-  /* Reassurance message */
-  .reassure-msg {
-    display: flex; align-items: center; gap: 12px; padding: 14px 16px;
-    background: var(--dawn); border-radius: 12px; border-left: 4px solid var(--royal);
-    animation: fadeIn 0.4s ease;
-  }
-  .reassure-icon { color: var(--royal); flex-shrink: 0; }
-  .reassure-text { font-size: 13px; color: var(--midnight); line-height: 1.5; font-weight: 500; }
-
-  /* Options */
-  .options-grid { display: flex; flex-direction: column; gap: 12px; }
-  .option-card {
-    display: flex; align-items: center; gap: 16px; padding: 16px;
-    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-    cursor: pointer; transition: all 0.2s; width: 100%; text-align: left;
-    font-family: 'Plus Jakarta Sans', sans-serif; color: var(--midnight); box-shadow: var(--shadow-sm);
-  }
-  .option-card:hover:not(:disabled) { border-color: var(--china); background: var(--bg); transform: translateX(4px); }
-  .option-card.selected { border-color: var(--royal); background: var(--dawn); }
-  .option-card.correct { border-color: var(--correct); background: var(--correct-bg); }
-  .option-card.wrong { border-color: var(--wrong); background: var(--wrong-bg); }
-  .option-card:disabled { cursor: default; transform: none !important; }
-
-  .opt-letter {
-    width: 32px; height: 32px; min-width: 32px; border-radius: 8px;
-    background: var(--bg); border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600;
-    color: var(--text-muted); transition: all 0.2s;
-  }
-  .option-card.selected .opt-letter { background: var(--royal); border-color: var(--royal); color: var(--surface); }
-  .option-card.correct .opt-letter { background: var(--correct); border-color: var(--correct); color: var(--surface); }
-  .option-card.wrong .opt-letter { background: var(--wrong); border-color: var(--wrong); color: var(--surface); }
-
-  .opt-text { font-size: 15px; line-height: 1.5; flex: 1; }
-
-  /* Explanation */
-  .explanation-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: none; animation: fadeIn 0.3s ease; }
-  .explanation-card.visible { display: block; }
-  .exp-label {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase;
-    letter-spacing: 0.1em; color: var(--royal); margin-bottom: 12px; font-weight: 600;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .exp-text { font-size: 14px; color: var(--text-main); line-height: 1.6; }
-
-  /* Nav */
-  .quiz-nav { padding: 0 28px 48px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .skip-link {
-    font-size: 14px; color: var(--text-muted); background: none; border: none; cursor: pointer;
-    font-family: 'Plus Jakarta Sans', sans-serif; text-decoration: underline; text-underline-offset: 4px;
-    transition: color 0.2s; font-weight: 500;
-  }
-  .skip-link:hover { color: var(--midnight); }
-  .next-btn { max-width: 160px; }
-
-  /* ══════════════════════════════
-     LOADING SCREEN
-  ══════════════════════════════ */
-  #loading { align-items: center; justify-content: center; gap: 32px; background: var(--surface); padding: 40px 28px; }
-  
-  .spinner {
-    width: 64px; height: 64px; border-radius: 50%;
-    border: 3px solid var(--dawn); border-top-color: var(--royal);
-    animation: spin 1s linear infinite;
-  }
+  /* QUIZ UI */
+  #quiz { padding: 32px 28px; }
+  .q-text { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 24px; line-height: 1.4; color: var(--midnight); }
+  .option-card { display: flex; align-items: center; gap: 16px; padding: 16px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; cursor: pointer; width: 100%; text-align: left; font-family: 'Plus Jakarta Sans', sans-serif; background: white; font-size: 15px; color: var(--midnight); }
+  .option-card.correct { background: var(--correct-bg); border-color: var(--correct); }
+  .option-card.wrong { background: var(--wrong-bg); border-color: var(--wrong); }
+  .explanation-card { background: var(--surface); border-radius: 12px; padding: 20px; display: none; margin-top: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+  .explanation-card.visible { display: block; animation: fadeIn 0.3s ease; }
+  .exp-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--royal); font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; }
+  .exp-text { font-size: 14px; line-height: 1.6; color: var(--text-main); }
+  .ai-loading { display: flex; align-items: center; gap: 8px; color: var(--royal); font-size: 14px; font-weight: 500; font-style: italic;}
+  .spinner-small { width: 16px; height: 16px; border: 2px solid var(--dawn); border-top-color: var(--royal); border-radius: 50%; animation: spin 1s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .loading-text-wrap { text-align: center; }
-  .loading-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 600; color: var(--midnight); margin-bottom: 12px; }
-  .loading-sub { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
-
-  .loading-tips {
-    background: var(--jicama); border: 1px solid var(--asian-pear); border-radius: 12px;
-    padding: 20px; max-width: 340px; width: 100%; text-align: center; margin-top: 20px;
-  }
-  .tip-label {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase;
-    letter-spacing: 0.1em; color: var(--warning); margin-bottom: 10px; font-weight: 600;
-    display: flex; justify-content: center; align-items: center; gap: 6px;
-  }
-  .tip-text { font-size: 14px; color: var(--text-main); line-height: 1.6; font-style: italic; }
-
-  /* ══════════════════════════════
-     RESULTS SCREEN
-  ══════════════════════════════ */
-  #results { background: var(--bg); padding-bottom: 80px; }
-
-  .results-header { padding: 48px 28px 32px; text-align: center; background: var(--surface); border-bottom: 1px solid var(--border); }
-  .results-icon { color: var(--royal); width: 48px; height: 48px; margin: 0 auto 16px; animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-  @keyframes scaleIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-  .results-title { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 600; color: var(--midnight); margin-bottom: 8px; }
-  .results-sub { font-size: 15px; color: var(--text-muted); }
-
-  /* Score cards */
-  .score-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 32px 28px 0; }
-  .score-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px 16px; text-align: center; box-shadow: var(--shadow-sm); }
-  .score-card.highlight { background: var(--midnight); border-color: var(--midnight); grid-column: 1 / -1; }
-  
-  .score-card-val { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 600; color: var(--midnight); margin-bottom: 6px; }
-  .score-card.highlight .score-card-val { color: var(--surface); font-size: 42px; }
-  
-  .score-card-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
-  .score-card.highlight .score-card-label { color: var(--china); }
-
-  /* Earned badge */
-  .section-wrap { padding: 32px 28px 0; }
-  .earned-badge-section {
-    padding: 20px; background: var(--jicama); border: 1px solid rgba(209, 154, 85, 0.3);
-    border-radius: 16px; display: flex; align-items: center; gap: 16px; box-shadow: var(--shadow-sm);
-  }
-  .earned-icon-wrap { width: 56px; height: 56px; border-radius: 50%; background: var(--surface); border: 1px solid rgba(209,154,85,0.3); display: flex; align-items: center; justify-content: center; color: var(--warning); flex-shrink: 0; }
-  .earned-icon-wrap .lucide { width: 28px; height: 28px; }
-  .earned-info { flex: 1; }
-  .earned-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--warning); margin-bottom: 6px; font-weight: 600; }
-  .earned-name { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--midnight); line-height: 1.2; }
-  .earned-desc { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
-
-  /* Breakdowns */
-  .section-head { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--midnight); margin-bottom: 16px; }
-
-  .chapter-result-list { display: flex; flex-direction: column; gap: 12px; }
-  .chapter-result-row { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow-sm); }
-  .cr-icon { width: 40px; height: 40px; border-radius: 8px; background: var(--bg); display: flex; align-items: center; justify-content: center; color: var(--royal); flex-shrink: 0; }
-  .cr-info { flex: 1; min-width: 0; }
-  .cr-name { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--midnight); }
-  .cr-bar-wrap { height: 4px; background: var(--bg); border-radius: 4px; overflow: hidden; }
-  .cr-bar-fill { height: 100%; border-radius: 4px; }
-  .cr-pct { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; flex-shrink: 0; width: 40px; text-align: right; }
-  .cr-status { width: 20px; height: 20px; display: flex; justify-content: center; align-items: center; }
-
-  .diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .diff-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 12px; text-align: center; box-shadow: var(--shadow-sm); }
-  .diff-card .lucide { margin: 0 auto 12px; width: 20px; height: 20px; }
-  .diff-card-val { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600; margin-bottom: 4px; }
-  .diff-card-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
-
-  /* AI Review */
-  .ai-review-card { background: var(--midnight); border-radius: 16px; padding: 28px; position: relative; overflow: hidden; box-shadow: var(--shadow-lg); }
-  .ai-review-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-  .ai-review-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--china); display: flex; align-items: center; gap: 6px; margin-bottom: 4px;}
-  .ai-review-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--surface); }
-  .ai-review-text { font-size: 15px; color: var(--sky); line-height: 1.7; font-weight: 300; }
-  .ai-review-text strong { color: var(--surface); font-weight: 500; }
-
-  /* Mistakes review */
-  .mistakes-section { display: flex; flex-direction: column; gap: 12px; }
-  .mistake-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm); }
-  .mistake-card.wrong-card { border-left: 4px solid var(--wrong); }
-  .mistake-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
-  .mistake-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .mistake-q { font-size: 15px; color: var(--text-main); line-height: 1.5; margin-bottom: 16px; font-weight: 500; }
-  .mistake-answers { display: flex; gap: 24px; flex-wrap: wrap; background: var(--bg); padding: 12px; border-radius: 8px; }
-  .ans-lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px; }
-  .ans-val { font-size: 14px; font-weight: 600; }
-  .ans-val.correct { color: var(--correct); }
-  .ans-val.wrong { color: var(--wrong); }
-  .time-tag { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
-  .time-tag.slow { color: var(--warning); }
-
-  /* Results nav */
-  .results-nav { display: flex; gap: 12px; padding: 40px 28px 0; }
-
+  /* RESULTS UI */
+  #results { text-align: center; padding: 60px 28px; }
+  .score-val { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 600; color: var(--royal); margin: 20px 0; }
 </style>
 </head>
 <body>
 
-<!-- ══ HOME ══ -->
+<!-- HOME SCREEN -->
 <div id="home" class="screen active">
-
-  <div class="home-top">
-    <div class="home-greeting">
-      <div class="avatar-ring"><i data-lucide="user"></i></div>
-      <div class="greeting-text">
-        <span class="greeting-hey">Good morning</span>
-        <span class="greeting-name">Aaradhya</span>
-      </div>
-      <div class="xp-bar-wrap">
-        <span class="xp-label">Lvl 3</span>
-        <div class="xp-bar"><div class="xp-fill"></div></div>
-      </div>
-    </div>
-
-    <div class="home-hero">
-      <div class="home-eyebrow">Informatics Practices</div>
-      <h1 class="home-title">Ready for your<br><em>daily quest?</em></h1>
-      <p class="home-sub">Pick your chapters and let's go. Every question gets you closer to mastery.</p>
-    </div>
-  </div>
-
-  <!-- Stats -->
+  <h1 class="home-title">Ready for your<br><em style="color:var(--royal);">daily quest?</em></h1>
   <div class="stats-row">
-    <div class="stat-pill">
-      <div class="stat-pill-val">12</div>
-      <div class="stat-pill-label">Mocks Done</div>
-    </div>
-    <div class="stat-pill">
-      <div class="stat-pill-val">74%</div>
-      <div class="stat-pill-label">Avg Accuracy</div>
-    </div>
-    <div class="stat-pill">
-      <div class="stat-pill-val"><i data-lucide="flame"></i> 5</div>
-      <div class="stat-pill-label">Day Streak</div>
-    </div>
+    <div class="stat-pill"><div class="stat-pill-val" id="statMocks">0</div><div class="stat-pill-label">Mocks</div></div>
+    <div class="stat-pill"><div class="stat-pill-val" id="statAccuracy">0%</div><div class="stat-pill-label">Accuracy</div></div>
+    <div class="stat-pill"><div class="stat-pill-val" id="statStreak"><i data-lucide="flame" style="color:var(--warning)"></i> 0</div><div class="stat-pill-label">Streak</div></div>
   </div>
-
-  <!-- Badges -->
-  <div class="badges-section">
-    <div class="badges-label">Your Badges</div>
-    <div class="badges-row">
-      <div class="badge-item">
-        <div class="badge-icon earned"><i data-lucide="star"></i></div>
-        <span class="badge-name">First Quest</span>
-      </div>
-      <div class="badge-item">
-        <div class="badge-icon earned"><i data-lucide="zap"></i></div>
-        <span class="badge-name">Speed Run</span>
-      </div>
-      <div class="badge-item">
-        <div class="badge-icon earned"><i data-lucide="database"></i></div>
-        <span class="badge-name">SQL Wizard</span>
-      </div>
-      <div class="badge-item">
-        <div class="badge-icon locked"><i data-lucide="award"></i></div>
-        <span class="badge-name">Perfect</span>
-      </div>
-      <div class="badge-item">
-        <div class="badge-icon locked"><i data-lucide="flame"></i></div>
-        <span class="badge-name">On Fire</span>
-      </div>
-      <div class="badge-item">
-        <div class="badge-icon locked"><i data-lucide="gem"></i></div>
-        <span class="badge-name">Diamond</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Chapters -->
   <div class="chapters-section">
-    <div class="section-header">
-      <h2 class="section-title">Choose Chapters</h2>
-      <span class="section-hint">Select one or more</span>
+    <div class="chapter-card" onclick="toggleChapter(this, 'pandas')">
+      <div style="font-size: 24px; padding-right: 8px;">🐼</div>
+      <div><div style="font-weight: 600;">Data Handling & Pandas</div><div style="font-size: 12px; color: var(--text-muted);">df, matplotlib, visualization</div></div>
     </div>
-    <div class="chapter-list">
-      <div class="chapter-card" onclick="toggleChapter(this, 'pandas')">
-        <div class="chapter-icon"><i data-lucide="table-2"></i></div>
-        <div class="chapter-info">
-          <div class="chapter-name">Data Handling & Pandas</div>
-          <div class="chapter-meta">df, matplotlib, visualization</div>
-        </div>
-        <div class="chapter-check"><i data-lucide="check"></i></div>
-      </div>
-      <div class="chapter-card" onclick="toggleChapter(this, 'sql')">
-        <div class="chapter-icon"><i data-lucide="database"></i></div>
-        <div class="chapter-info">
-          <div class="chapter-name">Database Query using SQL</div>
-          <div class="chapter-meta">SELECT, JOIN, GROUP BY</div>
-        </div>
-        <div class="chapter-check"><i data-lucide="check"></i></div>
-      </div>
-      <div class="chapter-card" onclick="toggleChapter(this, 'networks')">
-        <div class="chapter-icon"><i data-lucide="network"></i></div>
-        <div class="chapter-info">
-          <div class="chapter-name">Computer Networks</div>
-          <div class="chapter-meta">protocols, topologies, OSI</div>
-        </div>
-        <div class="chapter-check"><i data-lucide="check"></i></div>
-      </div>
-      <div class="chapter-card" onclick="toggleChapter(this, 'societal')">
-        <div class="chapter-icon"><i data-lucide="globe"></i></div>
-        <div class="chapter-info">
-          <div class="chapter-name">Societal Impacts</div>
-          <div class="chapter-meta">cyber ethics, digital rights</div>
-        </div>
-        <div class="chapter-check"><i data-lucide="check"></i></div>
-      </div>
+    <div class="chapter-card" onclick="toggleChapter(this, 'sql')">
+      <div style="font-size: 24px; padding-right: 8px;">🗄️</div>
+      <div><div style="font-weight: 600;">Database Query using SQL</div><div style="font-size: 12px; color: var(--text-muted);">SELECT, JOIN, GROUP BY</div></div>
+    </div>
+    <div class="chapter-card" onclick="toggleChapter(this, 'networks')">
+      <div style="font-size: 24px; padding-right: 8px;">🌐</div>
+      <div><div style="font-weight: 600;">Computer Networks</div><div style="font-size: 12px; color: var(--text-muted);">protocols, topologies</div></div>
+    </div>
+    <div class="chapter-card" onclick="toggleChapter(this, 'societal')">
+      <div style="font-size: 24px; padding-right: 8px;">🌍</div>
+      <div><div style="font-weight: 600;">Societal Impacts</div><div style="font-size: 12px; color: var(--text-muted);">cyber ethics, digital rights</div></div>
     </div>
   </div>
-
-  <!-- Feeling Lucky -->
-  <div class="lucky-section">
-    <div class="lucky-card" onclick="toggleLucky(this)">
-      <div class="lucky-top">
-        <i data-lucide="sparkles" class="lucky-icon"></i>
-        <h3 class="lucky-title">I'm Feeling Lucky</h3>
-      </div>
-      <p class="lucky-desc">Let AI curate a balanced mix across all chapters to test your overall readiness.</p>
-
-      <div class="lucky-expand" id="luckyExpand">
-        <div class="lucky-divider"></div>
-        <div class="lucky-info">
-          <div class="lucky-pill"><i data-lucide="library"></i> All 4 chapters</div>
-          <div class="lucky-pill"><i data-lucide="help-circle"></i> 20 questions</div>
-          <div class="lucky-pill"><i data-lucide="clock"></i> 25 minutes</div>
-        </div>
-        <button class="lucky-btn" onclick="startLucky(event)">
-          Start Lucky Quest <i data-lucide="arrow-right" style="width:14px;"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Start -->
-  <div class="start-area">
-    <p class="selected-count" id="selectedCount">Select chapters above to begin</p>
-    <button class="btn-primary" id="startBtn" onclick="goToQuiz()" disabled style="opacity:0.5;cursor:not-allowed;">
-      Begin Quest <i data-lucide="arrow-right"></i>
-    </button>
-  </div>
-
+  <button class="btn-primary" id="startBtn" style="margin-top:24px;" onclick="goToQuiz()" disabled>Begin Quest <i data-lucide="arrow-right"></i></button>
 </div>
 
-<!-- ══ LOADING ══ -->
-<div id="loading" class="screen">
-  <div class="spinner"></div>
-  <div class="loading-text-wrap">
-    <h2 class="loading-title">Crafting your quest...</h2>
-    <p class="loading-sub">Mixing chapters, calibrating difficulty<br>and preparing your challenge.</p>
-  </div>
-  <div class="loading-tips">
-    <div class="tip-label"><i data-lucide="lightbulb"></i> Quick tip</div>
-    <p class="tip-text" id="loadingTip">"Read each SQL query carefully — one wrong keyword changes everything."</p>
-  </div>
-</div>
-
-
-<!-- ══ QUIZ ══ -->
+<!-- QUIZ SCREEN -->
 <div id="quiz" class="screen">
-
-  <div class="quiz-header">
-    <div class="quiz-top-row">
-      <div class="quiz-back" onclick="show('home')"><i data-lucide="arrow-left"></i></div>
-      <span class="quiz-progress-text">Question <span id="qNum">1</span> of <span id="qTotal">10</span></span>
-      <div class="timer-chip" id="timerChip">
-        <i data-lucide="clock"></i>
-        <span id="timerText">25:00</span>
-      </div>
-    </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="progressFill" style="width:10%"></div>
-    </div>
+  <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono'; font-size:12px; color:var(--text-muted); margin-bottom: 16px;">
+    <span>Question <span id="qNum">1</span> / <span id="qTotal">10</span></span>
   </div>
-
-  <div class="quiz-body">
-    <div class="q-meta-row">
-      <span class="badge badge-easy" id="diffBadge">Easy</span>
-      <span class="chapter-tag" id="chapterTag">Data Handling & Pandas</span>
-    </div>
-
-    <!-- Reassurance message (shown after answer) -->
-    <div class="reassure-msg" id="reassureMsg" style="display:none;">
-      <div class="reassure-icon" id="reassureEmoji"><i data-lucide="check-circle-2"></i></div>
-      <span class="reassure-text" id="reassureText">You're doing amazing, keep going!</span>
-    </div>
-
-    <h2 class="q-text" id="qText">Which Pandas function is used to display the first N rows of a DataFrame?</h2>
-
-    <div class="options-grid" id="optionsGrid">
-      <button class="option-card" onclick="selectOption(this, 0)">
-        <span class="opt-letter">A</span>
-        <span class="opt-text">df.head()</span>
-      </button>
-      <button class="option-card" onclick="selectOption(this, 1)">
-        <span class="opt-letter">B</span>
-        <span class="opt-text">df.first()</span>
-      </button>
-      <button class="option-card" onclick="selectOption(this, 2)">
-        <span class="opt-letter">C</span>
-        <span class="opt-text">df.top()</span>
-      </button>
-      <button class="option-card" onclick="selectOption(this, 3)">
-        <span class="opt-letter">D</span>
-        <span class="opt-text">df.show()</span>
-      </button>
-    </div>
-
-    <div class="explanation-card" id="explanationCard">
-      <div class="exp-label"><i data-lucide="info"></i> Explanation</div>
-      <p class="exp-text" id="expText">df.head(N) returns the first N rows of a DataFrame. By default, it returns 5 rows if N is not specified.</p>
-    </div>
+  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+    <span class="badge badge-easy" id="diffBadge">Easy</span>
+    <span style="font-size: 12px; color: var(--text-muted); font-weight: 500;" id="chapterTag">Chapter Name</span>
   </div>
-
-  <div class="quiz-nav">
-    <button class="skip-link" id="skipBtn" onclick="skipQ()">Skip question</button>
-    <button class="btn-primary next-btn" id="nextBtn" disabled onclick="nextQ()">
-      Next <i data-lucide="arrow-right"></i>
-    </button>
+  <h2 class="q-text" id="qText">Question goes here</h2>
+  <div id="optionsGrid"></div>
+  <div class="explanation-card" id="explanationCard">
+    <div class="exp-label" id="expLabel"><i data-lucide="info"></i> Explanation</div>
+    <p class="exp-text" id="expText"></p>
+    <div id="aiLoader" class="ai-loading" style="display: none;"><div class="spinner-small"></div> AI generating textbook explanation...</div>
   </div>
-
+  <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+    <button id="skipBtn" style="background:none;border:none;color:var(--text-muted);font-weight:600;cursor:pointer;" onclick="skipQ()">Skip</button>
+    <button class="btn-primary" id="nextBtn" style="width:auto; padding: 12px 32px;" disabled onclick="nextQ()">Next <i data-lucide="arrow-right"></i></button>
+  </div>
 </div>
 
-<!-- ══ RESULTS ══ -->
+<!-- RESULTS SCREEN -->
 <div id="results" class="screen">
-
-  <div class="results-header">
-    <i data-lucide="award" class="results-icon"></i>
-    <h2 class="results-title">Quest Complete!</h2>
-    <p class="results-sub">You showed up and did the work. That's everything.</p>
-  </div>
-
-  <!-- Score -->
-  <div class="score-cards">
-    <div class="score-card highlight">
-      <div class="score-card-val">42<span style="font-size: 24px; color: var(--china)">/50</span></div>
-      <div class="score-card-label">Total Score</div>
-    </div>
-    <div class="score-card">
-      <div class="score-card-val" style="color:var(--correct)">84%</div>
-      <div class="score-card-label">Accuracy</div>
-    </div>
-    <div class="score-card">
-      <div class="score-card-val">38s</div>
-      <div class="score-card-label">Avg / Question</div>
-    </div>
-  </div>
-
-  <!-- Earned badge -->
-  <div class="section-wrap">
-    <div class="earned-badge-section">
-      <div class="earned-icon-wrap"><i data-lucide="zap"></i></div>
-      <div class="earned-info">
-        <div class="earned-label">Badge Unlocked</div>
-        <div class="earned-name">Speed Runner</div>
-        <div class="earned-desc">Completed in under 20 minutes</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Chapter breakdown -->
-  <div class="section-wrap">
-    <h3 class="section-head">Chapter Breakdown</h3>
-    <div class="chapter-result-list">
-      <div class="chapter-result-row">
-        <div class="cr-icon"><i data-lucide="network"></i></div>
-        <div class="cr-info">
-          <div class="cr-name">Computer Networks</div>
-          <div class="cr-bar-wrap">
-            <div class="cr-bar-fill" style="width:100%;background:var(--correct)"></div>
-          </div>
-        </div>
-        <span class="cr-pct" style="color:var(--correct)">100%</span>
-        <span class="cr-status" style="color:var(--correct)"><i data-lucide="check-circle-2"></i></span>
-      </div>
-      <div class="chapter-result-row">
-        <div class="cr-icon"><i data-lucide="database"></i></div>
-        <div class="cr-info">
-          <div class="cr-name">Database Query using SQL</div>
-          <div class="cr-bar-wrap">
-            <div class="cr-bar-fill" style="width:75%;background:var(--warning)"></div>
-          </div>
-        </div>
-        <span class="cr-pct" style="color:var(--warning)">75%</span>
-        <span class="cr-status" style="color:var(--warning)"><i data-lucide="alert-triangle"></i></span>
-      </div>
-      <div class="chapter-result-row">
-        <div class="cr-icon"><i data-lucide="table-2"></i></div>
-        <div class="cr-info">
-          <div class="cr-name">Data Handling & Pandas</div>
-          <div class="cr-bar-wrap">
-            <div class="cr-bar-fill" style="width:57%;background:var(--wrong)"></div>
-          </div>
-        </div>
-        <span class="cr-pct" style="color:var(--wrong)">57%</span>
-        <span class="cr-status" style="color:var(--wrong)"><i data-lucide="x-circle"></i></span>
-      </div>
-      <div class="chapter-result-row">
-        <div class="cr-icon"><i data-lucide="globe"></i></div>
-        <div class="cr-info">
-          <div class="cr-name">Societal Impacts</div>
-          <div class="cr-bar-wrap">
-            <div class="cr-bar-fill" style="width:90%;background:var(--correct)"></div>
-          </div>
-        </div>
-        <span class="cr-pct" style="color:var(--correct)">90%</span>
-        <span class="cr-status" style="color:var(--correct)"><i data-lucide="check-circle-2"></i></span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Difficulty -->
-  <div class="section-wrap">
-    <h3 class="section-head">Difficulty Breakdown</h3>
-    <div class="diff-grid">
-      <div class="diff-card">
-        <i data-lucide="target" style="color:var(--correct)"></i>
-        <div class="diff-card-val" style="color:var(--correct)">8/8</div>
-        <div class="diff-card-label">Easy</div>
-      </div>
-      <div class="diff-card">
-        <i data-lucide="bar-chart-2" style="color:var(--warning)"></i>
-        <div class="diff-card-val" style="color:var(--warning)">5/7</div>
-        <div class="diff-card-label">Medium</div>
-      </div>
-      <div class="diff-card">
-        <i data-lucide="flame" style="color:var(--wrong)"></i>
-        <div class="diff-card-val" style="color:var(--wrong)">2/5</div>
-        <div class="diff-card-label">Hard</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AI Review -->
-  <div class="section-wrap">
-    <div class="ai-review-card">
-      <div class="ai-review-top">
-        <div>
-          <div class="ai-review-label"><i data-lucide="sparkles"></i> AI Review</div>
-          <div class="ai-review-title">Personalized Feedback</div>
-        </div>
-      </div>
-      <p class="ai-review-text">
-        Aaradhya, you absolutely <strong>nailed Computer Networks</strong> today — 5/5, that's your strongest chapter right now. <strong>SQL</strong> is coming along too, just watch out for GROUP BY questions, that's where you slipped. <strong>Pandas</strong> needs a bit more love — the output-based questions are tripping you up. Spend 20 minutes on <strong>df.head(), df.tail(), and df.describe()</strong> before your next quest. You're genuinely improving and it shows.
-      </p>
-    </div>
-  </div>
-
-  <!-- Mistakes review -->
-  <div class="section-wrap">
-    <h3 class="section-head">Review Mistakes</h3>
-    <div class="mistakes-section">
-      <div class="mistake-card wrong-card">
-        <div class="mistake-top">
-          <div class="mistake-meta">
-            <span class="badge badge-medium">Medium</span>
-            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted)">Q7 · SQL</span>
-          </div>
-          <span class="time-tag slow"><i data-lucide="clock" style="width:12px;height:12px;"></i> 72s</span>
-        </div>
-        <p class="mistake-q">Which SQL clause is used to filter groups after GROUP BY?</p>
-        <div class="mistake-answers">
-          <div class="ans-item">
-            <span class="ans-lbl">Your answer</span>
-            <span class="ans-val wrong">WHERE</span>
-          </div>
-          <div class="ans-item">
-            <span class="ans-lbl">Correct</span>
-            <span class="ans-val correct">HAVING</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mistake-card wrong-card">
-        <div class="mistake-top">
-          <div class="mistake-meta">
-            <span class="badge badge-hard">Hard</span>
-            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted)">Q12 · Pandas</span>
-          </div>
-          <span class="time-tag"><i data-lucide="clock" style="width:12px;height:12px;"></i> 45s</span>
-        </div>
-        <p class="mistake-q">What does df.pivot_table() return when aggfunc is not specified?</p>
-        <div class="mistake-answers">
-          <div class="ans-item">
-            <span class="ans-lbl">Your answer</span>
-            <span class="ans-val wrong">Sum</span>
-          </div>
-          <div class="ans-item">
-            <span class="ans-lbl">Correct</span>
-            <span class="ans-val correct">Mean</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Nav -->
-  <div class="results-nav">
-    <button class="btn-secondary" style="flex:1" onclick="show('home')">Home</button>
-    <button class="btn-primary" style="flex:2" onclick="show('home')">New Quest <i data-lucide="sparkles"></i></button>
-  </div>
-
+  <i data-lucide="award" style="width: 64px; height: 64px; color: var(--warning); margin: 0 auto 16px;"></i>
+  <h2 style="font-family: 'Playfair Display'; font-size: 32px; color: var(--midnight);">Quest Complete!</h2>
+  <div class="score-val" id="finalScore">0 / 0</div>
+  <p style="color: var(--text-muted); margin-bottom: 40px;">Your progress has been saved.</p>
+  <button class="btn-primary" onclick="location.reload()">Return Home</button>
 </div>
 
 <script>
-  // Initialize Lucide Icons
+  // ── ANTI-SNOOPING SECURITY SCRIPT ──
+  // 1. Disable Right-Click
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  // 2. Disable F12, Ctrl+U, Ctrl+Shift+I, and other DevTools shortcuts
+  document.onkeydown = function(e) {
+    if (e.keyCode == 123) { return false; } // F12
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; } // Ctrl+Shift+I
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } // Ctrl+Shift+J
+    if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } // Ctrl+U
+  };
+
   lucide.createIcons();
 
-  // ── SCREENS ──
-  function show(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    window.scrollTo(0,0);
+  // ════════════════════════════════════════════════════
+  // 🔴 CONFIGURATION ZONE: PASTE YOUR KEYS HERE 🔴 
+  // ════════════════════════════════════════════════════
+
+  const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co'; // <--- PASTE SUPABASE URL
+  const SUPABASE_ANON_KEY = 'eyJhb...'; // <--- PASTE SUPABASE ANON KEY
+  const GEMINI_API_KEY = 'AIzaSy...'; // <--- PASTE FREE GEMINI API KEY HERE
+
+  const CHAPTER_TEXT = `
+  INFORMATICS PRACTICES CLASS XII NCERT KNOWLEDGE BASE:
+
+  CHAPTER 1: QUERYING AND SQL FUNCTIONS
+  Single row functions return one result per row (e.g., POWER, ROUND, MOD, UCASE, MID, SUBSTR, LENGTH, LEFT, RIGHT, INSTR, NOW, DATE).
+  Aggregate/Multiple row functions return one result for a group of rows (e.g., MAX, MIN, AVG, SUM, COUNT).
+  GROUP BY groups rows. HAVING specifies conditions on GROUP BY rows.
+  Operations: UNION combines tables without duplicates. INTERSECT gets common tuples. MINUS gets tuples in first but not second. Cartesian product pairs all rows (Degree = sum of degrees, Cardinality = product of cardinalities).
+  DROP TABLE <tablename> deletes a table and its data.
+  LIKE clause uses wildcards: '%' (zero or more characters), '_' (exactly one character).
+  SUBSTR(string, pos, n) extracts n characters starting at pos. e.g., substr("Every cloud has a silver lining", 7, 5) is "cloud".
+  
+  CHAPTER 2 & 3: DATA HANDLING USING PANDAS
+  Pandas is the most popular Python library for data analysis and manipulation. It contains Series (1D) and DataFrame (2D).
+  DataFrames can be exported to CSV using to_csv() and imported using read_csv(). A Spreadsheet package is most suitable to create/read CSV files.
+  Combining DataFrames is done using pd.merge() or append().
+  Descriptive Statistics: df.max(), df.min(), df.sum(), df.count(), df.mean(), df.median(), df.mode(), df.quantile().
+  Variance is calculated using df.var(). It is the average of squared differences from the mean. Standard deviation is df.std().
+  Handling missing values (NaN): use dropna() to drop, fillna() to estimate/replace.
+  
+  CHAPTER 4: PLOTTING DATA USING MATPLOTLIB
+  Visualisation helps in understanding data. Matplotlib.pyplot is used for plotting.
+  import matplotlib.pyplot as plt
+  Customisations include linewidth, linestyle, edgecolor, color.
+  Bar charts use kind='bar'. Histograms use kind='hist' (groups data into bins).
+  Scatter plots show relationship between two variables (correlation).
+  Pie charts represent proportional data. To show percentage as label, use 'autopct'.
+  
+  CHAPTER 5: INTERNET AND WEB
+  A network is an interconnection of devices. LAN (Local, up to 1km), MAN (Metropolitan), WAN (Wide, across continents).
+  Devices: Modem (Modulator Demodulator, converts analog to digital and vice versa), Hub (broadcasts), Switch (sends signals only to selected destination using MAC), Router (connects networks, internet), Gateway (entry/exit point, firewall).
+  Topologies: Mesh, Ring, Bus, Star, Tree/Hybrid.
+  The World Wide Web (WWW) was invented by Tim Berners-Lee. The first web browser was Mosaic by NCSA.
+  Web hosting is a service that puts a website onto the internet. Web servers store and deliver website content.
+  
+  CHAPTER 6: SOCIETAL IMPACTS
+  Digital Footprints: Active (intentionally submitted, e.g., writing emails/responses on apps) and Passive (unintentionally left behind, e.g., browsing history).
+  Net Etiquettes: Be ethical, respectful, responsible. Don't feed trolls. An Internet Troll deliberately sows discord or upsets people for amusement.
+  Cyber Bullying: Intimidating online.
+  Intellectual Property Rights (IPR): Copyright (creative works), Patent (inventions), Trademark (brand symbols/logos).
+  FOSS (Free and Open Source Software) like Ubuntu, LibreOffice. GPL and Creative Commons (CC) provide licensing guidelines.
+  Cyber Crime: Hacking (White hat = ethical, Black hat/Crackers = malicious). Hacktivist is a hacker aiming for political or social change.
+  Phishing: Fake emails/sites to steal credentials. Ransomware blocks access until ransom is paid. Malware like Adware generates revenue for developers.
+  E-waste (Electronic waste) contains harmful metals (lead, cadmium). Proper management is Reduce, Reuse, Recycle.
+  Ergonomics is the science of designing workplaces to prevent physical strain. Bad posture can be prevented by following ergonomists' recommendations.
+  `;
+  // ════════════════════════════════════════════════════
+
+  // 1. SUPABASE LOGIC
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let currentStats = { mocks_done: 0, total_correct: 0, total_answered: 0, streak: 0, last_played_date: null };
+
+  async function loadProgress() {
+    try {
+      const { data } = await supabase.from('aaradhya_stats').select('*').eq('id', 'aaradhya').single();
+      if (data) { currentStats = data; updateHomeUI(); }
+    } catch(err) { console.log("Supabase not linked yet."); }
   }
 
-  // ── CHAPTERS ──
-  let selected = new Set();
+  function updateHomeUI() {
+    document.getElementById('statMocks').innerText = currentStats.mocks_done;
+    let accuracy = currentStats.total_answered > 0 ? Math.round((currentStats.total_correct / currentStats.total_answered) * 100) : 0;
+    document.getElementById('statAccuracy').innerText = `${accuracy}%`;
+    document.getElementById('statStreak').innerHTML = `<i data-lucide="flame" style="color:var(--warning)"></i> ${currentStats.streak}`;
+    lucide.createIcons();
+  }
+  loadProgress();
+
+  // 2. QUESTION BANK
+  const questionBank = [
+    { chapterId: "pandas", chapterName: "Data Handling", difficulty: "medium", question: "Which command is used for combining or merging dataframes in pandas?", options: ["pd.combine()", "pd.merge()", "pd.join()", "pd.show()"], correctAnswer: 1, explanation: "pd.merge() is the standard Pandas function used to merge DataFrame objects." },
+    { chapterId: "pandas", chapterName: "Data Handling", difficulty: "hard", question: "Assume df is a dataframe. Which function is used to find the average of squared differences from the mean?", options: ["df.var()", "df.std()", "df.mean()", "df.StandardDeviation()"], correctAnswer: 0, explanation: "df.var() calculates the variance, which is the average of squared differences from the mean." },
+    { chapterId: "pandas", chapterName: "Data Handling", difficulty: "easy", question: "In data science, which of the python libraries is most popular for data analysis?", options: ["Swift", "Django", "Open office", "Pandas"], correctAnswer: 3, explanation: "Pandas is the core library used for data manipulation and analysis in Python." },
+    { chapterId: "pandas", chapterName: "Data Handling", difficulty: "medium", question: "Which package or software is most suitable to create a CSV file?", options: ["Any word processing", "Any spreadsheet package", "Any Presentation package", "Any Database software"], correctAnswer: 1, explanation: "A Comma-Separated Values (CSV) file is easily created and handled using any spreadsheet package like Excel." },
+    { chapterId: "pandas", chapterName: "Plotting", difficulty: "easy", question: "Autopct is used in a pie plot to display the ______ of that part as a label.", options: ["Value", "Legend", "Percentage", "Data"], correctAnswer: 2, explanation: "The 'autopct' parameter enables you to display the percentage value of each wedge in a pie chart." },
+    { chapterId: "sql", chapterName: "SQL Queries", difficulty: "easy", question: "Which command is used to delete a table from a database?", options: ["Delete Table <tableName>;", "Drop Table <tableName>;", "Delete <tableName>;", "Remove <tableName>;"], correctAnswer: 1, explanation: "The DROP TABLE command deletes both the structure and the data of the table." },
+    { chapterId: "sql", chapterName: "SQL Queries", difficulty: "medium", question: "In SQL, the LIKE condition allows wild card characters. Which of the following is a valid wild card character?", options: ["#", "$", "*", "%"], correctAnswer: 3, explanation: "The '%' symbol is used in SQL to represent zero, one, or multiple characters." },
+    { chapterId: "sql", chapterName: "SQL Queries", difficulty: "hard", question: "Find output for the following: Select substr('Every cloud has a silver lining', 7, 5);", options: ["cloud", "cloud has a silver lining", "Every c", "very "], correctAnswer: 0, explanation: "substr(string, start, length) starts at the 7th character ('c') and takes 5 characters ('cloud')." },
+    { chapterId: "networks", chapterName: "Computer Networks", difficulty: "medium", question: "_______ was the first Web browser developed by the National Centre for Supercomputing Application (NCSA).", options: ["Mozilla Firefox", "Opera", "Mosaic", "Google Chrome"], correctAnswer: 2, explanation: "Mosaic was the first popular web browser developed by the NCSA." },
+    { chapterId: "networks", chapterName: "Computer Networks", difficulty: "easy", question: "________ is a service that allows us to put a website or a web page onto the internet.", options: ["Web server", "Web hosting", "Web site", "Web upload"], correctAnswer: 1, explanation: "Web hosting is the service that provides storage and access for websites on the Internet." },
+    { chapterId: "societal", chapterName: "Societal Impacts", difficulty: "medium", question: "A ________ is a hacker with an aim to bring about political and social change.", options: ["White hat", "Hacktivist", "Black hat", "Grey hat"], correctAnswer: 1, explanation: "A hacktivist uses computers and networks to promote political agendas or social change." },
+    { chapterId: "societal", chapterName: "Societal Impacts", difficulty: "easy", question: "An ________ is a person who deliberately sows discord on the internet by posting inflammatory messages for amusement.", options: ["Internet addict", "Internet troll", "Netizen", "Digital citizen"], correctAnswer: 1, explanation: "An internet troll intentionally tries to provoke or upset others online." },
+    { chapterId: "societal", chapterName: "Societal Impacts", difficulty: "medium", question: "Writing emails or responses on different websites or mobile Apps is a part of your ________.", options: ["Digital citizen", "Passive Digital Footprint", "Active Digital Footprint", "Digital Social Circle"], correctAnswer: 2, explanation: "Active Digital Footprints are created when personal data is released intentionally (e.g., posting, emailing)." },
+    { chapterId: "societal", chapterName: "Societal Impacts", difficulty: "medium", question: "Bad posture, backaches, neck and shoulder pain can be prevented by arranging the workspace as recommended by ________.", options: ["doctor", "therapist", "ergonomists", "Psychologist"], correctAnswer: 2, explanation: "Ergonomists study and design workspaces to maximize productivity and reduce physical fatigue." }
+  ];
+
+  // 3. QUIZ LOGIC
+  let selected = new Set(); let activeQuestions = []; let currentQIndex = 0; let score = 0;
+
+  function show(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
 
   function toggleChapter(card, id) {
-    if (selected.has(id)) {
-      selected.delete(id);
-      card.classList.remove('selected');
-    } else {
-      selected.add(id);
-      card.classList.add('selected');
-    }
-    updateStartBtn();
+    selected.has(id) ? selected.delete(id) : selected.add(id);
+    card.classList.toggle('selected');
+    document.getElementById('startBtn').disabled = selected.size === 0;
   }
 
-  function updateStartBtn() {
-    const btn = document.getElementById('startBtn');
-    const count = document.getElementById('selectedCount');
-    if (selected.size === 0) {
-      btn.disabled = true;
-      btn.style.opacity = '0.5';
-      btn.style.cursor = 'not-allowed';
-      count.innerHTML = 'Select chapters above to begin';
-    } else {
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      btn.style.cursor = 'pointer';
-      count.innerHTML = `<span>${selected.size} chapter${selected.size > 1 ? 's' : ''}</span> selected · ~${selected.size * 5} questions`;
-    }
-  }
-
-  // ── LUCKY ──
-  function toggleLucky(card) {
-    const expand = document.getElementById('luckyExpand');
-    expand.classList.toggle('open');
-  }
-
-  function startLucky(e) {
-    e.stopPropagation();
-    show('loading');
-    setTimeout(() => show('quiz'), 2500);
-  }
-
-  // ── START ──
   function goToQuiz() {
-    if (selected.size === 0) return;
-    show('loading');
-    setTimeout(() => show('quiz'), 2500);
+    activeQuestions = questionBank.filter(q => selected.has(q.chapterId)).sort(() => Math.random() - 0.5);
+    currentQIndex = 0; score = 0; renderQuestion(); show('quiz');
   }
 
-  // ── QUIZ DEMO ──
-  function selectOption(btn, idx) {
-    const opts = document.querySelectorAll('.option-card');
-    if (opts[0].disabled) return;
+  function renderQuestion() {
+    const q = activeQuestions[currentQIndex];
+    document.getElementById('qNum').innerText = currentQIndex + 1;
+    document.getElementById('qTotal').innerText = activeQuestions.length;
+    document.getElementById('qText').innerText = q.question;
+    document.getElementById('chapterTag').innerText = q.chapterName;
+    document.getElementById('diffBadge').className = `badge badge-${q.difficulty}`;
+    document.getElementById('diffBadge').innerText = q.difficulty;
 
-    opts.forEach(o => o.disabled = true);
-    btn.classList.add(idx === 0 ? 'correct' : 'wrong');
-    if (idx !== 0) opts[0].classList.add('correct');
+    const grid = document.getElementById('optionsGrid'); grid.innerHTML = ''; 
+    const letters = ['A', 'B', 'C', 'D'];
+    q.options.forEach((opt, i) => {
+      grid.innerHTML += `<button class="option-card"
+      onclick="selectOption(this, ${i})"><span style="font-family:'JetBrains Mono'; color:var(--text-muted); width:24px; font-weight:600;">${letters[i]}</span><span style="flex:1;">${opt}</span></button>`;
+    });
+
+    document.getElementById('explanationCard').classList.remove('visible');
+    document.getElementById('nextBtn').disabled = true;
+    document.getElementById('skipBtn').style.display = 'inline-block';
+  }
+
+  async function selectOption(btn, index) {
+    const q = activeQuestions[currentQIndex];
+    document.querySelectorAll('.option-card').forEach(o => o.style.pointerEvents = 'none');
+    
+    const isCorrect = (index === q.correctAnswer);
+    if (isCorrect) { btn.classList.add('correct'); score++; } 
+    else { btn.classList.add('wrong'); document.querySelectorAll('.option-card')[q.correctAnswer].classList.add('correct'); }
 
     document.getElementById('explanationCard').classList.add('visible');
+    const expLabel = document.getElementById('expLabel');
+    const expText = document.getElementById('expText');
+    const aiLoader = document.getElementById('aiLoader');
 
-    const msg = document.getElementById('reassureMsg');
-    const iconContainer = document.getElementById('reassureEmoji');
-    const text = document.getElementById('reassureText');
+    // ── 5. GOOGLE GEMINI RAG AI ──
+    if (GEMINI_API_KEY && GEMINI_API_KEY.includes('AIzaSy')) {
+      expLabel.innerHTML = '<i data-lucide="sparkles"></i> AI Searching Textbook...';
+      expText.innerText = '';
+      aiLoader.style.display = 'flex';
+      
+      const promptText = `
+        Student answered a question. 
+        Question: "${q.question}"
+        Student picked: "${index >= 0 ? q.options[index] : 'Skipped'}"
+        Correct answer: "${q.options[q.correctAnswer]}"
+        Is correct: ${isCorrect}
 
-    if (idx === 0) {
-      iconContainer.innerHTML = '<i data-lucide="check-circle-2"></i>';
-      iconContainer.style.color = 'var(--correct)';
-      msg.style.borderLeftColor = 'var(--correct)';
-      text.textContent = "That's correct! You're doing so well, keep it up.";
+        SOURCE MATERIAL (TEXTBOOK SUMMARY):
+        ${CHAPTER_TEXT}
+
+        INSTRUCTIONS:
+        1. Explain exactly why "${q.options[q.correctAnswer]}" is the correct answer.
+        2. GROUNDING: You MUST base your explanation STRICTLY on the SOURCE MATERIAL above.
+        3. CITE: If possible, pull a short direct quote from the text.
+        4. TONE: Be warm. Use her name (Aaradhya).
+        5. Maximum 3 sentences.
+      `;
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: promptText }] }],
+            systemInstruction: { parts: [{ text: "You are a brilliant, encouraging Informatics Practices teacher." }] },
+            generationConfig: { temperature: 0.1 } // Very low temperature for textbook accuracy
+          })
+        });
+        const data = await res.json();
+        expLabel.innerHTML = '<i data-lucide="sparkles"></i> Gemini Textbook Tutor';
+        expText.innerText = data.candidates[0].content.parts[0].text;
+      } catch (err) {
+        expLabel.innerHTML = '<i data-lucide="info"></i> Standard Explanation';
+        expText.innerText = q.explanation;
+      } finally {
+        aiLoader.style.display = 'none';
+        lucide.createIcons();
+      }
     } else {
-      iconContainer.innerHTML = '<i data-lucide="lightbulb"></i>';
-      iconContainer.style.color = 'var(--warning)';
-      msg.style.borderLeftColor = 'var(--warning)';
-      text.textContent = "That one was tricky — now you know it. That's what this is for.";
+      expLabel.innerHTML = '<i data-lucide="info"></i> Standard Explanation';
+      expText.innerText = q.explanation;
     }
-    msg.style.display = 'flex';
     
-    // Re-render icons dynamically added
-    lucide.createIcons();
-
     document.getElementById('nextBtn').disabled = false;
     document.getElementById('skipBtn').style.display = 'none';
   }
 
-  function skipQ() {
-    document.getElementById('explanationCard').classList.add('visible');
-    const msg = document.getElementById('reassureMsg');
-    const iconContainer = document.getElementById('reassureEmoji');
-    
-    iconContainer.innerHTML = '<i data-lucide="fast-forward"></i>';
-    iconContainer.style.color = 'var(--royal)';
-    msg.style.borderLeftColor = 'var(--royal)';
-    document.getElementById('reassureText').textContent = "No worries, skipping is smart sometimes. Read the explanation and move on.";
-    msg.style.display = 'flex';
-    
-    // Re-render icons dynamically added
-    lucide.createIcons();
+  function skipQ() { selectOption(document.querySelectorAll('.option-card')[0], -1); }
+  function nextQ() { currentQIndex++; currentQIndex < activeQuestions.length ? renderQuestion() : finishQuiz(); }
 
-    document.getElementById('nextBtn').disabled = false;
-    document.getElementById('skipBtn').style.display = 'none';
-    document.querySelectorAll('.option-card').forEach(o => o.disabled = true);
-  }
+  // ── 6. SUPABASE SAVE ──
+  async function finishQuiz() { 
+    document.getElementById('finalScore').innerHTML = `${score} <span style="font-size:32px; color:var(--china)">/ ${activeQuestions.length}</span>`; 
+    show('results'); 
 
-  function nextQ() {
-    show('results');
+    const today = new Date().toISOString().split('T')[0];
+    let newStreak = currentStats.streak;
+    if (currentStats.last_played_date !== today) {
+      const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+      newStreak = (currentStats.last_played_date === yesterday.toISOString().split('T')[0]) ? newStreak + 1 : 1;
+    }
+
+    const updatedData = { mocks_done: currentStats.mocks_done + 1, total_correct: currentStats.total_correct + score, total_answered: currentStats.total_answered + activeQuestions.length, streak: newStreak, last_played_date: today };
+    try {
+      const { error } = await supabase.from('aaradhya_stats').update(updatedData).eq('id', 'aaradhya');
+      if (!error) { currentStats = { ...currentStats, ...updatedData }; updateHomeUI(); }
+    } catch(err) { console.log("DB save failed."); }
   }
 </script>
 </body>
