@@ -1,338 +1,1742 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>down bad — niv on aaradhya</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,700;1,9..144,900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400&family=Inter:wght@400;500;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aaradhya's IP Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #FFFFFF;
+    --bg: #FAFAFA;
+    --lavender: #8B7FD4;
+    --lavender-light: #EAE8F8;
+    --lavender-mid: #C4BFF0;
+    --lavender-dark: #6B5FBB;
+    --text: #1A1A2E;
+    --text-mid: #5A5A7A;
+    --text-light: #9999BB;
+    --border: #EBEBF5;
+    --correct: #6DBF8A;
+    --correct-light: #E8F7ED;
+    --wrong: #E8837A;
+    --wrong-light: #FDEEEC;
+    --easy: #6DBF8A;
+    --medium: #F0B860;
+    --hard: #E8837A;
+    --gold: #F5C842;
+    --shadow-sm: 0 2px 8px rgba(139,127,212,0.08);
+    --shadow-md: 0 8px 32px rgba(139,127,212,0.12);
+    --shadow-lg: 0 20px 60px rgba(139,127,212,0.16);
+  }
 
-    <style>
-        :root {
-            --paper: #fdfcfb;
-            --ink: #121212;
-            --ink-mid: #3a3a3a;
-            --accent: #d63031; /* Vibrant Pen Red */
-            --ig-purple: #6c3fc5;
-            --ig-gray: #1a1a1a;
-            --col-width: 720px;
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-        /* 11:11 Atmosphere */
-        body.eleven-active {
-            background-color: #fff8f8;
-            transition: background-color 3s ease;
-        }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background-color: var(--paper);
-            color: var(--ink);
-            font-family: 'Cormorant Garamond', serif;
-            line-height: 1.8;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+  /* ── SCREEN SYSTEM ── */
+  .screen { display: none; min-height: 100vh; }
+  .screen.active { display: flex; flex-direction: column; }
 
-        /* Paper Texture */
-        body::before {
-            content: "";
-            position: fixed; inset: 0;
-            background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
-            opacity: 0.3; pointer-events: none; z-index: 10000;
-        }
+  /* ── SHARED ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
 
-        #progress {
-            position: fixed; top: 0; left: 0; width: 100%; height: 4px;
-            background: var(--ink); transform-origin: left; transform: scaleX(0); z-index: 10001;
-        }
+  .badge-easy { background: #E8F7ED; color: #4A9E65; }
+  .badge-medium { background: #FEF5E6; color: #C88A20; }
+  .badge-hard { background: #FDEEEC; color: #C45850; }
+  .badge-lavender { background: var(--lavender-light); color: var(--lavender-dark); }
 
-        /* --- 11:11 VISUAL BEACON --- */
-        .beacon-section {
-            margin: 6rem 0; text-align: center; position: relative;
-        }
-        .beacon-orb {
-            width: clamp(140px, 30vw, 200px); height: clamp(140px, 30vw, 200px);
-            border: 1px solid rgba(0,0,0,0.05);
-            border-radius: 50%; margin: 0 auto;
-            display: flex; align-items: center; justify-content: center;
-            position: relative;
-        }
-        .beacon-flare {
-            position: absolute; width: 100%; height: 100%;
-            border-radius: 50%; background: var(--accent);
-            filter: blur(40px); opacity: 0; transition: 2s all ease;
-        }
-        .eleven-active .beacon-flare { opacity: 0.25; transform: scale(1.6); }
-        .beacon-text { font-family: 'Fraunces'; font-size: clamp(3rem, 10vw, 5rem); font-style: italic; z-index: 2; }
-        .beacon-label { font-family: 'JetBrains Mono'; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; margin-top: 1.5rem; color: #888; }
+  .btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px 24px;
+    background: var(--lavender);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 20px rgba(139,127,212,0.3);
+    letter-spacing: 0.01em;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(139,127,212,0.4); background: var(--lavender-dark); }
+  .btn-primary:active { transform: translateY(0); }
 
-        /* --- LAYOUT --- */
-        .container { width: 90%; max-width: var(--col-width); margin: 0 auto; }
-        header { padding: 8rem 0 4rem; text-align: center; }
-        .kicker { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.7rem; letter-spacing: 0.5em; margin-bottom: 2rem; display: block; }
-        h1 { font-family: 'Fraunces', serif; font-size: clamp(3.5rem, 12vw, 8rem); font-weight: 900; font-style: italic; line-height: 0.8; letter-spacing: -0.05em; }
-        h1 span { display: block; -webkit-text-stroke: 1.2px var(--ink); color: transparent; }
+  .btn-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: white;
+    color: var(--lavender);
+    border: 1.5px solid var(--lavender-mid);
+    border-radius: 16px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .btn-secondary:hover { background: var(--lavender-light); border-color: var(--lavender); }
 
-        .prose { font-size: clamp(1.2rem, 3.5vw, 1.5rem); margin-bottom: 6rem; opacity: 0; transform: translateY(20px); transition: 1s all ease; }
-        .prose.visible { opacity: 1; transform: translateY(0); }
-        .prose p { margin-bottom: 2.5rem; }
+  /* ══════════════════════════════
+     HOME SCREEN
+  ══════════════════════════════ */
+  #home {
+    padding: 0;
+    background: var(--white);
+  }
 
-        /* --- THE POEM (lowercase) --- */
-        .poem-section {
-            margin: 8rem 0; padding: 4rem 1.5rem; position: relative; border-left: 2px solid rgba(214, 48, 49, 0.2);
-        }
-        .dancing-light {
-            position: absolute; top: 0; right: -5%; width: 50%; height: 100%;
-            background: radial-gradient(circle, rgba(255,245,210,0.4) 0%, transparent 70%);
-            filter: blur(50px); animation: kitchenLight 8s infinite alternate; pointer-events: none;
-        }
-        @keyframes kitchenLight { from { opacity: 0.2; transform: translateX(0); } to { opacity: 0.5; transform: translateX(-30px); } }
-        .poem-text { font-family: 'Cormorant Garamond'; font-size: clamp(1.3rem, 4vw, 1.5rem); line-height: 1.7; font-style: italic; color: var(--ink-mid); text-transform: lowercase; }
+  .home-top {
+    padding: 56px 28px 32px;
+    position: relative;
+  }
 
-        /* --- INSTAGRAM UI --- */
-        .dm-block { margin: 8rem 0; position: relative; }
-        .dm-window { background: #000; border-radius: 30px; overflow: hidden; width: 100%; max-width: 400px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 80px rgba(0,0,0,0.3); }
-        .dm-header { padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; border-bottom: 1px solid #1a1a1a; }
-        .dm-pfp { width: 34px; height: 34px; border-radius: 50%; background: #222; overflow: hidden; border: 1px solid #333; }
-        .dm-pfp img { width: 100%; height: 100%; object-fit: cover; }
-        .dm-chat { padding: 2rem 1.2rem; display: flex; flex-direction: column; gap: 0.8rem; }
-        
-        .bubble { max-width: 85%; padding: 0.8rem 1.1rem; border-radius: 20px; font-family: 'Inter', sans-serif; font-size: 0.9rem; opacity: 0; transform: translateY(15px); transition: 0.8s all cubic-bezier(0.16, 1, 0.3, 1); }
-        .her { align-self: flex-start; background: #262626; color: #fff; border-bottom-left-radius: 4px; }
-        .you { align-self: flex-end; background: var(--ig-purple); color: #fff; border-bottom-right-radius: 4px; }
-        .bubble.show { opacity: 1; transform: translateY(0); }
-        .reply-context { font-size: 0.75rem; opacity: 0.4; border-left: 2px solid #fff; padding-left: 0.6rem; margin-bottom: 0.4rem; }
+  .home-greeting {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
 
-        /* --- RED ANNOTATIONS --- */
-        .annotation { 
-            font-family: 'Caveat', cursive; color: var(--accent); font-size: clamp(1.3rem, 4vw, 1.7rem); 
-            position: absolute; pointer-events: none; line-height: 1.1; z-index: 100; opacity: 0; 
-            transition: 1s opacity ease 1s, transform 1s ease 1s; 
-        }
-        .annotation.visible { opacity: 1; }
-        .annotation svg { position: absolute; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
+  .avatar-ring {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--lavender-light);
+    border: 2px solid var(--lavender-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
 
-        /* --- FOOTER --- */
-        footer {
-            margin-top: 10rem; padding: 8rem 2rem 5rem; background: var(--ink); color: #fff;
-            display: flex; justify-content: space-between; align-items: flex-end; position: relative;
-        }
-        .footer-logo { font-family: 'Fraunces'; font-size: 3rem; font-style: italic; font-weight: 900; }
-        .footer-metrics { font-family: 'JetBrains Mono'; font-size: 0.6rem; text-align: right; line-height: 2.2; letter-spacing: 0.2em; opacity: 0.5; }
+  .greeting-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .greeting-hey {
+    font-size: 12px;
+    color: var(--text-light);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .greeting-name {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
 
-        @media (max-width: 900px) {
-            .annotation { 
-                position: relative; display: block; margin: 1rem auto; text-align: center; 
-                top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
-                width: 100% !important; transform: none !important;
-            }
-            .annotation svg { display: none; }
-            footer { flex-direction: column; align-items: flex-start; gap: 3rem; }
-            .footer-metrics { text-align: left; }
-        }
-    </style>
+  .xp-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+  .xp-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--lavender);
+    font-weight: 500;
+  }
+  .xp-bar {
+    width: 60px;
+    height: 6px;
+    background: var(--lavender-light);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .xp-fill {
+    width: 35%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--lavender-mid), var(--lavender));
+    border-radius: 6px;
+  }
+
+  .home-hero {
+    margin-bottom: 8px;
+  }
+  .home-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--lavender);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .home-eyebrow::before {
+    content: '';
+    width: 20px;
+    height: 1.5px;
+    background: var(--lavender-mid);
+    border-radius: 2px;
+  }
+
+  .home-title {
+    font-family: 'Fraunces', serif;
+    font-size: 38px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .home-title em {
+    font-style: italic;
+    color: var(--lavender);
+  }
+
+  .home-sub {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: flex;
+    gap: 10px;
+    margin: 28px 28px 0;
+  }
+
+  .stat-pill {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+  .stat-pill-val {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin-bottom: 2px;
+  }
+  .stat-pill-label {
+    font-size: 10px;
+    color: var(--text-light);
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* Badges row */
+  .badges-section {
+    margin: 24px 28px 0;
+  }
+  .badges-label {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+  .badges-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .badge-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 56px;
+  }
+  .badge-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    border: 1.5px solid var(--border);
+    background: white;
+    position: relative;
+    transition: transform 0.2s;
+  }
+  .badge-icon:hover { transform: scale(1.08); }
+  .badge-icon.locked {
+    opacity: 0.35;
+    filter: grayscale(1);
+  }
+  .badge-icon.earned {
+    border-color: var(--gold);
+    background: #FFFBEE;
+    box-shadow: 0 0 0 3px rgba(245,200,66,0.15);
+  }
+  .badge-name {
+    font-size: 9px;
+    color: var(--text-light);
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+  }
+
+  /* Divider */
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 28px 28px 0;
+  }
+
+  /* Chapters section */
+  .chapters-section {
+    padding: 24px 28px 0;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .section-hint {
+    font-size: 12px;
+    color: var(--text-light);
+  }
+
+  .chapter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .chapter-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+  .chapter-card:hover { border-color: var(--lavender-mid); box-shadow: var(--shadow-sm); }
+  .chapter-card.selected {
+    border-color: var(--lavender);
+    background: var(--lavender-light);
+    box-shadow: 0 0 0 3px rgba(139,127,212,0.12);
+  }
+
+  .chapter-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    background: var(--bg);
+    border: 1px solid var(--border);
+  }
+  .chapter-card.selected .chapter-icon {
+    background: white;
+    border-color: var(--lavender-mid);
+  }
+
+  .chapter-info { flex: 1; min-width: 0; }
+  .chapter-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .chapter-meta {
+    font-size: 11px;
+    color: var(--text-light);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .chapter-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.18s;
+    font-size: 11px;
+    color: transparent;
+  }
+  .chapter-card.selected .chapter-check {
+    background: var(--lavender);
+    border-color: var(--lavender);
+    color: white;
+  }
+
+  /* Feeling Lucky */
+  .lucky-section {
+    margin: 16px 28px 0;
+  }
+
+  .lucky-card {
+    background: var(--text);
+    border-radius: 20px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .lucky-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .lucky-card:active { transform: translateY(0); }
+
+  .lucky-stars {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .lucky-star {
+    position: absolute;
+    color: rgba(245,200,66,0.3);
+    font-size: 14px;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  .lucky-star:nth-child(1) { top: 15%; right: 15%; animation-delay: 0s; }
+  .lucky-star:nth-child(2) { top: 50%; right: 8%; animation-delay: 0.8s; font-size: 10px; }
+  .lucky-star:nth-child(3) { bottom: 20%; right: 25%; animation-delay: 1.6s; font-size: 8px; }
+  .lucky-star:nth-child(4) { top: 30%; right: 35%; animation-delay: 0.4s; font-size: 6px; color: rgba(139,127,212,0.5); }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  .lucky-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .lucky-emoji {
+    font-size: 24px;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  .lucky-title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.02em;
+  }
+  .lucky-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  .lucky-expand {
+    display: none;
+    animation: slideDown 0.3s ease;
+  }
+  .lucky-expand.open { display: block; }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .lucky-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+    margin-bottom: 14px;
+  }
+
+  .lucky-info {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .lucky-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .lucky-btn {
+    width: 100%;
+    padding: 14px;
+    background: white;
+    color: var(--text);
+    border: none;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .lucky-btn:hover { background: var(--lavender-light); }
+
+  /* Start btn area */
+  .start-area {
+    padding: 20px 28px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .selected-count {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-light);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .selected-count span { color: var(--lavender); font-weight: 500; }
+
+  /* ══════════════════════════════
+     QUESTION SCREEN
+  ══════════════════════════════ */
+  #quiz {
+    background: var(--white);
+  }
+
+  .quiz-header {
+    padding: 20px 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 10;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+
+  .quiz-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .quiz-back {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-mid);
+    transition: all 0.18s;
+  }
+  .quiz-back:hover { border-color: var(--lavender-mid); color: var(--lavender); }
+
+  .quiz-progress-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-light);
+  }
+  .quiz-progress-text span { color: var(--text); font-weight: 500; }
+
+  .timer-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  .timer-chip.urgent { background: #FDEEEC; border-color: #F5C0BB; color: var(--wrong); }
+  .timer-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--correct);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  .timer-chip.urgent .timer-dot { background: var(--wrong); }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .progress-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--lavender-mid), var(--lavender));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  /* Question body */
+  .quiz-body {
+    flex: 1;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .q-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .chapter-tag {
+    font-size: 11px;
+    color: var(--text-light);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .q-text {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  /* Reassurance message */
+  .reassure-msg {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--lavender-light);
+    border-radius: 14px;
+    border-left: 3px solid var(--lavender-mid);
+    animation: fadeIn 0.4s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reassure-emoji { font-size: 16px; flex-shrink: 0; }
+  .reassure-text {
+    font-size: 13px;
+    color: var(--lavender-dark);
+    line-height: 1.4;
+    font-weight: 400;
+  }
+
+  /* Options */
+  .options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.18s;
+    width: 100%;
+    text-align: left;
+    font-family: 'Outfit', sans-serif;
+    color: var(--text);
+  }
+  .option-card:hover:not(:disabled) {
+    border-color: var(--lavender-mid);
+    background: var(--lavender-light);
+    transform: translateX(3px);
+  }
+  .option-card.selected { border-color: var(--lavender); background: var(--lavender-light); }
+  .option-card.correct { border-color: var(--correct); background: var(--correct-light); }
+  .option-card.wrong { border-color: var(--wrong); background: var(--wrong-light); }
+  .option-card:disabled { cursor: default; transform: none !important; }
+
+  .opt-letter {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    border-radius: 9px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-mid);
+    transition: all 0.18s;
+  }
+  .option-card.selected .opt-letter { background: var(--lavender); border-color: var(--lavender); color: white; }
+  .option-card.correct .opt-letter { background: var(--correct); border-color: var(--correct); color: white; }
+  .option-card.wrong .opt-letter { background: var(--wrong); border-color: var(--wrong); color: white; }
+
+  .opt-text { font-size: 15px; line-height: 1.45; flex: 1; }
+
+  /* Explanation */
+  .explanation-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 18px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .explanation-card.visible { display: block; }
+  .exp-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--lavender);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .exp-text { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+
+  /* Nav */
+  .quiz-nav {
+    padding: 0 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .skip-link {
+    font-size: 13px;
+    color: var(--text-light);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.18s;
+    padding: 8px 0;
+  }
+  .skip-link:hover { color: var(--text-mid); }
+
+  .next-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: var(--lavender);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 16px rgba(139,127,212,0.25);
+  }
+  .next-btn:hover:not(:disabled) { transform: translateY(-2px) scale(1.02); background: var(--lavender-dark); }
+  .next-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* ══════════════════════════════
+     LOADING SCREEN
+  ══════════════════════════════ */
+  #loading {
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    background: white;
+    padding: 40px 28px;
+  }
+
+  .loading-orb {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--lavender-light);
+    border: 3px solid var(--lavender-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    animation: orbPulse 2s ease-in-out infinite;
+  }
+  @keyframes orbPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139,127,212,0.2); }
+    50% { transform: scale(1.05); box-shadow: 0 0 0 16px rgba(139,127,212,0); }
+  }
+
+  .loading-text-wrap { text-align: center; }
+  .loading-title {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .loading-sub {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  .loading-dots {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--lavender-mid);
+    animation: dotBounce 1.2s ease-in-out infinite;
+  }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dotBounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+    40% { transform: translateY(-8px); opacity: 1; }
+  }
+
+  .loading-tips {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+  }
+  .tip-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--lavender);
+    margin-bottom: 8px;
+  }
+  .tip-text {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ══════════════════════════════
+     RESULTS SCREEN
+  ══════════════════════════════ */
+  #results {
+    background: white;
+    padding-bottom: 60px;
+  }
+
+  .results-header {
+    padding: 32px 24px 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .results-emoji {
+    font-size: 48px;
+    margin-bottom: 12px;
+    display: block;
+    animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes bounceIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .results-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+  }
+  .results-sub { font-size: 14px; color: var(--text-mid); }
+
+  /* Score cards */
+  .score-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 24px 24px 0;
+  }
+
+  .score-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 18px;
+    text-align: center;
+  }
+  .score-card.highlight {
+    background: var(--lavender);
+    border-color: var(--lavender);
+    grid-column: 1 / -1;
+  }
+  .score-card-val {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .score-card.highlight .score-card-val { color: white; font-size: 40px; }
+  .score-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-light);
+  }
+  .score-card.highlight .score-card-label { color: rgba(255,255,255,0.65); }
+
+  /* Earned badge */
+  .earned-badge-section {
+    margin: 24px 24px 0;
+    padding: 18px;
+    background: #FFFBEE;
+    border: 1.5px solid rgba(245,200,66,0.4);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .earned-icon { font-size: 36px; }
+  .earned-info { flex: 1; }
+  .earned-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #C88A20;
+    margin-bottom: 4px;
+  }
+  .earned-name {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .earned-desc { font-size: 12px; color: var(--text-mid); margin-top: 2px; }
+
+  /* Chapter breakdown */
+  .section-wrap {
+    padding: 24px 24px 0;
+  }
+  .section-head {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+
+  .chapter-result-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .chapter-result-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+  .cr-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: white;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .cr-info { flex: 1; min-width: 0; }
+  .cr-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .cr-bar-wrap { height: 4px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .cr-bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+  .cr-pct {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    flex-shrink: 0;
+    width: 36px;
+    text-align: right;
+  }
+  .cr-status { font-size: 16px; flex-shrink: 0; }
+
+  /* Difficulty breakdown */
+  .diff-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .diff-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 12px;
+    text-align: center;
+  }
+  .diff-card-icon { font-size: 20px; margin-bottom: 8px; }
+  .diff-card-val {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 2px;
+  }
+  .diff-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-light);
+  }
+
+/* AI Review */
+  .ai-review-card {
+    background: var(--text);
+    border-radius: 20px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ai-review-stars {
+    position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+    pointer-events: none; overflow: hidden;
+  }
+  .ai-review-star {
+    position: absolute;
+    color: rgba(245,200,66,0.2);
+    font-size: 12px;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  .ai-review-star:nth-child(1) { top: 10%; right: 10%; }
+  .ai-review-star:nth-child(2) { top: 60%; right: 6%; animation-delay: 1s; font-size: 8px; }
+  .ai-review-star:nth-child(3) { bottom: 15%; right: 20%; animation-delay: 2s; font-size: 6px; }
+
+  .ai-review-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .ai-review-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--lavender-mid);
+  }
+  .ai-review-title {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.01em;
+  }
+
+  .ai-review-loading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+  }
+
+  .ai-review-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .ai-review-text strong { color: white; font-weight: 600; }
+
+  /* Review mistakes */
+  .mistakes-section { display: flex; flex-direction: column; gap: 10px; }
+
+  .mistake-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 18px;
+  }
+  .mistake-card.wrong-card { border-left: 3px solid var(--wrong); }
+  .mistake-card.skipped-card { border-left: 3px solid var(--text-light); }
+
+  .mistake-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .mistake-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .mistake-q { font-size: 14px; color: var(--text-mid); line-height: 1.5; margin-bottom: 10px; }
+  .mistake-answers { display: flex; gap: 16px; flex-wrap: wrap; }
+  .ans-item { }
+  .ans-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .ans-val { font-size: 13px; font-weight: 500; }
+  .ans-val.correct { color: var(--correct); }
+  .ans-val.wrong { color: var(--wrong); }
+
+  .time-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-light);
+  }
+  .time-tag.slow { color: var(--medium); }
+
+  /* Results nav */
+  .results-nav {
+    display: flex;
+    gap: 10px;
+    padding: 24px 24px 0;
+  }
+
+  /* ══════════════════════════════
+     ANIMATIONS
+  ══════════════════════════════ */
+  .fade-up {
+    animation: fadeUp 0.4s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
 </head>
 <body>
 
-<div id="progress"></div>
+<!-- ══ HOME ══ -->
+<div id="home" class="screen active">
 
-<nav style="padding: 1.5rem 2rem; font-family: 'JetBrains Mono'; font-size: 0.6rem; letter-spacing: 0.2em; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(0,0,0,0.05);">
-    <span>niv + aaradhya</span>
-    <span>may 2, 2026</span>
-</nav>
-
-<div class="container">
-    <header>
-        <span class="kicker">volume 01 // the eleven month archive</span>
-        <h1>down<span>bad</span></h1>
-    </header>
-
-    <div class="prose scroll-anim">
-        <p>i’m going to be completely honest, i am someone who doesn't engage with mainstream media. i told anyone who’d mention harry potter that it was overrated. i stood my ground like a man with principles.</p>
-        <p>and then you happened. you asked me to watch the sorcerer’s stone and i sat through the entire thing—2hr 39m of wizards and wands—not because i’d watch a screen of literal static if it meant i got to know more about you. i’m finished. i folded my entire personality because of this.</p>
-        <p>that was the moment. one <b>"niv?"</b> on my screen and everything i thought i knew about myself just resets. i don't care about being right anymore. i just want to hear my name in your voice (i wonder when i will)=.</p>
+  <div class="home-top">
+    <div class="home-greeting">
+      <div class="avatar-ring">🌸</div>
+      <div class="greeting-text">
+        <span class="greeting-hey">Good morning</span>
+        <span class="greeting-name">Aaradhya</span>
+      </div>
+      <div class="xp-bar-wrap">
+        <span class="xp-label">Lvl 3</span>
+        <div class="xp-bar"><div class="xp-fill"></div></div>
+      </div>
     </div>
 
-    <!-- DM 1 -->
-    <div class="dm-block">
-        <div class="annotation visible" style="top: -60px; left: -140px; width: 220px; transform: rotate(-5deg);">
-            the boy who lived (only to see this notification).
-            <svg style="bottom: -25px; right: 20px; width: 60px; height: 40px;"><path d="M0,0 Q15,30 50,10" /></svg>
+    <div class="home-hero">
+      <div class="home-eyebrow">Informatics Practices</div>
+      <h1 class="home-title">Ready for your<br><em>daily quest?</em></h1>
+      <p class="home-sub">Pick your chapters and let's go. Every question gets you closer.</p>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-pill">
+      <div class="stat-pill-val">12</div>
+      <div class="stat-pill-label">Mocks Done</div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-pill-val">74%</div>
+      <div class="stat-pill-label">Avg Accuracy</div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-pill-val">🔥 5</div>
+      <div class="stat-pill-label">Day Streak</div>
+    </div>
+  </div>
+
+<!-- Badges -->
+  <div class="badges-section">
+    <div style="height:24px"></div>
+    <div class="badges-label">Your badges</div>
+    <div class="badges-row">
+      <div class="badge-item">
+        <div class="badge-icon earned">🌟</div>
+        <span class="badge-name">First Quest</span>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon earned">⚡</div>
+        <span class="badge-name">Speed Run</span>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon earned">🧠</div>
+        <span class="badge-name">SQL Wizard</span>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon locked">🏆</div>
+        <span class="badge-name">Perfectionist</span>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon locked">🔥</div>
+        <span class="badge-name">On Fire</span>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon locked">💎</div>
+        <span class="badge-name">Diamond</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Chapters -->
+  <div class="chapters-section">
+    <div class="section-header">
+      <span class="section-title">Choose chapters</span>
+      <span class="section-hint">pick one or more</span>
+    </div>
+    <div class="chapter-list">
+      <div class="chapter-card" onclick="toggleChapter(this, 'pandas')">
+        <div class="chapter-icon">🐼</div>
+        <div class="chapter-info">
+          <div class="chapter-name">Data Handling & Pandas</div>
+          <div class="chapter-meta">df, matplotlib, visualization</div>
         </div>
-        <div class="dm-window">
-            <div class="dm-header">
-                <div class="dm-pfp"><img src="https://i.postimg.cc/BnWtQBrG/IMG-9895.jpg" alt="A"></div>
-                <div style="color:white; font-family:'Inter'; font-size:0.85rem; font-weight:600;">aaradhya</div>
-            </div>
-            <div class="dm-chat">
-                <div class="bubble her">niv?</div>
-            </div>
+        <div class="chapter-check">✓</div>
+      </div>
+      <div class="chapter-card" onclick="toggleChapter(this, 'sql')">
+        <div class="chapter-icon">🗄️</div>
+        <div class="chapter-info">
+          <div class="chapter-name">Database Query using SQL</div>
+          <div class="chapter-meta">SELECT, JOIN, GROUP BY, WHERE</div>
         </div>
-    </div>
-
-    <div class="prose scroll-anim">
-        <p>and then you sent the spotify blend link. you followed it up with <b>"stamped and sealed,"</b> and i realized then that maybe you like me back. i've never been more happy to be legally bound to someone's frequency.</p>
-    </div>
-
-    <!-- DM 2 -->
-    <div class="dm-block">
-        <div class="annotation visible" style="bottom: 10px; right: -160px; width: 200px; transform: rotate(3deg);">
-            she notarized the vibes. i had no choice.
-            <svg style="top: -30px; left: -20px; transform: scaleX(-1);"><path d="M0,0 Q15,30 50,10" /></svg>
+        <div class="chapter-check">✓</div>
+      </div>
+      <div class="chapter-card" onclick="toggleChapter(this, 'networks')">
+        <div class="chapter-icon">🌐</div>
+        <div class="chapter-info">
+          <div class="chapter-name">Computer Networks</div>
+          <div class="chapter-meta">protocols, topologies, OSI model</div>
         </div>
-        <div class="dm-window">
-            <div class="dm-header">
-                <div class="dm-pfp"><img src="https://i.postimg.cc/BnWtQBrG/IMG-9895.jpg" alt="A"></div>
-                <div style="color:white; font-family:'Inter'; font-size:0.85rem; font-weight:600;">aaradhya</div>
-            </div>
-            <div class="dm-chat">
-                <div class="bubble her" style="background:transparent; padding:0; width: 100%;">
-                    <div style="background:#121212; border-radius:14px; padding:1.2rem; display:flex; align-items:center; gap:1rem; border:1px solid #333;">
-                        <span style="color:#1DB954; font-size: 1.8rem;">♫</span>
-                        <div>
-                            <div style="color:#1DB954; font-weight:600; font-size:0.8rem;">Join Blend on Spotify</div>
-                            <div style="color:#8e8e8e; font-size:0.7rem;">spotify.link/aaradhya-niv</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bubble her">stamped and sealed.</div>
-            </div>
+        <div class="chapter-check">✓</div>
+      </div>
+      <div class="chapter-card" onclick="toggleChapter(this, 'societal')">
+        <div class="chapter-icon">🌍</div>
+        <div class="chapter-info">
+          <div class="chapter-name">Societal Impacts</div>
+          <div class="chapter-meta">cyber ethics, e-waste, digital rights</div>
         </div>
+        <div class="chapter-check">✓</div>
+      </div>
     </div>
+  </div>
 
-    <!-- 11:11 BEACON -->
-    <div class="beacon-section">
-        <div class="beacon-orb">
-            <div class="beacon-flare"></div>
-            <div class="beacon-text" id="wish-time">11:11</div>
+  <!-- Feeling Lucky -->
+  <div class="lucky-section" style="margin-top:16px;">
+    <div class="lucky-card" onclick="toggleLucky(this)">
+      <div class="lucky-stars">
+        <span class="lucky-star">✦</span>
+        <span class="lucky-star">✦</span>
+        <span class="lucky-star">✦</span>
+        <span class="lucky-star">✦</span>
+      </div>
+      <div class="lucky-top">
+        <span class="lucky-emoji">🎲</span>
+        <span class="lucky-title">I'm Feeling Lucky</span>
+      </div>
+      <p class="lucky-desc">Let Claude curate a balanced mix across all chapters to test your overall readiness.</p>
+
+      <div class="lucky-expand" id="luckyExpand">
+        <div class="lucky-divider"></div>
+        <div class="lucky-info">
+          <div class="lucky-pill">📚 All 4 chapters</div>
+          <div class="lucky-pill">❓ 20 questions</div>
+          <div class="lucky-pill">⏱ 25 minutes</div>
         </div>
-        <div class="beacon-label" id="wish-status">scanning global timezones...</div>
-        <p style="font-size: 0.8rem; color: #aaa; margin-top: 1rem; font-style: italic; max-width: 320px; margin-left: auto; margin-right: auto;">it pulses red whenever it's 11:11 anywhere in the world.</p>
+        <button class="lucky-btn" onclick="startLucky(event)">
+          ✦ Start Lucky Quest
+        </button>
+      </div>
     </div>
+  </div>
 
-    <!-- POEM -->
-    <div class="poem-section scroll-anim">
-        <div class="dancing-light"></div>
-        <div class="poem-text">
-            (a + n) you keep the salt in an old gelato jar. the scissors live in the drawer but the tape lives on top of the microwave, and we don’t question it anymore. the bedroom smells of honey, you smell of me. we’ve spent too many nights under the cozy lavender blanket to have any other religion to believe. <br><br>
-            we always forget the sugar but somehow remember the cinnamon. there’s dust on the bookshelf and your socks under the table, there’s a postcard from the poland trip on the fridge, sun-bleached at the edges. and i promise i’ll wrap a lasso around the sun and bring it you, inch a little closer, just enough to keep you warm.
-        </div>
-        <div class="annotation visible" style="top: -20px; right: -50px; width: 180px;">there's nothing more poetic than the unfinished poem we wrote together</div>
-    </div>
+  <!-- Start -->
+  <div class="start-area">
+    <p class="selected-count" id="selectedCount">Select chapters above to begin</p>
+    <button class="btn-primary" id="startBtn" onclick="goToQuiz()" disabled style="opacity:0.4;cursor:not-allowed;">
+      Begin Quest →
+    </button>
+  </div>
 
-    <div class="prose scroll-anim">
-        <p>then there was the box. you told me you keep your love letters in a wooden home, i tried to be the smooth poet; i told you to "nestle" this one deep inside. i immediately panicked because i was being too sincere, so i tried to take it back. <i>"just kidding by the way i'm too bad at this."</i></p>
-        <p>you called me a liar. you said it was <b>"oddly comforting"</b> that memories and cherishing are infinite. almost 3k away, and yet you make me feel like we’re just building the architecture of the same house.</p>
-    </div>
-
-    <!-- DM 3: THE BOX -->
-    <div class="dm-block">
-        <div class="annotation visible" style="bottom: -70px; left: -100px; width: 230px; transform: rotate(-2deg);">
-            she called my bluff. i've never been happier to lose.
-            <svg style="top: -25px; right: 0px; transform: scaleX(-1);"><path d="M0,0 Q20,35 60,15" /></svg>
-        </div>
-        <div class="dm-window">
-            <div class="dm-header">
-                <div class="dm-pfp"><img src="https://i.postimg.cc/BnWtQBrG/IMG-9895.jpg" alt="A"></div>
-                <div style="color:white; font-family:'Inter'; font-size:0.85rem; font-weight:600;">aaradhya</div>
-            </div>
-            <div class="dm-chat">
-                <div class="bubble her">i usually keep my love letters in a wooden box, where shall i give a home to this one?</div>
-                <div class="bubble you">nestle it in the wooden box of yours, but make sure there's room for a few more surprises - and if you ever run out of room, i'll make sure there's another box waiting</div>
-                <div class="bubble you" style="font-size:0.8rem; opacity:0.7;">
-                    <div class="reply-context">nestle it in the wooden box...</div>
-                    just kidding by the way i'm too bad at this
-                </div>
-                <div class="bubble her">such a liar, you're clearly very good at this and you know it</div>
-                <div class="bubble her">
-                    <div class="reply-context">nestle it in the wooden box of yours... more</div>
-                    this is, again, oddly comforting. the fact that memories and cherishing may be so abundant that they may fill up all the space — but there's always more space to fill.
-                </div>
-                <div class="bubble her">watch me write a m again</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="prose scroll-anim" style="text-align: center; margin-top: 6rem; padding-bottom: 4rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-        <p style="font-family: 'Fraunces'; font-style: italic; font-size: 2rem;">happy eleven months.</p>
-        <p>we’ve built so many boxes, but i think we’re just getting started. thank you for the poems, the playlist, and for letting me be the boy who watched a wizard movie for you.</p>
-    </div>
 </div>
 
-<footer>
-    <div class="footer-left">
-        <div class="footer-logo">niv.</div>
-        <div style="font-family: 'Caveat'; color: var(--accent); font-size: 1.4rem; margin-top: 1rem;">for aaradhya // muse & poet</div>
+<!-- ══ LOADING ══ -->
+<div id="loading" class="screen">
+  <div class="loading-orb">✦</div>
+  <div class="loading-text-wrap">
+    <h2 class="loading-title">Crafting your quest...</h2>
+    <p class="loading-sub">Mixing chapters, calibrating difficulty<br>and preparing your challenge.</p>
+  </div>
+  <div class="loading-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+  <div class="loading-tips">
+    <div class="tip-label">💡 Quick tip</div>
+    <p class="tip-text" id="loadingTip">"Read each SQL query carefully — one wrong keyword changes everything."</p>
+  </div>
+</div>
+
+
+<!-- ══ QUIZ ══ -->
+<div id="quiz" class="screen">
+
+  <div class="quiz-header">
+    <div class="quiz-top-row">
+      <div class="quiz-back" onclick="show('home')">←</div>
+      <span class="quiz-progress-text">Question <span id="qNum">1</span> of <span id="qTotal">10</span></span>
+      <div class="timer-chip" id="timerChip">
+        <div class="timer-dot"></div>
+        <span id="timerText">25:00</span>
+      </div>
     </div>
-    <div class="footer-metrics">
-        2,083 KM OF FREQUENCY<br>
-        STAMPED AND SEALED<br>
-        ELEVEN MONTHS LATER<br>
-        MAY 2, 2026
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width:10%"></div>
     </div>
-</footer>
+  </div>
+
+  <div class="quiz-body">
+
+    <div class="q-meta-row">
+      <span class="badge badge-easy" id="diffBadge">Easy</span>
+      <span class="chapter-tag" id="chapterTag">Data Handling</span>
+    </div>
+
+    <!-- Reassurance message (shown after answer) -->
+    <div class="reassure-msg" id="reassureMsg" style="display:none;">
+      <span class="reassure-emoji" id="reassureEmoji">💙</span>
+      <span class="reassure-text" id="reassureText">You're doing amazing, keep going!</span>
+    </div>
+
+    <p class="q-text" id="qText">Which Pandas function is used to display the first N rows of a DataFrame?</p>
+
+    <div class="options-grid" id="optionsGrid">
+      <button class="option-card" onclick="selectOption(this, 0)">
+        <span class="opt-letter">A</span>
+        <span class="opt-text">df.head()</span>
+      </button>
+      <button class="option-card" onclick="selectOption(this, 1)">
+        <span class="opt-letter">B</span>
+        <span class="opt-text">df.first()</span>
+      </button>
+      <button class="option-card" onclick="selectOption(this, 2)">
+        <span class="opt-letter">C</span>
+        <span class="opt-text">df.top()</span>
+      </button>
+      <button class="option-card" onclick="selectOption(this, 3)">
+        <span class="opt-letter">D</span>
+        <span class="opt-text">df.show()</span>
+      </button>
+    </div>
+
+    <div class="explanation-card" id="explanationCard">
+      <div class="exp-label">✦ Explanation</div>
+      <p class="exp-text" id="expText">df.head(N) returns the first N rows of a DataFrame. By default, it returns 5 rows if N is not specified.</p>
+    </div>
+
+  </div>
+
+  <div class="quiz-nav">
+    <button class="skip-link" id="skipBtn" onclick="skipQ()">Skip question</button>
+    <button class="next-btn" id="nextBtn" disabled onclick="nextQ()">
+      Next <span>→</span>
+    </button>
+  </div>
+
+</div>
+
+<!-- ══ RESULTS ══ -->
+<div id="results" class="screen">
+
+  <div class="results-header">
+    <span class="results-emoji">🌟</span>
+    <h2 class="results-title">Quest Complete!</h2>
+    <p class="results-sub">You showed up and did the work. That's everything.</p>
+  </div>
+
+  <!-- Score -->
+  <div class="score-cards">
+    <div class="score-card highlight">
+      <div class="score-card-val">42/50</div>
+      <div class="score-card-label">Total Score</div>
+    </div>
+    <div class="score-card">
+      <div class="score-card-val" style="color:var(--correct)">84%</div>
+      <div class="score-card-label">Accuracy</div>
+    </div>
+    <div class="score-card">
+      <div class="score-card-val">38s</div>
+      <div class="score-card-label">Avg / Question</div>
+    </div>
+  </div>
+
+  <!-- Earned badge -->
+  <div class="section-wrap">
+    <div class="earned-badge-section">
+      <span class="earned-icon">⚡</span>
+      <div class="earned-info">
+        <div class="earned-label">Badge Unlocked</div>
+        <div class="earned-name">Speed Runner</div>
+        <div class="earned-desc">Completed in under 20 minutes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter breakdown -->
+  <div class="section-wrap">
+    <div class="section-head">Chapter Breakdown</div>
+    <div class="chapter-result-list">
+      <div class="chapter-result-row">
+        <div class="cr-icon">🌐</div>
+        <div class="cr-info">
+          <div class="cr-name">Computer Networks</div>
+          <div class="cr-bar-wrap">
+            <div class="cr-bar-fill" style="width:100%;background:var(--correct)"></div>
+          </div>
+        </div>
+        <span class="cr-pct" style="color:var(--correct)">100%</span>
+        <span class="cr-status">✅</span>
+      </div>
+      <div class="chapter-result-row">
+        <div class="cr-icon">🗄️</div>
+        <div class="cr-info">
+          <div class="cr-name">Database Query using SQL</div>
+          <div class="cr-bar-wrap">
+            <div class="cr-bar-fill" style="width:75%;background:var(--medium)"></div>
+          </div>
+        </div>
+        <span class="cr-pct" style="color:var(--medium)">75%</span>
+        <span class="cr-status">⚠️</span>
+      </div>
+      <div class="chapter-result-row">
+        <div class="cr-icon">🐼</div>
+        <div class="cr-info">
+          <div class="cr-name">Data Handling & Pandas</div>
+          <div class="cr-bar-wrap">
+            <div class="cr-bar-fill" style="width:57%;background:var(--wrong)"></div>
+          </div>
+        </div>
+        <span class="cr-pct" style="color:var(--wrong)">57%</span>
+        <span class="cr-status">❌</span>
+      </div>
+      <div class="chapter-result-row">
+        <div class="cr-icon">🌍</div>
+        <div class="cr-info">
+          <div class="cr-name">Societal Impacts</div>
+          <div class="cr-bar-wrap">
+            <div class="cr-bar-fill" style="width:90%;background:var(--correct)"></div>
+          </div>
+        </div>
+        <span class="cr-pct" style="color:var(--correct)">90%</span>
+        <span class="cr-status">✅</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Difficulty -->
+  <div class="section-wrap">
+    <div class="section-head">Difficulty Breakdown</div>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="diff-card-icon">🟢</div>
+        <div class="diff-card-val" style="color:var(--correct)">8/8</div>
+        <div class="diff-card-label">Easy</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-card-icon">🟡</div>
+        <div class="diff-card-val" style="color:var(--medium)">5/7</div>
+        <div class="diff-card-label">Medium</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-card-icon">🔴</div>
+        <div class="diff-card-val" style="color:var(--wrong)">2/5</div>
+        <div class="diff-card-label">Hard</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Review -->
+  <div class="section-wrap">
+    <div class="ai-review-card">
+      <div class="ai-review-stars">
+        <span class="ai-review-star">✦</span>
+        <span class="ai-review-star">✦</span>
+        <span class="ai-review-star">✦</span>
+      </div>
+      <div class="ai-review-top">
+        <div>
+          <div class="ai-review-label">✦ AI Review</div>
+          <div class="ai-review-title">Personalized feedback</div>
+        </div>
+      </div>
+      <p class="ai-review-text">
+        Aaradhya, you absolutely <strong>nailed Computer Networks</strong> today — 5/5, that's your strongest chapter right now 💙. <strong>SQL</strong> is coming along too, just watch out for GROUP BY questions, that's where you slipped. <strong>Pandas</strong> needs a bit more love — the output-based questions are tripping you up. Spend 20 minutes on <strong>df.head(), df.tail(), and df.describe()</strong> before your next quest. You're genuinely improving and it shows. Don't stress the score — stress the pattern, and your pattern is going up 🌸
+      </p>
+    </div>
+  </div>
+
+  <!-- Mistakes review -->
+  <div class="section-wrap">
+    <div class="section-head">Review Mistakes</div>
+    <div class="mistakes-section">
+      <div class="mistake-card wrong-card">
+        <div class="mistake-top">
+          <div class="mistake-meta">
+            <span class="badge badge-medium">Medium</span>
+            <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-light)">Q7 · SQL</span>
+          </div>
+          <span class="time-tag slow">72s ⚠️</span>
+        </div>
+        <p class="mistake-q">Which SQL clause is used to filter groups after GROUP BY?</p>
+        <div class="mistake-answers">
+          <div class="ans-item">
+            <span class="ans-lbl">Your answer</span>
+            <span class="ans-val wrong">WHERE</span>
+          </div>
+          <div class="ans-item">
+            <span class="ans-lbl">Correct</span>
+            <span class="ans-val correct">HAVING</span>
+          </div>
+        </div>
+      </div>
+      <div class="mistake-card wrong-card">
+        <div class="mistake-top">
+          <div class="mistake-meta">
+            <span class="badge badge-hard">Hard</span>
+            <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-light)">Q12 · Pandas</span>
+          </div>
+          <span class="time-tag">45s</span>
+        </div>
+        <p class="mistake-q">What does df.pivot_table() return when aggfunc is not specified?</p>
+        <div class="mistake-answers">
+          <div class="ans-item">
+            <span class="ans-lbl">Your answer</span>
+            <span class="ans-val wrong">Sum</span>
+          </div>
+          <div class="ans-item">
+            <span class="ans-lbl">Correct</span>
+            <span class="ans-val correct">Mean</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <div class="results-nav">
+    <button class="btn-secondary" style="flex:1" onclick="show('home')">← Home</button>
+    <button class="btn-primary" style="flex:2" onclick="show('home')">New Quest ✦</button>
+  </div>
+
+</div>
 
 <script>
-    // Scroll progress
-    window.addEventListener('scroll', () => {
-        const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight));
-        document.getElementById("progress").style.transform = `scaleX(${scrolled})`;
-    });
+  // ── SCREENS ──
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
 
-    // --- 11:11 GLOBAL ENGINE ---
-    function checkUniversalEleven() {
-        const now = new Date();
-        document.getElementById('wish-time').innerText = now.toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit' });
-        
-        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-        let active = false;
+  // ── CHAPTERS ──
+  let selected = new Set();
 
-        // Check every half-hour increment (to catch India +5:30 etc)
-        for (let offset = -12; offset <= 14; offset += 0.5) {
-            const tzTime = new Date(utc + (3600000 * offset));
-            if (tzTime.getMinutes() === 11) {
-                active = true;
-                break;
-            }
-        }
-
-        const body = document.body;
-        const status = document.getElementById('wish-status');
-        
-        if (active) {
-            body.classList.add('eleven-active');
-            status.innerText = "11:11 active somewhere. making a wish.";
-            status.style.color = "var(--accent)";
-        } else {
-            body.classList.remove('eleven-active');
-            status.innerText = "scanning global timezones...";
-            status.style.color = "#888";
-        }
+  function toggleChapter(card, id) {
+    if (selected.has(id)) {
+      selected.delete(id);
+      card.classList.remove('selected');
+    } else {
+      selected.add(id);
+      card.classList.add('selected');
     }
-    setInterval(checkUniversalEleven, 1000);
-    checkUniversalEleven();
+    updateStartBtn();
+  }
 
-    // Intersection Observer
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                if (e.target.classList.contains('scroll-anim')) e.target.classList.add('visible');
-                if (e.target.classList.contains('dm-chat')) {
-                    const bubbles = e.target.querySelectorAll('.bubble');
-                    bubbles.forEach((b, i) => setTimeout(() => b.classList.add('show'), i * 450));
-                    
-                    const notes = e.target.parentElement.querySelectorAll('.annotation');
-                    notes.forEach(n => setTimeout(() => n.classList.add('show'), 1200));
-                }
-                obs.unobserve(e.target);
-            }
-        });
-    }, { threshold: 0.1 });
+  function updateStartBtn() {
+    const btn = document.getElementById('startBtn');
+    const count = document.getElementById('selectedCount');
+    if (selected.size === 0) {
+      btn.disabled = true;
+      btn.style.opacity = '0.4';
+      btn.style.cursor = 'not-allowed';
+      count.innerHTML = 'Select chapters above to begin';
+    } else {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.style.cursor = 'pointer';
+      count.innerHTML = `<span>${selected.size} chapter${selected.size > 1 ? 's' : ''}</span> selected · ~${selected.size * 5} questions`;
+    }
+  }
 
-    document.querySelectorAll('.scroll-anim, .dm-chat').forEach(el => obs.observe(el));
+  // ── LUCKY ──
+  function toggleLucky(card) {
+    const expand = document.getElementById('luckyExpand');
+    expand.classList.toggle('open');
+  }
+
+  function startLucky(e) {
+    e.stopPropagation();
+    show('loading');
+    setTimeout(() => show('quiz'), 2500);
+  }
+
+  // ── START ──
+  function goToQuiz() {
+    if (selected.size === 0) return;
+    show('loading');
+    setTimeout(() => show('quiz'), 2500);
+  }
+
+  // ── QUIZ DEMO ──
+  function selectOption(btn, idx) {
+    const opts = document.querySelectorAll('.option-card');
+    if (opts[0].disabled) return;
+
+    opts.forEach(o => o.disabled = true);
+    btn.classList.add(idx === 0 ? 'correct' : 'wrong');
+    if (idx !== 0) opts[0].classList.add('correct');
+
+    document.getElementById('explanationCard').classList.add('visible');
+
+    const msg = document.getElementById('reassureMsg');
+    const emoji = document.getElementById('reassureEmoji');
+    const text = document.getElementById('reassureText');
+
+    if (idx === 0) {
+      emoji.textContent = '💙';
+      text.textContent = "That's correct! You're doing so well, keep it up 🌸";
+    } else {
+      emoji.textContent = '✨';
+      text.textContent = "That one was tricky — now you know it. That's what this is for 💙";
+    }
+    msg.style.display = 'flex';
+
+    document.getElementById('nextBtn').disabled = false;
+    document.getElementById('skipBtn').style.display = 'none';
+  }
+
+  function skipQ() {
+    document.getElementById('explanationCard').classList.add('visible');
+    const msg = document.getElementById('reassureMsg');
+    document.getElementById('reassureEmoji').textContent = '🌸';
+    document.getElementById('reassureText').textContent = "No worries, skipping is smart sometimes. Read the explanation and move on 💙";
+    msg.style.display = 'flex';
+    document.getElementById('nextBtn').disabled = false;
+    document.getElementById('skipBtn').style.display = 'none';
+    document.querySelectorAll('.option-card').forEach(o => o.disabled = true);
+  }
+
+  function nextQ() {
+    show('results');
+  }
 </script>
-
 </body>
 </html>
