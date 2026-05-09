@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CUET IP Quest | Premium</title>
+    <title>Quest Pro | Premium CUET</title>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -11,149 +11,133 @@
             --royal: #334EAC; --midnight: #081F5C; --dawn: #D0E3FF;
             --china: #7096D1; --moon: #F7F2EB; --porcelain: #EDF1F6;
         }
-        body { font-family: 'Google Sans', sans-serif; background-color: #FFFFFF; color: var(--midnight); overflow-x: hidden; }
+        body { font-family: 'Google Sans', sans-serif; background-color: white; color: var(--midnight); overflow-x: hidden; }
         .view { display: none; }
-        .view.active { display: block; animation: slideUp 0.4s cubic-bezier(0, 0, 0.2, 1); }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .view.active { display: block; animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        .premium-card { background: white; border-radius: 32px; border: 1px solid var(--porcelain); transition: all 0.3s ease; }
-        .btn-royal { background: var(--royal); color: white; border-radius: 100px; transition: all 0.2s; box-shadow: 0 4px 14px rgba(51, 78, 172, 0.25); }
-        .btn-royal:active { transform: scale(0.96); box-shadow: none; }
+        .premium-card { background: white; border-radius: 28px; border: 1px solid var(--porcelain); transition: all 0.2s; }
+        .btn-main { background: var(--royal); color: white; border-radius: 100px; font-weight: 500; transition: transform 0.1s active; }
+        .btn-main:active { transform: scale(0.97); }
         
-        .badge-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-        .nav-active { color: var(--royal); font-weight: 700; }
+        /* Bottom Nav Logic */
+        .nav-item { color: #9aa0a6; transition: color 0.2s; }
+        .nav-item.active { color: var(--royal); }
     </style>
 </head>
-<body class="max-w-md mx-auto min-h-screen relative pb-28">
+<body class="max-w-md mx-auto min-h-screen relative pb-32">
 
-    <div id="view-login" class="view active px-8 pt-32 text-center">
+    <div id="view-login" class="view active px-10 pt-32 text-center">
         <div class="mb-12">
-            <div class="w-24 h-24 bg-[var(--dawn)] rounded-[32px] flex items-center justify-center mx-auto mb-6">
+            <div class="w-20 h-20 bg-[var(--dawn)] rounded-[24px] flex items-center justify-center mx-auto mb-6 shadow-sm">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--royal)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08c-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
             </div>
-            <h1 class="text-3xl font-bold tracking-tight text-[var(--midnight)]">Quest Pro</h1>
-            <p class="text-gray-500 mt-2">Sign in to save your progress</p>
+            <h1 class="text-3xl font-bold text-[var(--midnight)]">Quest Pro</h1>
+            <p class="text-gray-500 mt-2">Personalized CUET Preparation</p>
         </div>
-        <div class="space-y-4">
-            <input type="password" placeholder="Passcode" class="w-full p-5 rounded-3xl bg-[var(--moon)] border-none outline-none focus:ring-2 focus:ring-[var(--royal)]">
-            <button onclick="nav('view-home')" class="btn-royal w-full py-5 text-lg font-medium">Log In</button>
-        </div>
+        <input type="password" placeholder="Passcode" class="w-full p-5 rounded-3xl bg-[var(--moon)] mb-4 border-none outline-none focus:ring-2 focus:ring-[var(--royal)]">
+        <button onclick="nav('view-home')" class="btn-main w-full py-5 text-lg">Sign In</button>
     </div>
 
     <div id="view-home" class="view px-6 pt-12">
         <div class="flex justify-between items-center mb-8">
             <div>
-                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Informatics Practices</p>
-                [span_3](start_span)<h2 class="text-3xl font-bold">Good Morning, Aaradhya</h2>[span_3](end_span)
+                <p class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Good Morning</p>
+                <h2 class="text-3xl font-bold">Aaradhya</h2>
             </div>
-            <div class="w-12 h-12 bg-[var(--royal)] rounded-full flex items-center justify-center text-white font-bold">A</div>
+            <div class="bg-[var(--dawn)] text-[var(--royal)] px-4 py-1 rounded-full font-bold text-sm">Lvl 3</div>
         </div>
 
-        <div class="premium-card p-6 mb-8 flex justify-between bg-[var(--midnight)] text-white border-none">
+        <div class="premium-card p-6 mb-8 flex justify-between bg-[var(--midnight)] text-white border-none shadow-xl shadow-blue-900/20">
             <div class="text-center">
-                [span_4](start_span)<p class="text-2xl font-bold">12</p>[span_4](end_span)
-                <p class="text-[9px] uppercase opacity-60">Mocks</p>
+                <p class="text-2xl font-bold">12</p>
+                <p class="text-[9px] uppercase tracking-tighter opacity-70">Mocks Done</p>
+            </div>
+            <div class="text-center border-x border-white/10 px-6">
+                <p class="text-2xl font-bold">74%</p>
+                <p class="text-[9px] uppercase tracking-tighter opacity-70">Avg Accuracy</p>
             </div>
             <div class="text-center">
-                [span_5](start_span)<p class="text-2xl font-bold">74%</p>[span_5](end_span)
-                <p class="text-[9px] uppercase opacity-60">Accuracy</p>
-            </div>
-            <div class="text-center">
-                [span_6](start_span)<p class="text-2xl font-bold">5</p>[span_6](end_span)
-                <p class="text-[9px] uppercase opacity-60">Streak</p>
+                <p class="text-2xl font-bold text-orange-400">5</p>
+                <p class="text-[9px] uppercase tracking-tighter opacity-70">Day Streak</p>
             </div>
         </div>
 
-        <h3 class="font-bold text-lg mb-4">Daily Quests</h3>
-        <div class="space-y-4 mb-8">
-            <div class="premium-card p-5 flex items-center gap-4 bg-[var(--porcelain)] border-none">
-                <div class="p-3 bg-white rounded-2xl">📊</div>
-                <div class="flex-1">
-                    <p class="font-bold">SQL Mastery</p>
-                    [span_7](start_span)<p class="text-xs text-gray-500">SELECT, JOIN, GROUP BY</p>[span_7](end_span)
-                </div>
+        <h3 class="font-bold text-lg mb-4">Pick Your Chapters</h3>
+        <div class="space-y-3 mb-10">
+            <label class="premium-card p-5 flex items-center gap-4 cursor-pointer">
+                <div class="w-10 h-10 bg-[var(--porcelain)] rounded-xl flex items-center justify-center">💾</div>
+                <div class="flex-1"><p class="font-bold text-sm">Database Query using SQL</p></div>
                 <input type="checkbox" checked class="w-6 h-6 accent-[var(--royal)]">
-            </div>
-            <button onclick="nav('view-question')" class="w-full py-4 text-sm font-bold text-[var(--royal)] bg-[var(--dawn)] rounded-2xl">
-                [span_8](start_span)✨ I'm Feeling Lucky (AI Mix)[span_8](end_span)
-            </button>
+            </label>
+            <button onclick="nav('view-results')" class="w-full py-4 text-[var(--royal)] bg-[var(--dawn)] rounded-2xl font-bold text-sm">✨ I'm Feeling Lucky (AI Mix)</button>
         </div>
-        [span_9](start_span)<button onclick="nav('view-question')" class="btn-royal w-full py-5 text-xl font-bold">Begin Quest</button>[span_9](end_span)
-    </div>
-
-    <div id="view-question" class="view px-6 pt-12">
-        <div class="flex justify-between items-center mb-10">
-            <div class="w-2/3 bg-[var(--porcelain)] h-2 rounded-full overflow-hidden">
-                <div class="bg-[var(--royal)] h-full w-1/3"></div>
-            </div>
-            <span class="text-xs font-bold text-gray-500">Q7 OF 50</span>
-        </div>
-
-        <div class="mb-8">
-            [span_10](start_span)<span class="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-[10px] font-bold uppercase">Medium • SQL</span>[span_10](end_span)
-            [span_11](start_span)<h2 class="text-2xl font-bold mt-4 leading-snug">Which SQL clause is used to filter groups after GROUP BY?</h2>[span_11](end_span)
-        </div>
-
-        <div class="space-y-4 mb-12">
-            [span_12](start_span)<button onclick="nav('view-results')" class="w-full p-6 premium-card text-left font-medium hover:border-[var(--royal)] hover:bg-[var(--dawn)] transition-all">WHERE</button>[span_12](end_span)
-            [span_13](start_span)<button onclick="nav('view-results')" class="w-full p-6 premium-card text-left font-medium border-[var(--royal)] bg-[var(--dawn)]">HAVING</button>[span_13](end_span)
-            <button onclick="nav('view-results')" class="w-full p-6 premium-card text-left font-medium hover:border-[var(--royal)] hover:bg-[var(--dawn)] transition-all">ORDER BY</button>
-        </div>
+        <button onclick="nav('view-results')" class="btn-main w-full py-5 text-xl">Begin Quest</button>
     </div>
 
     <div id="view-profile" class="view px-6 pt-12">
         <div class="text-center mb-10">
-            <div class="w-24 h-24 mx-auto bg-gradient-to-tr from-[var(--royal)] to-[var(--china)] rounded-full mb-4 shadow-lg"></div>
-            [span_14](start_span)<h2 class="text-2xl font-bold">Aaradhya</h2>[span_14](end_span)
-            [span_15](start_span)<p class="text-[var(--royal)] font-bold text-sm">Lvl 3 SQL Wizard</p>[span_15](end_span)
+            <div class="w-24 h-24 mx-auto bg-[var(--royal)] rounded-full mb-4 border-4 border-[var(--dawn)] flex items-center justify-center text-white text-3xl font-bold">A</div>
+            <h2 class="text-2xl font-bold">Aaradhya</h2>
+            <p class="text-[var(--royal)] font-bold text-sm">Lvl 3 SQL Wizard</p>
         </div>
 
         <h3 class="font-bold mb-4">Badge Collection</h3>
-        <div class="badge-grid mb-10">
+        <div class="grid grid-cols-3 gap-4 mb-10">
             <div class="premium-card p-4 text-center">
-                <div class="w-12 h-12 bg-[var(--dawn)] rounded-full mx-auto mb-2 flex items-center justify-center">🏆</div>
-                [span_16](start_span)[span_17](start_span)<p class="text-[9px] font-bold uppercase">Speed Runner</p>[span_16](end_span)[span_17](end_span)
+                <img src="https://img.icons8.com/color/96/trophy.png" class="w-10 h-10 mx-auto mb-2">
+                <p class="text-[10px] font-bold uppercase leading-tight">Speed Runner</p>
             </div>
-            <div class="premium-card p-4 text-center">
-                <div class="w-12 h-12 bg-[var(--dawn)] rounded-full mx-auto mb-2 flex items-center justify-center">🔥</div>
-                [span_18](start_span)<p class="text-[9px] font-bold uppercase">On Fire</p>[span_18](end_span)
+            <div class="premium-card p-4 text-center border-orange-100 bg-orange-50/30">
+                <img src="https://img.icons8.com/color/96/fire-element.png" class="w-10 h-10 mx-auto mb-2">
+                <p class="text-[10px] font-bold uppercase leading-tight text-orange-600">On Fire</p>
             </div>
-            <div class="premium-card p-4 text-center">
-                <div class="w-12 h-12 bg-[var(--porcelain)] rounded-full mx-auto mb-2 flex items-center justify-center opacity-30">💎</div>
-                [span_19](start_span)<p class="text-[9px] font-bold uppercase opacity-30">Diamond</p>[span_19](end_span)
+            <div class="premium-card p-4 text-center opacity-40 grayscale">
+                <img src="https://img.icons8.com/color/96/diamond.png" class="w-10 h-10 mx-auto mb-2">
+                <p class="text-[10px] font-bold uppercase leading-tight">Diamond</p>
             </div>
         </div>
 
-        <button onclick="nav('view-login')" class="w-full py-4 text-red-500 font-bold bg-red-50 rounded-2xl">Log Out</button>
+        <button onclick="nav('view-login')" class="w-full py-4 text-red-500 font-bold bg-red-50 rounded-2xl border border-red-100">Log Out</button>
     </div>
 
     <div id="view-results" class="view px-6 pt-12">
-        <div class="text-center mb-8">
-            [span_20](start_span)<h2 class="text-3xl font-bold">Quest Complete!</h2>[span_20](end_span)
-            <div class="flex justify-center gap-8 mt-6">
-                [span_21](start_span)<div><p class="text-2xl font-bold">84%</p><p class="text-[10px] text-gray-400">ACCURACY</p></div>[span_21](end_span)
-                [span_22](start_span)<div><p class="text-2xl font-bold">38s</p><p class="text-[10px] text-gray-400">AVG TIME</p></div>[span_22](end_span)
-            </div>
+        <div class="text-center mb-10">
+            <p class="text-green-600 font-bold text-xs uppercase tracking-widest mb-1">Quest Complete!</p>
+            <h2 class="text-4xl font-bold">84%</h2>
+            [span_4](start_span)<p class="text-gray-400 text-sm mt-1">42/50 Correct[span_4](end_span)</p>
         </div>
 
-        <div class="premium-card bg-[var(--midnight)] p-6 text-white border-none mb-8">
+        <div class="premium-card bg-[var(--midnight)] p-6 text-white border-none mb-8 relative overflow-hidden">
             <div class="flex items-center gap-2 mb-4">
-                <span class="p-1 bg-white/20 rounded">✨</span>
-                <span class="text-[10px] font-bold tracking-[0.2em] uppercase">AI Overview</span>
+                <div class="p-1.5 bg-white/10 rounded-lg">✨</div>
+                [span_5](start_span)<span class="text-[10px] font-bold uppercase tracking-[0.2em]">AI Overview[span_5](end_span)</span>
             </div>
             <p class="text-sm leading-relaxed opacity-90">
-                Aaradhya, you nailed Computer Networks today—5/5! [span_23](start_span)SQL is coming along too, but watch out for GROUP BY questions.[span_23](end_span)
+                Aaradhya, you nailed Computer Networks today - 5/5! Watch out for GROUP BY in SQL; that's where you slipped. [span_6](start_span)Spend 20 mins on Pandas output questions next[span_6](end_span).
             </p>
         </div>
-        [span_24](start_span)<button onclick="nav('view-home')" class="btn-royal w-full py-5 font-bold">New Quest</button>[span_24](end_span)
+
+        <h3 class="font-bold mb-4">Chapter Breakdown</h3>
+        <div class="space-y-4 mb-10">
+            <div class="premium-card p-4 flex items-center justify-between">
+                <span class="text-sm font-medium">Computer Networks</span>
+                [span_7](start_span)<span class="text-green-600 font-bold">100%[span_7](end_span)</span>
+            </div>
+            <div class="premium-card p-4 flex items-center justify-between border-red-100 bg-red-50/20">
+                <span class="text-sm font-medium">Data Handling & Pandas</span>
+                [span_8](start_span)<span class="text-red-500 font-bold">57%[span_8](end_span)</span>
+            </div>
+        </div>
+        <button onclick="nav('view-home')" class="btn-main w-full py-5">New Quest</button>
     </div>
 
-    <nav class="fixed bottom-8 left-6 right-6 h-20 bg-white border border-[var(--porcelain)] rounded-[40px] shadow-2xl flex justify-around items-center px-4">
-        <button onclick="nav('view-home')" class="flex flex-col items-center gap-1 nav-active">
+    <nav id="bottom-nav" class="fixed bottom-8 left-6 right-6 h-20 bg-white/80 backdrop-blur-xl border border-[var(--porcelain)] rounded-[40px] shadow-2xl flex justify-around items-center px-4 z-50 hidden">
+        <button onclick="nav('view-home')" id="btn-home" class="nav-item flex flex-col items-center gap-1 active">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
             <span class="text-[9px] font-bold uppercase">Home</span>
         </button>
-        <button onclick="nav('view-profile')" class="flex flex-col items-center gap-1 text-gray-300">
+        <button onclick="nav('view-profile')" id="btn-profile" class="nav-item flex flex-col items-center gap-1">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             <span class="text-[9px] font-bold uppercase">Profile</span>
         </button>
@@ -161,8 +145,23 @@
 
     <script>
         function nav(id) {
+            // Manage View Visibility
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById(id).classList.add('active');
+            
+            // Manage Nav Bar visibility
+            const navBar = document.getElementById('bottom-nav');
+            if (id === 'view-login') {
+                navBar.classList.add('hidden');
+            } else {
+                navBar.classList.remove('hidden');
+            }
+
+            // Update Nav Active State
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            if (id === 'view-home') document.getElementById('btn-home').classList.add('active');
+            if (id === 'view-profile') document.getElementById('btn-profile').classList.add('active');
+            
             window.scrollTo(0,0);
         }
     </script>
