@@ -4,179 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CUET IP Quest | Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            --g-blue: #1a73e8; --g-red: #ea4335; --g-yellow: #fbbc04; --g-green: #34a853;
-            --surface: #ffffff; --background: #f8f9fa;
+            --royal: #334EAC; --midnight: #081F5C; --dawn: #D0E3FF;
+            --china: #7096D1; --moon: #F7F2EB; --porcelain: #EDF1F6;
         }
-        body {
-            font-family: 'Google Sans', sans-serif;
-            background-color: var(--background);
-            color: #202124;
-            transition: all 0.3s ease;
-        }
-        .view { display: none; opacity: 0; transform: translateY(10px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .view.active { display: block; opacity: 1; transform: translateY(0); }
+        body { font-family: 'Google Sans', sans-serif; background-color: #FFFFFF; color: var(--midnight); overflow-x: hidden; }
+        .view { display: none; }
+        .view.active { display: block; animation: slideUp 0.4s cubic-bezier(0, 0, 0.2, 1); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        .g-card {
-            background: var(--surface);
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(60,64,67,0.1), 0 4px 8px rgba(60,64,67,0.1);
-            border: 1px solid #e0e3e7;
-        }
-        .nav-active { color: var(--g-blue); }
-        .nav-active svg { fill: var(--g-blue); stroke: var(--g-blue); }
+        .premium-card { background: white; border-radius: 32px; border: 1px solid var(--porcelain); transition: all 0.3s ease; }
+        .btn-royal { background: var(--royal); color: white; border-radius: 100px; transition: all 0.2s; box-shadow: 0 4px 14px rgba(51, 78, 172, 0.25); }
+        .btn-royal:active { transform: scale(0.96); box-shadow: none; }
         
-        /* Smooth progress bar animations */
-        .progress-fill { transition: width 1s ease-in-out; }
+        .badge-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .nav-active { color: var(--royal); font-weight: 700; }
     </style>
 </head>
 <body class="max-w-md mx-auto min-h-screen relative pb-28">
 
-    <div id="view-signin" class="view active px-8 pt-24 text-center">
-        <div class="mb-10">
-            <div class="w-20 h-20 bg-blue-50 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-inner">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--g-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88a9.947 9.947 0 0112.28 0C16.43 19.18 14.03 20 12 20z"/></svg>
+    <div id="view-login" class="view active px-8 pt-32 text-center">
+        <div class="mb-12">
+            <div class="w-24 h-24 bg-[var(--dawn)] rounded-[32px] flex items-center justify-center mx-auto mb-6">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--royal)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08c-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
             </div>
-            <h1 class="text-3xl font-bold tracking-tight">CUET Quest</h1>
-            <p class="text-gray-500 mt-2">Log in to resume your progress</p>
+            <h1 class="text-3xl font-bold tracking-tight text-[var(--midnight)]">Quest Pro</h1>
+            <p class="text-gray-500 mt-2">Sign in to save your progress</p>
         </div>
         <div class="space-y-4">
-            <input type="password" placeholder="Access Code" class="w-full p-4 rounded-2xl bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-blue-400 transition-all">
-            <button onclick="nav('view-home')" class="w-full bg-[#1a73e8] text-white py-4 rounded-full font-medium shadow-lg hover:shadow-blue-200">Sign In</button>
+            <input type="password" placeholder="Passcode" class="w-full p-5 rounded-3xl bg-[var(--moon)] border-none outline-none focus:ring-2 focus:ring-[var(--royal)]">
+            <button onclick="nav('view-home')" class="btn-royal w-full py-5 text-lg font-medium">Log In</button>
         </div>
     </div>
 
     <div id="view-home" class="view px-6 pt-12">
         <div class="flex justify-between items-center mb-8">
             <div>
-                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Good Morning</p>
-                <h2 class="text-3xl font-bold">Aaradhya</h2>
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Informatics Practices</p>
+                [span_3](start_span)<h2 class="text-3xl font-bold">Good Morning, Aaradhya</h2>[span_3](end_span)
             </div>
-            <div class="bg-blue-100 text-blue-700 px-4 py-2 rounded-full font-bold text-sm">Lvl 3</div>
+            <div class="w-12 h-12 bg-[var(--royal)] rounded-full flex items-center justify-center text-white font-bold">A</div>
         </div>
 
-        <div class="g-card mb-8 flex justify-around text-center py-6">
-            <div><p class="text-xl font-bold">12</p><p class="text-[10px] text-gray-400 uppercase">Mocks</p></div>
-            <div class="border-x border-gray-100 px-8"><p class="text-xl font-bold text-green-600">74%</p><p class="text-[10px] text-gray-400 uppercase">Accuracy</p></div>
-            <div><p class="text-xl font-bold text-orange-500">5</p><p class="text-[10px] text-gray-400 uppercase">Streak</p></div>
+        <div class="premium-card p-6 mb-8 flex justify-between bg-[var(--midnight)] text-white border-none">
+            <div class="text-center">
+                [span_4](start_span)<p class="text-2xl font-bold">12</p>[span_4](end_span)
+                <p class="text-[9px] uppercase opacity-60">Mocks</p>
+            </div>
+            <div class="text-center">
+                [span_5](start_span)<p class="text-2xl font-bold">74%</p>[span_5](end_span)
+                <p class="text-[9px] uppercase opacity-60">Accuracy</p>
+            </div>
+            <div class="text-center">
+                [span_6](start_span)<p class="text-2xl font-bold">5</p>[span_6](end_span)
+                <p class="text-[9px] uppercase opacity-60">Streak</p>
+            </div>
         </div>
 
-        <h3 class="font-bold mb-4 ml-1">Pick Your Chapters</h3>
-        <div class="space-y-3 mb-8">
-            <div class="g-card p-4 flex items-center justify-between border-blue-100">
-                <span class="font-medium">Database Query using SQL</span>
-                <input type="checkbox" checked class="w-6 h-6 rounded-full accent-blue-600">
+        <h3 class="font-bold text-lg mb-4">Daily Quests</h3>
+        <div class="space-y-4 mb-8">
+            <div class="premium-card p-5 flex items-center gap-4 bg-[var(--porcelain)] border-none">
+                <div class="p-3 bg-white rounded-2xl">📊</div>
+                <div class="flex-1">
+                    <p class="font-bold">SQL Mastery</p>
+                    [span_7](start_span)<p class="text-xs text-gray-500">SELECT, JOIN, GROUP BY</p>[span_7](end_span)
+                </div>
+                <input type="checkbox" checked class="w-6 h-6 accent-[var(--royal)]">
             </div>
-            <div class="g-card p-4 flex items-center justify-between opacity-50">
-                <span class="font-medium">Computer Networks</span>
-                <input type="checkbox" class="w-6 h-6 rounded-full accent-blue-600">
-            </div>
-            <button onclick="nav('view-results')" class="w-full py-4 text-sm font-bold text-blue-600 bg-blue-50 rounded-2xl flex items-center justify-center gap-2">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                I'm Feeling Lucky (AI Mix)
+            <button onclick="nav('view-question')" class="w-full py-4 text-sm font-bold text-[var(--royal)] bg-[var(--dawn)] rounded-2xl">
+                [span_8](start_span)✨ I'm Feeling Lucky (AI Mix)[span_8](end_span)
             </button>
         </div>
-        <button onclick="nav('view-results')" class="w-full bg-[#1a73e8] text-white py-5 rounded-3xl font-bold shadow-2xl shadow-blue-200 text-lg">Begin Quest</button>
+        [span_9](start_span)<button onclick="nav('view-question')" class="btn-royal w-full py-5 text-xl font-bold">Begin Quest</button>[span_9](end_span)
     </div>
 
-    <div id="view-stats" class="view px-6 pt-12">
-        <h2 class="text-2xl font-bold mb-6">Mastery & Badges</h2>
-        
-        <div class="g-card mb-8">
-            <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Recent Performance</h4>
-            <div class="space-y-5">
-                <div>
-                    <div class="flex justify-between text-xs font-bold mb-2"><span>SQL Mastery</span><span>75%</span></div>
-                    <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden"><div class="bg-yellow-400 h-full w-[75%] progress-fill"></div></div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-xs font-bold mb-2"><span>Pandas Logic</span><span>57%</span></div>
-                    <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden"><div class="bg-red-400 h-full w-[57%] progress-fill"></div></div>
-                </div>
+    <div id="view-question" class="view px-6 pt-12">
+        <div class="flex justify-between items-center mb-10">
+            <div class="w-2/3 bg-[var(--porcelain)] h-2 rounded-full overflow-hidden">
+                <div class="bg-[var(--royal)] h-full w-1/3"></div>
+            </div>
+            <span class="text-xs font-bold text-gray-500">Q7 OF 50</span>
+        </div>
+
+        <div class="mb-8">
+            [span_10](start_span)<span class="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-[10px] font-bold uppercase">Medium • SQL</span>[span_10](end_span)
+            [span_11](start_span)<h2 class="text-2xl font-bold mt-4 leading-snug">Which SQL clause is used to filter groups after GROUP BY?</h2>[span_11](end_span)
+        </div>
+
+        <div class="space-y-4 mb-12">
+            [span_12](start_span)<button onclick="nav('view-results')" class="w-full p-6 premium-card text-left font-medium hover:border-[var(--royal)] hover:bg-[var(--dawn)] transition-all">WHERE</button>[span_12](end_span)
+            [span_13](start_span)<button onclick="nav('view-results')" class="w-full p-6 premium-card text-left font-medium border-[var(--royal)] bg-[var(--dawn)]">HAVING</button>[span_13](end_span)
+            <button onclick="nav('view-results')" class="w-full p-6 premium-card text-left font-medium hover:border-[var(--royal)] hover:bg-[var(--dawn)] transition-all">ORDER BY</button>
+        </div>
+    </div>
+
+    <div id="view-profile" class="view px-6 pt-12">
+        <div class="text-center mb-10">
+            <div class="w-24 h-24 mx-auto bg-gradient-to-tr from-[var(--royal)] to-[var(--china)] rounded-full mb-4 shadow-lg"></div>
+            [span_14](start_span)<h2 class="text-2xl font-bold">Aaradhya</h2>[span_14](end_span)
+            [span_15](start_span)<p class="text-[var(--royal)] font-bold text-sm">Lvl 3 SQL Wizard</p>[span_15](end_span)
+        </div>
+
+        <h3 class="font-bold mb-4">Badge Collection</h3>
+        <div class="badge-grid mb-10">
+            <div class="premium-card p-4 text-center">
+                <div class="w-12 h-12 bg-[var(--dawn)] rounded-full mx-auto mb-2 flex items-center justify-center">🏆</div>
+                [span_16](start_span)[span_17](start_span)<p class="text-[9px] font-bold uppercase">Speed Runner</p>[span_16](end_span)[span_17](end_span)
+            </div>
+            <div class="premium-card p-4 text-center">
+                <div class="w-12 h-12 bg-[var(--dawn)] rounded-full mx-auto mb-2 flex items-center justify-center">🔥</div>
+                [span_18](start_span)<p class="text-[9px] font-bold uppercase">On Fire</p>[span_18](end_span)
+            </div>
+            <div class="premium-card p-4 text-center">
+                <div class="w-12 h-12 bg-[var(--porcelain)] rounded-full mx-auto mb-2 flex items-center justify-center opacity-30">💎</div>
+                [span_19](start_span)<p class="text-[9px] font-bold uppercase opacity-30">Diamond</p>[span_19](end_span)
             </div>
         </div>
 
-        <h3 class="font-bold mb-4 ml-1">Unlocked Badges</h3>
-        <div class="grid grid-cols-3 gap-4 mb-10">
-            <div class="g-card p-3 text-center flex flex-col items-center">
-                <img src="https://via.placeholder.com/60/FFD700/FFFFFF?text=Wizard" class="w-12 h-12 rounded-full mb-2 border-2 border-yellow-100">
-                <span class="text-[10px] font-bold uppercase">SQL Wizard</span>
-            </div>
-            <div class="g-card p-3 text-center flex flex-col items-center">
-                <img src="https://via.placeholder.com/60/FF4500/FFFFFF?text=Fire" class="w-12 h-12 rounded-full mb-2 border-2 border-orange-100">
-                <span class="text-[10px] font-bold uppercase">On Fire</span>
-            </div>
-            <div class="g-card p-3 text-center flex flex-col items-center opacity-30 grayscale">
-                <img src="https://via.placeholder.com/60/808080/FFFFFF?text=Lock" class="w-12 h-12 rounded-full mb-2">
-                <span class="text-[10px] font-bold uppercase tracking-tighter">Diamond</span>
-            </div>
-        </div>
-        
-        <button onclick="nav('view-signin')" class="w-full py-4 text-red-500 font-bold bg-red-50 rounded-2xl">Log Out</button>
+        <button onclick="nav('view-login')" class="w-full py-4 text-red-500 font-bold bg-red-50 rounded-2xl">Log Out</button>
     </div>
 
     <div id="view-results" class="view px-6 pt-12">
         <div class="text-center mb-8">
-            <p class="text-green-600 font-bold text-sm uppercase">Quest Complete</p>
-            <h2 class="text-4xl font-bold mt-1">84%</h2>
-            <p class="text-gray-400 text-sm">42/50 Correct</p>
+            [span_20](start_span)<h2 class="text-3xl font-bold">Quest Complete!</h2>[span_20](end_span)
+            <div class="flex justify-center gap-8 mt-6">
+                [span_21](start_span)<div><p class="text-2xl font-bold">84%</p><p class="text-[10px] text-gray-400">ACCURACY</p></div>[span_21](end_span)
+                [span_22](start_span)<div><p class="text-2xl font-bold">38s</p><p class="text-[10px] text-gray-400">AVG TIME</p></div>[span_22](end_span)
+            </div>
         </div>
 
-        <div class="g-card bg-gradient-to-br from-blue-600 to-indigo-700 text-white border-none mb-6 relative overflow-hidden">
-            <div class="absolute -right-4 -top-4 opacity-10">
-                <svg width="120" height="120" fill="white" viewBox="0 0 24 24"><path d="M12 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <div class="premium-card bg-[var(--midnight)] p-6 text-white border-none mb-8">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="p-1 bg-white/20 rounded">✨</span>
+                <span class="text-[10px] font-bold tracking-[0.2em] uppercase">AI Overview</span>
             </div>
-            <div class="flex items-center gap-2 mb-3">
-                <div class="bg-white/20 p-1 rounded-lg">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-                </div>
-                <span class="text-[10px] font-bold uppercase tracking-[0.2em]">AI Overview</span>
-            </div>
-            <p class="text-sm font-medium leading-relaxed">
-                [span_3](start_span)Aaradhya, you nailed Computer Networks today[span_3](end_span)! [span_4](start_span)Watch out for GROUP BY in SQL—it tripped you up on 2 questions[span_4](end_span). [span_5](start_span)Spend 15 minutes on df.describe() for Pandas[span_5](end_span).
+            <p class="text-sm leading-relaxed opacity-90">
+                Aaradhya, you nailed Computer Networks today—5/5! [span_23](start_span)SQL is coming along too, but watch out for GROUP BY questions.[span_23](end_span)
             </p>
         </div>
-
-        <button onclick="nav('view-home')" class="w-full bg-[#1a73e8] text-white py-4 rounded-3xl font-bold shadow-lg">New Quest</button>
+        [span_24](start_span)<button onclick="nav('view-home')" class="btn-royal w-full py-5 font-bold">New Quest</button>[span_24](end_span)
     </div>
 
-    <nav class="fixed bottom-6 left-6 right-6 h-20 bg-white/90 backdrop-blur-xl border border-gray-200 rounded-[32px] shadow-2xl flex justify-around items-center px-4 z-50">
-        <button onclick="nav('view-home')" class="nav-btn flex flex-col items-center gap-1 nav-active" id="nav-home">
+    <nav class="fixed bottom-8 left-6 right-6 h-20 bg-white border border-[var(--porcelain)] rounded-[40px] shadow-2xl flex justify-around items-center px-4">
+        <button onclick="nav('view-home')" class="flex flex-col items-center gap-1 nav-active">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
             <span class="text-[9px] font-bold uppercase">Home</span>
         </button>
-        <button onclick="nav('view-stats')" class="nav-btn flex flex-col items-center gap-1 text-gray-400" id="nav-stats">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
-            <span class="text-[9px] font-bold uppercase">Progress</span>
-        </button>
-        <button onclick="nav('view-signin')" class="nav-btn flex flex-col items-center gap-1 text-gray-400">
+        <button onclick="nav('view-profile')" class="flex flex-col items-center gap-1 text-gray-300">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span class="text-[9px] font-bold uppercase">Logout</span>
+            <span class="text-[9px] font-bold uppercase">Profile</span>
         </button>
     </nav>
 
     <script>
-        function nav(targetId) {
-            // Instant feedback for button click
-            window.scrollTo({top: 0, behavior: 'smooth'});
-            
-            // Toggle Views
+        function nav(id) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            const target = document.getElementById(targetId);
-            target.classList.add('active');
-
-            // Update Bottom Nav Style
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('nav-active'));
-            if(targetId === 'view-home') document.getElementById('nav-home').classList.add('nav-active');
-            if(targetId === 'view-stats') document.getElementById('nav-stats').classList.add('nav-active');
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
         }
-        
-        // Initialize first view without double-tapping requirement
-        window.onload = () => { nav('view-signin'); };
     </script>
 </body>
 </html>
