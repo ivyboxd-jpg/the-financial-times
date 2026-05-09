@@ -2,211 +2,181 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CUET IP Quest | Aaradhya</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CUET IP Quest | Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            --google-blue: #1a73e8;
-            --google-red: #ea4335;
-            --google-yellow: #fbbc04;
-            --google-green: #34a853;
-            --google-gray: #5f6368;
-            --bg-light: #F8F9FA;
+            --g-blue: #1a73e8; --g-red: #ea4335; --g-yellow: #fbbc04; --g-green: #34a853;
+            --surface: #ffffff; --background: #f8f9fa;
         }
-
         body {
-            font-family: 'Google Sans', 'Roboto', sans-serif;
-            background-color: var(--bg-light);
+            font-family: 'Google Sans', sans-serif;
+            background-color: var(--background);
             color: #202124;
-            -webkit-tap-highlight-color: transparent;
+            transition: all 0.3s ease;
         }
-
-        .view { display: none; }
-        .view.active { display: block; animation: fadeIn 0.3s ease-in-out; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .view { display: none; opacity: 0; transform: translateY(10px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .view.active { display: block; opacity: 1; transform: translateY(0); }
+        
+        .g-card {
+            background: var(--surface);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(60,64,67,0.1), 0 4px 8px rgba(60,64,67,0.1);
+            border: 1px solid #e0e3e7;
         }
-
-        .premium-card {
-            background: white;
-            border-radius: 28px;
-            padding: 24px;
-            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
-            transition: all 0.2s ease;
-        }
-
-        .premium-card:active {
-            transform: scale(0.98);
-            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3);
-        }
-
-        .btn-google {
-            background-color: var(--google-blue);
-            color: white;
-            border-radius: 100px;
-            padding: 12px 24px;
-            font-weight: 500;
-            text-align: center;
-            transition: box-shadow 0.2s;
-        }
-
-        .nav-item.active { color: var(--google-blue); }
-        .nav-item.active svg { fill: var(--google-blue); }
+        .nav-active { color: var(--g-blue); }
+        .nav-active svg { fill: var(--g-blue); stroke: var(--g-blue); }
+        
+        /* Smooth progress bar animations */
+        .progress-fill { transition: width 1s ease-in-out; }
     </style>
 </head>
-<body class="max-w-md mx-auto min-h-screen relative pb-24">
+<body class="max-w-md mx-auto min-h-screen relative pb-28">
 
-    <div id="view-login" class="view active px-8 pt-20">
-        <div class="text-center mb-12">
-            <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--google-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08c-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+    <div id="view-signin" class="view active px-8 pt-24 text-center">
+        <div class="mb-10">
+            <div class="w-20 h-20 bg-blue-50 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-inner">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--g-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88a9.947 9.947 0 0112.28 0C16.43 19.18 14.03 20 12 20z"/></svg>
             </div>
-            <h1 class="text-2xl font-bold mb-2">Welcome Back</h1>
-            <p class="text-gray-500">Sign in to resume your daily quest</p>
+            <h1 class="text-3xl font-bold tracking-tight">CUET Quest</h1>
+            <p class="text-gray-500 mt-2">Log in to resume your progress</p>
         </div>
-        
         <div class="space-y-4">
-            <input type="password" placeholder="Enter Password" class="w-full p-4 rounded-2xl bg-white border border-gray-200 focus:border-blue-500 outline-none">
-            <button onclick="showView('view-home')" class="btn-google w-full py-4 text-lg">Sign In</button>
+            <input type="password" placeholder="Access Code" class="w-full p-4 rounded-2xl bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-blue-400 transition-all">
+            <button onclick="nav('view-home')" class="w-full bg-[#1a73e8] text-white py-4 rounded-full font-medium shadow-lg hover:shadow-blue-200">Sign In</button>
         </div>
     </div>
 
     <div id="view-home" class="view px-6 pt-12">
-        <div class="flex justify-between items-start mb-8">
+        <div class="flex justify-between items-center mb-8">
             <div>
-                [span_0](start_span)<p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Good Morning[span_0](end_span)</p>
-                [span_1](start_span)<h2 class="text-3xl font-bold">Aaradhya[span_1](end_span)</h2>
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Good Morning</p>
+                <h2 class="text-3xl font-bold">Aaradhya</h2>
             </div>
-            <div class="bg-blue-50 text-blue-600 font-bold px-4 py-2 rounded-full border border-blue-100">
-                [span_2](start_span)Lvl 3[span_2](end_span)
-            </div>
+            <div class="bg-blue-100 text-blue-700 px-4 py-2 rounded-full font-bold text-sm">Lvl 3</div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4 mb-8">
-            <div class="premium-card bg-blue-50 border-none">
-                <p class="text-sm font-medium text-blue-600">Mocks Done</p>
-                [span_3](start_span)<p class="text-2xl font-bold mt-1">12[span_3](end_span)</p>
-            </div>
-            <div class="premium-card bg-green-50 border-none">
-                <p class="text-sm font-medium text-green-600">Accuracy</p>
-                [span_4](start_span)<p class="text-2xl font-bold mt-1">74%[span_4](end_span)</p>
-            </div>
+        <div class="g-card mb-8 flex justify-around text-center py-6">
+            <div><p class="text-xl font-bold">12</p><p class="text-[10px] text-gray-400 uppercase">Mocks</p></div>
+            <div class="border-x border-gray-100 px-8"><p class="text-xl font-bold text-green-600">74%</p><p class="text-[10px] text-gray-400 uppercase">Accuracy</p></div>
+            <div><p class="text-xl font-bold text-orange-500">5</p><p class="text-[10px] text-gray-400 uppercase">Streak</p></div>
         </div>
 
-        [span_5](start_span)<h3 class="font-bold text-lg mb-4">Pick your chapters[span_5](end_span)</h3>
+        <h3 class="font-bold mb-4 ml-1">Pick Your Chapters</h3>
         <div class="space-y-3 mb-8">
-            <div class="premium-card p-4 flex items-center justify-between border border-gray-100">
-                [span_6](start_span)<span class="font-medium text-gray-700">Database Query using SQL[span_6](end_span)</span>
-                <input type="checkbox" checked class="w-5 h-5 rounded accent-blue-600">
+            <div class="g-card p-4 flex items-center justify-between border-blue-100">
+                <span class="font-medium">Database Query using SQL</span>
+                <input type="checkbox" checked class="w-6 h-6 rounded-full accent-blue-600">
             </div>
-            <div class="premium-card p-4 flex items-center justify-between border border-gray-100 opacity-60">
-                [span_7](start_span)<span class="font-medium text-gray-700">Data Handling & Pandas[span_7](end_span)</span>
-                <input type="checkbox" class="w-5 h-5 rounded accent-blue-600">
+            <div class="g-card p-4 flex items-center justify-between opacity-50">
+                <span class="font-medium">Computer Networks</span>
+                <input type="checkbox" class="w-6 h-6 rounded-full accent-blue-600">
             </div>
+            <button onclick="nav('view-results')" class="w-full py-4 text-sm font-bold text-blue-600 bg-blue-50 rounded-2xl flex items-center justify-center gap-2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                I'm Feeling Lucky (AI Mix)
+            </button>
         </div>
-
-        [span_8](start_span)<button onclick="showView('view-results')" class="btn-google w-full py-4 shadow-xl shadow-blue-200">Begin Quest[span_8](end_span)</button>
+        <button onclick="nav('view-results')" class="w-full bg-[#1a73e8] text-white py-5 rounded-3xl font-bold shadow-2xl shadow-blue-200 text-lg">Begin Quest</button>
     </div>
 
     <div id="view-stats" class="view px-6 pt-12">
-        [span_9](start_span)<h2 class="text-2xl font-bold mb-6">Your Progress[span_9](end_span)</h2>
+        <h2 class="text-2xl font-bold mb-6">Mastery & Badges</h2>
         
-        <div class="premium-card mb-8">
-            [span_10](start_span)<h4 class="font-bold text-gray-400 text-xs uppercase tracking-widest mb-4">Mastery Breakdown[span_10](end_span)</h4>
-            <div class="space-y-6">
+        <div class="g-card mb-8">
+            <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Recent Performance</h4>
+            <div class="space-y-5">
                 <div>
-                    <div class="flex justify-between text-sm font-medium mb-2">
-                        [span_11](start_span)<span>Computer Networks[span_11](end_span)</span>
-                        [span_12](start_span)<span>100%[span_12](end_span)</span>
-                    </div>
-                    <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-                        <div class="bg-green-500 h-full w-[100%]"></div>
-                    </div>
+                    <div class="flex justify-between text-xs font-bold mb-2"><span>SQL Mastery</span><span>75%</span></div>
+                    <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden"><div class="bg-yellow-400 h-full w-[75%] progress-fill"></div></div>
                 </div>
                 <div>
-                    <div class="flex justify-between text-sm font-medium mb-2">
-                        [span_13](start_span)<span>Database SQL[span_13](end_span)</span>
-                        [span_14](start_span)<span>75%[span_14](end_span)</span>
-                    </div>
-                    <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-                        <div class="bg-yellow-500 h-full w-[75%]"></div>
-                    </div>
+                    <div class="flex justify-between text-xs font-bold mb-2"><span>Pandas Logic</span><span>57%</span></div>
+                    <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden"><div class="bg-red-400 h-full w-[57%] progress-fill"></div></div>
                 </div>
             </div>
         </div>
 
-        [span_15](start_span)<h3 class="font-bold mb-4">Unlocked Badges[span_15](end_span)</h3>
-        <div class="grid grid-cols-3 gap-4">
-            <div class="premium-card p-4 flex flex-col items-center">
-                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mb-2">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--google-yellow)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                </div>
-                [span_16](start_span)<span class="text-[10px] font-bold text-center">SQL Wizard[span_16](end_span)</span>
+        <h3 class="font-bold mb-4 ml-1">Unlocked Badges</h3>
+        <div class="grid grid-cols-3 gap-4 mb-10">
+            <div class="g-card p-3 text-center flex flex-col items-center">
+                <img src="https://via.placeholder.com/60/FFD700/FFFFFF?text=Wizard" class="w-12 h-12 rounded-full mb-2 border-2 border-yellow-100">
+                <span class="text-[10px] font-bold uppercase">SQL Wizard</span>
             </div>
-            <div class="premium-card p-4 flex flex-col items-center">
-                <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mb-2">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#F97316"><path d="M13.5 1.5s3 3 3 7c0 3.5-3 5.5-3 5.5s-2-2-2-4.5c0-2.5 2-8 2-8zM9 8.5s3 3 3 7c0 3.5-3 5.5-3 5.5s-2-2-2-4.5c0-2.5 2-8 2-8z"/></svg>
-                </div>
-                [span_17](start_span)<span class="text-[10px] font-bold text-center">On Fire[span_17](end_span)</span>
+            <div class="g-card p-3 text-center flex flex-col items-center">
+                <img src="https://via.placeholder.com/60/FF4500/FFFFFF?text=Fire" class="w-12 h-12 rounded-full mb-2 border-2 border-orange-100">
+                <span class="text-[10px] font-bold uppercase">On Fire</span>
+            </div>
+            <div class="g-card p-3 text-center flex flex-col items-center opacity-30 grayscale">
+                <img src="https://via.placeholder.com/60/808080/FFFFFF?text=Lock" class="w-12 h-12 rounded-full mb-2">
+                <span class="text-[10px] font-bold uppercase tracking-tighter">Diamond</span>
             </div>
         </div>
+        
+        <button onclick="nav('view-signin')" class="w-full py-4 text-red-500 font-bold bg-red-50 rounded-2xl">Log Out</button>
     </div>
 
     <div id="view-results" class="view px-6 pt-12">
         <div class="text-center mb-8">
-            [span_18](start_span)<h2 class="text-3xl font-bold">Quest Complete[span_18](end_span)!</h2>
-            [span_19](start_span)<p class="text-gray-500 mt-2">Accuracy: 84%[span_19](end_span)</p>
+            <p class="text-green-600 font-bold text-sm uppercase">Quest Complete</p>
+            <h2 class="text-4xl font-bold mt-1">84%</h2>
+            <p class="text-gray-400 text-sm">42/50 Correct</p>
         </div>
 
-        <div class="premium-card bg-gradient-to-br from-blue-500 to-blue-700 text-white mb-6">
-            <div class="flex items-center gap-2 mb-3">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-                [span_20](start_span)<span class="text-xs font-bold tracking-widest uppercase">AI Review[span_20](end_span)</span>
+        <div class="g-card bg-gradient-to-br from-blue-600 to-indigo-700 text-white border-none mb-6 relative overflow-hidden">
+            <div class="absolute -right-4 -top-4 opacity-10">
+                <svg width="120" height="120" fill="white" viewBox="0 0 24 24"><path d="M12 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             </div>
-            <p class="text-sm font-medium leading-relaxed opacity-90">
-                Aaradhya, you absolutely nailed Computer Networks! [span_21](start_span)SQL is coming along, just watch out for GROUP BY questions.[span_21](end_span)
+            <div class="flex items-center gap-2 mb-3">
+                <div class="bg-white/20 p-1 rounded-lg">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-[0.2em]">AI Overview</span>
+            </div>
+            <p class="text-sm font-medium leading-relaxed">
+                [span_3](start_span)Aaradhya, you nailed Computer Networks today[span_3](end_span)! [span_4](start_span)Watch out for GROUP BY in SQL—it tripped you up on 2 questions[span_4](end_span). [span_5](start_span)Spend 15 minutes on df.describe() for Pandas[span_5](end_span).
             </p>
         </div>
 
-        [span_22](start_span)<button onclick="showView('view-home')" class="w-full text-blue-600 font-bold py-4">New Quest[span_22](end_span)</button>
+        <button onclick="nav('view-home')" class="w-full bg-[#1a73e8] text-white py-4 rounded-3xl font-bold shadow-lg">New Quest</button>
     </div>
 
-    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-gray-100 h-20 flex justify-around items-center px-6">
-        <button onclick="showView('view-home')" class="nav-item flex flex-col items-center gap-1 active">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-            <span class="text-[10px] font-bold uppercase tracking-tighter">Home</span>
+    <nav class="fixed bottom-6 left-6 right-6 h-20 bg-white/90 backdrop-blur-xl border border-gray-200 rounded-[32px] shadow-2xl flex justify-around items-center px-4 z-50">
+        <button onclick="nav('view-home')" class="nav-btn flex flex-col items-center gap-1 nav-active" id="nav-home">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            <span class="text-[9px] font-bold uppercase">Home</span>
         </button>
-        <button onclick="showView('view-stats')" class="nav-item flex flex-col items-center gap-1">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
-            <span class="text-[10px] font-bold uppercase tracking-tighter">Stats</span>
+        <button onclick="nav('view-stats')" class="nav-btn flex flex-col items-center gap-1 text-gray-400" id="nav-stats">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+            <span class="text-[9px] font-bold uppercase">Progress</span>
         </button>
-        <button onclick="showView('view-login')" class="nav-item flex flex-col items-center gap-1">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span class="text-[10px] font-bold uppercase tracking-tighter">Profile</span>
+        <button onclick="nav('view-signin')" class="nav-btn flex flex-col items-center gap-1 text-gray-400">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span class="text-[9px] font-bold uppercase">Logout</span>
         </button>
     </nav>
 
     <script>
-        function showView(viewId) {
-            // Hide all views
-            document.querySelectorAll('.view').forEach(view => {
-                view.classList.remove('active');
-            });
-            // Show target view
-            document.getElementById(viewId).classList.add('active');
+        function nav(targetId) {
+            // Instant feedback for button click
+            window.scrollTo({top: 0, behavior: 'smooth'});
             
-            // Update Nav Icons
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            // (Simple logic to highlight icons based on ID)
-            if(viewId === 'view-home') document.querySelectorAll('.nav-item')[0].classList.add('active');
-            if(viewId === 'view-stats') document.querySelectorAll('.nav-item')[1].classList.add('active');
+            // Toggle Views
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            const target = document.getElementById(targetId);
+            target.classList.add('active');
+
+            // Update Bottom Nav Style
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('nav-active'));
+            if(targetId === 'view-home') document.getElementById('nav-home').classList.add('nav-active');
+            if(targetId === 'view-stats') document.getElementById('nav-stats').classList.add('nav-active');
         }
+        
+        // Initialize first view without double-tapping requirement
+        window.onload = () => { nav('view-signin'); };
     </script>
 </body>
 </html>
