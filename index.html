@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Quest Pro | Premium</title>
+    <title>Quest Pro | For Aaradhya</title>
     
     <!-- Google Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
-        /* Custom Color Palette from Image */
+        /* Custom Color Palette */
         :root {
             --c-royal: #334EAC;
             --c-moon: #F7F2EB;
@@ -29,83 +29,79 @@
             --gemini-grad: linear-gradient(90deg, #1A73E8 0%, #B371FF 50%, #F4B400 100%);
         }
 
-        body { 
+        body, html { 
+            margin: 0; padding: 0;
             font-family: 'Google Sans', sans-serif; 
             background-color: var(--c-moon); 
             color: var(--c-midnight); 
             -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
             overflow-x: hidden;
+            width: 100%;
         }
 
         /* Ambient Background Visuals */
         .ambient-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-            background: var(--c-moon);
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; overflow: hidden; background: var(--c-moon);
         }
         .ambient-blob-1 {
             position: absolute; top: -10%; left: -10%; width: 50vw; height: 50vw;
-            background: var(--c-dawn); filter: blur(80px); opacity: 0.6; border-radius: 50%;
+            background: var(--c-dawn); filter: blur(80px); opacity: 0.7; border-radius: 50%;
         }
         .ambient-blob-2 {
-            position: absolute; top: 20%; right: -10%; width: 40vw; height: 40vw;
+            position: absolute; top: 30%; right: -20%; width: 50vw; height: 50vw;
             background: var(--c-asian-pear); filter: blur(80px); opacity: 0.8; border-radius: 50%;
         }
 
-        /* View Transitions */
-        .view { display: none; }
-        .view.active { display: block; animation: fadeSlideUp 0.5s cubic-bezier(0.2, 0, 0, 1); }
+        /* View Section Logic (Fixes Scroll Bug completely) */
+        .view-section { display: none; opacity: 0; box-sizing: border-box; width: 100%; min-h-screen; }
+        .view-section.active { 
+            display: block; opacity: 1; 
+            animation: fadeSlideUp 0.4s cubic-bezier(0.2, 0, 0, 1) forwards; 
+        }
+        /* Only apply bottom padding to views that have the bottom nav bar */
+        .with-bottom-nav { padding-bottom: 110px; }
+
         @keyframes fadeSlideUp { 
-            from { opacity: 0; transform: translateY(20px); } 
+            from { opacity: 0; transform: translateY(15px); } 
             to { opacity: 1; transform: translateY(0); } 
         }
+        @keyframes pulseHeart {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
         
-        /* Material 3 Components Mapped to Custom Palette */
         .premium-card { 
-            background: rgba(255, 255, 255, 0.85); 
-            backdrop-filter: blur(12px);
-            border: 1px solid white; 
-            border-radius: 28px; 
-            box-shadow: 0 4px 20px rgba(8, 31, 92, 0.04);
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
+            border: 1px solid white; border-radius: 28px; box-shadow: 0 4px 20px rgba(8, 31, 92, 0.04);
         }
         
         .btn-primary { 
-            background: var(--c-royal); 
-            color: white; 
-            border-radius: 100px; 
-            font-weight: 500; 
-            transition: all 0.2s; 
-            box-shadow: 0 4px 12px rgba(51, 78, 172, 0.2);
+            background: var(--c-royal); color: white; border-radius: 100px; 
+            font-weight: 500; transition: all 0.2s; box-shadow: 0 4px 12px rgba(51, 78, 172, 0.2); cursor: pointer;
         }
         .btn-primary:active { transform: scale(0.97); box-shadow: 0 2px 6px rgba(51, 78, 172, 0.2); }
 
         .btn-lucky {
-            background: var(--c-dawn);
-            color: var(--c-midnight);
-            border-radius: 100px;
-            font-weight: 700;
-            transition: all 0.2s;
-            border: 1px solid white;
+            background: var(--c-dawn); color: var(--c-midnight); border-radius: 100px;
+            font-weight: 700; transition: all 0.2s; border: 1px solid white; cursor: pointer;
         }
         .btn-lucky:active { transform: scale(0.97); background: var(--c-sky); }
 
-        /* Gradients & Highlights */
+        /* Gradients */
         .gemini-gradient-text {
-            background: var(--gemini-grad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: var(--gemini-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .hero-gradient { background: linear-gradient(135deg, var(--c-midnight) 0%, var(--c-royal) 100%); }
 
-        /* Inputs */
-        .passcode-input {
-            background: white; border: 2px solid var(--c-porcelain); transition: all 0.3s;
-        }
-        .passcode-input:focus-within {
-            border-color: var(--c-royal); box-shadow: 0 0 0 4px var(--c-dawn);
-        }
+        /* Inputs & Options */
+        .passcode-input { background: white; border: 2px solid var(--c-porcelain); transition: all 0.3s; }
+        .passcode-input:focus-within { border-color: var(--c-royal); box-shadow: 0 0 0 4px var(--c-dawn); }
+        
+        .option-card { border: 2px solid var(--c-porcelain); transition: all 0.2s; background: white; }
+        .option-card.selected { border-color: var(--c-royal); background: var(--c-dawn); }
 
         /* Bottom Nav */
         .nav-pill { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -115,19 +111,21 @@
         .nav-text { opacity: 0; transition: all 0.2s; height: 0; overflow: hidden; }
         .nav-item.active .nav-text { height: 16px; margin-top: 4px; }
 
-        /* Custom Checkbox */
+        /* Custom Checkboxes / Radios */
         input[type="checkbox"] { accent-color: var(--c-royal); width: 22px; height: 22px; border-radius: 6px; cursor: pointer; }
+        .progress-track { background: var(--c-porcelain); border-radius: 100px; height: 8px; width: 100%; overflow: hidden; }
+        .progress-fill { background: var(--c-royal); height: 100%; border-radius: 100px; transition: width 1s ease-out; }
     </style>
 </head>
-<body class="max-w-md mx-auto min-h-screen relative pb-28">
+<body>
 
-    <!-- Soft Ambient Background Visuals -->
+    <!-- Ambient Visuals -->
     <div class="ambient-bg">
         <div class="ambient-blob-1"></div>
         <div class="ambient-blob-2"></div>
     </div>
 
-    <!-- Gemini SVG Component (Hidden) -->
+    <!-- Official Perfect Gemini Star SVG -->
     <svg style="display: none;">
         <defs>
             <linearGradient id="gemini-grad-svg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -137,28 +135,31 @@
             </linearGradient>
         </defs>
         <g id="gemini-star">
-            <path d="M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z" fill="url(#gemini-grad-svg)"/>
+            <path d="M12 0C11.7 5.5 7.5 9.7 2 10C7.5 10.3 11.7 14.5 12 20C12.3 14.5 16.5 10.3 22 10C16.5 9.7 12.3 5.5 12 0Z" fill="url(#gemini-grad-svg)"/>
         </g>
     </svg>
 
     <!-- ================= VIEW: LOGIN ================= -->
-    <div id="view-login" class="view active px-8 pt-32 text-center h-screen flex flex-col">
-        <div class="mb-16 mt-8">
-            <div class="w-20 h-20 mx-auto mb-8 bg-white rounded-3xl shadow-xl shadow-[var(--c-dawn)] flex items-center justify-center p-4 border border-[var(--c-porcelain)]">
-                <svg viewBox="0 0 24 24" class="w-full h-full"><use href="#gemini-star"></use></svg>
+    <div id="view-login" class="view-section active px-8 flex flex-col justify-center h-screen items-center">
+        <div class="mb-10 text-center w-full">
+            <div class="flex justify-center items-center gap-3 mb-8">
+                <!-- Perfected Heart Animation -->
+                <svg viewBox="0 0 24 24" class="w-16 h-16 drop-shadow-lg" fill="var(--c-royal)" style="animation: pulseHeart 2s infinite ease-in-out;">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
             </div>
-            <h1 class="text-4xl font-normal tracking-tight mb-3" style="color: var(--c-midnight)">Welcome.</h1>
-            <p style="color: var(--c-china)" class="text-lg font-medium">Enter passcode to continue</p>
+            <h1 class="text-4xl font-normal tracking-tight mb-2" style="color: var(--c-midnight)">Hey gorgeous.</h1>
+            <p style="color: var(--c-china)" class="text-lg font-medium">Enter your passcode to prep</p>
         </div>
         
-        <div class="text-left mb-8 max-w-[280px] mx-auto w-full">
+        <div class="text-left mb-10 max-w-[280px] w-full">
             <div class="passcode-input rounded-2xl flex items-center px-5 py-4">
                 <span class="material-symbols-rounded mr-3" style="color: var(--c-china)">lock</span>
-                <input type="password" placeholder="Passcode" class="w-full border-none outline-none text-xl font-medium placeholder-gray-300" style="color: var(--c-midnight); background: transparent;">
+                <input type="password" placeholder="Passcode" class="w-full border-none outline-none text-xl font-medium placeholder-gray-400" style="color: var(--c-midnight); background: transparent;">
             </div>
         </div>
 
-        <div class="mt-auto mb-12">
+        <div class="max-w-[280px] w-full">
             <button onclick="nav('view-home')" class="btn-primary w-full py-4 text-[17px] flex justify-center items-center gap-2">
                 Unlock Quest Pro
                 <span class="material-symbols-rounded text-xl">arrow_forward</span>
@@ -167,21 +168,18 @@
     </div>
 
     <!-- ================= VIEW: HOME ================= -->
-    <div id="view-home" class="view px-6 pt-12">
-        <!-- Header -->
+    <div id="view-home" class="view-section with-bottom-nav px-6 pt-12">
         <div class="flex justify-between items-center mb-8">
             <div>
-                <p class="text-sm font-bold uppercase tracking-widest mb-1" style="color: var(--c-china)">Welcome Back</p>
+                <p class="text-sm font-bold tracking-widest mb-1" style="color: var(--c-china)">READY TO CRUSH CUET?</p>
                 <h2 class="text-3xl font-normal tracking-tight">Aaradhya</h2>
             </div>
-            <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg border-2 border-white" style="background: var(--c-royal)">
+            <button onclick="nav('view-profile')" class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg border-2 border-white" style="background: var(--c-royal)">
                 A
-            </div>
+            </button>
         </div>
 
-        <!-- Hero Stats Card -->
         <div class="hero-gradient p-6 mb-10 flex justify-between rounded-[28px] text-white shadow-xl shadow-[var(--c-dawn)] relative overflow-hidden">
-            <!-- decorative circles inside card -->
             <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white opacity-5"></div>
             <div class="absolute -bottom-8 -left-8 w-24 h-24 rounded-full bg-white opacity-5"></div>
             
@@ -199,37 +197,171 @@
             </div>
         </div>
 
-        <!-- Topics -->
-        <h3 class="font-bold text-lg mb-4 px-1">Pick Your Chapters</h3>
+        <h3 class="font-bold text-lg mb-4 px-1">What are we studying today?</h3>
         <div class="space-y-3 mb-8">
-            <label class="premium-card p-4 flex items-center gap-4 cursor-pointer hover:scale-[1.01] transition-transform">
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: var(--c-jicama); color: var(--c-royal);">
-                    <span class="material-symbols-rounded text-2xl">database</span>
-                </div>
-                <div class="flex-1"><p class="font-bold text-[15px]">Database Query (SQL)</p></div>
-                <input type="checkbox" checked>
-            </label>
-            <label class="premium-card p-4 flex items-center gap-4 cursor-pointer hover:scale-[1.01] transition-transform">
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: var(--c-porcelain); color: var(--c-china);">
+            <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: var(--c-porcelain); color: var(--c-royal);">
                     <span class="material-symbols-rounded text-2xl">router</span>
                 </div>
-                <div class="flex-1"><p class="font-bold text-[15px]">Computer Networks</p></div>
+                <div class="flex-1"><p class="font-bold text-[14px]">Computer Networks</p><p class="text-[11px] text-gray-500 font-medium">Protocols, Topologies</p></div>
+                <input type="checkbox" checked>
+            </label>
+            <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: var(--c-jicama); color: #D9502A;">
+                    <span class="material-symbols-rounded text-2xl">database</span>
+                </div>
+                <div class="flex-1"><p class="font-bold text-[14px]">Database Query (SQL)</p><p class="text-[11px] text-gray-500 font-medium">SELECT, JOIN, GROUP BY</p></div>
+                <input type="checkbox" checked>
+            </label>
+            <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: var(--c-sky); color: var(--c-midnight);">
+                    <span class="material-symbols-rounded text-2xl">table_chart</span>
+                </div>
+                <div class="flex-1"><p class="font-bold text-[14px]">Data Handling</p><p class="text-[11px] text-gray-500 font-medium">Pandas, Matplotlib</p></div>
                 <input type="checkbox">
             </label>
         </div>
         
-        <!-- Action Buttons -->
         <div class="flex flex-col gap-3">
-            <button onclick="nav('view-results')" class="btn-lucky w-full py-4 text-[16px] flex items-center justify-center gap-2">
+            <button onclick="nav('view-quest')" class="btn-lucky w-full py-4 text-[15px] flex items-center justify-center gap-2">
                 <svg viewBox="0 0 24 24" class="w-5 h-5"><use href="#gemini-star"></use></svg>
-                I'm Feeling Lucky
+                I'm Feeling Lucky (And I am, to have you)
             </button>
-            <button onclick="nav('view-results')" class="btn-primary w-full py-4 text-[16px]">Start Quest</button>
+            <button onclick="nav('view-quest')" class="btn-primary w-full py-4 text-[16px]">Start Quest</button>
+        </div>
+    </div>
+
+    <!-- ================= VIEW: QUESTIONS (NEW) ================= -->
+    <div id="view-quest" class="view-section px-6 pt-12 pb-12">
+        <!-- Top Navigation / Progress -->
+        <div class="flex justify-between items-center mb-6">
+            <button onclick="nav('view-home')" class="w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-sm border border-gray-100">
+                <span class="material-symbols-rounded text-gray-600">close</span>
+            </button>
+            <div class="text-center flex-1 px-4">
+                <div class="progress-track h-2 mb-2"><div class="progress-fill" style="width: 8%;"></div></div>
+                <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--c-china)">Q 4 of 50</p>
+            </div>
+            <div class="flex items-center gap-1 font-bold text-sm bg-white px-3 py-2 rounded-full border border-gray-100 shadow-sm" style="color: var(--c-royal)">
+                <span class="material-symbols-rounded text-lg">timer</span> 19:45
+            </div>
+        </div>
+
+        <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: #D9502A">Data Handling (Pandas)</p>
+        <h2 class="text-2xl font-normal leading-snug mb-8 text-gray-900">
+            Which of the following functions is used to view the last 3 rows of a DataFrame named <span class="font-mono text-xl text-blue-700 bg-blue-50 px-1 rounded">df</span>?
+        </h2>
+
+        <!-- Options Container -->
+        <div class="space-y-4 mb-10">
+            <button class="option-card w-full text-left p-5 rounded-2xl flex items-center gap-4 cursor-pointer group" onclick="selectOption(this)">
+                <div class="w-6 h-6 rounded-full border-2 border-gray-300 group-[.selected]:border-[var(--c-royal)] group-[.selected]:bg-[var(--c-royal)] flex items-center justify-center transition-colors">
+                    <span class="material-symbols-rounded text-white text-sm opacity-0 group-[.selected]:opacity-100 transition-opacity">check</span>
+                </div>
+                <span class="font-medium text-[16px]">df.head(3)</span>
+            </button>
+            <button class="option-card w-full text-left p-5 rounded-2xl flex items-center gap-4 cursor-pointer group selected" onclick="selectOption(this)">
+                <div class="w-6 h-6 rounded-full border-2 border-gray-300 group-[.selected]:border-[var(--c-royal)] group-[.selected]:bg-[var(--c-royal)] flex items-center justify-center transition-colors">
+                    <span class="material-symbols-rounded text-white text-sm opacity-0 group-[.selected]:opacity-100 transition-opacity">check</span>
+                </div>
+                <span class="font-medium text-[16px]">df.tail(3)</span>
+            </button>
+            <button class="option-card w-full text-left p-5 rounded-2xl flex items-center gap-4 cursor-pointer group" onclick="selectOption(this)">
+                <div class="w-6 h-6 rounded-full border-2 border-gray-300 group-[.selected]:border-[var(--c-royal)] group-[.selected]:bg-[var(--c-royal)] flex items-center justify-center transition-colors">
+                    <span class="material-symbols-rounded text-white text-sm opacity-0 group-[.selected]:opacity-100 transition-opacity">check</span>
+                </div>
+                <span class="font-medium text-[16px]">df.last(3)</span>
+            </button>
+        </div>
+
+        <button onclick="nav('view-results')" class="btn-primary w-full py-4 text-[16px] flex justify-center items-center gap-2 mt-auto">
+            Submit Mock <span class="material-symbols-rounded">check_circle</span>
+        </button>
+    </div>
+
+    <!-- ================= VIEW: RESULTS & REPORT ================= -->
+    <div id="view-results" class="view-section with-bottom-nav px-6 pt-12">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-normal tracking-tight mb-1">Quest Complete!</h2>
+            <p class="text-sm font-medium" style="color: var(--c-china)">You did amazing, babe.</p>
+        </div>
+
+        <div class="flex justify-center mb-8">
+            <div class="relative w-40 h-40 flex items-center justify-center rounded-full bg-white shadow-xl shadow-[var(--c-dawn)] border-8 border-green-400">
+                <div class="text-center">
+                    <h2 class="text-5xl font-normal mb-1">84<span class="text-2xl" style="color: var(--c-china)">%</span></h2>
+                    <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--c-china)">Score</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actionable Gemini Report -->
+        <div class="rounded-[28px] p-[2px] mb-8 shadow-xl shadow-purple-900/10" style="background: var(--gemini-grad)">
+            <div class="bg-white rounded-[26px] p-6 h-full w-full">
+                <div class="flex items-center gap-2 mb-4">
+                    <svg viewBox="0 0 24 24" class="w-6 h-6"><use href="#gemini-star"></use></svg>
+                    <span class="text-sm font-bold gemini-gradient-text uppercase tracking-widest">AI Action Plan</span>
+                </div>
+                <p class="text-[15px] font-medium leading-relaxed opacity-90 mb-5">
+                    Aaradhya, you nailed <span class="text-green-600 font-bold">Computer Networks</span>! 
+                    However, you dropped a few points in Pandas. Here is exactly what we need to focus on next:
+                </p>
+                
+                <!-- Specific Weak Points List instead of video -->
+                <div class="bg-red-50 rounded-2xl p-4 border border-red-100">
+                    <p class="text-xs font-bold uppercase tracking-widest text-red-600 mb-3">Concepts to Review:</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-rounded text-red-400 text-sm mt-0.5">adjust</span>
+                            <span class="text-sm text-red-900 font-medium leading-snug">Difference between <code class="font-bold bg-white px-1 rounded">loc[]</code> and <code class="font-bold bg-white px-1 rounded">iloc[]</code> in DataFrame indexing.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-rounded text-red-400 text-sm mt-0.5">adjust</span>
+                            <span class="text-sm text-red-900 font-medium leading-snug">SQL <code class="font-bold bg-white px-1 rounded">GROUP BY</code> aggregate logic.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="nav('view-home')" class="btn-primary w-full py-4 text-[16px] mb-6 shadow-xl shadow-[var(--c-dawn)]">Back to Home</button>
+    </div>
+
+    <!-- ================= VIEW: STATS ================= -->
+    <div id="view-stats" class="view-section with-bottom-nav px-6 pt-12">
+        <div class="mb-10 text-center">
+            <p class="text-sm font-bold tracking-widest mb-1 uppercase" style="color: var(--c-china)">Analytics</p>
+            <h2 class="text-3xl font-normal tracking-tight">Your Progress</h2>
+        </div>
+
+        <h3 class="font-bold text-lg mb-4 px-1">Chapter Mastery</h3>
+        <div class="premium-card p-6 space-y-6">
+            <div>
+                <div class="flex justify-between text-sm font-bold mb-2">
+                    <span>Computer Networks</span>
+                    <span style="color: var(--c-royal)">100%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
+            </div>
+            <div>
+                <div class="flex justify-between text-sm font-bold mb-2">
+                    <span>Database Query (SQL)</span>
+                    <span style="color: var(--c-royal)">82%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 82%;"></div></div>
+            </div>
+            <div>
+                <div class="flex justify-between text-sm font-bold mb-2">
+                    <span>Data Handling (Pandas)</span>
+                    <span class="text-[#D9502A]">45%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="background: #D9502A; width: 45%;"></div></div>
+            </div>
         </div>
     </div>
 
     <!-- ================= VIEW: PROFILE ================= -->
-    <div id="view-profile" class="view px-6 pt-12">
+    <div id="view-profile" class="view-section with-bottom-nav px-6 pt-12">
         <div class="text-center mb-10 mt-4">
             <div class="w-28 h-28 mx-auto rounded-full mb-5 flex items-center justify-center text-white text-5xl font-normal relative shadow-xl shadow-[var(--c-dawn)] border-4 border-white" style="background: var(--c-royal)">
                 A
@@ -239,136 +371,91 @@
             </div>
             <h2 class="text-3xl font-normal tracking-tight">Aaradhya</h2>
         </div>
-
-        <div class="flex justify-between items-end mb-4 px-1">
-            <h3 class="font-bold text-lg">Your Badges</h3>
-            <span class="text-xs font-bold uppercase tracking-widest" style="color: var(--c-china)">View All</span>
-        </div>
         
-        <div class="grid grid-cols-3 gap-4 mb-10">
-            <div class="premium-card p-4 text-center flex flex-col items-center">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center mb-3" style="background: var(--c-asian-pear)">
-                    <span class="material-symbols-rounded text-2xl text-[#D4A336]">emoji_events</span>
+        <h3 class="font-bold text-lg mb-4 px-1">Badge Collection</h3>
+        <div class="grid grid-cols-3 gap-3 mb-10">
+            <div class="premium-card p-3 text-center flex flex-col items-center">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center mb-2 bg-purple-100 text-purple-600">
+                    <span class="material-symbols-rounded">magic_button</span>
                 </div>
-                <p class="text-[10px] font-bold uppercase tracking-wider text-center leading-tight">Speed<br>Runner</p>
+                <p class="text-[9px] font-bold uppercase tracking-wider leading-tight">SQL<br>Wizard</p>
             </div>
-            <div class="premium-card p-4 text-center flex flex-col items-center" style="background: #FFF5F0; border-color: #FFE5D9;">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center mb-3" style="background: white">
-                    <span class="material-symbols-rounded text-2xl text-[#F26A44]">local_fire_department</span>
+            <div class="premium-card p-3 text-center flex flex-col items-center" style="background: #FFF5F0; border-color: #FFE5D9;">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center mb-2" style="background: white">
+                    <span class="material-symbols-rounded text-[#F26A44]">local_fire_department</span>
                 </div>
-                <p class="text-[10px] font-bold uppercase tracking-wider text-center leading-tight text-[#D9502A]">On Fire</p>
+                <p class="text-[9px] font-bold uppercase tracking-wider leading-tight text-[#D9502A]">On Fire</p>
             </div>
-            <div class="premium-card p-4 text-center flex flex-col items-center opacity-50 grayscale">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center mb-3" style="background: var(--c-porcelain)">
-                    <span class="material-symbols-rounded text-2xl text-gray-400">diamond</span>
+            <div class="premium-card p-3 text-center flex flex-col items-center opacity-40 grayscale">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center mb-2 bg-gray-100 text-gray-500">
+                    <span class="material-symbols-rounded">diamond</span>
                 </div>
-                <p class="text-[10px] font-bold uppercase tracking-wider text-center leading-tight">Diamond</p>
-            </div>
-        </div>
-
-        <h3 class="font-bold text-lg mb-4 px-1">Past Mocks</h3>
-        <div class="space-y-4 mb-8">
-            <div class="premium-card p-5">
-                <div class="flex justify-between items-center mb-4">
-                    <div>
-                        <p class="font-bold text-[15px]">Computer Networks</p>
-                        <p class="text-xs font-medium mt-1" style="color: var(--c-china)">Today, 10:42 AM</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm" style="background: var(--c-asian-pear); color: #5B7A27;">84%</div>
-                </div>
-                <div class="rounded-2xl p-4" style="background: var(--c-moon)">
-                    <div class="flex items-center gap-1.5 mb-2">
-                        <svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#gemini-star"></use></svg>
-                        <span class="text-[11px] font-bold gemini-gradient-text uppercase tracking-widest">AI Summary</span>
-                    </div>
-                    <p class="text-sm font-medium leading-relaxed opacity-80">Solid understanding of topologies. Need to revise the OSI model layers for perfect accuracy.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ================= VIEW: RESULTS ================= -->
-    <div id="view-results" class="view px-6 pt-12">
-        <div class="flex justify-center mb-8">
-            <div class="relative w-40 h-40 flex items-center justify-center rounded-full bg-white shadow-xl shadow-[var(--c-dawn)] border-8" style="border-color: var(--c-asian-pear)">
-                <div class="text-center">
-                    <h2 class="text-5xl font-normal mb-1">84<span class="text-2xl" style="color: var(--c-china)">%</span></h2>
-                    <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--c-china)">Score</p>
-                </div>
+                <p class="text-[9px] font-bold uppercase tracking-wider leading-tight">Diamond<br>Status</p>
             </div>
         </div>
 
-        <!-- Premium Gemini AI Box -->
-        <div class="rounded-[28px] p-[2px] mb-8 shadow-xl shadow-purple-900/10" style="background: var(--gemini-grad)">
-            <div class="bg-white rounded-[26px] p-6 h-full w-full">
-                <div class="flex items-center gap-2 mb-4">
-                    <svg viewBox="0 0 24 24" class="w-6 h-6"><use href="#gemini-star"></use></svg>
-                    <span class="text-sm font-bold gemini-gradient-text uppercase tracking-widest">Gemini Insight</span>
-                </div>
-                <p class="text-[16px] font-medium leading-relaxed opacity-90 mb-5">
-                    Aaradhya, you nailed Computer Networks today — perfect score! Watch out for <span class="px-2 py-0.5 rounded font-mono text-sm font-bold" style="background: var(--c-dawn); color: var(--c-royal)">GROUP BY</span> in SQL; that's where you slipped up.
-                </p>
-                <div class="pt-4 border-t border-[var(--c-porcelain)] flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--c-dawn); color: var(--c-royal)">
-                        <span class="material-symbols-rounded">play_arrow</span>
-                    </div>
-                    <p class="text-sm font-bold flex-1">Spend 15 mins reviewing Pandas output logic.</p>
-                </div>
-            </div>
-        </div>
-
-        <h3 class="font-bold text-lg mb-4 px-1">Breakdown</h3>
-        <div class="space-y-3 mb-10">
-            <div class="premium-card p-4 flex items-center justify-between">
-                <span class="font-bold text-sm">Computer Networks</span>
-                <span class="font-bold text-sm px-3 py-1 rounded-full" style="background: var(--c-asian-pear); color: #5B7A27;">100%</span>
-            </div>
-            <div class="premium-card p-4 flex items-center justify-between" style="background: #FFF5F0; border-color: #FFE5D9;">
-                <span class="font-bold text-sm text-[#D9502A]">Database Query (SQL)</span>
-                <span class="font-bold text-sm px-3 py-1 rounded-full text-[#D9502A]" style="background: white">68%</span>
-            </div>
-        </div>
-        
-        <button onclick="nav('view-home')" class="btn-primary w-full py-4 text-[16px] mb-6 shadow-xl shadow-[var(--c-dawn)]">Complete Review</button>
+        <button onclick="nav('view-login')" class="premium-card w-full py-4 text-[15px] font-bold text-[#D9502A] mb-8 hover:bg-red-50 transition-colors flex justify-center items-center gap-2">
+            <span class="material-symbols-rounded text-[20px]">logout</span> Log Out
+        </button>
     </div>
 
     <!-- ================= BOTTOM NAV ================= -->
     <nav id="bottom-nav" class="fixed bottom-6 left-6 right-6 h-[72px] bg-white/90 backdrop-blur-xl border border-[var(--c-porcelain)] rounded-[36px] shadow-2xl shadow-[var(--c-dawn)] flex justify-around items-center px-4 z-50 hidden">
         <button onclick="nav('view-home')" id="btn-home" class="nav-item flex flex-col items-center justify-center active w-16 h-full">
             <div class="nav-pill h-8 rounded-full flex items-center justify-center">
-                <span class="material-symbols-rounded text-2xl">home</span>
+                <span class="material-symbols-rounded text-[22px]">home</span>
             </div>
             <span class="nav-text text-[10px] uppercase tracking-widest">Home</span>
+        </button>
+
+        <button onclick="nav('view-stats')" id="btn-stats" class="nav-item flex flex-col items-center justify-center w-16 h-full">
+            <div class="nav-pill h-8 rounded-full flex items-center justify-center">
+                <span class="material-symbols-rounded text-[22px]">insert_chart</span>
+            </div>
+            <span class="nav-text text-[10px] uppercase tracking-widest">Stats</span>
         </button>
         
         <button onclick="nav('view-profile')" id="btn-profile" class="nav-item flex flex-col items-center justify-center w-16 h-full">
             <div class="nav-pill h-8 rounded-full flex items-center justify-center">
-                <span class="material-symbols-rounded text-2xl">person</span>
+                <span class="material-symbols-rounded text-[22px]">person</span>
             </div>
             <span class="nav-text text-[10px] uppercase tracking-widest">Profile</span>
         </button>
     </nav>
 
     <script>
+        // Quest Radio Button Logic
+        function selectOption(element) {
+            document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        // Navigation Logic
         function nav(id) {
-            // Manage View Visibility
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            // Hide all views completely to fix scrolling
+            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+            
+            // Show new view
             document.getElementById(id).classList.add('active');
             
-            // Manage Nav Bar visibility (Hide on Login and Results)
+            // Toggle Bottom Nav
             const navBar = document.getElementById('bottom-nav');
-            if (id === 'view-login' || id === 'view-results') {
+            if (id === 'view-login' || id === 'view-quest') {
                 navBar.classList.add('hidden');
+                navBar.classList.remove('flex');
             } else {
                 navBar.classList.remove('hidden');
+                navBar.classList.add('flex');
             }
 
-            // Update Nav Active State
+            // Update Nav Active States
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            if (id === 'view-home') document.getElementById('btn-home').classList.add('active');
+            if (id === 'view-home' || id === 'view-results') document.getElementById('btn-home').classList.add('active');
+            if (id === 'view-stats') document.getElementById('btn-stats').classList.add('active');
             if (id === 'view-profile') document.getElementById('btn-profile').classList.add('active');
             
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Instantly reset scroll to top 
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         }
     </script>
 </body>
