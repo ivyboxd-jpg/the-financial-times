@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Quest Pro | For Aaradhya</title>
     
-    <!-- Google Fonts & Icons -->
+    <!-- Google Fonts & Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
     
@@ -13,7 +13,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
-        /* Custom Color Palette */
+        /* Premium Custom Color Palette */
         :root {
             --c-royal: #334EAC;
             --c-moon: #F7F2EB;
@@ -25,7 +25,7 @@
             --c-porcelain: #EDF1F6;
             --c-sky: #BAD6EB;
             
-            /* Gemini Branding */
+            /* Official Gemini Branding */
             --gemini-grad: linear-gradient(90deg, #1A73E8 0%, #B371FF 50%, #F4B400 100%);
         }
 
@@ -54,13 +54,24 @@
             background: var(--c-asian-pear); filter: blur(80px); opacity: 0.8; border-radius: 50%;
         }
 
-        /* View Section Logic (Fixes Scroll Bug completely) */
-        .view-section { display: none; opacity: 0; box-sizing: border-box; width: 100%; min-h-screen; }
+        /* 
+         * STRICT VIEW LOGIC (Fixes the scroll bug completely)
+         * We force display: none to override any Tailwind flex/block utilities 
+         * preventing hidden elements from taking up phantom space.
+         */
+        .view-section { 
+            display: none !important; 
+            opacity: 0; 
+            width: 100%; 
+            box-sizing: border-box; 
+        }
         .view-section.active { 
-            display: block; opacity: 1; 
+            display: block !important; 
+            opacity: 1; 
             animation: fadeSlideUp 0.4s cubic-bezier(0.2, 0, 0, 1) forwards; 
         }
-        /* Only apply bottom padding to views that have the bottom nav bar */
+        
+        /* Padding for pages with the bottom nav bar */
         .with-bottom-nav { padding-bottom: 110px; }
 
         @keyframes fadeSlideUp { 
@@ -68,11 +79,12 @@
             to { opacity: 1; transform: translateY(0); } 
         }
         @keyframes pulseHeart {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-            100% { transform: scale(1); }
+            0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(51,78,172,0.2)); }
+            50% { transform: scale(1.15); filter: drop-shadow(0 0 20px rgba(51,78,172,0.6)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(51,78,172,0.2)); }
         }
         
+        /* Material 3 Components */
         .premium-card { 
             background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
             border: 1px solid white; border-radius: 28px; box-shadow: 0 4px 20px rgba(8, 31, 92, 0.04);
@@ -90,13 +102,12 @@
         }
         .btn-lucky:active { transform: scale(0.97); background: var(--c-sky); }
 
-        /* Gradients */
         .gemini-gradient-text {
             background: var(--gemini-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .hero-gradient { background: linear-gradient(135deg, var(--c-midnight) 0%, var(--c-royal) 100%); }
 
-        /* Inputs & Options */
+        /* Inputs & Quest Options */
         .passcode-input { background: white; border: 2px solid var(--c-porcelain); transition: all 0.3s; }
         .passcode-input:focus-within { border-color: var(--c-royal); box-shadow: 0 0 0 4px var(--c-dawn); }
         
@@ -111,13 +122,12 @@
         .nav-text { opacity: 0; transition: all 0.2s; height: 0; overflow: hidden; }
         .nav-item.active .nav-text { height: 16px; margin-top: 4px; }
 
-        /* Custom Checkboxes / Radios */
         input[type="checkbox"] { accent-color: var(--c-royal); width: 22px; height: 22px; border-radius: 6px; cursor: pointer; }
         .progress-track { background: var(--c-porcelain); border-radius: 100px; height: 8px; width: 100%; overflow: hidden; }
         .progress-fill { background: var(--c-royal); height: 100%; border-radius: 100px; transition: width 1s ease-out; }
     </style>
 </head>
-<body>
+<body class="max-w-md mx-auto relative">
 
     <!-- Ambient Visuals -->
     <div class="ambient-bg">
@@ -140,30 +150,33 @@
     </svg>
 
     <!-- ================= VIEW: LOGIN ================= -->
-    <div id="view-login" class="view-section active px-8 flex flex-col justify-center h-screen items-center">
-        <div class="mb-10 text-center w-full">
-            <div class="flex justify-center items-center gap-3 mb-8">
-                <!-- Perfected Heart Animation -->
-                <svg viewBox="0 0 24 24" class="w-16 h-16 drop-shadow-lg" fill="var(--c-royal)" style="animation: pulseHeart 2s infinite ease-in-out;">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
+    <div id="view-login" class="view-section active">
+        <!-- Wrapper enforces strictly centering without scroll bleed -->
+        <div class="h-screen w-full flex flex-col justify-center items-center px-8">
+            <div class="mb-10 text-center w-full">
+                <div class="flex justify-center items-center gap-3 mb-8">
+                    <!-- Perfected Pulsing Heart -->
+                    <svg viewBox="0 0 24 24" class="w-16 h-16" fill="var(--c-royal)" style="animation: pulseHeart 2s infinite ease-in-out;">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </div>
+                <h1 class="text-4xl font-normal tracking-tight mb-2" style="color: var(--c-midnight)">Hey gorgeous.</h1>
+                <p style="color: var(--c-china)" class="text-lg font-medium">Enter your passcode to prep</p>
             </div>
-            <h1 class="text-4xl font-normal tracking-tight mb-2" style="color: var(--c-midnight)">Hey gorgeous.</h1>
-            <p style="color: var(--c-china)" class="text-lg font-medium">Enter your passcode to prep</p>
-        </div>
-        
-        <div class="text-left mb-10 max-w-[280px] w-full">
-            <div class="passcode-input rounded-2xl flex items-center px-5 py-4">
-                <span class="material-symbols-rounded mr-3" style="color: var(--c-china)">lock</span>
-                <input type="password" placeholder="Passcode" class="w-full border-none outline-none text-xl font-medium placeholder-gray-400" style="color: var(--c-midnight); background: transparent;">
+            
+            <div class="text-left mb-10 max-w-[280px] w-full">
+                <div class="passcode-input rounded-2xl flex items-center px-5 py-4">
+                    <span class="material-symbols-rounded mr-3" style="color: var(--c-china)">lock</span>
+                    <input type="password" placeholder="Passcode" class="w-full border-none outline-none text-xl font-medium placeholder-gray-400" style="color: var(--c-midnight); background: transparent;">
+                </div>
             </div>
-        </div>
 
-        <div class="max-w-[280px] w-full">
-            <button onclick="nav('view-home')" class="btn-primary w-full py-4 text-[17px] flex justify-center items-center gap-2">
-                Unlock Quest Pro
-                <span class="material-symbols-rounded text-xl">arrow_forward</span>
-            </button>
+            <div class="max-w-[280px] w-full">
+                <button onclick="nav('view-home')" class="btn-primary w-full py-4 text-[17px] flex justify-center items-center gap-2">
+                    Unlock Quest Pro
+                    <span class="material-symbols-rounded text-xl">arrow_forward</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -174,7 +187,7 @@
                 <p class="text-sm font-bold tracking-widest mb-1" style="color: var(--c-china)">READY TO CRUSH CUET?</p>
                 <h2 class="text-3xl font-normal tracking-tight">Aaradhya</h2>
             </div>
-            <button onclick="nav('view-profile')" class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg border-2 border-white" style="background: var(--c-royal)">
+            <button onclick="nav('view-profile')" class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg border-2 border-white cursor-pointer" style="background: var(--c-royal)">
                 A
             </button>
         </div>
@@ -218,7 +231,7 @@
                     <span class="material-symbols-rounded text-2xl">table_chart</span>
                 </div>
                 <div class="flex-1"><p class="font-bold text-[14px]">Data Handling</p><p class="text-[11px] text-gray-500 font-medium">Pandas, Matplotlib</p></div>
-                <input type="checkbox">
+                <input type="checkbox" checked>
             </label>
         </div>
         
@@ -231,62 +244,64 @@
         </div>
     </div>
 
-    <!-- ================= VIEW: QUESTIONS (NEW) ================= -->
-    <div id="view-quest" class="view-section px-6 pt-12 pb-12">
+    <!-- ================= VIEW: QUESTIONS (MOCK TEST UI) ================= -->
+    <div id="view-quest" class="view-section px-6 pt-12 pb-12 min-h-screen flex flex-col">
         <!-- Top Navigation / Progress -->
         <div class="flex justify-between items-center mb-6">
-            <button onclick="nav('view-home')" class="w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-sm border border-gray-100">
+            <button onclick="nav('view-home')" class="w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-sm border border-gray-100 cursor-pointer">
                 <span class="material-symbols-rounded text-gray-600">close</span>
             </button>
             <div class="text-center flex-1 px-4">
-                <div class="progress-track h-2 mb-2"><div class="progress-fill" style="width: 8%;"></div></div>
-                <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--c-china)">Q 4 of 50</p>
+                <div class="progress-track h-2 mb-2"><div class="progress-fill" style="width: 84%;"></div></div>
+                <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--c-china)">Q 42 of 50</p>
             </div>
             <div class="flex items-center gap-1 font-bold text-sm bg-white px-3 py-2 rounded-full border border-gray-100 shadow-sm" style="color: var(--c-royal)">
-                <span class="material-symbols-rounded text-lg">timer</span> 19:45
+                <span class="material-symbols-rounded text-lg">timer</span> 14:22
             </div>
         </div>
 
         <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: #D9502A">Data Handling (Pandas)</p>
-        <h2 class="text-2xl font-normal leading-snug mb-8 text-gray-900">
-            Which of the following functions is used to view the last 3 rows of a DataFrame named <span class="font-mono text-xl text-blue-700 bg-blue-50 px-1 rounded">df</span>?
+        <h2 class="text-[22px] font-normal leading-snug mb-8 text-gray-900">
+            Which of the following syntax is logically correct to extract the exact last 3 rows of a given DataFrame <span class="font-mono text-[20px] text-blue-700 bg-blue-50 px-1 rounded">df</span> using slicing?
         </h2>
 
-        <!-- Options Container -->
+        <!-- Selectable Options -->
         <div class="space-y-4 mb-10">
             <button class="option-card w-full text-left p-5 rounded-2xl flex items-center gap-4 cursor-pointer group" onclick="selectOption(this)">
-                <div class="w-6 h-6 rounded-full border-2 border-gray-300 group-[.selected]:border-[var(--c-royal)] group-[.selected]:bg-[var(--c-royal)] flex items-center justify-center transition-colors">
+                <div class="w-6 h-6 rounded-full border-2 border-gray-300 group-[.selected]:border-[var(--c-royal)] group-[.selected]:bg-[var(--c-royal)] flex items-center justify-center transition-colors shrink-0">
                     <span class="material-symbols-rounded text-white text-sm opacity-0 group-[.selected]:opacity-100 transition-opacity">check</span>
                 </div>
                 <span class="font-medium text-[16px]">df.head(3)</span>
             </button>
-            <button class="option-card w-full text-left p-5 rounded-2xl flex items-center gap-4 cursor-pointer group selected" onclick="selectOption(this)">
-                <div class="w-6 h-6 rounded-full border-2 border-gray-300 group-[.selected]:border-[var(--c-royal)] group-[.selected]:bg-[var(--c-royal)] flex items-center justify-center transition-colors">
+            <button class="option-card w-full text-left p-5 rounded-2xl flex items-center gap-4 cursor-pointer group" onclick="selectOption(this)">
+                <div class="w-6 h-6 rounded-full border-2 border-gray-300 group-[.selected]:border-[var(--c-royal)] group-[.selected]:bg-[var(--c-royal)] flex items-center justify-center transition-colors shrink-0">
                     <span class="material-symbols-rounded text-white text-sm opacity-0 group-[.selected]:opacity-100 transition-opacity">check</span>
                 </div>
                 <span class="font-medium text-[16px]">df.tail(3)</span>
             </button>
-            <button class="option-card w-full text-left p-5 rounded-2xl flex items-center gap-4 cursor-pointer group" onclick="selectOption(this)">
-                <div class="w-6 h-6 rounded-full border-2 border-gray-300 group-[.selected]:border-[var(--c-royal)] group-[.selected]:bg-[var(--c-royal)] flex items-center justify-center transition-colors">
+            <button class="option-card w-full text-left p-5 rounded-2xl flex items-center gap-4 cursor-pointer group selected" onclick="selectOption(this)">
+                <div class="w-6 h-6 rounded-full border-2 border-gray-300 group-[.selected]:border-[var(--c-royal)] group-[.selected]:bg-[var(--c-royal)] flex items-center justify-center transition-colors shrink-0">
                     <span class="material-symbols-rounded text-white text-sm opacity-0 group-[.selected]:opacity-100 transition-opacity">check</span>
                 </div>
-                <span class="font-medium text-[16px]">df.last(3)</span>
+                <span class="font-medium text-[16px]">df.iloc[-3:]</span>
             </button>
         </div>
 
-        <button onclick="nav('view-results')" class="btn-primary w-full py-4 text-[16px] flex justify-center items-center gap-2 mt-auto">
-            Submit Mock <span class="material-symbols-rounded">check_circle</span>
-        </button>
+        <div class="mt-auto pt-6">
+            <button onclick="nav('view-results')" class="btn-primary w-full py-4 text-[16px] flex justify-center items-center gap-2">
+                Submit Mock <span class="material-symbols-rounded text-lg">check_circle</span>
+            </button>
+        </div>
     </div>
 
-    <!-- ================= VIEW: RESULTS & REPORT ================= -->
+    <!-- ================= VIEW: RESULTS & DETAILED REPORT ================= -->
     <div id="view-results" class="view-section with-bottom-nav px-6 pt-12">
         <div class="text-center mb-8">
             <h2 class="text-3xl font-normal tracking-tight mb-1">Quest Complete!</h2>
             <p class="text-sm font-medium" style="color: var(--c-china)">You did amazing, babe.</p>
         </div>
 
-        <div class="flex justify-center mb-8">
+        <div class="flex justify-center mb-10">
             <div class="relative w-40 h-40 flex items-center justify-center rounded-full bg-white shadow-xl shadow-[var(--c-dawn)] border-8 border-green-400">
                 <div class="text-center">
                     <h2 class="text-5xl font-normal mb-1">84<span class="text-2xl" style="color: var(--c-china)">%</span></h2>
@@ -295,35 +310,58 @@
             </div>
         </div>
 
-        <!-- Actionable Gemini Report -->
+        <!-- NEW: Difficulty Breakdown Cards -->
+        <h3 class="font-bold text-lg mb-4 px-1">Difficulty Breakdown</h3>
+        <div class="flex justify-between gap-3 mb-10">
+            <div class="premium-card p-4 text-center flex-1">
+                <p class="text-2xl font-normal text-green-600">92%</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1">Easy</p>
+            </div>
+            <div class="premium-card p-4 text-center flex-1">
+                <p class="text-2xl font-normal text-yellow-600">74%</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1">Medium</p>
+            </div>
+            <div class="premium-card p-4 text-center flex-1">
+                <p class="text-2xl font-normal text-red-600">45%</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1">Hard</p>
+            </div>
+        </div>
+
+        <!-- DETAILED Actionable Gemini Report -->
         <div class="rounded-[28px] p-[2px] mb-8 shadow-xl shadow-purple-900/10" style="background: var(--gemini-grad)">
             <div class="bg-white rounded-[26px] p-6 h-full w-full">
                 <div class="flex items-center gap-2 mb-4">
                     <svg viewBox="0 0 24 24" class="w-6 h-6"><use href="#gemini-star"></use></svg>
-                    <span class="text-sm font-bold gemini-gradient-text uppercase tracking-widest">AI Action Plan</span>
+                    <span class="text-sm font-bold gemini-gradient-text uppercase tracking-widest">Detailed AI Report</span>
                 </div>
+                
                 <p class="text-[15px] font-medium leading-relaxed opacity-90 mb-5">
-                    Aaradhya, you nailed <span class="text-green-600 font-bold">Computer Networks</span>! 
-                    However, you dropped a few points in Pandas. Here is exactly what we need to focus on next:
+                    Aaradhya, your foundational knowledge in <span class="text-green-600 font-bold">Computer Networks</span> is flawless (100%). However, we lost points in the "Hard" tier of Data Handling. Let's review this so you can completely crush the next one.
                 </p>
                 
-                <!-- Specific Weak Points List instead of video -->
-                <div class="bg-red-50 rounded-2xl p-4 border border-red-100">
-                    <p class="text-xs font-bold uppercase tracking-widest text-red-600 mb-3">Concepts to Review:</p>
-                    <ul class="space-y-3">
-                        <li class="flex items-start gap-2">
-                            <span class="material-symbols-rounded text-red-400 text-sm mt-0.5">adjust</span>
-                            <span class="text-sm text-red-900 font-medium leading-snug">Difference between <code class="font-bold bg-white px-1 rounded">loc[]</code> and <code class="font-bold bg-white px-1 rounded">iloc[]</code> in DataFrame indexing.</span>
+                <!-- Explicit Weak Points Breakdown -->
+                <div class="bg-[#FFF5F0] rounded-2xl p-5 border border-[#FFE5D9] mb-4">
+                    <p class="text-xs font-bold uppercase tracking-widest text-[#D9502A] mb-3 flex items-center gap-2">
+                        <span class="material-symbols-rounded text-[18px]">error</span> Syntax to Fix:
+                    </p>
+                    <ul class="space-y-4">
+                        <li>
+                            <p class="text-sm font-bold text-gray-900 mb-1">1. DataFrame Slicing Confusion</p>
+                            <p class="text-[13px] text-gray-700 leading-snug">
+                                You selected <code class="bg-white px-1 rounded font-mono font-bold text-blue-600 border border-gray-200">df.tail(3)</code>. While this works, the question explicitly asked for index slicing syntax, which is <code class="bg-white px-1 rounded font-mono font-bold text-green-600 border border-gray-200">df.iloc[-3:]</code>.
+                            </p>
                         </li>
-                        <li class="flex items-start gap-2">
-                            <span class="material-symbols-rounded text-red-400 text-sm mt-0.5">adjust</span>
-                            <span class="text-sm text-red-900 font-medium leading-snug">SQL <code class="font-bold bg-white px-1 rounded">GROUP BY</code> aggregate logic.</span>
+                        <li>
+                            <p class="text-sm font-bold text-gray-900 mb-1">2. SQL Aggregation</p>
+                            <p class="text-[13px] text-gray-700 leading-snug">
+                                Remember, anytime you use <code class="bg-white px-1 rounded font-mono font-bold text-gray-800 border border-gray-200">COUNT()</code> or <code class="bg-white px-1 rounded font-mono font-bold text-gray-800 border border-gray-200">SUM()</code> with a non-aggregated column, you <b>must</b> include a <code class="bg-white px-1 rounded font-mono font-bold text-[#D9502A] border border-gray-200">GROUP BY</code> clause.
+                            </p>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-
+        
         <button onclick="nav('view-home')" class="btn-primary w-full py-4 text-[16px] mb-6 shadow-xl shadow-[var(--c-dawn)]">Back to Home</button>
     </div>
 
@@ -360,7 +398,7 @@
         </div>
     </div>
 
-    <!-- ================= VIEW: PROFILE ================= -->
+    <!-- ================= VIEW: PROFILE & HISTORY ================= -->
     <div id="view-profile" class="view-section with-bottom-nav px-6 pt-12">
         <div class="text-center mb-10 mt-4">
             <div class="w-28 h-28 mx-auto rounded-full mb-5 flex items-center justify-center text-white text-5xl font-normal relative shadow-xl shadow-[var(--c-dawn)] border-4 border-white" style="background: var(--c-royal)">
@@ -394,28 +432,61 @@
             </div>
         </div>
 
-        <button onclick="nav('view-login')" class="premium-card w-full py-4 text-[15px] font-bold text-[#D9502A] mb-8 hover:bg-red-50 transition-colors flex justify-center items-center gap-2">
+        <!-- NEW: Detailed Past Reports Log -->
+        <h3 class="font-bold text-lg mb-4 px-1">Detailed Past Reports</h3>
+        <div class="space-y-4 mb-10">
+            
+            <!-- Past Mock Card 1 -->
+            <div class="premium-card p-5">
+                <div class="flex justify-between items-center mb-3">
+                    <div>
+                        <p class="font-bold text-[15px]">Full Syllabus Mock #12</p>
+                        <p class="text-[11px] font-medium text-gray-500 mt-0.5">Today, 10:42 AM</p>
+                    </div>
+                    <div class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm bg-green-100 text-green-700">84%</div>
+                </div>
+                
+                <!-- Past Difficulty Split -->
+                <div class="flex gap-2 mb-4 border-b border-gray-100 pb-4">
+                    <span class="text-[10px] font-bold bg-green-50 text-green-600 px-2 py-1 rounded">Easy: 92%</span>
+                    <span class="text-[10px] font-bold bg-yellow-50 text-yellow-600 px-2 py-1 rounded">Med: 74%</span>
+                    <span class="text-[10px] font-bold bg-red-50 text-red-600 px-2 py-1 rounded">Hard: 45%</span>
+                </div>
+                
+                <!-- Past AI Summary -->
+                <div class="bg-[var(--c-porcelain)] rounded-xl p-4">
+                    <div class="flex items-center gap-1.5 mb-2">
+                        <svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#gemini-star"></use></svg>
+                        <span class="text-[11px] font-bold gemini-gradient-text uppercase tracking-widest">AI Synopsis</span>
+                    </div>
+                    <p class="text-[13px] text-gray-700 leading-relaxed font-medium">Perfect in Topologies. Weakness detected in Pandas <code class="bg-white px-1 rounded text-[#D9502A] border border-gray-200">iloc</code> vs <code class="bg-white px-1 rounded text-[#D9502A] border border-gray-200">loc</code> indexing. Recommended practicing Medium-tier DataFrame extraction.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <button onclick="nav('view-login')" class="premium-card w-full py-4 text-[15px] font-bold text-[#D9502A] mb-8 hover:bg-red-50 transition-colors flex justify-center items-center gap-2 cursor-pointer">
             <span class="material-symbols-rounded text-[20px]">logout</span> Log Out
         </button>
     </div>
 
     <!-- ================= BOTTOM NAV ================= -->
     <nav id="bottom-nav" class="fixed bottom-6 left-6 right-6 h-[72px] bg-white/90 backdrop-blur-xl border border-[var(--c-porcelain)] rounded-[36px] shadow-2xl shadow-[var(--c-dawn)] flex justify-around items-center px-4 z-50 hidden">
-        <button onclick="nav('view-home')" id="btn-home" class="nav-item flex flex-col items-center justify-center active w-16 h-full">
+        <button onclick="nav('view-home')" id="btn-home" class="nav-item flex flex-col items-center justify-center active w-16 h-full cursor-pointer">
             <div class="nav-pill h-8 rounded-full flex items-center justify-center">
                 <span class="material-symbols-rounded text-[22px]">home</span>
             </div>
             <span class="nav-text text-[10px] uppercase tracking-widest">Home</span>
         </button>
 
-        <button onclick="nav('view-stats')" id="btn-stats" class="nav-item flex flex-col items-center justify-center w-16 h-full">
+        <button onclick="nav('view-stats')" id="btn-stats" class="nav-item flex flex-col items-center justify-center w-16 h-full cursor-pointer">
             <div class="nav-pill h-8 rounded-full flex items-center justify-center">
                 <span class="material-symbols-rounded text-[22px]">insert_chart</span>
             </div>
             <span class="nav-text text-[10px] uppercase tracking-widest">Stats</span>
         </button>
         
-        <button onclick="nav('view-profile')" id="btn-profile" class="nav-item flex flex-col items-center justify-center w-16 h-full">
+        <button onclick="nav('view-profile')" id="btn-profile" class="nav-item flex flex-col items-center justify-center w-16 h-full cursor-pointer">
             <div class="nav-pill h-8 rounded-full flex items-center justify-center">
                 <span class="material-symbols-rounded text-[22px]">person</span>
             </div>
@@ -424,21 +495,24 @@
     </nav>
 
     <script>
-        // Quest Radio Button Logic
+        // Quest Selectable Options Logic
         function selectOption(element) {
             document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
             element.classList.add('selected');
         }
 
-        // Navigation Logic
+        // Strict Single Page App Navigation
         function nav(id) {
-            // Hide all views completely to fix scrolling
-            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+            // 1. Force ALL views to completely disappear (fixes scroll bug)
+            document.querySelectorAll('.view-section').forEach(v => {
+                v.classList.remove('active');
+            });
             
-            // Show new view
-            document.getElementById(id).classList.add('active');
+            // 2. Activate ONLY the requested view
+            const targetView = document.getElementById(id);
+            targetView.classList.add('active');
             
-            // Toggle Bottom Nav
+            // 3. Toggle Bottom Nav Bar visibility securely
             const navBar = document.getElementById('bottom-nav');
             if (id === 'view-login' || id === 'view-quest') {
                 navBar.classList.add('hidden');
@@ -448,13 +522,13 @@
                 navBar.classList.add('flex');
             }
 
-            // Update Nav Active States
+            // 4. Update Nav Bar Icon Colors
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             if (id === 'view-home' || id === 'view-results') document.getElementById('btn-home').classList.add('active');
             if (id === 'view-stats') document.getElementById('btn-stats').classList.add('active');
             if (id === 'view-profile') document.getElementById('btn-profile').classList.add('active');
             
-            // Instantly reset scroll to top 
+            // 5. Instantly jump to top of the new view without smooth scroll latency
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         }
     </script>
