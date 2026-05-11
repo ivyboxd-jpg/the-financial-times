@@ -24,6 +24,8 @@
             --c-jicama: #FFF9F0;
             --c-porcelain: #EDF1F6;
             --c-sky: #BAD6EB;
+            --c-coral: #F26A44;
+            --c-mint: #E0F2E9;
             
             /* Official Gemini Branding */
             --gemini-grad: linear-gradient(90deg, #1A73E8 0%, #B371FF 50%, #F4B400 100%);
@@ -40,25 +42,34 @@
             width: 100%;
         }
 
-        /* Ambient Background Visuals */
+        /* Animated Ambient Background Visuals */
         .ambient-bg {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; overflow: hidden; background: var(--c-moon);
         }
         .ambient-blob-1 {
-            position: absolute; top: -10%; left: -10%; width: 50vw; height: 50vw;
+            position: absolute; top: -10%; left: -10%; width: 60vw; height: 60vw;
             background: var(--c-dawn); filter: blur(80px); opacity: 0.7; border-radius: 50%;
+            animation: float 14s ease-in-out infinite;
         }
         .ambient-blob-2 {
             position: absolute; top: 30%; right: -20%; width: 50vw; height: 50vw;
             background: var(--c-asian-pear); filter: blur(80px); opacity: 0.8; border-radius: 50%;
+            animation: float 18s ease-in-out infinite reverse;
+        }
+        .ambient-blob-3 {
+            position: absolute; bottom: -10%; left: 20%; width: 40vw; height: 40vw;
+            background: #E8DDFF; filter: blur(80px); opacity: 0.5; border-radius: 50%;
+            animation: float 12s ease-in-out infinite;
         }
 
-        /* 
-         * STRICT VIEW LOGIC (Fixes the scroll bug completely)
-         * We force display: none to override any Tailwind flex/block utilities 
-         * preventing hidden elements from taking up phantom space.
-         */
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.1); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* View Logic */
         .view-section { 
             display: none !important; 
             opacity: 0; 
@@ -68,27 +79,37 @@
         .view-section.active { 
             display: block !important; 
             opacity: 1; 
-            animation: fadeSlideUp 0.4s cubic-bezier(0.2, 0, 0, 1) forwards; 
+            animation: fadeSlideUp 0.5s cubic-bezier(0.2, 0, 0, 1) forwards; 
         }
         
-        /* Padding for pages with the bottom nav bar */
         .with-bottom-nav { padding-bottom: 110px; }
 
         @keyframes fadeSlideUp { 
-            from { opacity: 0; transform: translateY(15px); } 
+            from { opacity: 0; transform: translateY(20px); } 
             to { opacity: 1; transform: translateY(0); } 
         }
         @keyframes pulseHeart {
-            0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(51,78,172,0.2)); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 20px rgba(51,78,172,0.6)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(51,78,172,0.2)); }
+            0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(242, 106, 68, 0.3)); }
+            50% { transform: scale(1.15); filter: drop-shadow(0 0 25px rgba(242, 106, 68, 0.7)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(242, 106, 68, 0.3)); }
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(15deg); }
         }
         
-        /* Material 3 Components */
+        /* Glassmorphism & Components */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 32px;
+            box-shadow: 0 10px 40px rgba(8, 31, 92, 0.05);
+        }
         .premium-card { 
             background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
             border: 1px solid white; border-radius: 28px; box-shadow: 0 4px 20px rgba(8, 31, 92, 0.04);
+            transition: transform 0.2s;
         }
+        .premium-card:active { transform: scale(0.98); }
         
         .btn-primary { 
             background: var(--c-royal); color: white; border-radius: 100px; 
@@ -97,19 +118,20 @@
         .btn-primary:active { transform: scale(0.97); box-shadow: 0 2px 6px rgba(51, 78, 172, 0.2); }
 
         .btn-lucky {
-            background: var(--c-dawn); color: var(--c-midnight); border-radius: 100px;
-            font-weight: 700; transition: all 0.2s; border: 1px solid white; cursor: pointer;
+            background: white; color: var(--c-midnight); border-radius: 100px;
+            font-weight: 700; transition: all 0.2s; border: 2px solid white; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
-        .btn-lucky:active { transform: scale(0.97); background: var(--c-sky); }
+        .btn-lucky:active { transform: scale(0.97); background: var(--c-asian-pear); }
 
         .gemini-gradient-text {
             background: var(--gemini-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .hero-gradient { background: linear-gradient(135deg, var(--c-midnight) 0%, var(--c-royal) 100%); }
+        .hero-gradient { background: linear-gradient(135deg, var(--c-royal) 0%, #6883DF 100%); }
 
-        /* Inputs & Quest Options */
-        .passcode-input { background: white; border: 2px solid var(--c-porcelain); transition: all 0.3s; }
-        .passcode-input:focus-within { border-color: var(--c-royal); box-shadow: 0 0 0 4px var(--c-dawn); }
+        /* Inputs */
+        .passcode-input { background: rgba(255,255,255,0.8); border: 2px solid var(--c-porcelain); transition: all 0.3s; }
+        .passcode-input:focus-within { border-color: var(--c-royal); box-shadow: 0 0 0 4px var(--c-dawn); background: white; }
         
         .option-card { border: 2px solid var(--c-porcelain); transition: all 0.2s; background: white; }
         .option-card.selected { border-color: var(--c-royal); background: var(--c-dawn); }
@@ -133,6 +155,7 @@
     <div class="ambient-bg">
         <div class="ambient-blob-1"></div>
         <div class="ambient-blob-2"></div>
+        <div class="ambient-blob-3"></div>
     </div>
 
     <!-- Official Perfect Gemini Star SVG -->
@@ -151,30 +174,37 @@
 
     <!-- ================= VIEW: LOGIN ================= -->
     <div id="view-login" class="view-section active">
-        <!-- Wrapper enforces strictly centering without scroll bleed -->
-        <div class="h-screen w-full flex flex-col justify-center items-center px-8">
-            <div class="mb-10 text-center w-full">
-                <div class="flex justify-center items-center gap-3 mb-8">
-                    <!-- Perfected Pulsing Heart -->
-                    <svg viewBox="0 0 24 24" class="w-16 h-16" fill="var(--c-royal)" style="animation: pulseHeart 2s infinite ease-in-out;">
+        <div class="h-screen w-full flex flex-col justify-center items-center px-6 relative">
+            
+            <!-- Floating Sparkles -->
+            <div class="absolute top-1/4 left-8" style="animation: sparkle 3s infinite 0.5s;">
+                <svg viewBox="0 0 24 24" class="w-8 h-8" fill="#F4B400"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+            </div>
+            <div class="absolute top-1/3 right-10" style="animation: sparkle 4s infinite 1.2s;">
+                <svg viewBox="0 0 24 24" class="w-6 h-6" fill="var(--c-royal)"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+            </div>
+
+            <!-- Glassmorphism Login Card -->
+            <div class="glass-card w-full p-8 flex flex-col items-center relative z-10">
+                <div class="mb-8 relative">
+                    <svg viewBox="0 0 24 24" class="w-20 h-20" fill="var(--c-coral)" style="animation: pulseHeart 2.5s infinite ease-in-out;">
                         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                     </svg>
                 </div>
-                <h1 class="text-4xl font-normal tracking-tight mb-2" style="color: var(--c-midnight)">Hey gorgeous.</h1>
-                <p style="color: var(--c-china)" class="text-lg font-medium">Enter your passcode to prep</p>
-            </div>
-            
-            <div class="text-left mb-10 max-w-[280px] w-full">
-                <div class="passcode-input rounded-2xl flex items-center px-5 py-4">
-                    <span class="material-symbols-rounded mr-3" style="color: var(--c-china)">lock</span>
-                    <input type="password" placeholder="Passcode" class="w-full border-none outline-none text-xl font-medium placeholder-gray-400" style="color: var(--c-midnight); background: transparent;">
+                
+                <h1 class="text-3xl font-bold tracking-tight mb-2 text-center" style="color: var(--c-midnight)">Hey gorgeous.</h1>
+                <p style="color: var(--c-china)" class="text-[15px] font-medium text-center mb-8">Ready to ace your mocks today?</p>
+                
+                <div class="w-full mb-8">
+                    <div class="passcode-input rounded-2xl flex items-center px-5 py-4">
+                        <span class="material-symbols-rounded mr-3" style="color: var(--c-china)">key</span>
+                        <input type="password" placeholder="Passcode" class="w-full border-none outline-none text-lg font-medium placeholder-gray-400" style="color: var(--c-midnight); background: transparent;">
+                    </div>
                 </div>
-            </div>
 
-            <div class="max-w-[280px] w-full">
                 <button onclick="nav('view-home')" class="btn-primary w-full py-4 text-[17px] flex justify-center items-center gap-2">
-                    Unlock Quest Pro
-                    <span class="material-symbols-rounded text-xl">arrow_forward</span>
+                    Let's Go, Aaradhya
+                    <span class="material-symbols-rounded text-xl">rocket_launch</span>
                 </button>
             </div>
         </div>
@@ -184,53 +214,99 @@
     <div id="view-home" class="view-section with-bottom-nav px-6 pt-12">
         <div class="flex justify-between items-center mb-8">
             <div>
-                <p class="text-sm font-bold tracking-widest mb-1" style="color: var(--c-china)">READY TO CRUSH CUET?</p>
-                <h2 class="text-3xl font-normal tracking-tight">Aaradhya</h2>
+                <p class="text-[11px] font-bold tracking-widest mb-1 uppercase" style="color: var(--c-china)">Ready to crush CUET?</p>
+                <h2 class="text-3xl font-bold tracking-tight">Aaradhya</h2>
             </div>
-            <button onclick="nav('view-profile')" class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg border-2 border-white cursor-pointer" style="background: var(--c-royal)">
+            <button onclick="nav('view-profile')" class="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-blue-900/20 border-2 border-white cursor-pointer relative" style="background: var(--c-royal)">
                 A
+                <span class="absolute top-0 right-0 w-4 h-4 bg-red-500 border-2 border-white rounded-full"></span>
             </button>
         </div>
 
-        <div class="hero-gradient p-6 mb-10 flex justify-between rounded-[28px] text-white shadow-xl shadow-[var(--c-dawn)] relative overflow-hidden">
-            <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white opacity-5"></div>
-            <div class="absolute -bottom-8 -left-8 w-24 h-24 rounded-full bg-white opacity-5"></div>
+        <div class="hero-gradient p-6 mb-10 flex justify-between rounded-[32px] text-white shadow-2xl shadow-blue-900/20 relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-white opacity-10"></div>
+            <div class="absolute -bottom-8 -left-8 w-24 h-24 rounded-full bg-white opacity-10"></div>
             
             <div class="text-center flex-1 relative z-10">
-                <p class="text-4xl font-normal">12</p>
-                <p class="text-[10px] font-bold uppercase tracking-widest mt-2" style="color: var(--c-dawn)">Mocks</p>
+                <p class="text-4xl font-bold">12</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest mt-2 opacity-80">Mocks</p>
             </div>
             <div class="text-center flex-1 border-x border-white/20 relative z-10">
-                <p class="text-4xl font-normal">74<span class="text-xl">%</span></p>
-                <p class="text-[10px] font-bold uppercase tracking-widest mt-2" style="color: var(--c-dawn)">Avg Score</p>
+                <p class="text-4xl font-bold">74<span class="text-xl">%</span></p>
+                <p class="text-[10px] font-bold uppercase tracking-widest mt-2 opacity-80">Avg Score</p>
             </div>
             <div class="text-center flex-1 relative z-10">
-                <p class="text-4xl font-normal text-[#FFD166]">5</p>
-                <p class="text-[10px] font-bold uppercase tracking-widest mt-2" style="color: var(--c-dawn)">Streak</p>
+                <p class="text-4xl font-bold text-[#FFD166]">5<span class="text-xl">🔥</span></p>
+                <p class="text-[10px] font-bold uppercase tracking-widest mt-2 opacity-80">Streak</p>
             </div>
         </div>
 
-        <h3 class="font-bold text-lg mb-4 px-1">What are we studying today?</h3>
+        <h3 class="font-bold text-xl mb-4 px-1 text-gray-800">Your Target Chapters</h3>
         <div class="space-y-3 mb-8">
+            <!-- 1. Data Handling / Pandas -->
             <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: var(--c-porcelain); color: var(--c-royal);">
-                    <span class="material-symbols-rounded text-2xl">router</span>
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-blue-50">
+                    <svg viewBox="0 0 24 24" class="w-7 h-7">
+                        <path d="M4 20h16v2H4z" fill="var(--c-royal)"/>
+                        <path d="M6 16h3v4H6zM11 10h3v10h-3zM16 6h3v14h-3z" fill="var(--c-sky)"/>
+                        <path d="M4 12l6-6 4 4 6-6" fill="none" stroke="var(--c-coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </div>
-                <div class="flex-1"><p class="font-bold text-[14px]">Computer Networks</p><p class="text-[11px] text-gray-500 font-medium">Protocols, Topologies</p></div>
+                <div class="flex-1">
+                    <p class="font-bold text-[14px]">Data Handling (Pandas)</p>
+                    <p class="text-[11px] text-gray-500 font-medium">DataFrames, Visualization</p>
+                </div>
                 <input type="checkbox" checked>
             </label>
+
+            <!-- 2. Database Query / SQL -->
             <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: var(--c-jicama); color: #D9502A;">
-                    <span class="material-symbols-rounded text-2xl">database</span>
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-orange-50">
+                    <svg viewBox="0 0 24 24" class="w-7 h-7">
+                        <ellipse cx="12" cy="6" rx="8" ry="3" fill="var(--c-coral)"/>
+                        <path d="M4 6v5c0 1.66 3.58 3 8 3s8-1.34 8-3V6" fill="none" stroke="var(--c-coral)" stroke-width="2"/>
+                        <path d="M4 11v5c0 1.66 3.58 3 8 3s8-1.34 8-3v-5" fill="none" stroke="var(--c-coral)" stroke-width="2"/>
+                        <circle cx="16" cy="16" r="4" fill="var(--c-royal)" opacity="0.9"/>
+                        <path d="M19 19l3 3" stroke="var(--c-royal)" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
                 </div>
-                <div class="flex-1"><p class="font-bold text-[14px]">Database Query (SQL)</p><p class="text-[11px] text-gray-500 font-medium">SELECT, JOIN, GROUP BY</p></div>
+                <div class="flex-1">
+                    <p class="font-bold text-[14px]">Database Query (SQL)</p>
+                    <p class="text-[11px] text-gray-500 font-medium">SELECT, JOIN, GROUP BY</p>
+                </div>
                 <input type="checkbox" checked>
             </label>
+
+            <!-- 3. Computer Networks -->
             <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: var(--c-sky); color: var(--c-midnight);">
-                    <span class="material-symbols-rounded text-2xl">table_chart</span>
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-purple-50">
+                    <svg viewBox="0 0 24 24" class="w-7 h-7">
+                        <circle cx="12" cy="5" r="3" fill="#9333EA"/>
+                        <circle cx="5" cy="17" r="3" fill="#D8B4FE"/>
+                        <circle cx="19" cy="17" r="3" fill="#D8B4FE"/>
+                        <path d="M10.5 7.5L6.5 14.5M13.5 7.5L17.5 14.5M7.5 17h9" stroke="#9333EA" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
                 </div>
-                <div class="flex-1"><p class="font-bold text-[14px]">Data Handling</p><p class="text-[11px] text-gray-500 font-medium">Pandas, Matplotlib</p></div>
+                <div class="flex-1">
+                    <p class="font-bold text-[14px]">Computer Networks</p>
+                    <p class="text-[11px] text-gray-500 font-medium">Protocols, Topologies</p>
+                </div>
+                <input type="checkbox" checked>
+            </label>
+
+            <!-- 4. Societal Impacts -->
+            <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-green-50">
+                    <svg viewBox="0 0 24 24" class="w-7 h-7">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="var(--c-mint)" stroke="#059669" stroke-width="1.5"/>
+                        <circle cx="12" cy="10" r="2.5" fill="#059669"/>
+                        <path d="M7.5 16c1.5-2 7.5-2 9 0" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <p class="font-bold text-[14px]">Societal Impacts</p>
+                    <p class="text-[11px] text-gray-500 font-medium">Ethics, Privacy, Security</p>
+                </div>
                 <input type="checkbox" checked>
             </label>
         </div>
@@ -238,15 +314,14 @@
         <div class="flex flex-col gap-3">
             <button onclick="nav('view-quest')" class="btn-lucky w-full py-4 text-[15px] flex items-center justify-center gap-2">
                 <svg viewBox="0 0 24 24" class="w-5 h-5"><use href="#gemini-star"></use></svg>
-                I'm Feeling Lucky (And I am, to have you)
+                I'm feeling lucky (And I am, to have you)
             </button>
-            <button onclick="nav('view-quest')" class="btn-primary w-full py-4 text-[16px]">Start Quest</button>
+            <button onclick="nav('view-quest')" class="btn-primary w-full py-4 text-[16px] font-bold text-lg">Start Quest</button>
         </div>
     </div>
 
     <!-- ================= VIEW: QUESTIONS (MOCK TEST UI) ================= -->
     <div id="view-quest" class="view-section px-6 pt-12 pb-12 min-h-screen flex flex-col">
-        <!-- Top Navigation / Progress -->
         <div class="flex justify-between items-center mb-6">
             <button onclick="nav('view-home')" class="w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-sm border border-gray-100 cursor-pointer">
                 <span class="material-symbols-rounded text-gray-600">close</span>
@@ -260,9 +335,9 @@
             </div>
         </div>
 
-        <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: #D9502A">Data Handling (Pandas)</p>
-        <h2 class="text-[22px] font-normal leading-snug mb-8 text-gray-900">
-            Which of the following syntax is logically correct to extract the exact last 3 rows of a given DataFrame <span class="font-mono text-[20px] text-blue-700 bg-blue-50 px-1 rounded">df</span> using slicing?
+        <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--c-coral)">Data Handling (Pandas)</p>
+        <h2 class="text-[22px] font-medium leading-snug mb-8 text-gray-900">
+            Which of the following syntax is logically correct to extract the exact last 3 rows of a given DataFrame <span class="font-mono text-[20px] text-blue-700 bg-blue-50 px-1 rounded">df</span> using index slicing?
         </h2>
 
         <!-- Selectable Options -->
@@ -288,7 +363,7 @@
         </div>
 
         <div class="mt-auto pt-6">
-            <button onclick="nav('view-results')" class="btn-primary w-full py-4 text-[16px] flex justify-center items-center gap-2">
+            <button onclick="nav('view-results')" class="btn-primary w-full py-4 text-[16px] flex justify-center items-center gap-2 font-bold">
                 Submit Mock <span class="material-symbols-rounded text-lg">check_circle</span>
             </button>
         </div>
@@ -296,65 +371,59 @@
 
     <!-- ================= VIEW: RESULTS & DETAILED REPORT ================= -->
     <div id="view-results" class="view-section with-bottom-nav px-6 pt-12">
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-normal tracking-tight mb-1">Quest Complete!</h2>
-            <p class="text-sm font-medium" style="color: var(--c-china)">You did amazing, babe.</p>
+        <div class="text-center mb-8 relative">
+            <div class="absolute inset-0 flex justify-center items-center pointer-events-none z-[-1]" style="animation: sparkle 4s infinite;">
+                <div class="w-40 h-40 bg-yellow-200 blur-3xl opacity-30 rounded-full"></div>
+            </div>
+            <h2 class="text-4xl font-bold tracking-tight mb-2">Quest Complete!</h2>
+            <p class="text-[15px] font-medium" style="color: var(--c-china)">You did amazing, babe. So proud of you.</p>
         </div>
 
-        <div class="flex justify-center mb-10">
-            <div class="relative w-40 h-40 flex items-center justify-center rounded-full bg-white shadow-xl shadow-[var(--c-dawn)] border-8 border-green-400">
-                <div class="text-center">
-                    <h2 class="text-5xl font-normal mb-1">84<span class="text-2xl" style="color: var(--c-china)">%</span></h2>
-                    <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--c-china)">Score</p>
+        <!-- Hero Metric Row: Score & Time -->
+        <div class="flex justify-center gap-4 mb-8">
+            <div class="relative w-36 h-36 flex items-center justify-center rounded-full bg-white shadow-xl shadow-[var(--c-dawn)] border-[6px] border-green-400">
+                <div class="text-center mt-1">
+                    <h2 class="text-4xl font-bold mb-0">84<span class="text-xl text-gray-400">%</span></h2>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Score</p>
                 </div>
             </div>
-        </div>
-
-        <!-- NEW: Difficulty Breakdown Cards -->
-        <h3 class="font-bold text-lg mb-4 px-1">Difficulty Breakdown</h3>
-        <div class="flex justify-between gap-3 mb-10">
-            <div class="premium-card p-4 text-center flex-1">
-                <p class="text-2xl font-normal text-green-600">92%</p>
-                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1">Easy</p>
-            </div>
-            <div class="premium-card p-4 text-center flex-1">
-                <p class="text-2xl font-normal text-yellow-600">74%</p>
-                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1">Medium</p>
-            </div>
-            <div class="premium-card p-4 text-center flex-1">
-                <p class="text-2xl font-normal text-red-600">45%</p>
-                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1">Hard</p>
+            
+            <div class="w-36 h-36 flex flex-col items-center justify-center rounded-[32px] bg-white shadow-xl shadow-[var(--c-dawn)] border border-gray-100 p-4">
+                <span class="material-symbols-rounded text-3xl mb-1 text-blue-500">timer</span>
+                <h2 class="text-2xl font-bold text-gray-800">14<span class="text-sm font-medium text-gray-400">m</span> 22<span class="text-sm font-medium text-gray-400">s</span></h2>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1">Time Taken</p>
+                <div class="mt-2 bg-green-100 text-green-700 text-[9px] font-bold px-2 py-1 rounded-md">2x Faster</div>
             </div>
         </div>
 
         <!-- DETAILED Actionable Gemini Report -->
-        <div class="rounded-[28px] p-[2px] mb-8 shadow-xl shadow-purple-900/10" style="background: var(--gemini-grad)">
-            <div class="bg-white rounded-[26px] p-6 h-full w-full">
+        <div class="rounded-[32px] p-[3px] mb-8 shadow-2xl shadow-purple-900/10" style="background: var(--gemini-grad)">
+            <div class="bg-white rounded-[30px] p-6 h-full w-full">
                 <div class="flex items-center gap-2 mb-4">
                     <svg viewBox="0 0 24 24" class="w-6 h-6"><use href="#gemini-star"></use></svg>
-                    <span class="text-sm font-bold gemini-gradient-text uppercase tracking-widest">Detailed AI Report</span>
+                    <span class="text-sm font-bold gemini-gradient-text uppercase tracking-widest">AI Report & Analysis</span>
                 </div>
                 
-                <p class="text-[15px] font-medium leading-relaxed opacity-90 mb-5">
-                    Aaradhya, your foundational knowledge in <span class="text-green-600 font-bold">Computer Networks</span> is flawless (100%). However, we lost points in the "Hard" tier of Data Handling. Let's review this so you can completely crush the next one.
+                <p class="text-[14px] font-medium leading-relaxed opacity-90 mb-5 text-gray-800">
+                    Aaradhya, your foundational knowledge in <span class="text-purple-600 font-bold">Computer Networks</span> and <span class="text-green-600 font-bold">Societal Impacts</span> is absolutely flawless (100%). However, we notice you blazed through this mock in just <b>14.5 minutes</b> (average is 45m). Let's review the points lost in the rush.
                 </p>
                 
                 <!-- Explicit Weak Points Breakdown -->
-                <div class="bg-[#FFF5F0] rounded-2xl p-5 border border-[#FFE5D9] mb-4">
-                    <p class="text-xs font-bold uppercase tracking-widest text-[#D9502A] mb-3 flex items-center gap-2">
-                        <span class="material-symbols-rounded text-[18px]">error</span> Syntax to Fix:
+                <div class="bg-red-50 rounded-2xl p-5 border border-red-100 mb-4">
+                    <p class="text-xs font-bold uppercase tracking-widest text-red-600 mb-3 flex items-center gap-2">
+                        <span class="material-symbols-rounded text-[18px]">bolt</span> Speed vs Accuracy:
                     </p>
                     <ul class="space-y-4">
                         <li>
-                            <p class="text-sm font-bold text-gray-900 mb-1">1. DataFrame Slicing Confusion</p>
-                            <p class="text-[13px] text-gray-700 leading-snug">
-                                You selected <code class="bg-white px-1 rounded font-mono font-bold text-blue-600 border border-gray-200">df.tail(3)</code>. While this works, the question explicitly asked for index slicing syntax, which is <code class="bg-white px-1 rounded font-mono font-bold text-green-600 border border-gray-200">df.iloc[-3:]</code>.
+                            <p class="text-[13px] font-bold text-gray-900 mb-1">1. Data Handling (Pandas) Slicing</p>
+                            <p class="text-[12px] text-gray-700 leading-snug">
+                                You selected <code class="bg-white px-1 rounded font-mono font-bold text-blue-600 border border-gray-200">df.tail(3)</code>. While it works logically, the question explicitly tested <i>index slicing syntax</i>, which is <code class="bg-white px-1 rounded font-mono font-bold text-green-600 border border-gray-200">df.iloc[-3:]</code>. Read carefully!
                             </p>
                         </li>
                         <li>
-                            <p class="text-sm font-bold text-gray-900 mb-1">2. SQL Aggregation</p>
-                            <p class="text-[13px] text-gray-700 leading-snug">
-                                Remember, anytime you use <code class="bg-white px-1 rounded font-mono font-bold text-gray-800 border border-gray-200">COUNT()</code> or <code class="bg-white px-1 rounded font-mono font-bold text-gray-800 border border-gray-200">SUM()</code> with a non-aggregated column, you <b>must</b> include a <code class="bg-white px-1 rounded font-mono font-bold text-[#D9502A] border border-gray-200">GROUP BY</code> clause.
+                            <p class="text-[13px] font-bold text-gray-900 mb-1">2. Database Query (SQL)</p>
+                            <p class="text-[12px] text-gray-700 leading-snug">
+                                Remember, anytime you use <code class="bg-white px-1 rounded font-mono font-bold text-gray-800 border border-gray-200">COUNT()</code> or <code class="bg-white px-1 rounded font-mono font-bold text-gray-800 border border-gray-200">SUM()</code> with a non-aggregated column, you <b>must</b> include a <code class="bg-white px-1 rounded font-mono font-bold text-red-600 border border-gray-200">GROUP BY</code> clause. You missed this due to rushing!
                             </p>
                         </li>
                     </ul>
@@ -362,38 +431,52 @@
             </div>
         </div>
         
-        <button onclick="nav('view-home')" class="btn-primary w-full py-4 text-[16px] mb-6 shadow-xl shadow-[var(--c-dawn)]">Back to Home</button>
+        <button onclick="nav('view-home')" class="btn-primary w-full py-4 text-[16px] mb-6 shadow-xl shadow-[var(--c-dawn)] font-bold">Back to Home</button>
     </div>
 
     <!-- ================= VIEW: STATS ================= -->
     <div id="view-stats" class="view-section with-bottom-nav px-6 pt-12">
         <div class="mb-10 text-center">
-            <p class="text-sm font-bold tracking-widest mb-1 uppercase" style="color: var(--c-china)">Analytics</p>
-            <h2 class="text-3xl font-normal tracking-tight">Your Progress</h2>
+            <p class="text-[11px] font-bold tracking-widest mb-1 uppercase" style="color: var(--c-china)">Analytics</p>
+            <h2 class="text-3xl font-bold tracking-tight">Your Progress</h2>
         </div>
 
-        <h3 class="font-bold text-lg mb-4 px-1">Chapter Mastery</h3>
-        <div class="premium-card p-6 space-y-6">
+        <h3 class="font-bold text-xl mb-4 px-1 text-gray-800">Chapter Mastery</h3>
+        <div class="premium-card p-6 space-y-7">
+            <!-- 1. Pandas -->
             <div>
                 <div class="flex justify-between text-sm font-bold mb-2">
-                    <span>Computer Networks</span>
-                    <span style="color: var(--c-royal)">100%</span>
+                    <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-400"></span> Data Handling (Pandas)</span>
+                    <span class="text-orange-500">62%</span>
                 </div>
-                <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
+                <div class="progress-track"><div class="progress-fill" style="background: #F97316; width: 62%;"></div></div>
             </div>
+            
+            <!-- 2. SQL -->
             <div>
                 <div class="flex justify-between text-sm font-bold mb-2">
-                    <span>Database Query (SQL)</span>
-                    <span style="color: var(--c-royal)">82%</span>
+                    <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-orange-400"></span> Database Query (SQL)</span>
+                    <span style="color: var(--c-royal)">84%</span>
                 </div>
-                <div class="progress-track"><div class="progress-fill" style="width: 82%;"></div></div>
+                <div class="progress-track"><div class="progress-fill" style="width: 84%;"></div></div>
             </div>
+
+            <!-- 3. Networks -->
             <div>
                 <div class="flex justify-between text-sm font-bold mb-2">
-                    <span>Data Handling (Pandas)</span>
-                    <span class="text-[#D9502A]">45%</span>
+                    <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-purple-400"></span> Computer Networks</span>
+                    <span class="text-green-500">100%</span>
                 </div>
-                <div class="progress-track"><div class="progress-fill" style="background: #D9502A; width: 45%;"></div></div>
+                <div class="progress-track"><div class="progress-fill" style="background: #10B981; width: 100%;"></div></div>
+            </div>
+
+            <!-- 4. Society -->
+            <div>
+                <div class="flex justify-between text-sm font-bold mb-2">
+                    <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span> Societal Impacts</span>
+                    <span class="text-green-500">100%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="background: #10B981; width: 100%;"></div></div>
             </div>
         </div>
     </div>
@@ -401,71 +484,38 @@
     <!-- ================= VIEW: PROFILE & HISTORY ================= -->
     <div id="view-profile" class="view-section with-bottom-nav px-6 pt-12">
         <div class="text-center mb-10 mt-4">
-            <div class="w-28 h-28 mx-auto rounded-full mb-5 flex items-center justify-center text-white text-5xl font-normal relative shadow-xl shadow-[var(--c-dawn)] border-4 border-white" style="background: var(--c-royal)">
+            <div class="w-32 h-32 mx-auto rounded-full mb-5 flex items-center justify-center text-white text-6xl font-normal relative shadow-2xl shadow-blue-900/20 border-4 border-white" style="background: var(--c-royal)">
                 A
-                <div class="absolute -bottom-2 border-2 border-white px-3 py-1 rounded-full font-bold text-xs" style="background: var(--c-asian-pear); color: var(--c-midnight)">
+                <div class="absolute -bottom-2 border-2 border-white px-4 py-1 rounded-full font-bold text-xs" style="background: var(--c-asian-pear); color: var(--c-midnight)">
                     Level 3
                 </div>
             </div>
-            <h2 class="text-3xl font-normal tracking-tight">Aaradhya</h2>
+            <h2 class="text-3xl font-bold tracking-tight">Aaradhya</h2>
         </div>
         
-        <h3 class="font-bold text-lg mb-4 px-1">Badge Collection</h3>
+        <h3 class="font-bold text-xl mb-4 px-1 text-gray-800">Badge Collection</h3>
         <div class="grid grid-cols-3 gap-3 mb-10">
-            <div class="premium-card p-3 text-center flex flex-col items-center">
-                <div class="w-10 h-10 rounded-full flex items-center justify-center mb-2 bg-purple-100 text-purple-600">
-                    <span class="material-symbols-rounded">magic_button</span>
+            <div class="premium-card p-4 text-center flex flex-col items-center">
+                <div class="w-12 h-12 rounded-full flex items-center justify-center mb-2 bg-purple-100 text-purple-600">
+                    <span class="material-symbols-rounded text-2xl">magic_button</span>
                 </div>
-                <p class="text-[9px] font-bold uppercase tracking-wider leading-tight">SQL<br>Wizard</p>
+                <p class="text-[10px] font-bold uppercase tracking-wider leading-tight">Network<br>Wizard</p>
             </div>
-            <div class="premium-card p-3 text-center flex flex-col items-center" style="background: #FFF5F0; border-color: #FFE5D9;">
-                <div class="w-10 h-10 rounded-full flex items-center justify-center mb-2" style="background: white">
-                    <span class="material-symbols-rounded text-[#F26A44]">local_fire_department</span>
+            <div class="premium-card p-4 text-center flex flex-col items-center" style="background: #FFF5F0; border-color: #FFE5D9;">
+                <div class="w-12 h-12 rounded-full flex items-center justify-center mb-2" style="background: white">
+                    <span class="material-symbols-rounded text-2xl text-[#F26A44]">local_fire_department</span>
                 </div>
-                <p class="text-[9px] font-bold uppercase tracking-wider leading-tight text-[#D9502A]">On Fire</p>
+                <p class="text-[10px] font-bold uppercase tracking-wider leading-tight text-[#D9502A]">5 Day<br>Streak</p>
             </div>
-            <div class="premium-card p-3 text-center flex flex-col items-center opacity-40 grayscale">
-                <div class="w-10 h-10 rounded-full flex items-center justify-center mb-2 bg-gray-100 text-gray-500">
-                    <span class="material-symbols-rounded">diamond</span>
+            <div class="premium-card p-4 text-center flex flex-col items-center opacity-40 grayscale">
+                <div class="w-12 h-12 rounded-full flex items-center justify-center mb-2 bg-gray-100 text-gray-500">
+                    <span class="material-symbols-rounded text-2xl">diamond</span>
                 </div>
-                <p class="text-[9px] font-bold uppercase tracking-wider leading-tight">Diamond<br>Status</p>
+                <p class="text-[10px] font-bold uppercase tracking-wider leading-tight">100%<br>Pandas</p>
             </div>
         </div>
 
-        <!-- NEW: Detailed Past Reports Log -->
-        <h3 class="font-bold text-lg mb-4 px-1">Detailed Past Reports</h3>
-        <div class="space-y-4 mb-10">
-            
-            <!-- Past Mock Card 1 -->
-            <div class="premium-card p-5">
-                <div class="flex justify-between items-center mb-3">
-                    <div>
-                        <p class="font-bold text-[15px]">Full Syllabus Mock #12</p>
-                        <p class="text-[11px] font-medium text-gray-500 mt-0.5">Today, 10:42 AM</p>
-                    </div>
-                    <div class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm bg-green-100 text-green-700">84%</div>
-                </div>
-                
-                <!-- Past Difficulty Split -->
-                <div class="flex gap-2 mb-4 border-b border-gray-100 pb-4">
-                    <span class="text-[10px] font-bold bg-green-50 text-green-600 px-2 py-1 rounded">Easy: 92%</span>
-                    <span class="text-[10px] font-bold bg-yellow-50 text-yellow-600 px-2 py-1 rounded">Med: 74%</span>
-                    <span class="text-[10px] font-bold bg-red-50 text-red-600 px-2 py-1 rounded">Hard: 45%</span>
-                </div>
-                
-                <!-- Past AI Summary -->
-                <div class="bg-[var(--c-porcelain)] rounded-xl p-4">
-                    <div class="flex items-center gap-1.5 mb-2">
-                        <svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#gemini-star"></use></svg>
-                        <span class="text-[11px] font-bold gemini-gradient-text uppercase tracking-widest">AI Synopsis</span>
-                    </div>
-                    <p class="text-[13px] text-gray-700 leading-relaxed font-medium">Perfect in Topologies. Weakness detected in Pandas <code class="bg-white px-1 rounded text-[#D9502A] border border-gray-200">iloc</code> vs <code class="bg-white px-1 rounded text-[#D9502A] border border-gray-200">loc</code> indexing. Recommended practicing Medium-tier DataFrame extraction.</p>
-                </div>
-            </div>
-
-        </div>
-
-        <button onclick="nav('view-login')" class="premium-card w-full py-4 text-[15px] font-bold text-[#D9502A] mb-8 hover:bg-red-50 transition-colors flex justify-center items-center gap-2 cursor-pointer">
+        <button onclick="nav('view-login')" class="premium-card w-full py-4 text-[15px] font-bold text-[#D9502A] mb-8 hover:bg-red-50 transition-colors flex justify-center items-center gap-2 cursor-pointer border border-red-100">
             <span class="material-symbols-rounded text-[20px]">logout</span> Log Out
         </button>
     </div>
@@ -474,45 +524,40 @@
     <nav id="bottom-nav" class="fixed bottom-6 left-6 right-6 h-[72px] bg-white/90 backdrop-blur-xl border border-[var(--c-porcelain)] rounded-[36px] shadow-2xl shadow-[var(--c-dawn)] flex justify-around items-center px-4 z-50 hidden">
         <button onclick="nav('view-home')" id="btn-home" class="nav-item flex flex-col items-center justify-center active w-16 h-full cursor-pointer">
             <div class="nav-pill h-8 rounded-full flex items-center justify-center">
-                <span class="material-symbols-rounded text-[22px]">home</span>
+                <span class="material-symbols-rounded text-[24px]">home</span>
             </div>
             <span class="nav-text text-[10px] uppercase tracking-widest">Home</span>
         </button>
 
         <button onclick="nav('view-stats')" id="btn-stats" class="nav-item flex flex-col items-center justify-center w-16 h-full cursor-pointer">
             <div class="nav-pill h-8 rounded-full flex items-center justify-center">
-                <span class="material-symbols-rounded text-[22px]">insert_chart</span>
+                <span class="material-symbols-rounded text-[24px]">insert_chart</span>
             </div>
             <span class="nav-text text-[10px] uppercase tracking-widest">Stats</span>
         </button>
         
         <button onclick="nav('view-profile')" id="btn-profile" class="nav-item flex flex-col items-center justify-center w-16 h-full cursor-pointer">
             <div class="nav-pill h-8 rounded-full flex items-center justify-center">
-                <span class="material-symbols-rounded text-[22px]">person</span>
+                <span class="material-symbols-rounded text-[24px]">person</span>
             </div>
             <span class="nav-text text-[10px] uppercase tracking-widest">Profile</span>
         </button>
     </nav>
 
     <script>
-        // Quest Selectable Options Logic
         function selectOption(element) {
             document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
             element.classList.add('selected');
         }
 
-        // Strict Single Page App Navigation
         function nav(id) {
-            // 1. Force ALL views to completely disappear (fixes scroll bug)
             document.querySelectorAll('.view-section').forEach(v => {
                 v.classList.remove('active');
             });
             
-            // 2. Activate ONLY the requested view
             const targetView = document.getElementById(id);
             targetView.classList.add('active');
             
-            // 3. Toggle Bottom Nav Bar visibility securely
             const navBar = document.getElementById('bottom-nav');
             if (id === 'view-login' || id === 'view-quest') {
                 navBar.classList.add('hidden');
@@ -522,13 +567,11 @@
                 navBar.classList.add('flex');
             }
 
-            // 4. Update Nav Bar Icon Colors
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             if (id === 'view-home' || id === 'view-results') document.getElementById('btn-home').classList.add('active');
             if (id === 'view-stats') document.getElementById('btn-stats').classList.add('active');
             if (id === 'view-profile') document.getElementById('btn-profile').classList.add('active');
             
-            // 5. Instantly jump to top of the new view without smooth scroll latency
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         }
     </script>
