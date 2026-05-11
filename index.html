@@ -21,7 +21,6 @@
             --c-asian-pear: #F2F0DE;
             --c-midnight: #081F5C;
             --c-dawn: #D0E3FF;
-            --c-jicama: #FFF9F0;
             --c-porcelain: #EDF1F6;
             --c-sky: #BAD6EB;
             --c-coral: #F26A44;
@@ -34,33 +33,53 @@
         body, html { 
             margin: 0; padding: 0;
             font-family: 'Google Sans', sans-serif; 
-            background-color: var(--c-moon); 
+            background-color: #E2E8F0; 
             color: var(--c-midnight); 
             -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-            overflow-x: hidden;
-            width: 100%;
+            overflow: hidden; 
+            width: 100vw;
+            height: 100vh;
         }
 
-        /* Animated Ambient Background Visuals */
-        .ambient-bg {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; overflow: hidden; background: var(--c-moon);
+        /* Desktop App Shell Wrapper */
+        #app-container {
+            background-color: var(--c-moon);
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            scroll-behavior: smooth;
         }
+
+        /* Laptop / Desktop Styling */
+        @media (min-width: 768px) {
+            body { display: flex; align-items: center; justify-content: center; background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop') center/cover no-repeat; }
+            #app-container {
+                max-width: 440px;
+                height: 90vh;
+                max-height: 850px;
+                border-radius: 40px;
+                box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2), 0 0 0 8px rgba(255, 255, 255, 0.4);
+                backdrop-filter: blur(20px);
+            }
+            .desktop-bottom-nav { position: absolute !important; }
+        }
+
+        /* Hide Scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Ambient Animated Backgrounds */
         .ambient-blob-1 {
-            position: absolute; top: -10%; left: -10%; width: 60vw; height: 60vw;
-            background: var(--c-dawn); filter: blur(80px); opacity: 0.7; border-radius: 50%;
-            animation: float 14s ease-in-out infinite;
+            position: absolute; top: -10%; left: -10%; width: 60vw; height: 60vw; max-width: 300px; max-height: 300px;
+            background: var(--c-dawn); filter: blur(60px); opacity: 0.7; border-radius: 50%;
+            animation: float 14s ease-in-out infinite; z-index: 0; pointer-events: none;
         }
         .ambient-blob-2 {
-            position: absolute; top: 30%; right: -20%; width: 50vw; height: 50vw;
-            background: var(--c-asian-pear); filter: blur(80px); opacity: 0.8; border-radius: 50%;
-            animation: float 18s ease-in-out infinite reverse;
-        }
-        .ambient-blob-3 {
-            position: absolute; bottom: -10%; left: 20%; width: 40vw; height: 40vw;
-            background: #E8DDFF; filter: blur(80px); opacity: 0.5; border-radius: 50%;
-            animation: float 12s ease-in-out infinite;
+            position: absolute; top: 40%; right: -20%; width: 50vw; height: 50vw; max-width: 250px; max-height: 250px;
+            background: var(--c-asian-pear); filter: blur(60px); opacity: 0.8; border-radius: 50%;
+            animation: float 18s ease-in-out infinite reverse; z-index: 0; pointer-events: none;
         }
 
         @keyframes float {
@@ -70,40 +89,16 @@
         }
 
         /* View Logic */
-        .view-section { 
-            display: none !important; 
-            opacity: 0; 
-            width: 100%; 
-            box-sizing: border-box; 
-        }
-        .view-section.active { 
-            display: block !important; 
-            opacity: 1; 
-            animation: fadeSlideUp 0.5s cubic-bezier(0.2, 0, 0, 1) forwards; 
-        }
-        
-        .with-bottom-nav { padding-bottom: 110px; }
+        .view-section { display: none !important; opacity: 0; width: 100%; box-sizing: border-box; z-index: 10; position: relative; min-height: 100%; }
+        .view-section.active { display: block !important; opacity: 1; animation: fadeSlideUp 0.4s cubic-bezier(0.2, 0, 0, 1) forwards; }
+        .with-bottom-nav { padding-bottom: 120px; }
 
         @keyframes fadeSlideUp { 
-            from { opacity: 0; transform: translateY(20px); } 
+            from { opacity: 0; transform: translateY(15px); } 
             to { opacity: 1; transform: translateY(0); } 
         }
-        @keyframes pulseHeart {
-            0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(242, 106, 68, 0.3)); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 25px rgba(242, 106, 68, 0.7)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(242, 106, 68, 0.3)); }
-        }
-        @keyframes sparkle {
-            0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-            50% { opacity: 1; transform: scale(1) rotate(15deg); }
-        }
         
-        /* Glassmorphism & Components */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 32px;
-            box-shadow: 0 10px 40px rgba(8, 31, 92, 0.05);
-        }
+        /* Premium Components */
         .premium-card { 
             background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
             border: 1px solid white; border-radius: 28px; box-shadow: 0 4px 20px rgba(8, 31, 92, 0.04);
@@ -111,9 +106,14 @@
         }
         .premium-card:active { transform: scale(0.98); }
         
+        .error-card {
+            background: white; border: 1px solid #FFE5D9; border-radius: 24px;
+            box-shadow: 0 4px 15px rgba(217, 80, 42, 0.05); padding: 16px;
+        }
+
         .btn-primary { 
             background: var(--c-royal); color: white; border-radius: 100px; 
-            font-weight: 500; transition: all 0.2s; box-shadow: 0 4px 12px rgba(51, 78, 172, 0.2); cursor: pointer;
+            font-weight: 700; transition: all 0.2s; box-shadow: 0 4px 12px rgba(51, 78, 172, 0.2); cursor: pointer;
         }
         .btn-primary:active { transform: scale(0.97); box-shadow: 0 2px 6px rgba(51, 78, 172, 0.2); }
 
@@ -124,15 +124,19 @@
         }
         .btn-lucky:active { transform: scale(0.97); background: var(--c-asian-pear); }
 
-        .gemini-gradient-text {
-            background: var(--gemini-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
+        .gemini-gradient-text { background: var(--gemini-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero-gradient { background: linear-gradient(135deg, var(--c-royal) 0%, #6883DF 100%); }
 
-        /* Inputs */
-        .passcode-input { background: rgba(255,255,255,0.8); border: 2px solid var(--c-porcelain); transition: all 0.3s; }
-        .passcode-input:focus-within { border-color: var(--c-royal); box-shadow: 0 0 0 4px var(--c-dawn); background: white; }
-        
+        /* Login Screen VIP Inputs */
+        .pin-input {
+            width: 60px; height: 70px; text-align: center; font-size: 28px; font-weight: 700;
+            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px);
+            border: 2px solid white; border-radius: 20px; color: var(--c-midnight);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03); transition: all 0.2s; outline: none;
+        }
+        .pin-input:focus { background: white; border-color: var(--c-royal); box-shadow: 0 0 0 4px var(--c-dawn); transform: translateY(-2px); }
+
+        /* Quest Options */
         .option-card { border: 2px solid var(--c-porcelain); transition: all 0.2s; background: white; }
         .option-card.selected { border-color: var(--c-royal); background: var(--c-dawn); }
 
@@ -147,18 +151,28 @@
         input[type="checkbox"] { accent-color: var(--c-royal); width: 22px; height: 22px; border-radius: 6px; cursor: pointer; }
         .progress-track { background: var(--c-porcelain); border-radius: 100px; height: 8px; width: 100%; overflow: hidden; }
         .progress-fill { background: var(--c-royal); height: 100%; border-radius: 100px; transition: width 1s ease-out; }
+
+        /* Holographic Orb */
+        .holo-orb {
+            width: 140px; height: 140px; border-radius: 50%;
+            background: linear-gradient(135deg, #FFB8D2 0%, #B371FF 50%, #7096D1 100%);
+            filter: blur(20px); animation: spinOrb 8s linear infinite; position: absolute; top: -30px; left: -30px; z-index: -1;
+        }
+        @keyframes spinOrb { 100% { transform: rotate(360deg); } }
+        
+        /* Difficulty Badges */
+        .badge-easy { background: #ECFDF5; color: #059669; border: 1px solid #D1FAE5; }
+        .badge-med { background: #FFF7ED; color: #EA580C; border: 1px solid #FFEDD5; }
+        .badge-hard { background: #FEF2F2; color: #DC2626; border: 1px solid #FEE2E2; }
     </style>
 </head>
-<body class="max-w-md mx-auto relative">
+<body>
 
-    <!-- Ambient Visuals -->
-    <div class="ambient-bg">
-        <div class="ambient-blob-1"></div>
-        <div class="ambient-blob-2"></div>
-        <div class="ambient-blob-3"></div>
-    </div>
+<div id="app-container" class="no-scrollbar relative">
+    
+    <div class="ambient-blob-1"></div>
+    <div class="ambient-blob-2"></div>
 
-    <!-- Official Perfect Gemini Star SVG -->
     <svg style="display: none;">
         <defs>
             <linearGradient id="gemini-grad-svg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -173,40 +187,32 @@
     </svg>
 
     <!-- ================= VIEW: LOGIN ================= -->
-    <div id="view-login" class="view-section active">
-        <div class="h-screen w-full flex flex-col justify-center items-center px-6 relative">
+    <div id="view-login" class="view-section active flex flex-col h-full">
+        <div class="flex-1 flex flex-col justify-center px-8 pt-10 pb-20 relative z-10">
+            <div class="relative mb-12">
+                <div class="holo-orb"></div>
+                <div class="w-20 h-20 rounded-[28px] bg-white/40 backdrop-blur-md border border-white flex items-center justify-center shadow-xl">
+                    <span class="text-4xl font-bold gemini-gradient-text">A</span>
+                </div>
+            </div>
+
+            <h1 class="text-5xl font-bold tracking-tight mb-3" style="color: var(--c-midnight); line-height: 1.1;">Welcome<br>Aaradhya.</h1>
+            <p style="color: var(--c-china)" class="text-lg font-medium mb-12">Your personal study sanctuary awaits.</p>
             
-            <!-- Floating Sparkles -->
-            <div class="absolute top-1/4 left-8" style="animation: sparkle 3s infinite 0.5s;">
-                <svg viewBox="0 0 24 24" class="w-8 h-8" fill="#F4B400"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
-            </div>
-            <div class="absolute top-1/3 right-10" style="animation: sparkle 4s infinite 1.2s;">
-                <svg viewBox="0 0 24 24" class="w-6 h-6" fill="var(--c-royal)"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+            <div class="mb-10 w-full">
+                <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 pl-1">Enter VIP PIN</p>
+                <div class="flex gap-3 justify-start">
+                    <input type="password" maxlength="1" class="pin-input" placeholder="•" onkeyup="moveToNext(this, 'pin2')">
+                    <input type="password" maxlength="1" class="pin-input" placeholder="•" id="pin2" onkeyup="moveToNext(this, 'pin3')">
+                    <input type="password" maxlength="1" class="pin-input" placeholder="•" id="pin3" onkeyup="moveToNext(this, 'pin4')">
+                    <input type="password" maxlength="1" class="pin-input" placeholder="•" id="pin4">
+                </div>
             </div>
 
-            <!-- Glassmorphism Login Card -->
-            <div class="glass-card w-full p-8 flex flex-col items-center relative z-10">
-                <div class="mb-8 relative">
-                    <svg viewBox="0 0 24 24" class="w-20 h-20" fill="var(--c-coral)" style="animation: pulseHeart 2.5s infinite ease-in-out;">
-                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                    </svg>
-                </div>
-                
-                <h1 class="text-3xl font-bold tracking-tight mb-2 text-center" style="color: var(--c-midnight)">Hey gorgeous.</h1>
-                <p style="color: var(--c-china)" class="text-[15px] font-medium text-center mb-8">Ready to ace your mocks today?</p>
-                
-                <div class="w-full mb-8">
-                    <div class="passcode-input rounded-2xl flex items-center px-5 py-4">
-                        <span class="material-symbols-rounded mr-3" style="color: var(--c-china)">key</span>
-                        <input type="password" placeholder="Passcode" class="w-full border-none outline-none text-lg font-medium placeholder-gray-400" style="color: var(--c-midnight); background: transparent;">
-                    </div>
-                </div>
-
-                <button onclick="nav('view-home')" class="btn-primary w-full py-4 text-[17px] flex justify-center items-center gap-2">
-                    Let's Go, Aaradhya
-                    <span class="material-symbols-rounded text-xl">rocket_launch</span>
-                </button>
-            </div>
+            <button onclick="nav('view-home')" class="btn-primary w-full py-5 text-[17px] flex justify-center items-center gap-2 mt-auto">
+                Unlock Workspace
+                <span class="material-symbols-rounded text-xl">arrow_right_alt</span>
+            </button>
         </div>
     </div>
 
@@ -243,70 +249,32 @@
 
         <h3 class="font-bold text-xl mb-4 px-1 text-gray-800">Your Target Chapters</h3>
         <div class="space-y-3 mb-8">
-            <!-- 1. Data Handling / Pandas -->
             <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
                 <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-blue-50">
-                    <svg viewBox="0 0 24 24" class="w-7 h-7">
-                        <path d="M4 20h16v2H4z" fill="var(--c-royal)"/>
-                        <path d="M6 16h3v4H6zM11 10h3v10h-3zM16 6h3v14h-3z" fill="var(--c-sky)"/>
-                        <path d="M4 12l6-6 4 4 6-6" fill="none" stroke="var(--c-coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24" class="w-7 h-7"><path d="M4 20h16v2H4z" fill="var(--c-royal)"/><path d="M6 16h3v4H6zM11 10h3v10h-3zM16 6h3v14h-3z" fill="var(--c-sky)"/><path d="M4 12l6-6 4 4 6-6" fill="none" stroke="var(--c-coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
-                <div class="flex-1">
-                    <p class="font-bold text-[14px]">Data Handling (Pandas)</p>
-                    <p class="text-[11px] text-gray-500 font-medium">DataFrames, Visualization</p>
-                </div>
+                <div class="flex-1"><p class="font-bold text-[14px]">Data Handling (Pandas)</p><p class="text-[11px] text-gray-500 font-medium">DataFrames, Visualization</p></div>
                 <input type="checkbox" checked>
             </label>
-
-            <!-- 2. Database Query / SQL -->
             <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
                 <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-orange-50">
-                    <svg viewBox="0 0 24 24" class="w-7 h-7">
-                        <ellipse cx="12" cy="6" rx="8" ry="3" fill="var(--c-coral)"/>
-                        <path d="M4 6v5c0 1.66 3.58 3 8 3s8-1.34 8-3V6" fill="none" stroke="var(--c-coral)" stroke-width="2"/>
-                        <path d="M4 11v5c0 1.66 3.58 3 8 3s8-1.34 8-3v-5" fill="none" stroke="var(--c-coral)" stroke-width="2"/>
-                        <circle cx="16" cy="16" r="4" fill="var(--c-royal)" opacity="0.9"/>
-                        <path d="M19 19l3 3" stroke="var(--c-royal)" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24" class="w-7 h-7"><ellipse cx="12" cy="6" rx="8" ry="3" fill="var(--c-coral)"/><path d="M4 6v5c0 1.66 3.58 3 8 3s8-1.34 8-3V6" fill="none" stroke="var(--c-coral)" stroke-width="2"/><path d="M4 11v5c0 1.66 3.58 3 8 3s8-1.34 8-3v-5" fill="none" stroke="var(--c-coral)" stroke-width="2"/><circle cx="16" cy="16" r="4" fill="var(--c-royal)" opacity="0.9"/><path d="M19 19l3 3" stroke="var(--c-royal)" stroke-width="2" stroke-linecap="round"/></svg>
                 </div>
-                <div class="flex-1">
-                    <p class="font-bold text-[14px]">Database Query (SQL)</p>
-                    <p class="text-[11px] text-gray-500 font-medium">SELECT, JOIN, GROUP BY</p>
-                </div>
+                <div class="flex-1"><p class="font-bold text-[14px]">Database Query (SQL)</p><p class="text-[11px] text-gray-500 font-medium">SELECT, JOIN, GROUP</p></div>
                 <input type="checkbox" checked>
             </label>
-
-            <!-- 3. Computer Networks -->
             <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
                 <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-purple-50">
-                    <svg viewBox="0 0 24 24" class="w-7 h-7">
-                        <circle cx="12" cy="5" r="3" fill="#9333EA"/>
-                        <circle cx="5" cy="17" r="3" fill="#D8B4FE"/>
-                        <circle cx="19" cy="17" r="3" fill="#D8B4FE"/>
-                        <path d="M10.5 7.5L6.5 14.5M13.5 7.5L17.5 14.5M7.5 17h9" stroke="#9333EA" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24" class="w-7 h-7"><circle cx="12" cy="5" r="3" fill="#9333EA"/><circle cx="5" cy="17" r="3" fill="#D8B4FE"/><circle cx="19" cy="17" r="3" fill="#D8B4FE"/><path d="M10.5 7.5L6.5 14.5M13.5 7.5L17.5 14.5M7.5 17h9" stroke="#9333EA" stroke-width="2" stroke-linecap="round"/></svg>
                 </div>
-                <div class="flex-1">
-                    <p class="font-bold text-[14px]">Computer Networks</p>
-                    <p class="text-[11px] text-gray-500 font-medium">Protocols, Topologies</p>
-                </div>
+                <div class="flex-1"><p class="font-bold text-[14px]">Computer Networks</p><p class="text-[11px] text-gray-500 font-medium">Protocols, Topologies</p></div>
                 <input type="checkbox" checked>
             </label>
-
-            <!-- 4. Societal Impacts -->
             <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
                 <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-green-50">
-                    <svg viewBox="0 0 24 24" class="w-7 h-7">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="var(--c-mint)" stroke="#059669" stroke-width="1.5"/>
-                        <circle cx="12" cy="10" r="2.5" fill="#059669"/>
-                        <path d="M7.5 16c1.5-2 7.5-2 9 0" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24" class="w-7 h-7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="var(--c-mint)" stroke="#059669" stroke-width="1.5"/><circle cx="12" cy="10" r="2.5" fill="#059669"/><path d="M7.5 16c1.5-2 7.5-2 9 0" stroke="#059669" stroke-width="2" stroke-linecap="round"/></svg>
                 </div>
-                <div class="flex-1">
-                    <p class="font-bold text-[14px]">Societal Impacts</p>
-                    <p class="text-[11px] text-gray-500 font-medium">Ethics, Privacy, Security</p>
-                </div>
+                <div class="flex-1"><p class="font-bold text-[14px]">Societal Impacts</p><p class="text-[11px] text-gray-500 font-medium">Ethics, Privacy, Security</p></div>
                 <input type="checkbox" checked>
             </label>
         </div>
@@ -316,12 +284,12 @@
                 <svg viewBox="0 0 24 24" class="w-5 h-5"><use href="#gemini-star"></use></svg>
                 I'm feeling lucky (And I am, to have you)
             </button>
-            <button onclick="nav('view-quest')" class="btn-primary w-full py-4 text-[16px] font-bold text-lg">Start Quest</button>
+            <button onclick="nav('view-quest')" class="btn-primary w-full py-4 text-[16px]">Start Quest</button>
         </div>
     </div>
 
-    <!-- ================= VIEW: QUESTIONS (MOCK TEST UI) ================= -->
-    <div id="view-quest" class="view-section px-6 pt-12 pb-12 min-h-screen flex flex-col">
+    <!-- ================= VIEW: QUESTIONS ================= -->
+    <div id="view-quest" class="view-section px-6 pt-12 pb-12 flex flex-col">
         <div class="flex justify-between items-center mb-6">
             <button onclick="nav('view-home')" class="w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-sm border border-gray-100 cursor-pointer">
                 <span class="material-symbols-rounded text-gray-600">close</span>
@@ -335,12 +303,14 @@
             </div>
         </div>
 
-        <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--c-coral)">Data Handling (Pandas)</p>
+        <div class="flex items-center gap-2 mb-2">
+            <span class="badge-easy px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider">Easy</span>
+            <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--c-coral)">Data Handling (Pandas)</p>
+        </div>
         <h2 class="text-[22px] font-medium leading-snug mb-8 text-gray-900">
             Which of the following syntax is logically correct to extract the exact last 3 rows of a given DataFrame <span class="font-mono text-[20px] text-blue-700 bg-blue-50 px-1 rounded">df</span> using index slicing?
         </h2>
 
-        <!-- Selectable Options -->
         <div class="space-y-4 mb-10">
             <button class="option-card w-full text-left p-5 rounded-2xl flex items-center gap-4 cursor-pointer group" onclick="selectOption(this)">
                 <div class="w-6 h-6 rounded-full border-2 border-gray-300 group-[.selected]:border-[var(--c-royal)] group-[.selected]:bg-[var(--c-royal)] flex items-center justify-center transition-colors shrink-0">
@@ -363,23 +333,20 @@
         </div>
 
         <div class="mt-auto pt-6">
-            <button onclick="nav('view-results')" class="btn-primary w-full py-4 text-[16px] flex justify-center items-center gap-2 font-bold">
+            <button onclick="nav('view-results')" class="btn-primary w-full py-4 text-[16px] flex justify-center items-center gap-2">
                 Submit Mock <span class="material-symbols-rounded text-lg">check_circle</span>
             </button>
         </div>
     </div>
 
-    <!-- ================= VIEW: RESULTS & DETAILED REPORT ================= -->
+    <!-- ================= VIEW: RESULTS ================= -->
     <div id="view-results" class="view-section with-bottom-nav px-6 pt-12">
-        <div class="text-center mb-8 relative">
-            <div class="absolute inset-0 flex justify-center items-center pointer-events-none z-[-1]" style="animation: sparkle 4s infinite;">
-                <div class="w-40 h-40 bg-yellow-200 blur-3xl opacity-30 rounded-full"></div>
-            </div>
+        <div class="text-center mb-8">
             <h2 class="text-4xl font-bold tracking-tight mb-2">Quest Complete!</h2>
             <p class="text-[15px] font-medium" style="color: var(--c-china)">You did amazing, babe. So proud of you.</p>
         </div>
 
-        <!-- Hero Metric Row: Score & Time -->
+        <!-- Metric Cards -->
         <div class="flex justify-center gap-4 mb-8">
             <div class="relative w-36 h-36 flex items-center justify-center rounded-full bg-white shadow-xl shadow-[var(--c-dawn)] border-[6px] border-green-400">
                 <div class="text-center mt-1">
@@ -391,46 +358,60 @@
             <div class="w-36 h-36 flex flex-col items-center justify-center rounded-[32px] bg-white shadow-xl shadow-[var(--c-dawn)] border border-gray-100 p-4">
                 <span class="material-symbols-rounded text-3xl mb-1 text-blue-500">timer</span>
                 <h2 class="text-2xl font-bold text-gray-800">14<span class="text-sm font-medium text-gray-400">m</span> 22<span class="text-sm font-medium text-gray-400">s</span></h2>
-                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1">Time Taken</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1">Total Time</p>
                 <div class="mt-2 bg-green-100 text-green-700 text-[9px] font-bold px-2 py-1 rounded-md">2x Faster</div>
             </div>
         </div>
 
-        <!-- DETAILED Actionable Gemini Report -->
-        <div class="rounded-[32px] p-[3px] mb-8 shadow-2xl shadow-purple-900/10" style="background: var(--gemini-grad)">
-            <div class="bg-white rounded-[30px] p-6 h-full w-full">
-                <div class="flex items-center gap-2 mb-4">
-                    <svg viewBox="0 0 24 24" class="w-6 h-6"><use href="#gemini-star"></use></svg>
-                    <span class="text-sm font-bold gemini-gradient-text uppercase tracking-widest">AI Report & Analysis</span>
+        <!-- NEW: Deep Dive Error Analysis Section -->
+        <h3 class="font-bold text-xl mb-4 px-1 text-gray-800 flex items-center gap-2">
+            <span class="material-symbols-rounded text-red-500">troubleshoot</span> Error Analysis
+        </h3>
+        
+        <div class="space-y-4 mb-8">
+            <!-- Error Card 1: Rushed Easy Question -->
+            <div class="error-card">
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <span class="badge-easy px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider mb-1 inline-block">Easy</span>
+                        <h4 class="font-bold text-[14px] text-gray-900 leading-tight">Q14: Pandas DataFrame Slicing</h4>
+                    </div>
+                    <div class="text-right">
+                        <div class="flex items-center gap-1 text-red-500 bg-red-50 px-2 py-1 rounded-md mb-1">
+                            <span class="material-symbols-rounded text-[14px]">timer</span>
+                            <span class="text-[11px] font-bold">12s Spent</span>
+                        </div>
+                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Avg: 45s</p>
+                    </div>
                 </div>
-                
-                <p class="text-[14px] font-medium leading-relaxed opacity-90 mb-5 text-gray-800">
-                    Aaradhya, your foundational knowledge in <span class="text-purple-600 font-bold">Computer Networks</span> and <span class="text-green-600 font-bold">Societal Impacts</span> is absolutely flawless (100%). However, we notice you blazed through this mock in just <b>14.5 minutes</b> (average is 45m). Let's review the points lost in the rush.
-                </p>
-                
-                <!-- Explicit Weak Points Breakdown -->
-                <div class="bg-red-50 rounded-2xl p-5 border border-red-100 mb-4">
-                    <p class="text-xs font-bold uppercase tracking-widest text-red-600 mb-3 flex items-center gap-2">
-                        <span class="material-symbols-rounded text-[18px]">bolt</span> Speed vs Accuracy:
-                    </p>
-                    <ul class="space-y-4">
-                        <li>
-                            <p class="text-[13px] font-bold text-gray-900 mb-1">1. Data Handling (Pandas) Slicing</p>
-                            <p class="text-[12px] text-gray-700 leading-snug">
-                                You selected <code class="bg-white px-1 rounded font-mono font-bold text-blue-600 border border-gray-200">df.tail(3)</code>. While it works logically, the question explicitly tested <i>index slicing syntax</i>, which is <code class="bg-white px-1 rounded font-mono font-bold text-green-600 border border-gray-200">df.iloc[-3:]</code>. Read carefully!
-                            </p>
-                        </li>
-                        <li>
-                            <p class="text-[13px] font-bold text-gray-900 mb-1">2. Database Query (SQL)</p>
-                            <p class="text-[12px] text-gray-700 leading-snug">
-                                Remember, anytime you use <code class="bg-white px-1 rounded font-mono font-bold text-gray-800 border border-gray-200">COUNT()</code> or <code class="bg-white px-1 rounded font-mono font-bold text-gray-800 border border-gray-200">SUM()</code> with a non-aggregated column, you <b>must</b> include a <code class="bg-white px-1 rounded font-mono font-bold text-red-600 border border-gray-200">GROUP BY</code> clause. You missed this due to rushing!
-                            </p>
-                        </li>
-                    </ul>
+                <div class="bg-gray-50 rounded-xl p-3 border border-gray-100 mt-3">
+                    <p class="text-[12px] font-bold text-gray-800 mb-1">AI Diagnosis: Rushed ⚠️</p>
+                    <p class="text-[12px] text-gray-600 leading-snug">You answered way too fast and picked <code class="bg-white px-1 border rounded text-blue-600">df.tail(3)</code>. The question specifically asked for <i>index slicing syntax</i>, which is <code class="bg-white px-1 border rounded text-green-600">df.iloc[-3:]</code>. Read carefully!</p>
+                </div>
+            </div>
+
+            <!-- Error Card 2: Struggled Medium Question -->
+            <div class="error-card">
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <span class="badge-med px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider mb-1 inline-block">Medium</span>
+                        <h4 class="font-bold text-[14px] text-gray-900 leading-tight">Q28: SQL Aggregation Rules</h4>
+                    </div>
+                    <div class="text-right">
+                        <div class="flex items-center gap-1 text-orange-600 bg-orange-50 px-2 py-1 rounded-md mb-1">
+                            <span class="material-symbols-rounded text-[14px]">hourglass_empty</span>
+                            <span class="text-[11px] font-bold">2m 15s Spent</span>
+                        </div>
+                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Avg: 1m 10s</p>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-3 border border-gray-100 mt-3">
+                    <p class="text-[12px] font-bold text-gray-800 mb-1">AI Diagnosis: Concept Confusion 🧠</p>
+                    <p class="text-[12px] text-gray-600 leading-snug">You spent over 2 minutes here. Remember: When using <code class="bg-white px-1 border rounded text-gray-800">COUNT()</code> alongside a normal column, a <code class="bg-white px-1 border rounded text-red-500 font-bold">GROUP BY</code> clause is strictly mandatory.</p>
                 </div>
             </div>
         </div>
-        
+
         <button onclick="nav('view-home')" class="btn-primary w-full py-4 text-[16px] mb-6 shadow-xl shadow-[var(--c-dawn)] font-bold">Back to Home</button>
     </div>
 
@@ -443,39 +424,20 @@
 
         <h3 class="font-bold text-xl mb-4 px-1 text-gray-800">Chapter Mastery</h3>
         <div class="premium-card p-6 space-y-7">
-            <!-- 1. Pandas -->
             <div>
-                <div class="flex justify-between text-sm font-bold mb-2">
-                    <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-400"></span> Data Handling (Pandas)</span>
-                    <span class="text-orange-500">62%</span>
-                </div>
+                <div class="flex justify-between text-sm font-bold mb-2"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-400"></span> Data Handling (Pandas)</span><span class="text-orange-500">62%</span></div>
                 <div class="progress-track"><div class="progress-fill" style="background: #F97316; width: 62%;"></div></div>
             </div>
-            
-            <!-- 2. SQL -->
             <div>
-                <div class="flex justify-between text-sm font-bold mb-2">
-                    <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-orange-400"></span> Database Query (SQL)</span>
-                    <span style="color: var(--c-royal)">84%</span>
-                </div>
+                <div class="flex justify-between text-sm font-bold mb-2"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-orange-400"></span> Database Query (SQL)</span><span style="color: var(--c-royal)">84%</span></div>
                 <div class="progress-track"><div class="progress-fill" style="width: 84%;"></div></div>
             </div>
-
-            <!-- 3. Networks -->
             <div>
-                <div class="flex justify-between text-sm font-bold mb-2">
-                    <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-purple-400"></span> Computer Networks</span>
-                    <span class="text-green-500">100%</span>
-                </div>
+                <div class="flex justify-between text-sm font-bold mb-2"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-purple-400"></span> Computer Networks</span><span class="text-green-500">100%</span></div>
                 <div class="progress-track"><div class="progress-fill" style="background: #10B981; width: 100%;"></div></div>
             </div>
-
-            <!-- 4. Society -->
             <div>
-                <div class="flex justify-between text-sm font-bold mb-2">
-                    <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span> Societal Impacts</span>
-                    <span class="text-green-500">100%</span>
-                </div>
+                <div class="flex justify-between text-sm font-bold mb-2"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span> Societal Impacts</span><span class="text-green-500">100%</span></div>
                 <div class="progress-track"><div class="progress-fill" style="background: #10B981; width: 100%;"></div></div>
             </div>
         </div>
@@ -493,25 +455,81 @@
             <h2 class="text-3xl font-bold tracking-tight">Aaradhya</h2>
         </div>
         
-        <h3 class="font-bold text-xl mb-4 px-1 text-gray-800">Badge Collection</h3>
-        <div class="grid grid-cols-3 gap-3 mb-10">
-            <div class="premium-card p-4 text-center flex flex-col items-center">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center mb-2 bg-purple-100 text-purple-600">
-                    <span class="material-symbols-rounded text-2xl">magic_button</span>
+        <h3 class="font-bold text-xl mb-4 px-1 text-gray-800 flex items-center gap-2">
+            <span class="material-symbols-rounded text-blue-600">history</span> Past Sessions Log
+        </h3>
+        
+        <div class="space-y-6 mb-10">
+            <!-- Mock 12 (Today) -->
+            <div class="premium-card p-5">
+                <div class="flex justify-between items-start border-b border-gray-100 pb-4 mb-4">
+                    <div>
+                        <h4 class="font-bold text-[16px] text-gray-900 mb-1">Full Mock #12</h4>
+                        <div class="flex items-center gap-2 text-xs font-medium text-gray-500">
+                            <span class="flex items-center gap-1"><span class="material-symbols-rounded text-[14px]">calendar_today</span> Today</span>
+                            <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                            <span class="flex items-center gap-1 text-orange-500"><span class="material-symbols-rounded text-[14px]">timer</span> 14m 22s</span>
+                        </div>
+                    </div>
+                    <div class="bg-green-100 text-green-700 font-bold px-3 py-1.5 rounded-xl text-lg border border-green-200 shadow-sm">84%</div>
                 </div>
-                <p class="text-[10px] font-bold uppercase tracking-wider leading-tight">Network<br>Wizard</p>
+                
+                <p class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Top Errors & Time Spent</p>
+                <div class="space-y-2">
+                    <!-- Historical Error Row 1 -->
+                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex flex-col gap-1.5">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2">
+                                <span class="badge-easy px-1.5 py-0.5 rounded text-[9px] font-bold uppercase">Easy</span>
+                                <span class="text-[12px] font-bold text-gray-800">Pandas Slicing</span>
+                            </div>
+                            <span class="text-[11px] font-bold text-red-500 bg-red-50 px-1.5 py-0.5 rounded">12s (Rushed)</span>
+                        </div>
+                        <p class="text-[11px] text-gray-500 leading-snug">Picked <code class="bg-white border rounded px-1">.tail()</code> instead of requested index slice <code class="bg-white border rounded px-1">.iloc[]</code>.</p>
+                    </div>
+
+                    <!-- Historical Error Row 2 -->
+                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex flex-col gap-1.5">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2">
+                                <span class="badge-med px-1.5 py-0.5 rounded text-[9px] font-bold uppercase">Med</span>
+                                <span class="text-[12px] font-bold text-gray-800">SQL Aggregation</span>
+                            </div>
+                            <span class="text-[11px] font-bold text-orange-500 bg-orange-50 px-1.5 py-0.5 rounded">2m 15s (Stuck)</span>
+                        </div>
+                        <p class="text-[11px] text-gray-500 leading-snug">Forgot mandatory <code class="bg-white border rounded px-1 text-red-400">GROUP BY</code> clause when using <code class="bg-white border rounded px-1">COUNT()</code>.</p>
+                    </div>
+                </div>
             </div>
-            <div class="premium-card p-4 text-center flex flex-col items-center" style="background: #FFF5F0; border-color: #FFE5D9;">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center mb-2" style="background: white">
-                    <span class="material-symbols-rounded text-2xl text-[#F26A44]">local_fire_department</span>
+
+            <!-- Mock 11 (Yesterday) -->
+            <div class="premium-card p-5">
+                <div class="flex justify-between items-start border-b border-gray-100 pb-4 mb-4">
+                    <div>
+                        <h4 class="font-bold text-[16px] text-gray-900 mb-1">Full Mock #11</h4>
+                        <div class="flex items-center gap-2 text-xs font-medium text-gray-500">
+                            <span class="flex items-center gap-1"><span class="material-symbols-rounded text-[14px]">calendar_today</span> Yesterday</span>
+                            <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                            <span class="flex items-center gap-1 text-green-600"><span class="material-symbols-rounded text-[14px]">timer</span> 42m 10s</span>
+                        </div>
+                    </div>
+                    <div class="bg-blue-50 text-blue-700 font-bold px-3 py-1.5 rounded-xl text-lg border border-blue-200 shadow-sm">76%</div>
                 </div>
-                <p class="text-[10px] font-bold uppercase tracking-wider leading-tight text-[#D9502A]">5 Day<br>Streak</p>
-            </div>
-            <div class="premium-card p-4 text-center flex flex-col items-center opacity-40 grayscale">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center mb-2 bg-gray-100 text-gray-500">
-                    <span class="material-symbols-rounded text-2xl">diamond</span>
+                
+                <p class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">Top Errors & Time Spent</p>
+                <div class="space-y-2">
+                    <!-- Historical Error Row 3 -->
+                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex flex-col gap-1.5">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2">
+                                <span class="badge-hard px-1.5 py-0.5 rounded text-[9px] font-bold uppercase">Hard</span>
+                                <span class="text-[12px] font-bold text-gray-800">Network Topologies</span>
+                            </div>
+                            <span class="text-[11px] font-bold text-orange-500 bg-orange-50 px-1.5 py-0.5 rounded">3m 40s (Stuck)</span>
+                        </div>
+                        <p class="text-[11px] text-gray-500 leading-snug">Confused Mesh vs Star topology regarding cable count formulas.</p>
+                    </div>
                 </div>
-                <p class="text-[10px] font-bold uppercase tracking-wider leading-tight">100%<br>Pandas</p>
             </div>
         </div>
 
@@ -521,59 +539,58 @@
     </div>
 
     <!-- ================= BOTTOM NAV ================= -->
-    <nav id="bottom-nav" class="fixed bottom-6 left-6 right-6 h-[72px] bg-white/90 backdrop-blur-xl border border-[var(--c-porcelain)] rounded-[36px] shadow-2xl shadow-[var(--c-dawn)] flex justify-around items-center px-4 z-50 hidden">
+    <nav id="bottom-nav" class="fixed md:absolute bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] md:w-[calc(100%-4rem)] h-[72px] bg-white/90 backdrop-blur-xl border border-[var(--c-porcelain)] rounded-[36px] shadow-2xl shadow-[var(--c-dawn)] flex justify-around items-center px-4 z-50 hidden desktop-bottom-nav">
         <button onclick="nav('view-home')" id="btn-home" class="nav-item flex flex-col items-center justify-center active w-16 h-full cursor-pointer">
-            <div class="nav-pill h-8 rounded-full flex items-center justify-center">
-                <span class="material-symbols-rounded text-[24px]">home</span>
-            </div>
+            <div class="nav-pill h-8 rounded-full flex items-center justify-center"><span class="material-symbols-rounded text-[24px]">home</span></div>
             <span class="nav-text text-[10px] uppercase tracking-widest">Home</span>
         </button>
-
         <button onclick="nav('view-stats')" id="btn-stats" class="nav-item flex flex-col items-center justify-center w-16 h-full cursor-pointer">
-            <div class="nav-pill h-8 rounded-full flex items-center justify-center">
-                <span class="material-symbols-rounded text-[24px]">insert_chart</span>
-            </div>
+            <div class="nav-pill h-8 rounded-full flex items-center justify-center"><span class="material-symbols-rounded text-[24px]">insert_chart</span></div>
             <span class="nav-text text-[10px] uppercase tracking-widest">Stats</span>
         </button>
-        
         <button onclick="nav('view-profile')" id="btn-profile" class="nav-item flex flex-col items-center justify-center w-16 h-full cursor-pointer">
-            <div class="nav-pill h-8 rounded-full flex items-center justify-center">
-                <span class="material-symbols-rounded text-[24px]">person</span>
-            </div>
-            <span class="nav-text text-[10px] uppercase tracking-widest">Profile</span>
+            <div class="nav-pill h-8 rounded-full flex items-center justify-center"><span class="material-symbols-rounded text-[24px]">history</span></div>
+            <span class="nav-text text-[10px] uppercase tracking-widest">History</span>
         </button>
     </nav>
 
-    <script>
-        function selectOption(element) {
-            document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
-            element.classList.add('selected');
+</div>
+
+<script>
+    function moveToNext(current, nextFieldID) {
+        if (current.value.length >= current.maxLength) {
+            let nextField = document.getElementById(nextFieldID);
+            if (nextField) nextField.focus();
+        }
+    }
+
+    function selectOption(element) {
+        document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+        element.classList.add('selected');
+    }
+
+    function nav(id) {
+        document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+        
+        const targetView = document.getElementById(id);
+        targetView.classList.add('active');
+        
+        const navBar = document.getElementById('bottom-nav');
+        if (id === 'view-login' || id === 'view-quest') {
+            navBar.classList.add('hidden');
+            navBar.classList.remove('flex');
+        } else {
+            navBar.classList.remove('hidden');
+            navBar.classList.add('flex');
         }
 
-        function nav(id) {
-            document.querySelectorAll('.view-section').forEach(v => {
-                v.classList.remove('active');
-            });
-            
-            const targetView = document.getElementById(id);
-            targetView.classList.add('active');
-            
-            const navBar = document.getElementById('bottom-nav');
-            if (id === 'view-login' || id === 'view-quest') {
-                navBar.classList.add('hidden');
-                navBar.classList.remove('flex');
-            } else {
-                navBar.classList.remove('hidden');
-                navBar.classList.add('flex');
-            }
-
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            if (id === 'view-home' || id === 'view-results') document.getElementById('btn-home').classList.add('active');
-            if (id === 'view-stats') document.getElementById('btn-stats').classList.add('active');
-            if (id === 'view-profile') document.getElementById('btn-profile').classList.add('active');
-            
-            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-        }
-    </script>
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        if (id === 'view-home' || id === 'view-results') document.getElementById('btn-home').classList.add('active');
+        if (id === 'view-stats') document.getElementById('btn-stats').classList.add('active');
+        if (id === 'view-profile') document.getElementById('btn-profile').classList.add('active');
+        
+        document.getElementById('app-container').scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+</script>
 </body>
 </html>
