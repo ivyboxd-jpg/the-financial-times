@@ -3,459 +3,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Quest Pro | Strava Athlete</title>
+    <title>Quest Pro | For Aaradhya</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;0,800;1,900&display=swap" rel="stylesheet">
+    <!-- Google Fonts & Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
         :root {
-            --s-orange: #FC4C02;
-            --s-bg: #121212;
-            --s-card: #1f1f1f;
-            --s-border: #2d2d2d;
-            --s-text: #ffffff;
-            --s-muted: #999999;
+            --c-royal: #334EAC;
+            --c-moon: #F7F2EB;
+            --c-china: #7096D1;
+            --c-asian-pear: #F2F0DE;
+            --c-midnight: #081F5C;
+            --c-dawn: #D0E3FF;
+            --c-porcelain: #EDF1F6;
+            --c-sky: #BAD6EB;
+            --c-coral: #F26A44;
+            --c-mint: #E0F2E9;
+            --gemini-grad: linear-gradient(90deg, #1A73E8 0%, #B371FF 50%, #F4B400 100%);
         }
 
-        body { 
-            background-color: black;
-            color: var(--s-text);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            overflow: hidden; /* Controlled by app-container */
+        body, html { 
+            margin: 0; padding: 0;
+            font-family: 'Google Sans', sans-serif; 
+            background-color: var(--c-moon); 
+            color: var(--c-midnight); 
+            -webkit-tap-highlight-color: transparent;
+            width: 100%;
         }
 
         #app-container {
-            max-width: 500px;
-            margin: 0 auto;
-            height: 100dvh;
-            background-color: var(--s-bg);
+            width: 100%;
+            min-height: 100dvh; 
             position: relative;
-            display: flex;
-            flex-direction: column;
-            border-left: 1px solid var(--s-border);
-            border-right: 1px solid var(--s-border);
-            overflow-y: auto;
+            background-color: var(--c-moon);
+            overflow-x: hidden;
         }
 
-        /* Hide scrollbar for Chrome, Safari and Opera */
-        #app-container::-webkit-scrollbar { display: none; }
+        @media (min-width: 768px) {
+            body { 
+                background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop') center/cover fixed no-repeat; 
+                display: flex; align-items: center; justify-content: center; min-height: 100vh;
+            }
+            #app-container {
+                width: 400px;
+                height: 90vh;
+                min-height: auto;
+                max-height: 850px;
+                border-radius: 40px;
+                box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2), 0 0 0 8px rgba(255, 255, 255, 0.4);
+                overflow-y: auto; 
+            }
+            .desktop-bottom-nav { position: absolute !important; }
+        }
 
-        .view-section { display: none; min-height: 100%; flex-direction: column; }
-        .view-section.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .view-section { display: none !important; opacity: 0; width: 100%; box-sizing: border-box; z-index: 10; position: relative; min-height: 100%; }
+        .view-section.active { display: block !important; opacity: 1; animation: fadeSlideUp 0.4s cubic-bezier(0.2, 0, 0, 1) forwards; }
+        .with-bottom-nav { padding-bottom: 120px; }
 
-        .strava-orange { color: var(--s-orange); }
-        .bg-strava-orange { background-color: var(--s-orange); }
+        @keyframes fadeSlideUp { 
+            from { opacity: 0; transform: translateY(15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
 
-        /* Login Center Alignment */
-        .login-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            height: 100%;
+        /* Ambient Blobs */
+        .ambient-blob-1 {
+            position: absolute; top: -10%; left: -10%; width: 300px; height: 300px;
+            background: var(--c-dawn); filter: blur(60px); opacity: 0.7; border-radius: 50%;
+            animation: float 14s ease-in-out infinite; z-index: 0; pointer-events: none;
+        }
+        .ambient-blob-2 {
+            position: absolute; top: 40%; right: -20%; width: 250px; height: 250px;
+            background: var(--c-asian-pear); filter: blur(60px); opacity: 0.8; border-radius: 50%;
+            animation: float 18s ease-in-out infinite reverse; z-index: 0; pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.1); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+        
+        .premium-card { 
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
+            border: 1px solid white; border-radius: 28px; box-shadow: 0 4px 20px rgba(8, 31, 92, 0.04);
+        }
+        
+        .error-card {
+            background: white; border: 1px solid #FFE5D9; border-radius: 24px;
+            box-shadow: 0 4px 15px rgba(217, 80, 42, 0.05); padding: 16px;
+        }
+
+        .btn-primary { 
+            background: var(--c-royal); color: white; border-radius: 100px; 
+            font-weight: 700; transition: all 0.2s; box-shadow: 0 4px 12px rgba(51, 78, 172, 0.2); cursor: pointer;
+        }
+
+        .btn-lucky {
+            background: white; color: var(--c-midnight); border-radius: 100px;
+            font-weight: 700; transition: all 0.2s; border: 2px solid white; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
         .pin-input {
-            width: 55px; height: 70px; background: var(--s-card); border: 2px solid var(--s-border);
-            border-radius: 8px; text-align: center; font-size: 2rem; font-weight: 900;
-            color: var(--s-orange); outline: none; margin: 0 5px;
+            width: 60px; height: 70px; text-align: center; font-size: 28px; font-weight: 700;
+            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px);
+            border: 2px solid white; border-radius: 20px; color: var(--c-midnight); outline: none;
         }
-        .pin-input:focus { border-color: var(--s-orange); }
 
-        /* Buttons */
-        .btn-strava {
-            background: var(--s-orange);
-            color: white;
-            font-weight: 800;
-            text-transform: uppercase;
-            padding: 16px;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
-            width: 100%;
-            transition: 0.2s;
+        .option-card { border: 2px solid var(--c-porcelain); transition: all 0.2s; background: white; cursor: pointer; }
+        .option-card.selected { border-color: var(--c-royal); background: var(--c-dawn); }
+
+        .progress-track { background: var(--c-porcelain); border-radius: 100px; height: 8px; width: 100%; overflow: hidden; }
+        .progress-fill { background: var(--c-royal); height: 100%; border-radius: 100px; transition: width 1s ease-out; }
+
+        .nav-item.active .nav-pill { background-color: var(--c-dawn); color: var(--c-royal); width: 64px; }
+        .nav-pill { transition: all 0.3s; }
+
+        .badge-easy { background: #ECFDF5; color: #059669; border: 1px solid #D1FAE5; }
+        .badge-med { background: #FFF7ED; color: #EA580C; border: 1px solid #FFEDD5; }
+        .badge-hard { background: #FEF2F2; color: #DC2626; border: 1px solid #FEE2E2; }
+
+        /* Loading Spinner */
+        .loader-orb {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: var(--gemini-grad);
+            animation: rotate 2s linear infinite;
+            filter: blur(10px); opacity: 0.6;
         }
-        .btn-strava:active { transform: scale(0.98); opacity: 0.9; }
-
-        /* Notification Drawer */
-        #notif-drawer {
-            position: absolute;
-            top: -100%;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 200;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 20px;
-        }
-        #notif-drawer.open { top: 0; }
-
-        /* Shimmer for AI loading */
-        .shimmer-box {
-            background: linear-gradient(90deg, #1f1f1f 25%, #2d2d2d 50%, #1f1f1f 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-        .italic-extra { font-style: italic; font-weight: 900; }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div id="app-container">
+<div id="app-container" class="no-scrollbar relative">
+    
+    <div class="ambient-blob-1"></div>
+    <div class="ambient-blob-2"></div>
 
-    <!-- ================= NOTIFICATION DRAWER ================= -->
-    <div id="notif-drawer">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-xl font-black italic uppercase">Strava Inbox</h2>
-            <button onclick="toggleNotifs()" class="p-2"><span class="material-symbols-rounded">close</span></button>
-        </div>
-        <div class="space-y-4">
-            <!-- Message 1 -->
-            <div class="bg-zinc-900 p-4 rounded-lg border-l-4 border-orange-600">
-                <p class="text-xs font-bold text-orange-500 uppercase mb-1">Coach Aaradhya</p>
-                <p class="text-sm font-medium">"You're doing amazing today! Remember to breathe and crush those Pandas segments. ❤️"</p>
-                <p class="text-[10px] text-zinc-500 mt-2">2 minutes ago</p>
-            </div>
-            <!-- Message 2 -->
-            <div class="bg-zinc-900 p-4 rounded-lg border-l-4 border-orange-600">
-                <p class="text-xs font-bold text-orange-500 uppercase mb-1">Training Partner</p>
-                <p class="text-sm font-medium">"I saw your 84% score earlier... honestly, I'm intimidated by your pace! 🏃‍♀️💨"</p>
-                <p class="text-[10px] text-zinc-500 mt-2">1 hour ago</p>
-            </div>
-        </div>
-    </div>
+    <svg style="display: none;">
+        <defs>
+            <linearGradient id="fire-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFD166" />
+                <stop offset="50%" stop-color="#FF9F1C" />
+                <stop offset="100%" stop-color="#F26A44" />
+            </linearGradient>
+            <linearGradient id="gemini-grad-svg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#1A73E8" />
+                <stop offset="50%" stop-color="#B371FF" />
+                <stop offset="100%" stop-color="#F4B400" />
+            </linearGradient>
+        </defs>
+        <g id="gemini-star"><path d="M12 0C11.7 5.5 7.5 9.7 2 10C7.5 10.3 11.7 14.5 12 20C12.3 14.5 16.5 10.3 22 10C16.5 9.7 12.3 5.5 12 0Z" fill="url(#gemini-grad-svg)"/></g>
+    </svg>
 
     <!-- ================= VIEW: LOGIN ================= -->
-    <div id="view-login" class="view-section active">
-        <div class="login-content">
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="#FC4C02" class="mb-8">
-                <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.637h4.15l-6.986-13.864L3.438 13.864h4.151" />
-            </svg>
-            <h1 class="text-4xl font-black italic uppercase tracking-tighter mb-2">Quest Pro</h1>
-            <p class="text-zinc-500 font-bold uppercase text-xs tracking-[3px] mb-12">Athlete Authentication</p>
+    <div id="view-login" class="view-section active flex flex-col h-full">
+        <div class="flex-1 flex flex-col justify-center px-8 pt-10 pb-20 relative z-10">
+            <h1 class="text-5xl font-bold tracking-tight mb-3" style="color: var(--c-midnight); line-height: 1.1;">Welcome<br>Aaradhya.</h1>
+            <p style="color: var(--c-china)" class="text-lg font-medium mb-12">Your personal study sanctuary awaits.</p>
             
-            <div class="flex mb-12">
-                <input type="password" maxlength="1" class="pin-input" placeholder="-" onkeyup="moveToNext(this, 'l2')">
-                <input type="password" maxlength="1" class="pin-input" id="l2" placeholder="-" onkeyup="moveToNext(this, 'l3')">
-                <input type="password" maxlength="1" class="pin-input" id="l3" placeholder="-" onkeyup="moveToNext(this, 'l4')">
-                <input type="password" maxlength="1" class="pin-input" id="l4" placeholder="-">
+            <div class="mb-10 w-full">
+                <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 pl-1">Enter VIP PIN</p>
+                <div class="flex gap-3 justify-start">
+                    <input type="password" maxlength="1" class="pin-input" placeholder="•" onkeyup="moveToNext(this, 'pin2')">
+                    <input type="password" maxlength="1" class="pin-input" placeholder="•" id="pin2" onkeyup="moveToNext(this, 'pin3')">
+                    <input type="password" maxlength="1" class="pin-input" placeholder="•" id="pin3" onkeyup="moveToNext(this, 'pin4')">
+                    <input type="password" maxlength="1" class="pin-input" placeholder="•" id="pin4">
+                </div>
             </div>
 
-            <button onclick="nav('view-home')" class="btn-strava">Unlock Dashboard</button>
+            <button onclick="nav('view-home')" class="btn-primary w-full py-5 text-[17px] mt-auto">Unlock Workspace</button>
         </div>
     </div>
 
     <!-- ================= VIEW: HOME ================= -->
-    <div id="view-home" class="view-section">
-        <header class="p-4 flex justify-between items-center sticky top-0 bg-[#121212] z-50 border-b border-zinc-800">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="#FC4C02">
-                <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.637h4.15l-6.986-13.864L3.438 13.864h4.151" />
-            </svg>
-            <div class="flex items-center gap-4">
-                <button onclick="toggleNotifs()" class="relative">
-                    <span class="material-symbols-rounded text-white">notifications</span>
-                    <span class="absolute top-0 right-0 w-2 h-2 bg-orange-600 rounded-full"></span>
-                </button>
-                <div class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center font-bold text-xs">A</div>
-            </div>
-        </header>
-
-        <div class="p-5 overflow-y-auto">
-            <h2 class="text-2xl font-black italic tracking-tighter mb-6">ATHLETE OVERVIEW</h2>
-            
-            <div class="bg-zinc-900 rounded-lg p-5 mb-6 border border-zinc-800">
-                <div class="grid grid-cols-3 gap-2">
-                    <div class="text-center">
-                        <span class="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Time</span>
-                        <span class="text-xl font-black italic block">14h 22m</span>
-                    </div>
-                    <div class="text-center border-x border-zinc-800">
-                        <span class="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Pace</span>
-                        <span class="text-xl font-black italic block">84%</span>
-                    </div>
-                    <div class="text-center">
-                        <span class="text-[10px] font-black text-orange-500 uppercase tracking-widest">Streak</span>
-                        <span class="text-xl font-black italic block">5d</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="space-y-4 mb-24">
-                <h3 class="text-xs font-black text-zinc-500 uppercase tracking-widest">Today's Segment Challenges</h3>
-                <div class="bg-zinc-900 border border-zinc-800 p-4 rounded-lg flex items-center gap-4">
-                    <span class="material-symbols-rounded text-orange-500 text-3xl">query_stats</span>
-                    <div class="flex-1">
-                        <p class="font-black italic text-sm">Data Handling (Pandas)</p>
-                        <p class="text-[11px] font-bold text-zinc-500 uppercase">Personal Best: 12s/Q</p>
-                    </div>
-                </div>
-                <div class="bg-zinc-900 border border-zinc-800 p-4 rounded-lg flex items-center gap-4">
-                    <span class="material-symbols-rounded text-blue-500 text-3xl">lan</span>
-                    <div class="flex-1">
-                        <p class="font-black italic text-sm">Computer Networks</p>
-                        <p class="text-[11px] font-bold text-zinc-500 uppercase">Personal Best: 45s/Q</p>
-                    </div>
-                </div>
-            </div>
-
-            <button onclick="nav('view-pre-quest')" class="btn-strava fixed bottom-20 left-1/2 -translate-x-1/2 w-[90%] max-w-[450px]">
-                Record New Session
-            </button>
-        </div>
-    </div>
-
-    <!-- ================= VIEW: GOAL SELECT ================= -->
-    <div id="view-pre-quest" class="view-section p-6">
-        <h2 class="text-2xl font-black italic uppercase text-center mt-10 mb-2">Set Your Effort</h2>
-        <p class="text-zinc-500 text-center font-bold text-xs uppercase tracking-widest mb-12">Choose your segment length</p>
-        
-        <div class="space-y-4 flex-1">
-            <button onclick="selectGoal(10, this)" class="w-full bg-zinc-900 border-2 border-zinc-800 p-6 rounded-xl text-left hover:border-orange-500 transition-all group">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <span class="text-orange-500 font-black italic text-3xl">10</span>
-                        <span class="text-white font-black italic text-xl uppercase ml-2">Sprints</span>
-                    </div>
-                    <span class="material-symbols-rounded text-zinc-700 group-hover:text-orange-500">bolt</span>
-                </div>
-                <p class="text-xs text-zinc-500 font-bold mt-2 uppercase tracking-tight">Recovery pace • 5-8 mins</p>
-            </button>
-
-            <button onclick="selectGoal(20, this)" class="w-full bg-zinc-900 border-2 border-orange-600 p-6 rounded-xl text-left transition-all group">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <span class="text-orange-500 font-black italic text-3xl">20</span>
-                        <span class="text-white font-black italic text-xl uppercase ml-2">Endurance</span>
-                    </div>
-                    <span class="material-symbols-rounded text-orange-500">speed</span>
-                </div>
-                <p class="text-xs text-zinc-500 font-bold mt-2 uppercase tracking-tight">Moderate effort • 15-20 mins</p>
-            </button>
-
-            <button onclick="selectGoal(30, this)" class="w-full bg-zinc-900 border-2 border-zinc-800 p-6 rounded-xl text-left hover:border-orange-500 transition-all group">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <span class="text-orange-500 font-black italic text-3xl">30</span>
-                        <span class="text-white font-black italic text-xl uppercase ml-2">Everesting</span>
-                    </div>
-                    <span class="material-symbols-rounded text-zinc-700 group-hover:text-orange-500">mountain_flag</span>
-                </div>
-                <p class="text-xs text-zinc-500 font-bold mt-2 uppercase tracking-tight">Pro level • 30-45 mins</p>
-            </button>
-        </div>
-
-        <button onclick="nav('view-quest')" class="btn-strava mt-10">Start Training</button>
-    </div>
-
-    <!-- ================= VIEW: QUEST ================= -->
-    <div id="view-quest" class="view-section">
-        <div class="bg-black p-4 flex justify-between items-center">
+    <div id="view-home" class="view-section with-bottom-nav px-6 pt-12">
+        <div class="flex justify-between items-center mb-8">
             <div>
-                <p class="text-[9px] font-black text-zinc-500 uppercase tracking-widest">Time Elapsed</p>
-                <p class="text-xl font-black italic tracking-tighter text-orange-500">04:21.0</p>
+                <p class="text-[11px] font-bold uppercase tracking-widest mb-1 text-blue-400">CUET Goal: 100 Percentile</p>
+                <h2 class="text-3xl font-bold tracking-tight">Aaradhya</h2>
             </div>
-            <div class="text-center">
-                <p class="text-[9px] font-black text-zinc-500 uppercase tracking-widest">Progress</p>
-                <p class="text-xl font-black italic tracking-tighter">4 <span class="text-xs text-zinc-500">/ 20</span></p>
-            </div>
-            <button onclick="nav('view-home')" class="bg-zinc-800 px-3 py-1 rounded text-[10px] font-black uppercase">Quit</button>
+            <div class="w-12 h-12 rounded-full bg-[var(--c-royal)] border-2 border-white flex items-center justify-center text-white font-bold">A</div>
         </div>
-        <div class="h-1 bg-zinc-800 w-full"><div class="h-full bg-orange-600" style="width: 20%"></div></div>
 
-        <div class="p-8 flex-1 flex flex-col items-center justify-center text-center">
-            <span class="bg-orange-600/20 text-orange-500 text-[10px] font-black uppercase px-3 py-1 rounded-full mb-6">Pandas Segment</span>
-            <h2 class="text-2xl font-bold leading-tight mb-12">How do you check for null values in a DataFrame named <code class="bg-zinc-800 px-1 rounded">df</code>?</h2>
-            
-            <div class="w-full space-y-4">
-                <div class="bg-zinc-900 border-2 border-zinc-800 p-5 rounded-lg font-bold hover:border-orange-500 cursor-pointer transition-all">df.isnull().sum()</div>
-                <div class="bg-zinc-900 border-2 border-zinc-800 p-5 rounded-lg font-bold hover:border-orange-500 cursor-pointer transition-all">df.empty()</div>
-                <div class="bg-zinc-900 border-2 border-zinc-800 p-5 rounded-lg font-bold hover:border-orange-500 cursor-pointer transition-all">df.find_null()</div>
+        <div class="hero-gradient p-6 mb-10 flex justify-between rounded-[32px] text-white shadow-xl relative overflow-hidden">
+            <div class="text-center flex-1">
+                <p class="text-4xl font-bold">12</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest opacity-80">Mocks</p>
+            </div>
+            <div class="text-center flex-1 border-x border-white/20">
+                <p class="text-4xl font-bold">74%</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest opacity-80">Avg Score</p>
+            </div>
+            <div class="text-center flex-1 flex flex-col items-center">
+                <div class="flex items-center gap-1">
+                    <p class="text-4xl font-bold text-[#FFD166]">5</p>
+                    <svg viewBox="0 0 24 24" class="w-7 h-7" fill="url(#fire-grad)"><path d="M12 2c0 0-4.5 3.5-4.5 8.5 0 2.5 1.5 4.5 3.5 5.5-.5-1.5.5-3.5.5-3.5s2 1.5 2 3.5c0 2 2.5 1 2.5-2.5C16 8.5 12 2 12 2z"/></svg>
+                </div>
+                <p class="text-[10px] font-bold uppercase tracking-widest opacity-80">Streak</p>
             </div>
         </div>
-        <div class="p-6">
-            <button onclick="startAILoader()" class="btn-strava">Submit Effort</button>
+
+        <h3 class="font-bold text-xl mb-4 text-gray-800">Target Chapters</h3>
+        <div class="space-y-3 mb-10">
+            <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center"><span class="material-symbols-rounded text-blue-600">analytics</span></div>
+                <div class="flex-1 text-[14px] font-bold">Data Handling (Pandas)</div>
+                <input type="checkbox" checked>
+            </label>
+            <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
+                <div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center"><span class="material-symbols-rounded text-orange-600">database</span></div>
+                <div class="flex-1 text-[14px] font-bold">Database Query (SQL)</div>
+                <input type="checkbox" checked>
+            </label>
         </div>
+
+        <button onclick="nav('view-setup')" class="btn-primary w-full py-4 text-[16px]">Start Quest</button>
     </div>
 
-    <!-- ================= VIEW: AI LOADING ================= -->
-    <div id="view-loading" class="view-section items-center justify-center p-8 bg-black">
-        <div class="relative w-24 h-24 mb-8">
-            <div class="absolute inset-0 border-4 border-zinc-800 rounded-full"></div>
-            <div class="absolute inset-0 border-4 border-t-orange-600 rounded-full animate-spin"></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-                <span class="material-symbols-rounded text-orange-500">psychology</span>
+    <!-- ================= VIEW: SETUP ================= -->
+    <div id="view-setup" class="view-section px-6 pt-12 flex flex-col h-full">
+        <button onclick="nav('view-home')" class="w-10 h-10 mb-8 rounded-full bg-white flex items-center justify-center border border-gray-100"><span class="material-symbols-rounded">arrow_back</span></button>
+        <h2 class="text-3xl font-bold tracking-tight mb-8">Session Length</h2>
+        <div class="space-y-4 mb-10">
+            <div class="option-card p-6 rounded-3xl flex justify-between items-center group" onclick="selectSetup(this)">
+                <div><p class="font-bold text-lg">10 Questions</p><p class="text-sm text-gray-400">Quick focus sprint</p></div>
+                <span class="material-symbols-rounded text-gray-200 group-[.selected]:text-blue-600">check_circle</span>
+            </div>
+            <div class="option-card p-6 rounded-3xl flex justify-between items-center group selected" onclick="selectSetup(this)">
+                <div><p class="font-bold text-lg">20 Questions</p><p class="text-sm text-gray-400">Balanced practice</p></div>
+                <span class="material-symbols-rounded text-gray-200 group-[.selected]:text-blue-600">check_circle</span>
+            </div>
+            <div class="option-card p-6 rounded-3xl flex justify-between items-center group" onclick="selectSetup(this)">
+                <div><p class="font-bold text-lg">30 Questions</p><p class="text-sm text-gray-400">Full mock simulation</p></div>
+                <span class="material-symbols-rounded text-gray-200 group-[.selected]:text-blue-600">check_circle</span>
             </div>
         </div>
-        <h2 class="text-2xl font-black italic uppercase italic-extra mb-2">Analyzing Pace</h2>
-        <p class="text-zinc-500 font-bold text-center text-sm mb-12 uppercase tracking-widest">Quest AI Premium Analysis...</p>
+        <button onclick="nav('view-quest')" class="btn-primary w-full py-5 text-[17px] mt-auto mb-10">Begin Quest</button>
+    </div>
+
+    <!-- ================= VIEW: QUESTIONS ================= -->
+    <div id="view-quest" class="view-section px-6 pt-12 flex flex-col h-full">
+        <div class="flex justify-between items-center mb-10">
+            <button onclick="nav('view-home')"><span class="material-symbols-rounded">close</span></button>
+            <div class="flex-1 px-8"><div class="progress-track"><div class="progress-fill" style="width: 84%"></div></div></div>
+            <div class="font-bold text-[var(--c-royal)]">14:22</div>
+        </div>
+        <div class="flex gap-2 mb-2"><span class="badge-easy px-2 py-0.5 rounded text-[10px] font-bold uppercase">Easy</span></div>
+        <h2 class="text-2xl font-medium leading-snug mb-8">Which syntax extracts the exact last 3 rows of a DataFrame <span class="font-mono bg-blue-50 px-1">df</span> using index slicing?</h2>
+        <div class="space-y-4">
+            <div class="option-card p-5 rounded-2xl flex items-center gap-4" onclick="selectQ(this)"><div class="w-5 h-5 rounded-full border-2 border-gray-300"></div>df.head(3)</div>
+            <div class="option-card p-5 rounded-2xl flex items-center gap-4 selected" onclick="selectQ(this)"><div class="w-5 h-5 rounded-full bg-[var(--c-royal)]"></div>df.iloc[-3:]</div>
+        </div>
+        <button onclick="submitQuiz()" class="btn-primary w-full py-5 mt-auto mb-10">Submit Mock</button>
+    </div>
+
+    <!-- ================= VIEW: LOADING ================= -->
+    <div id="view-loading" class="view-section flex flex-col items-center justify-center h-full text-center px-10">
+        <div class="loader-orb mb-8"></div>
+        <h2 class="text-2xl font-bold mb-2">Analyzing performance...</h2>
+        <p class="text-gray-500">Our AI is scanning your speed and accuracy to provide feedback.</p>
+    </div>
+
+    <!-- ================= VIEW: RESULTS ================= -->
+    <div id="view-results" class="view-section with-bottom-nav px-6 pt-12">
+        <h2 class="text-4xl font-bold text-center mb-8">Quest Complete</h2>
         
-        <div class="w-full space-y-4">
-            <div class="h-12 w-full shimmer-box rounded-lg"></div>
-            <div class="h-32 w-full shimmer-box rounded-lg"></div>
-            <div class="h-12 w-full shimmer-box rounded-lg"></div>
+        <!-- Overall AI Summary -->
+        <div class="premium-card p-6 border-l-4 border-blue-500 mb-8 bg-blue-50/50">
+            <div class="flex items-center gap-2 mb-2 text-blue-700">
+                <span class="material-symbols-rounded">psychology</span>
+                <span class="font-bold uppercase tracking-widest text-[11px]">AI Intelligence Summary</span>
+            </div>
+            <p class="text-gray-700 text-sm leading-relaxed">
+                Aaradhya, your accuracy in SQL is elite, but your speed in Pandas is causing "reading-rush" errors. You tend to answer questions in under 15 seconds when you see familiar keywords, which led to 2 avoidable mistakes today. Slow down on the slicing syntax and you'll hit 100%.
+            </p>
+        </div>
+
+        <div class="flex justify-center gap-4 mb-10">
+            <div class="w-32 h-32 rounded-full bg-white border-[6px] border-green-400 flex flex-col items-center justify-center shadow-lg">
+                <span class="text-3xl font-bold">84%</span><span class="text-[10px] font-bold text-gray-400 uppercase">Score</span>
+            </div>
+            <div class="w-32 h-32 rounded-[32px] bg-white border border-gray-100 flex flex-col items-center justify-center shadow-lg">
+                <span class="text-xl font-bold">14m 22s</span><span class="text-[10px] font-bold text-gray-400 uppercase">Time</span>
+            </div>
+        </div>
+
+        <h3 class="font-bold text-xl mb-4 flex items-center gap-2"><span class="material-symbols-rounded text-red-500">troubleshoot</span> Analysis</h3>
+        <div class="space-y-4 mb-10">
+            <div class="error-card">
+                <div class="flex justify-between mb-3">
+                    <span class="badge-easy px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">Pandas Slicing</span>
+                    <span class="text-red-500 font-bold text-xs">12s Spent</span>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-xl">
+                    <p class="font-bold text-xs text-gray-800 mb-1">AI Diagnosis: Rushed Attention</p>
+                    <p class="text-[12px] text-gray-600">You picked .tail() because it sounded right, but the question specifically asked for "index slicing" which requires iloc[].</p>
+                </div>
+            </div>
+        </div>
+        <button onclick="nav('view-home')" class="btn-primary w-full py-4 font-bold">Back to Home</button>
+    </div>
+
+    <!-- ================= VIEW: STATS ================= -->
+    <div id="view-stats" class="view-section with-bottom-nav px-6 pt-12">
+        <h2 class="text-3xl font-bold mb-8">Performance</h2>
+        <h3 class="font-bold text-gray-400 uppercase tracking-widest text-xs mb-4">Chapter Mastery</h3>
+        <div class="premium-card p-6 space-y-6">
+            <div>
+                <div class="flex justify-between text-sm font-bold mb-2"><span>Pandas</span><span class="text-orange-500">62%</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width: 62%; background: #F97316;"></div></div>
+            </div>
+            <div>
+                <div class="flex justify-between text-sm font-bold mb-2"><span>SQL Querying</span><span class="text-green-600">84%</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width: 84%; background: #10B981;"></div></div>
+            </div>
         </div>
     </div>
 
-    <!-- ================= VIEW: RESULTS (DETAILED) ================= -->
-    <div id="view-results" class="view-section overflow-y-auto">
-        <div class="p-6">
-            <div class="flex items-center gap-4 mb-8">
-                <div class="w-16 h-16 rounded-full bg-orange-600 flex items-center justify-center text-xl font-black shadow-lg shadow-orange-900/20">A</div>
-                <div>
-                    <h1 class="text-2xl font-black italic tracking-tighter leading-none">MORNING GRIND</h1>
-                    <p class="text-zinc-500 font-bold text-xs uppercase tracking-widest">Today at 08:30 AM</p>
+    <!-- ================= VIEW: HISTORY ================= -->
+    <div id="view-profile" class="view-section with-bottom-nav px-6 pt-12">
+        <h2 class="text-3xl font-bold mb-8">History Log</h2>
+        <div class="space-y-6">
+            <div class="premium-card p-5">
+                <div class="flex justify-between items-start mb-4 border-b border-gray-100 pb-4">
+                    <div><h4 class="font-bold">Full Mock #11</h4><p class="text-xs text-gray-400">Yesterday • 42m 10s</p></div>
+                    <div class="bg-blue-50 text-blue-600 px-3 py-1 rounded-xl font-bold text-lg">76%</div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-xl border border-gray-200">
+                    <p class="text-[11px] font-bold text-blue-600 uppercase tracking-widest mb-1">AI Feedback</p>
+                    <p class="text-xs text-gray-600">Score dipped due to "Network Topologies". AI recommends reviewing Mesh vs Star cable formulas before next session.</p>
                 </div>
             </div>
 
-            <!-- Major Stats -->
-            <div class="grid grid-cols-2 gap-4 mb-10">
-                <div class="bg-zinc-900 p-4 rounded-lg border border-zinc-800">
-                    <span class="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Accuracy</span>
-                    <p class="text-3xl font-black italic text-orange-500">92<span class="text-sm not-italic text-zinc-500 ml-1">%</span></p>
+            <div class="premium-card p-5">
+                <div class="flex justify-between items-start mb-4 border-b border-gray-100 pb-4">
+                    <div><h4 class="font-bold">Unit Test #09</h4><p class="text-xs text-gray-400">3 Days Ago • 12m 05s</p></div>
+                    <div class="bg-green-50 text-green-600 px-3 py-1 rounded-xl font-bold text-lg">92%</div>
                 </div>
-                <div class="bg-zinc-900 p-4 rounded-lg border border-zinc-800">
-                    <span class="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Relative Effort</span>
-                    <p class="text-3xl font-black italic">Hard</p>
+                <div class="bg-gray-50 p-3 rounded-xl border border-gray-200">
+                    <p class="text-[11px] font-bold text-blue-600 uppercase tracking-widest mb-1">AI Feedback</p>
+                    <p class="text-xs text-gray-600">Near perfect session. The speed was consistent with high accuracy across all chapters.</p>
                 </div>
-            </div>
-
-            <!-- Detailed AI Report -->
-            <div class="space-y-8 pb-32">
-                <section>
-                    <h3 class="text-xs font-black text-orange-500 uppercase tracking-[3px] mb-4">Segment Performance</h3>
-                    <div class="space-y-4">
-                        <div class="bg-zinc-900 p-4 rounded border-l-4 border-blue-500">
-                            <div class="flex justify-between font-black italic mb-2">
-                                <span>SQL Aggregations</span>
-                                <span class="text-blue-500">CRUNCHED</span>
-                            </div>
-                            <p class="text-sm text-zinc-400 font-medium">Your pace in this segment was 1.4x faster than your historical average. You maintained a high "mental cadence" through the Group By clauses.</p>
-                        </div>
-                        <div class="bg-zinc-900 p-4 rounded border-l-4 border-red-500">
-                            <div class="flex justify-between font-black italic mb-2">
-                                <span>Pandas Slicing</span>
-                                <span class="text-red-500">RUSHED</span>
-                            </div>
-                            <p class="text-sm text-zinc-400 font-medium">Quest AI detected a "Stumble" at Question 14. You answered in 4s (Avg 20s). This indicates a rush-induced error. Slow down your heart rate during logical segments.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
-                    <h3 class="text-xs font-black text-zinc-500 uppercase tracking-[3px] mb-4">Mental Heart Rate Zones</h3>
-                    <div class="bg-zinc-900 p-5 rounded-lg border border-zinc-800">
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="material-symbols-rounded text-zinc-500">monitoring</span>
-                            <span class="text-xs font-bold uppercase">Time in Power Zones</span>
-                        </div>
-                        <div class="space-y-3">
-                            <div class="flex items-center gap-2">
-                                <div class="h-2 w-full bg-zinc-800 rounded-full overflow-hidden">
-                                    <div class="h-full bg-green-500" style="width: 20%"></div>
-                                </div>
-                                <span class="text-[10px] font-black min-w-[30px]">Z1</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="h-2 w-full bg-zinc-800 rounded-full overflow-hidden">
-                                    <div class="h-full bg-orange-500" style="width: 70%"></div>
-                                </div>
-                                <span class="text-[10px] font-black min-w-[30px]">Z4</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="h-2 w-full bg-zinc-800 rounded-full overflow-hidden">
-                                    <div class="h-full bg-red-600" style="width: 10%"></div>
-                                </div>
-                                <span class="text-[10px] font-black min-w-[30px]">Z5</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
-                    <h3 class="text-xs font-black text-orange-500 uppercase tracking-[3px] mb-4">Coach's Recovery Advice</h3>
-                    <div class="bg-orange-600/10 p-5 rounded-lg border border-orange-600/20">
-                        <p class="text-sm italic font-bold leading-relaxed text-zinc-200">
-                            "Excellent climb today, athlete. Your endurance is peaking. Focus on 'Network Protocols' tomorrow for a lighter recovery effort. Keep this momentum for the 30-day trophy."
-                        </p>
-                    </div>
-                </section>
             </div>
         </div>
-
-        <div class="fixed bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black to-transparent">
-            <button onclick="nav('view-home')" class="btn-strava">Add to Feed</button>
-        </div>
+        <button onclick="nav('view-login')" class="w-full mt-10 py-4 text-red-500 font-bold flex items-center justify-center gap-2">
+            <span class="material-symbols-rounded">logout</span> Sign Out
+        </button>
     </div>
 
-    <!-- ================= BOTTOM NAV ================= -->
-    <nav id="bottom-nav" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[500px] bg-[#1a1a1a] border-t border-zinc-800 h-16 flex justify-around items-center z-[150] hidden">
-        <button onclick="nav('view-home')" class="flex flex-col items-center gap-1 text-orange-500">
-            <span class="material-symbols-rounded">home</span>
-            <span class="text-[8px] font-black uppercase tracking-tighter">Home</span>
+    <!-- Bottom Nav -->
+    <nav id="bottom-nav" class="fixed md:absolute bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] h-[72px] bg-white/90 backdrop-blur-xl border border-[var(--c-porcelain)] rounded-[36px] shadow-2xl flex justify-around items-center px-4 z-50 hidden desktop-bottom-nav">
+        <button onclick="nav('view-home')" id="btn-home" class="nav-item flex flex-col items-center justify-center active w-16 h-full">
+            <div class="nav-pill h-8 rounded-full flex items-center justify-center"><span class="material-symbols-rounded">home</span></div>
+            <span class="text-[10px] font-bold uppercase mt-1">Home</span>
         </button>
-        <button onclick="nav('view-results')" class="flex flex-col items-center gap-1 text-zinc-500">
-            <span class="material-symbols-rounded">leaderboard</span>
-            <span class="text-[8px] font-black uppercase tracking-tighter">Stats</span>
-        </button>
-        <button onclick="nav('view-home')" class="flex flex-col items-center gap-1 text-zinc-500">
-            <span class="material-symbols-rounded">groups</span>
-            <span class="text-[8px] font-black uppercase tracking-tighter">Groups</span>
-        </button>
-    </nav>
-
-</div>
-
-<script>
-    function moveToNext(current, nextID) {
-        if (current.value.length >= 1) {
-            document.getElementById(nextID)?.focus();
-        }
-    }
-
-    function toggleNotifs() {
-        document.getElementById('notif-drawer').classList.toggle('open');
-    }
-
-    function selectGoal(num, el) {
-        document.querySelectorAll('#view-pre-quest button').forEach(b => {
-            b.classList.remove('border-orange-600');
-            b.classList.add('border-zinc-800');
-        });
-        el.classList.add('border-orange-600');
-        el.classList.remove('border-zinc-800');
-    }
-
-    function startAILoader() {
-        nav('view-loading');
-        setTimeout(() => {
-            nav('view-results');
-        }, 2500);
-    }
-
-    function nav(id) {
-        document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-
-        const bNav = document.getElementById('bottom-nav');
-        if (id === 'view-login' || id === 'view-quest' || id === 'view-loading' || id === 'view-pre-quest') {
-            bNav.classList.add('hidden');
-        } else {
-            bNav.classList.remove('hidden');
-        }
-
-        // Scroll top of container
-        document.getElementById('app-container').scrollTo(0,0);
-    }
-</script>
-
-</body>
-</html>
+        <button onclick="nav('view-stats')" id="btn-stat
