@@ -135,6 +135,11 @@
         }
         .pin-input:focus { background: white; border-color: var(--c-royal); box-shadow: 0 0 0 4px var(--c-dawn); transform: translateY(-2px); }
 
+        /* Segmented Selector for Quest Length */
+        .pill-selector { display: flex; background: white; border: 2px solid var(--c-porcelain); border-radius: 24px; padding: 6px; gap: 4px; }
+        .pill-btn { flex: 1; padding: 12px 0; text-align: center; font-weight: 700; border-radius: 18px; color: var(--c-china); transition: all 0.2s; cursor: pointer; display: flex; flex-col; justify-content: center; align-items: center; flex-direction: column; }
+        .pill-btn.active { background: var(--c-royal); color: white; box-shadow: 0 4px 12px rgba(51, 78, 172, 0.2); }
+
         /* Quest Options */
         .option-card { border: 2px solid var(--c-porcelain); transition: all 0.2s; background: white; }
         .option-card.selected { border-color: var(--c-royal); background: var(--c-dawn); }
@@ -179,19 +184,19 @@
                 <stop offset="50%" stop-color="#B371FF" />
                 <stop offset="100%" stop-color="#F4B400" />
             </linearGradient>
+            
             <!-- Perfect Premium Fire Gradient -->
             <linearGradient id="fire-grad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#FFD166" />
                 <stop offset="50%" stop-color="#FF9F1C" />
                 <stop offset="100%" stop-color="#F26A44" />
             </linearGradient>
-            <!-- Gold Gradient for Badges -->
+
             <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#FDE047" />
                 <stop offset="100%" stop-color="#EAB308" />
             </linearGradient>
         </defs>
-        
         <g id="gemini-star">
             <path d="M12 0C11.7 5.5 7.5 9.7 2 10C7.5 10.3 11.7 14.5 12 20C12.3 14.5 16.5 10.3 22 10C16.5 9.7 12.3 5.5 12 0Z" fill="url(#gemini-grad-svg)"/>
         </g>
@@ -255,45 +260,62 @@
             <div class="text-center flex-1 relative z-10 flex flex-col items-center justify-center">
                 <div class="flex items-center justify-center gap-1.5">
                     <p class="text-4xl font-bold text-[#FFD166]">5</p>
-                    <!-- Flawless SVG Fire Replacement -->
-                    <svg viewBox="0 0 24 24" class="w-7 h-7 -mt-1" fill="url(#fire-grad)">
-                        <path d="M12 2c0 0-4.5 3.5-4.5 8.5 0 2.5 1.5 4.5 3.5 5.5-.5-1.5.5-3.5.5-3.5s2 1.5 2 3.5c0 2 2.5 1 2.5-2.5C16 8.5 12 2 12 2z"/>
+                    <!-- Flawless Proper SVG Fire Silhouette -->
+                    <svg viewBox="0 0 24 24" class="w-6 h-6 -mt-1" fill="url(#fire-grad)">
+                        <path fill-rule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248z" clip-rule="evenodd" />
                     </svg>
                 </div>
                 <p class="text-[10px] font-bold uppercase tracking-widest mt-1 opacity-80">Streak</p>
             </div>
         </div>
 
-        <h3 class="font-bold text-xl mb-4 px-1 text-gray-800">Your Target Chapters</h3>
+        <h3 class="font-bold text-xl mb-4 px-1 text-gray-800">Target Chapters</h3>
         <div class="space-y-3 mb-8">
             <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-blue-50">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-blue-50 shrink-0">
                     <svg viewBox="0 0 24 24" class="w-7 h-7"><path d="M4 20h16v2H4z" fill="var(--c-royal)"/><path d="M6 16h3v4H6zM11 10h3v10h-3zM16 6h3v14h-3z" fill="var(--c-sky)"/><path d="M4 12l6-6 4 4 6-6" fill="none" stroke="var(--c-coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
                 <div class="flex-1"><p class="font-bold text-[14px]">Data Handling (Pandas)</p><p class="text-[11px] text-gray-500 font-medium">DataFrames, Visualization</p></div>
                 <input type="checkbox" checked>
             </label>
             <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-orange-50">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-orange-50 shrink-0">
                     <svg viewBox="0 0 24 24" class="w-7 h-7"><ellipse cx="12" cy="6" rx="8" ry="3" fill="var(--c-coral)"/><path d="M4 6v5c0 1.66 3.58 3 8 3s8-1.34 8-3V6" fill="none" stroke="var(--c-coral)" stroke-width="2"/><path d="M4 11v5c0 1.66 3.58 3 8 3s8-1.34 8-3v-5" fill="none" stroke="var(--c-coral)" stroke-width="2"/><circle cx="16" cy="16" r="4" fill="var(--c-royal)" opacity="0.9"/><path d="M19 19l3 3" stroke="var(--c-royal)" stroke-width="2" stroke-linecap="round"/></svg>
                 </div>
                 <div class="flex-1"><p class="font-bold text-[14px]">Database Query (SQL)</p><p class="text-[11px] text-gray-500 font-medium">SELECT, JOIN, GROUP</p></div>
                 <input type="checkbox" checked>
             </label>
             <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-purple-50">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-purple-50 shrink-0">
                     <svg viewBox="0 0 24 24" class="w-7 h-7"><circle cx="12" cy="5" r="3" fill="#9333EA"/><circle cx="5" cy="17" r="3" fill="#D8B4FE"/><circle cx="19" cy="17" r="3" fill="#D8B4FE"/><path d="M10.5 7.5L6.5 14.5M13.5 7.5L17.5 14.5M7.5 17h9" stroke="#9333EA" stroke-width="2" stroke-linecap="round"/></svg>
                 </div>
                 <div class="flex-1"><p class="font-bold text-[14px]">Computer Networks</p><p class="text-[11px] text-gray-500 font-medium">Protocols, Topologies</p></div>
                 <input type="checkbox" checked>
             </label>
             <label class="premium-card p-4 flex items-center gap-4 cursor-pointer">
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-green-50">
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-green-50 shrink-0">
                     <svg viewBox="0 0 24 24" class="w-7 h-7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="var(--c-mint)" stroke="#059669" stroke-width="1.5"/><circle cx="12" cy="10" r="2.5" fill="#059669"/><path d="M7.5 16c1.5-2 7.5-2 9 0" stroke="#059669" stroke-width="2" stroke-linecap="round"/></svg>
                 </div>
                 <div class="flex-1"><p class="font-bold text-[14px]">Societal Impacts</p><p class="text-[11px] text-gray-500 font-medium">Ethics, Privacy, Security</p></div>
                 <input type="checkbox" checked>
             </label>
+        </div>
+
+        <!-- NEW: Quest Length Selector -->
+        <h3 class="font-bold text-xl mb-4 px-1 text-gray-800">Quest Length</h3>
+        <div class="pill-selector mb-8">
+            <div class="pill-btn" onclick="selectPill(this)">
+                <span class="text-[16px]">10 Qs</span>
+                <span class="text-[9px] uppercase tracking-widest opacity-70 mt-0.5">Quick</span>
+            </div>
+            <div class="pill-btn active" onclick="selectPill(this)">
+                <span class="text-[16px]">25 Qs</span>
+                <span class="text-[9px] uppercase tracking-widest opacity-80 mt-0.5">Standard</span>
+            </div>
+            <div class="pill-btn" onclick="selectPill(this)">
+                <span class="text-[16px]">50 Qs</span>
+                <span class="text-[9px] uppercase tracking-widest opacity-70 mt-0.5">Full Mock</span>
+            </div>
         </div>
         
         <div class="flex flex-col gap-3">
@@ -313,7 +335,7 @@
             </button>
             <div class="text-center flex-1 px-4">
                 <div class="progress-track h-2 mb-2"><div class="progress-fill" style="width: 84%;"></div></div>
-                <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--c-china)">Q 42 of 50</p>
+                <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--c-china)">Q 21 of 25</p>
             </div>
             <div class="flex items-center gap-1 font-bold text-sm bg-white px-3 py-2 rounded-full border border-gray-100 shadow-sm" style="color: var(--c-royal)">
                 <span class="material-symbols-rounded text-lg">timer</span> 14:22
@@ -435,7 +457,6 @@
             <h2 class="text-3xl font-bold tracking-tight">Your Progress</h2>
         </div>
 
-        <!-- NEW: Full 6-Grid Custom SVG Badges -->
         <h3 class="font-bold text-xl mb-4 px-1 text-gray-800">Achievements</h3>
         <div class="grid grid-cols-3 gap-3 mb-10">
             
@@ -466,7 +487,8 @@
             <!-- Badge 4: Streak (Unlocked) -->
             <div class="premium-card p-3 text-center flex flex-col items-center border border-red-100 shadow-sm" style="background: #FFF5F0;">
                 <div class="w-10 h-10 rounded-full flex items-center justify-center mb-2 bg-white shadow-sm">
-                    <svg viewBox="0 0 24 24" class="w-6 h-6" fill="url(#fire-grad)"><path d="M12 2c0 0-4.5 3.5-4.5 8.5 0 2.5 1.5 4.5 3.5 5.5-.5-1.5.5-3.5.5-3.5s2 1.5 2 3.5c0 2 2.5 1 2.5-2.5C16 8.5 12 2 12 2z"/></svg>
+                    <!-- Standard Fire SVG Match -->
+                    <svg viewBox="0 0 24 24" class="w-5 h-5" fill="url(#fire-grad)"><path fill-rule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248z" clip-rule="evenodd" /></svg>
                 </div>
                 <p class="text-[9px] font-bold uppercase tracking-wider leading-tight text-[#D9502A]">5 Day<br>Streak</p>
             </div>
@@ -527,11 +549,10 @@
         </h3>
         
         <div class="space-y-6 mb-10">
-            <!-- Mock 12 (Today) -->
             <div class="premium-card p-5">
                 <div class="flex justify-between items-start border-b border-gray-100 pb-4 mb-4">
                     <div>
-                        <h4 class="font-bold text-[16px] text-gray-900 mb-1">Full Mock #12</h4>
+                        <h4 class="font-bold text-[16px] text-gray-900 mb-1">Standard Mock (25 Qs)</h4>
                         <div class="flex items-center gap-2 text-xs font-medium text-gray-500">
                             <span class="flex items-center gap-1"><span class="material-symbols-rounded text-[14px]">calendar_today</span> Today</span>
                             <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
@@ -567,11 +588,10 @@
                 </div>
             </div>
 
-            <!-- Mock 11 (Yesterday) -->
             <div class="premium-card p-5">
                 <div class="flex justify-between items-start border-b border-gray-100 pb-4 mb-4">
                     <div>
-                        <h4 class="font-bold text-[16px] text-gray-900 mb-1">Full Mock #11</h4>
+                        <h4 class="font-bold text-[16px] text-gray-900 mb-1">Full Mock (50 Qs)</h4>
                         <div class="flex items-center gap-2 text-xs font-medium text-gray-500">
                             <span class="flex items-center gap-1"><span class="material-symbols-rounded text-[14px]">calendar_today</span> Yesterday</span>
                             <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
@@ -631,6 +651,11 @@
     function selectOption(element) {
         document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
         element.classList.add('selected');
+    }
+
+    function selectPill(element) {
+        document.querySelectorAll('.pill-btn').forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
     }
 
     function nav(id) {
