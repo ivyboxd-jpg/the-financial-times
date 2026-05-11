@@ -15,12 +15,12 @@
         :root {
             --s-orange: #FC4C02;
             --s-orange-hover: #E34402;
-            --s-bg-light: #F7F7F9; /* Strava feed background */
+            --s-bg-light: #F7F7F9; 
             --s-card: #FFFFFF;
             --s-text-dark: #242428;
             --s-text-muted: #6D6D78;
             --s-border: #E6E6EB;
-            --s-dark-bg: #1A1A1A; /* Strava recording screen */
+            --s-dark-bg: #1A1A1A; 
             --s-zone-easy: #4B92E5;
             --s-zone-med: #F97316;
             --s-zone-hard: #DC2626;
@@ -126,17 +126,13 @@
     <!-- ================= VIEW: LOGIN ================= -->
     <div id="view-login" class="view-section active flex flex-col h-full bg-white">
         <div class="flex-1 flex flex-col justify-center px-8 pt-10 pb-20">
-            <h1 class="text-[40px] font-black tracking-tighter text-[var(--s-orange)] text-center mb-1">STRAVA</h1>
-            <p class="text-center text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-12">Quest Pro</p>
+            <h1 class="text-[48px] font-black tracking-tighter text-[var(--s-orange)] text-center mb-1">STRAVA</h1>
+            <p class="text-center text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-16">Quest Pro</p>
             
-            <div class="mb-8 flex justify-center">
-                <div class="athlete-avatar w-24 h-24 text-4xl border-2 border-[var(--s-border)] shadow-sm">A</div>
-            </div>
-
-            <h2 class="text-3xl font-extrabold tracking-tight mb-2 text-center text-gray-900">Aaradhya</h2>
-            <p class="text-[var(--s-text-muted)] text-sm font-medium mb-10 text-center">Authenticate to access your training log.</p>
+            <h2 class="text-3xl font-extrabold tracking-tight mb-2 text-center text-gray-900">Welcome,<br>Aaradhya</h2>
+            <p class="text-[var(--s-text-muted)] text-sm font-medium mb-12 text-center">Authenticate to access your training log.</p>
             
-            <div class="mb-10 w-full flex justify-center gap-3">
+            <div class="mb-12 w-full flex justify-center gap-3">
                 <input type="password" maxlength="1" class="pin-input" placeholder="" onkeyup="moveToNext(this, 'pin2')">
                 <input type="password" maxlength="1" class="pin-input" placeholder="" id="pin2" onkeyup="moveToNext(this, 'pin3')">
                 <input type="password" maxlength="1" class="pin-input" placeholder="" id="pin3" onkeyup="moveToNext(this, 'pin4')">
@@ -393,7 +389,7 @@
     <div id="view-you" class="view-section with-bottom-nav">
         <div class="bg-white px-5 py-3 border-b border-gray-200 sticky top-0 z-20 flex justify-between items-center shadow-sm">
             <h1 class="text-xl font-black tracking-tight text-gray-900">You</h1>
-            <span class="material-symbols-rounded text-gray-400" onclick="nav('view-login')">logout</span>
+            <span class="material-symbols-rounded text-gray-400 cursor-pointer" onclick="nav('view-login')">logout</span>
         </div>
 
         <div class="bg-white p-5 border-b border-gray-200 mb-4">
@@ -454,4 +450,50 @@
                 </div>
                 <div>
                     <div class="flex justify-between text-sm font-bold mb-1 text-gray-800"><span>Database Query (SQL)</span><span class="text-[var(--s-orange)]">84%</span></div>
-                    <div
+                    <div class="progress-track"><div class="progress-fill" style="background: var(--s-orange); width: 84%;"></div></div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-sm font-bold mb-1 text-gray-800"><span>Computer Networks</span><span class="text-gray-900">100%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="background: var(--s-text-dark); width: 100%;"></div></div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-sm font-bold mb-1 text-gray-800"><span>Societal Impacts</span><span class="text-gray-900">100%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="background: var(--s-text-dark); width: 100%;"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= BOTTOM NAV ================= -->
+    <nav id="bottom-nav" class="fixed md:absolute bottom-0 left-0 w-full h-[64px] bg-white border-t border-gray-200 flex justify-around items-center px-2 z-50 hidden desktop-bottom-nav">
+        <button onclick="nav('view-feed')" id="btn-feed" class="flex-1 h-full flex flex-col items-center justify-center text-gray-400 hover:text-gray-600 transition-colors">
+            <span class="material-symbols-rounded text-[26px] mb-0.5" id="icon-feed">maps_home_work</span>
+            <span class="text-[10px] font-semibold">Feed</span>
+        </button>
+        <button onclick="nav('view-record')" id="btn-record" class="flex-1 h-full flex flex-col items-center justify-center text-[var(--s-orange)] transition-colors">
+            <span class="material-symbols-rounded text-[32px] mb-0.5" id="icon-record">add_circle</span>
+            <span class="text-[10px] font-semibold">Record</span>
+        </button>
+        <button onclick="nav('view-you')" id="btn-you" class="flex-1 h-full flex flex-col items-center justify-center text-gray-400 hover:text-gray-600 transition-colors">
+            <span class="material-symbols-rounded text-[26px] mb-0.5" id="icon-you">person</span>
+            <span class="text-[10px] font-semibold">You</span>
+        </button>
+    </nav>
+
+</div>
+
+<script>
+    function moveToNext(current, nextFieldID) {
+        if (current.value.length >= current.maxLength) {
+            let nextField = document.getElementById(nextFieldID);
+            if (nextField) nextField.focus();
+        }
+    }
+
+    function selectOption(element) {
+        document.querySelectorAll('.option-card, .route-card').forEach(card => card.classList.remove('selected'));
+        element.classList.add('selected');
+    }
+
+    function setDist(element) {
+        document.querySelectorAll('.dist-btn').forEach(btn
