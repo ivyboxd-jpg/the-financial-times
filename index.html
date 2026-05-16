@@ -4,30 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VerifiedWork LinkedIn Banner</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <!-- Importing fonts to match the image exactly -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Playfair+Display:ital,wght@1,700;1,900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-navy: #1B2B4B;
-            --accent-blue: #4A90D9;
+            --navy: #1B2B4B;
+            --blue-accent: #4A90D9;
             --white: #FFFFFF;
-            --black: #000000;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --logo-black: #000000;
+            --check-green: #24a17b;
         }
 
         body {
-            background-color: #f0f2f5;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background-color: #f4f4f4;
         }
 
-        /* BANNER CONTAINER */
+        /* EXACT LINKEDIN DIMENSIONS */
         .banner {
             width: 1584px;
             height: 396px;
@@ -36,115 +33,116 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 100px;
+            box-sizing: border-box;
             position: relative;
             overflow: hidden;
-            border: 1px solid #ddd; /* Visual border for the file preview */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        /* LOGO RECONSTRUCTION */
+        /* --- LOGO SECTION --- */
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 4px;
         }
 
-        .logo-verified {
+        .verified-text {
             font-family: 'Inter', sans-serif;
-            font-weight: 800;
-            font-size: 64px;
-            color: var(--black);
-            letter-spacing: -2px;
+            font-weight: 900;
+            font-size: 82px;
+            color: var(--logo-black);
+            letter-spacing: -3px;
         }
 
-        .logo-check {
-            width: 48px;
-            height: 48px;
-            background-color: #2da44e; /* Keeping the green from the original logo for authenticity */
+        /* The green dot with checkmark */
+        .dot-icon {
+            width: 54px;
+            height: 54px;
+            background-color: var(--check-green);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 0 10px;
             position: relative;
-            top: 4px;
+            top: 5px;
         }
 
-        .logo-check::after {
+        .dot-icon::after {
             content: '';
             width: 12px;
             height: 24px;
             border: solid white;
-            border-width: 0 5px 5px 0;
+            border-width: 0 6px 6px 0;
             transform: rotate(45deg);
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
-        .logo-work {
+        .work-text {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-weight: 700;
-            font-size: 72px;
-            color: var(--black);
-            margin-left: 5px;
+            font-weight: 900;
+            font-size: 96px;
+            color: var(--logo-black);
+            letter-spacing: -1px;
         }
 
-        /* SLOGAN SIDE */
+        /* --- SLOGAN SECTION --- */
         .slogan-container {
+            max-width: 600px;
             text-align: right;
-            border-right: 8px solid var(--accent-blue);
-            padding-right: 30px;
         }
 
         .slogan-text {
             font-family: 'Inter', sans-serif;
             font-size: 42px;
-            color: var(--primary-navy);
-            line-height: 1.2;
+            line-height: 1.1;
+            color: var(--navy);
+            font-weight: 900;
+            text-transform: uppercase;
         }
 
         .slogan-text span {
-            font-weight: 800;
+            color: var(--blue-accent);
             display: block;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .slogan-text em {
-            font-style: normal;
+            font-size: 38px;
             font-weight: 400;
-            color: #555;
+            text-transform: none;
+            margin-top: 5px;
         }
 
-        /* DECORATIVE ELEMENTS (Minimalist Blue Accents) */
-        .accent-bar {
+        /* Subtle professional accents */
+        .bottom-border {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 8px;
-            background: linear-gradient(90deg, var(--primary-navy) 70%, var(--accent-blue) 100%);
+            height: 10px;
+            background: linear-gradient(90deg, var(--navy) 0%, var(--blue-accent) 100%);
         }
+
     </style>
 </head>
 <body>
 
     <div class="banner">
-        <!-- Logo Left -->
+        <!-- Logo Recreated from Image -->
         <div class="logo-container">
-            <span class="logo-verified">verified</span>
-            <div class="logo-check"></div>
-            <span class="logo-work">work</span>
+            <div class="verified-text">verified</div>
+            <div class="dot-icon"></div>
+            <div class="work-text">work</div>
         </div>
 
-        <!-- Slogan Right -->
+        <!-- Professional Typography Slogan -->
         <div class="slogan-container">
             <div class="slogan-text">
-                <span>Human validation</span>
-                <em>in an AI world.</em>
+                Human validation
+                <span>in an AI world.</span>
             </div>
         </div>
 
-        <!-- Bottom Accent -->
-        <div class="accent-bar"></div>
+        <!-- Decorative UI Element -->
+        <div class="bottom-border"></div>
     </div>
 
 </body>
