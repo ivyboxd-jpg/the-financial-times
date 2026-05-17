@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VerifiedWork | Intent-based hiring is here.</title>
     
-    <!-- Premium Inter Font Import -->
+    <!-- Premium Fonts: Plus Jakarta Sans (for logo) & Inter (for everything else) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
     
     <style>
         /* --- Brand Variables --- */
@@ -78,17 +78,31 @@
             display: flex; justify-content: space-between; align-items: center; height: 72px;
         }
         
-        /* Perfected Logo Alignment */
+        /* --- Perfected Logo: Plus Jakarta Sans + Inter + Dot-Sized Checkmark --- */
         .logo {
-            display: flex; align-items: center; letter-spacing: -0.03em; line-height: 1;
+            display: flex; align-items: center; line-height: 1;
         }
-        .logo-verified { font-weight: 600; color: var(--black); font-size: 26px; }
+        .logo-verified { 
+            font-family: 'Plus Jakarta Sans', sans-serif; /* High-end geometric font */
+            font-weight: 800; 
+            color: var(--black); 
+            font-size: 26px; 
+            letter-spacing: -0.02em;
+        }
         .logo-icon {
             display: flex; align-items: center; justify-content: center;
-            width: 16px; height: 16px; margin: 0 4px;
+            width: 12px; /* Shrunk to dot size */
+            height: 12px; 
+            margin: 0 6px;
         }
         .logo-icon svg { width: 100%; height: 100%; }
-        .logo-work { font-weight: 400; color: var(--grey); font-size: 26px; letter-spacing: -0.01em; }
+        .logo-work { 
+            font-family: 'Inter', sans-serif; /* Crisp neutral font */
+            font-weight: 400; 
+            color: var(--grey); 
+            font-size: 26px; 
+            letter-spacing: -0.01em; 
+        }
         
         .nav-btn {
             background-color: var(--primary); color: var(--bg-white);
@@ -104,7 +118,7 @@
             max-width: 800px; margin: 0 auto;
         }
         
-        /* Soft Floating Pills (Reduced from bulky cards) */
+        /* Soft Floating Pills */
         .hero-visual {
             position: absolute; display: none; background: rgba(255,255,255,0.9);
             border: 1px solid var(--border); border-radius: 999px; padding: 10px 16px 10px 10px; 
@@ -196,7 +210,6 @@
         .p-card.active { opacity: 1; }
         .p-card.active.c1 { transform: rotate(-4deg) translate(-10px, 0px); z-index: 1; }
         .p-card.active.c2 { transform: rotate(2deg) translate(10px, 50px); z-index: 2; }
-        /* The specific visual you liked */
         .p-card.active.c3 { transform: rotate(-2deg) translate(0px, 110px); z-index: 3; border: 1px solid #111; box-shadow: 0 24px 48px -12px rgba(0,0,0,0.15); }
         
         .pc-header { font-size: 13px; font-weight: 600; color: var(--grey-light); margin-bottom: 12px; border-bottom: 1px dashed var(--border); padding-bottom: 8px; }
@@ -205,7 +218,7 @@
         .pc-alert { display: inline-flex; align-items: center; background: var(--bg-offwhite); color: var(--grey-dark); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 4px; margin-top: 12px; border: 1px solid var(--border); }
         .pc-alert.red { background: var(--black); color: white; border: none; }
 
-        /* --- 4. Roadmap (No Cards, Pure Timeline) --- */
+        /* --- 4. Roadmap / Pure Timeline --- */
         .roadmap-section {
             padding: 120px 24px; background-color: var(--bg-white);
         }
@@ -220,7 +233,7 @@
         .roadmap-line-bg { position: absolute; left: 11px; top: 8px; bottom: 0; width: 2px; background: var(--border); }
         .roadmap-line-fill { position: absolute; left: 11px; top: 8px; width: 2px; height: 0%; background: var(--primary); transition: height 0.4s ease-out; }
         
-        /* Step Container (No Box) */
+        /* Step Container */
         .roadmap-step { position: relative; margin-bottom: 64px; opacity: 0; transform: translateX(15px); transition: all 0.6s var(--ease-snappy); }
         .roadmap-step:last-child { margin-bottom: 0; }
         .roadmap-step.active { opacity: 1; transform: translateX(0); }
@@ -337,11 +350,12 @@
         <div class="container">
             <a href="/" class="logo" aria-label="VerifiedWork Home">
                 <span class="logo-verified">verified</span>
-                <!-- Logo Checkmark perfectly scaled & aligned -->
+                <!-- Logo Checkmark perfectly scaled to dot size -->
                 <span class="logo-icon">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="12" cy="12" r="12" fill="#2D6A4F"/>
-                        <path d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- Thicker stroke so it's readable at 12px -->
+                        <path d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
                 <span class="logo-work">work</span>
@@ -535,7 +549,7 @@
                         <span class="logo-icon">
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="12" cy="12" r="12" fill="#2D6A4F"/>
-                                <path d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </span>
                         <span class="logo-work">work</span>
@@ -653,21 +667,4 @@
                         
                         roadmapFill.style.height = `${progress}%`;
                         
-                        roadmapSteps.forEach((step, index) => {
-                            const stepThreshold = (index * 33) + 10;
-                            if (progress > stepThreshold) step.classList.add('active');
-                        });
-                    }
-                }, { passive: true });
-            }
-
-            // 6. Navbar Border on Scroll
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 10) navbar.classList.add('scrolled');
-                else navbar.classList.remove('scrolled');
-            }, { passive: true });
-        });
-    </script>
-</body>
-</html>
+                        roadmapSteps.forEach((step, in
