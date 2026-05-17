@@ -4,37 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VerifiedWork | Intent-based hiring is here.</title>
+    
+    <!-- Premium Inter Font Import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- Premium Design System --- */
+        /* --- Brand Variables --- */
         :root {
-            /* Colors */
             --bg-white: #FFFFFF;
             --bg-offwhite: #F9FAFB;
             --primary: #2D6A4F;
             --primary-hover: #1B4332;
-            --secondary-green: #40916C;
             --tint: #D8F3DC;
-            --black: #09090B;
-            --grey-dark: #3F3F46;
-            --grey: #71717A;
-            --grey-light: #A1A1AA;
-            --border: #E4E4E7;
+            --black: #111111;
+            --grey-dark: #374151;
+            --grey: #6B7280;
+            --grey-light: #D1D5DB;
+            --border: #E5E7EB;
             
-            /* Easing Curves for Premium Feel */
-            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            /* Premium Curves & Shadows */
             --ease-snappy: cubic-bezier(0.25, 1, 0.1, 1);
-            
-            /* Refined Shadows */
-            --shadow-card: 0 4px 24px -8px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-            --shadow-float: 0 20px 40px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.03);
+            --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-float: 0 20px 40px -10px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.03);
+            --shadow-card: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
         }
-
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            /* Using font-feature-settings to make Inter look highly editorial/Swiss */
+            font-family: 'Inter', sans-serif;
+            font-feature-settings: "cv02", "cv03", "cv04", "cv11";
             background-color: var(--bg-white);
             color: var(--black);
             line-height: 1.5;
@@ -48,32 +50,19 @@
 
         .container {
             width: 100%;
-            max-width: 1120px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
         }
 
-        /* --- High-End Animation Classes --- */
+        /* --- Scroll Animations --- */
         .reveal-up {
             opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.7s var(--ease-snappy), transform 0.7s var(--ease-snappy);
+            transform: translateY(30px);
+            transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+            will-change: opacity, transform;
         }
         .reveal-up.active { opacity: 1; transform: translateY(0); }
-
-        .mask-wrap {
-            display: inline-flex;
-            overflow: hidden;
-            vertical-align: bottom;
-            padding-bottom: 0.1em; /* Prevent descender cutoff */
-            margin-bottom: -0.1em;
-        }
-        .mask-text {
-            transform: translateY(105%);
-            transition: transform 0.8s var(--ease-snappy);
-            will-change: transform;
-        }
-        .mask-text.active { transform: translateY(0); }
 
         /* --- 1. Navbar --- */
         .navbar {
@@ -84,265 +73,288 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            transition: border-color 0.4s ease;
+            transition: border-color 0.3s ease;
         }
         .navbar.scrolled { border-bottom: 1px solid var(--border); }
         .navbar .container {
-            display: flex; justify-content: space-between; align-items: center; height: 72px;
+            display: flex; justify-content: space-between; align-items: center; height: 80px;
         }
+        
+        /* Updated Logo to Match Image */
         .logo {
-            display: flex; align-items: center; font-size: 18px; letter-spacing: -0.03em;
+            display: flex; align-items: center; font-size: 32px; letter-spacing: -0.04em;
         }
         .logo-verified { font-weight: 800; color: var(--black); }
-        .logo-dot {
-            width: 5px; height: 5px; background-color: var(--primary); border-radius: 50%; margin: 0 5px;
+        .logo-icon {
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 6px; width: 24px; height: 24px;
         }
-        .logo-work { font-weight: 400; color: var(--grey); }
+        .logo-icon svg { width: 100%; height: 100%; }
+        /* Notice how "work" is lighter, wider and grey just like the image */
+        .logo-work { font-weight: 400; color: var(--grey); letter-spacing: -0.01em; }
+        
         .nav-btn {
             background-color: var(--primary); color: var(--bg-white);
-            font-weight: 500; font-size: 14px; padding: 10px 20px;
-            border-radius: 6px; transition: transform 0.2s var(--ease-snappy), background-color 0.2s ease;
+            font-weight: 600; font-size: 14px; padding: 12px 24px;
+            border-radius: 8px; transition: transform 0.2s var(--ease-snappy), box-shadow 0.2s;
         }
-        .nav-btn:hover { background-color: var(--primary-hover); transform: scale(0.98); }
+        .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -10px var(--primary); }
 
-        /* --- 2. Hero --- */
+        /* --- 2. Rich Hero Section --- */
         .hero {
-            padding: 160px 24px 100px;
+            position: relative; padding: 140px 24px 100px;
             display: flex; flex-direction: column; align-items: center; text-align: center;
-            max-width: 860px; margin: 0 auto;
+            max-width: 900px; margin: 0 auto;
         }
+        
+        /* Floating Visual Elements */
+        .hero-visual {
+            position: absolute; display: none; background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(12px); border: 1px solid var(--border);
+            border-radius: 12px; padding: 16px 20px; box-shadow: var(--shadow-float);
+            z-index: -1; align-items: center; gap: 12px;
+            animation: float 6s ease-in-out infinite;
+        }
+        @media (min-width: 992px) { .hero-visual { display: flex; } }
+        .hero-visual.v-left { top: 20%; left: -100px; animation-delay: 0s; }
+        .hero-visual.v-right { top: 40%; right: -120px; animation-delay: -3s; }
+        .v-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--tint); display: flex; align-items: center; justify-content: center; color: var(--primary); }
+        .v-text { text-align: left; }
+        .v-title { font-size: 14px; font-weight: 700; color: var(--black); }
+        .v-sub { font-size: 12px; color: var(--grey); }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
         .hero-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background-color: var(--tint); color: var(--primary);
-            font-size: 13px; font-weight: 600; padding: 6px 16px;
-            border-radius: 999px; margin-bottom: 48px; letter-spacing: 0.02em;
-            opacity: 0; transform: translateY(-10px);
-            animation: heroBadgeIn 0.6s var(--ease-snappy) forwards;
+            display: inline-flex; align-items: center; background-color: var(--tint); color: var(--primary);
+            font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 999px; margin-bottom: 40px; letter-spacing: 0.02em; text-transform: uppercase;
         }
-        @keyframes heroBadgeIn { to { opacity: 1; transform: translateY(0); } }
         
         .hero-title {
-            font-size: clamp(48px, 8vw, 88px); font-weight: 800; color: var(--black);
-            line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 24px;
-            display: flex; flex-direction: column; align-items: center;
+            font-size: clamp(48px, 8vw, 80px); font-weight: 900; color: var(--black);
+            line-height: 1.1; letter-spacing: -0.04em; margin-bottom: 24px; position: relative;
         }
-        .hero-title .text-primary { color: var(--primary); }
         
+        /* Smooth Word Carousel */
+        .word-carousel {
+            display: inline-grid; color: var(--primary); text-align: left;
+            vertical-align: bottom; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em;
+        }
+        .carousel-word {
+            grid-area: 1 / 1; opacity: 0; transform: translateY(100%);
+            transition: opacity 0.5s var(--ease-smooth), transform 0.5s var(--ease-smooth);
+        }
+        .carousel-word.active { opacity: 1; transform: translateY(0); }
+        .carousel-word.out { opacity: 0; transform: translateY(-100%); }
+
         .hero-subtitle {
-            font-size: clamp(18px, 2.5vw, 22px); color: var(--grey-dark); font-weight: 400;
-            max-width: 540px; margin: 0 auto 48px; line-height: 1.5; letter-spacing: -0.01em;
+            font-size: clamp(18px, 2.5vw, 22px); color: var(--grey-dark); font-weight: 500;
+            max-width: 600px; margin: 0 auto 48px; line-height: 1.6; letter-spacing: -0.01em;
         }
         
         .hero-cta-btn {
             display: inline-flex; align-items: center; justify-content: center;
             background-color: var(--black); color: var(--bg-white);
-            font-weight: 600; font-size: 16px; padding: 18px 40px;
-            border-radius: 8px; transition: transform 0.2s var(--ease-snappy), background-color 0.2s ease;
-            margin-bottom: 24px; gap: 10px;
+            font-weight: 600; font-size: 18px; padding: 20px 48px;
+            border-radius: 12px; transition: transform 0.2s var(--ease-snappy), background-color 0.2s ease;
+            margin-bottom: 16px; gap: 12px;
         }
         .hero-cta-btn svg { transition: transform 0.3s var(--ease-snappy); }
-        .hero-cta-btn:hover { background-color: var(--grey-dark); transform: scale(0.98); }
-        .hero-cta-btn:hover svg { transform: translateX(4px); }
+        .hero-cta-btn:hover { background-color: var(--primary); transform: translateY(-4px); box-shadow: 0 12px 24px rgba(45, 106, 79, 0.2); }
+        .hero-cta-btn:hover svg { transform: translateX(6px); }
         
         .hero-guarantee {
-            display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-            gap: 12px; font-size: 13px; color: var(--grey); font-weight: 500;
+            font-size: 14px; color: var(--grey); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .hero-guarantee .dot { color: var(--border); font-size: 14px; }
+        .hero-guarantee svg { width: 14px; height: 14px; color: var(--primary); }
 
-        /* --- 3. Problem Statement --- */
+        /* --- 3. Visual Problem Section --- */
         .problem-section {
-            padding: 140px 24px; max-width: 720px; margin: 0 auto; text-align: center;
-        }
-        .section-label {
-            display: inline-block; text-transform: uppercase; letter-spacing: 0.15em;
-            font-size: 11px; font-weight: 700; color: var(--grey-light); margin-bottom: 48px;
-        }
-        .problem-lines { display: flex; flex-direction: column; gap: 8px; margin-bottom: 56px; }
-        
-        /* Using mask-wrap for problem lines for a high-end editorial feel */
-        .problem-line {
-            font-size: clamp(32px, 5vw, 56px); font-weight: 800; color: var(--black);
-            line-height: 1.1; letter-spacing: -0.04em;
-        }
-        .problem-desc {
-            font-size: 20px; color: var(--grey-dark); line-height: 1.6; max-width: 600px; margin: 0 auto;
-        }
-
-        /* --- 4. How it works --- */
-        .how-it-works {
-            padding: 140px 0; background-color: var(--bg-offwhite);
+            padding: 140px 24px; background: var(--bg-offwhite); position: relative; overflow: hidden;
             border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
         }
-        .how-it-works .section-title {
-            text-align: center; font-size: clamp(32px, 4vw, 40px); font-weight: 800;
-            color: var(--black); margin-bottom: 80px; letter-spacing: -0.03em;
+        .problem-container {
+            max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center;
         }
-        .steps-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
-        @media (min-width: 768px) { .steps-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 768px) { .problem-container { grid-template-columns: 1fr 1fr; } }
         
-        .step-card {
-            background: var(--bg-white); border: 1px solid var(--border);
-            border-radius: 12px; padding: 40px 32px; text-align: left;
-            box-shadow: var(--shadow-card); transition: transform 0.4s var(--ease-snappy);
+        .problem-text-content { text-align: left; }
+        .section-label {
+            display: inline-block; text-transform: uppercase; letter-spacing: 0.15em;
+            font-size: 12px; font-weight: 800; color: var(--primary); margin-bottom: 24px;
         }
-        .step-card:hover { transform: translateY(-4px); }
-        .step-icon-wrap {
-            width: 48px; height: 48px; border-radius: 8px;
-            background: var(--tint); color: var(--primary);
-            display: flex; align-items: center; justify-content: center; margin-bottom: 32px;
-        }
-        .step-icon-wrap svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 1.5; }
-        .step-title {
-            font-size: 18px; font-weight: 700; color: var(--black); margin-bottom: 12px; letter-spacing: -0.01em;
-        }
-        .step-desc { font-size: 15px; color: var(--grey); line-height: 1.6; }
+        .problem-title { font-size: clamp(32px, 4vw, 48px); font-weight: 900; color: var(--black); line-height: 1.1; letter-spacing: -0.04em; margin-bottom: 24px; }
+        .problem-desc { font-size: 18px; color: var(--grey-dark); line-height: 1.6; font-weight: 500; }
 
-        /* --- 5. Premium UI Mockup --- */
+        /* Overlapping CV Cards Visual */
+        .problem-visuals { position: relative; height: 320px; perspective: 1000px; }
+        .p-card {
+            position: absolute; width: 100%; max-width: 380px; background: var(--bg-white); border: 1px solid var(--border);
+            border-radius: 12px; padding: 24px; box-shadow: var(--shadow-float);
+            transition: all 0.8s var(--ease-snappy); opacity: 0; transform-origin: bottom right;
+        }
+        .p-card.active { opacity: 1; }
+        .p-card.active.c1 { transform: rotate(-6deg) translate(-20px, 0px); z-index: 1; }
+        .p-card.active.c2 { transform: rotate(2deg) translate(20px, 40px); z-index: 2; }
+        .p-card.active.c3 { transform: rotate(-2deg) translate(0px, 80px); z-index: 3; border: 2px solid #EF4444; }
+        
+        .pc-header { font-size: 14px; font-weight: 700; color: var(--grey-light); margin-bottom: 12px; border-bottom: 1px dashed var(--border); padding-bottom: 8px; }
+        .pc-text { font-size: 18px; font-weight: 800; color: var(--black); }
+        .pc-alert { display: inline-block; background: #FEF2F2; color: #EF4444; font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 4px; margin-top: 12px; }
+
+        /* --- 4. Interactive Roadmap Section --- */
+        .roadmap-section {
+            padding: 140px 24px; background-color: var(--bg-white);
+        }
+        .roadmap-header { text-align: center; margin-bottom: 80px; }
+        .roadmap-header .section-title { font-size: clamp(36px, 5vw, 48px); font-weight: 900; color: var(--black); letter-spacing: -0.04em; }
+        
+        .roadmap-container {
+            max-width: 800px; margin: 0 auto; position: relative; padding-left: 48px;
+        }
+        
+        /* The Line */
+        .roadmap-line-bg { position: absolute; left: 15px; top: 0; bottom: 0; width: 4px; background: var(--border); border-radius: 4px; }
+        .roadmap-line-fill { position: absolute; left: 15px; top: 0; width: 4px; height: 0%; background: var(--primary); border-radius: 4px; transition: height 0.4s ease-out; }
+        
+        .roadmap-step { position: relative; margin-bottom: 64px; opacity: 0; transform: translateX(20px); transition: all 0.6s var(--ease-snappy); }
+        .roadmap-step:last-child { margin-bottom: 0; }
+        .roadmap-step.active { opacity: 1; transform: translateX(0); }
+        
+        /* The Dot */
+        .roadmap-dot {
+            position: absolute; left: -43px; top: 0; width: 24px; height: 24px;
+            background: var(--bg-white); border: 4px solid var(--border); border-radius: 50%;
+            transition: all 0.4s ease; z-index: 2;
+        }
+        .roadmap-step.active .roadmap-dot { border-color: var(--primary); background: var(--primary); box-shadow: 0 0 0 6px var(--tint); }
+        
+        /* Step Content */
+        .rm-card {
+            background: var(--bg-white); border: 1px solid var(--border); border-radius: 16px; padding: 40px;
+            box-shadow: var(--shadow-card); transition: transform 0.3s var(--ease-snappy);
+        }
+        .rm-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-float); }
+        
+        .rm-step-num { font-size: 14px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+        .rm-title { font-size: 24px; font-weight: 800; color: var(--black); margin-bottom: 16px; letter-spacing: -0.02em; }
+        .rm-desc { font-size: 16px; color: var(--grey-dark); line-height: 1.6; }
+
+        /* --- 5. Clean Structured Mockup --- */
         .mockup-section {
-            padding: 160px 24px; text-align: center; position: relative;
-            background-color: var(--bg-white);
+            padding: 120px 24px; text-align: center; background-color: var(--bg-offwhite);
+            border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
         }
-        /* Subtle architectural dot grid */
-        .mockup-section::before {
-            content: ''; position: absolute; inset: 0;
-            background-image: radial-gradient(var(--border) 1px, transparent 1px);
-            background-size: 24px 24px; opacity: 0.6; pointer-events: none;
-        }
-        .mockup-section .section-title {
-            font-size: clamp(32px, 4vw, 40px); font-weight: 800; color: var(--black);
-            margin-bottom: 80px; letter-spacing: -0.03em; position: relative; z-index: 2;
-        }
+        .mockup-section .section-title { font-size: clamp(36px, 5vw, 48px); font-weight: 900; color: var(--black); margin-bottom: 64px; letter-spacing: -0.04em; }
         
-        .mockup-wrapper {
-            position: relative; max-width: 640px; margin: 0 auto; z-index: 2;
-        }
-        
-        /* The High-Fidelity UI Card */
         .ui-card {
-            background: var(--bg-white); border-radius: 16px; text-align: left;
-            box-shadow: var(--shadow-float); border: 1px solid var(--border);
-            overflow: hidden;
+            max-width: 640px; margin: 0 auto; background: var(--bg-white);
+            border: 1px solid var(--border); border-radius: 20px; text-align: left;
+            box-shadow: var(--shadow-float); overflow: hidden;
         }
         
-        /* Mac-style Window Chrome */
-        .ui-chrome {
-            height: 40px; background: var(--bg-offwhite); border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; padding: 0 16px; gap: 8px;
+        .ui-header {
+            padding: 32px 40px; border-bottom: 1px solid var(--border); background: var(--bg-white);
+            display: flex; justify-content: space-between; align-items: flex-start;
         }
-        .ui-dot { width: 10px; height: 10px; border-radius: 50%; background: #E4E4E7; }
+        .ui-profile-wrap { display: flex; gap: 20px; align-items: center; }
+        .ui-avatar {
+            width: 64px; height: 64px; background: var(--black); color: var(--bg-white);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700;
+        }
+        .ui-name { font-size: 24px; font-weight: 900; color: var(--black); letter-spacing: -0.03em; }
+        .ui-headline { font-size: 15px; color: var(--grey); font-weight: 500; margin-top: 2px; }
+        
+        .ui-badge {
+            background: var(--bg-white); border: 1px solid var(--primary); color: var(--primary);
+            font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 999px;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .ui-badge svg { width: 14px; height: 14px; fill: currentColor; }
         
         .ui-body { padding: 40px; }
+        .ui-entry-title { font-size: 20px; font-weight: 800; color: var(--black); }
+        .ui-entry-company { font-size: 16px; font-weight: 600; color: var(--grey); margin-top: 4px; }
+        .ui-entry-date { font-size: 14px; font-weight: 600; color: var(--grey-light); margin-top: 4px; margin-bottom: 24px; }
         
-        /* Profile Header */
-        .ui-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 32px; }
-        .ui-profile-info { display: flex; gap: 16px; align-items: center; }
-        .ui-avatar {
-            width: 64px; height: 64px; border-radius: 50%; background: var(--bg-offwhite); border: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 600; color: var(--black);
+        .ui-outcome {
+            font-size: 16px; color: var(--black); line-height: 1.6;
+            padding-bottom: 32px; border-bottom: 1px dashed var(--border); margin-bottom: 32px;
         }
-        .ui-name { font-size: 20px; font-weight: 700; color: var(--black); letter-spacing: -0.02em; }
-        .ui-headline { font-size: 14px; color: var(--grey); margin-top: 2px; }
         
-        /* Verified Pill */
-        .ui-verified-pill {
-            display: inline-flex; align-items: center; gap: 6px; background: var(--tint);
-            color: var(--primary); font-size: 12px; font-weight: 600; padding: 6px 12px;
-            border-radius: 999px; border: 1px solid rgba(45, 106, 79, 0.1);
-        }
-        .ui-verified-pill svg { width: 12px; height: 12px; fill: currentColor; }
+        .ui-verifier-box { display: flex; align-items: center; gap: 16px; background: var(--tint); padding: 16px 20px; border-radius: 12px; }
+        .ui-v-avatar { width: 44px; height: 44px; background: var(--bg-white); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
+        .ui-v-info { flex: 1; }
+        .ui-v-name { font-size: 15px; font-weight: 800; color: var(--black); }
+        .ui-v-role { font-size: 13px; color: var(--primary); font-weight: 600; }
 
-        /* Experience Entry */
-        .ui-entry { border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
-        .ui-role-title { font-size: 16px; font-weight: 700; color: var(--black); }
-        .ui-company { font-size: 14px; color: var(--grey-dark); font-weight: 500; margin-top: 2px; }
-        .ui-date { font-size: 13px; color: var(--grey-light); margin-top: 2px; margin-bottom: 16px; }
-        .ui-outcome { font-size: 15px; color: var(--black); line-height: 1.6; padding-bottom: 24px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
-        
-        /* Verification Meta */
-        .ui-meta-block { display: flex; align-items: center; gap: 12px; }
-        .ui-meta-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--bg-offwhite); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--grey); }
-        .ui-meta-text { font-size: 13px; }
-        .ui-meta-name { font-weight: 600; color: var(--black); }
-        .ui-meta-role { color: var(--grey); }
-
-        /* UI Card Internal Staggered Reveal */
-        .ui-item { opacity: 0; transform: translateY(10px); transition: all 0.6s var(--ease-snappy); }
-        .ui-card.active .ui-item { opacity: 1; transform: translateY(0); }
-        .ui-card.active .d1 { transition-delay: 0.1s; }
-        .ui-card.active .d2 { transition-delay: 0.2s; }
-        .ui-card.active .d3 { transition-delay: 0.3s; }
-
-        /* --- 6. Final CTA --- */
+        /* --- 6. Final CTA Section --- */
         .final-cta {
-            background-color: var(--primary); padding: 140px 24px; text-align: center;
+            background-color: var(--primary); padding: 120px 24px; text-align: center;
         }
-        .final-cta-title {
-            font-size: clamp(40px, 6vw, 56px); font-weight: 800; color: var(--bg-white);
-            margin-bottom: 24px; letter-spacing: -0.03em;
-        }
-        .final-cta-subtitle {
-            font-size: clamp(18px, 2.5vw, 22px); color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 48px; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.5;
-        }
+        .final-cta-title { font-size: clamp(36px, 5vw, 56px); font-weight: 900; color: var(--bg-white); margin-bottom: 24px; letter-spacing: -0.04em; }
+        .final-cta-subtitle { font-size: clamp(18px, 2.5vw, 22px); color: var(--tint); font-weight: 500; margin-bottom: 48px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5; }
         .final-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            background-color: var(--bg-white); color: var(--primary);
-            font-weight: 600; font-size: 16px; padding: 18px 40px; border-radius: 8px;
-            transition: transform 0.2s var(--ease-snappy); margin-bottom: 20px; gap: 10px;
+            display: inline-flex; align-items: center; justify-content: center; background-color: var(--bg-white); color: var(--black);
+            font-weight: 800; font-size: 18px; padding: 24px 48px; border-radius: 12px; transition: transform 0.2s var(--ease-snappy); margin-bottom: 16px; gap: 12px;
         }
+        .final-btn:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .final-btn svg { transition: transform 0.3s var(--ease-snappy); }
-        .final-btn:hover { transform: scale(0.98); }
-        .final-btn:hover svg { transform: translateX(4px); }
-        .final-note { font-size: 13px; color: rgba(255, 255, 255, 0.6); }
+        .final-btn:hover svg { transform: translateX(6px); }
 
-        /* --- 7. Footer --- */
+        /* --- 7. Dark Minimalist Footer --- */
         .footer {
-            background-color: var(--bg-white); padding: 80px 24px 40px;
-            border-top: 1px solid var(--border);
+            background-color: var(--black); color: var(--bg-white); padding: 80px 24px 40px;
         }
         .footer-grid {
-            display: grid; grid-template-columns: 1fr; gap: 48px; margin-bottom: 80px; text-align: center;
+            display: grid; grid-template-columns: 1fr; gap: 40px; margin-bottom: 64px; text-align: center;
         }
-        @media (min-width: 768px) {
-            .footer-grid { grid-template-columns: 2fr 1fr 1fr; text-align: left; align-items: start; }
-        }
-        .footer-logo-wrap .logo { justify-content: center; margin-bottom: 16px; }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; text-align: left; } }
+        
+        .footer-logo-wrap .logo { justify-content: center; margin-bottom: 20px; color: var(--bg-white); }
+        .footer-logo-wrap .logo-verified { color: var(--bg-white); }
+        .footer-logo-wrap .logo-work { color: var(--grey-light); }
         @media (min-width: 768px) { .footer-logo-wrap .logo { justify-content: flex-start; } }
-        .footer-tagline { font-size: 14px; color: var(--grey); line-height: 1.6; }
+        
+        .footer-tagline { font-size: 15px; color: var(--grey-light); line-height: 1.6; }
+        
         .footer-links { display: flex; flex-direction: column; gap: 16px; align-items: center; }
-        @media (min-width: 768px) { .footer-links { flex-direction: row; justify-content: center; gap: 40px; } }
-        .footer-links a { font-size: 14px; color: var(--grey); font-weight: 500; transition: color 0.2s; }
-        .footer-links a:hover { color: var(--black); }
+        @media (min-width: 768px) { .footer-links { align-items: flex-start; } }
+        .footer-links a { font-size: 14px; color: var(--grey-light); font-weight: 500; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--bg-white); }
         
         .footer-socials { display: flex; justify-content: center; gap: 16px; }
         @media (min-width: 768px) { .footer-socials { justify-content: flex-end; } }
-        
-        /* High-end minimalist icon buttons */
         .footer-socials a {
-            color: var(--grey-dark); display: flex; align-items: center; justify-content: center;
-            width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border);
-            transition: all 0.2s var(--ease-snappy); background: var(--bg-white);
+            color: var(--bg-white); display: flex; align-items: center; justify-content: center;
+            width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.2s var(--ease-snappy); background: transparent;
         }
-        .footer-socials a:hover { color: var(--primary); border-color: var(--primary); transform: scale(0.95); }
+        .footer-socials a:hover { border-color: var(--primary); background: var(--primary); transform: translateY(-4px); }
         .footer-socials svg { width: 18px; height: 18px; fill: currentColor; }
-        /* Stroke specific for mail icon */
         .footer-socials a.stroke-icon svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         
-        .footer-bottom {
-            border-top: 1px solid var(--border); padding-top: 32px; text-align: center;
-        }
-        .footer-copyright { font-size: 13px; color: var(--grey-light); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 32px; text-align: center; }
+        .footer-copyright { font-size: 13px; color: rgba(255,255,255,0.4); }
     </style>
 </head>
 <body>
 
-    <!-- Section 1: Navbar -->
+    <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="/" class="logo" aria-label="VerifiedWork Home">
                 <span class="logo-verified">verified</span>
-                <span class="logo-dot"></span>
+                <!-- Logo Badge matching exactly the provided image -->
+                <span class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="12" fill="#2D6A4F"/>
+                        <path d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
                 <span class="logo-work">work</span>
             </a>
             <a href="https://tally.so/r/your-form-url" target="_blank" rel="noopener noreferrer">
@@ -351,140 +363,165 @@
         </div>
     </nav>
 
-    <!-- Section 2: Hero -->
-    <section class="hero">
+    <!-- Hero Section -->
+    <section class="hero" id="heroArea">
+        <!-- Parallax Floating Visuals -->
+        <div class="hero-visual v-left">
+            <div class="v-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="v-text"><div class="v-title">Identity Verified</div><div class="v-sub">via LinkedIn</div></div>
+        </div>
+        <div class="hero-visual v-right">
+            <div class="v-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+            <div class="v-text"><div class="v-title">Project Confirmed</div><div class="v-sub">by Manager</div></div>
+        </div>
+
         <div class="hero-badge">
-            Intent-based hiring is here
+            Intent-based hiring is here.
         </div>
         
         <h1 class="hero-title">
-            <div class="mask-wrap">
-                <span class="mask-text hero-text-1">Stop being filtered.</span>
-            </div>
-            <div class="mask-wrap">
-                <span class="mask-text hero-text-2">Start being <span class="text-primary">found.</span></span>
-            </div>
+            <span style="display:block">Stop being filtered.</span>
+            <span>Start being</span>
+            <span class="word-carousel">
+                <span class="carousel-word active">found.</span>
+                <span class="carousel-word">hired.</span>
+                <span class="carousel-word">seen.</span>
+                <span class="carousel-word">verified.</span>
+            </span>
         </h1>
         
-        <p class="hero-subtitle reveal-up reveal-delay-1">
+        <p class="hero-subtitle">
             Hiring based on what you’ve done. Not what your CV says.
         </p>
 
-        <div class="reveal-up reveal-delay-2">
+        <div class="hero-cta">
             <a href="https://tally.so/r/your-form-url" target="_blank" rel="noopener noreferrer" class="hero-cta-btn">
                 Claim Your Early Access
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </a>
             
             <div class="hero-guarantee">
-                Join the waitlist <span class="dot">&bull;</span> We reach out personally before launch <span class="dot">&bull;</span> Founding member price guaranteed
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                Join the waitlist
             </div>
         </div>
     </section>
 
-    <!-- Section 3: Problem Statement -->
+    <!-- Visual Problem Section -->
     <section class="problem-section">
-        <span class="section-label reveal-up">Why VerifiedWork</span>
-        <div class="problem-lines" id="problemLines">
-            <div class="mask-wrap"><span class="mask-text problem-text">AI wrote the resume.</span></div>
-            <div class="mask-wrap"><span class="mask-text problem-text">AI screened the resume.</span></div>
-            <div class="mask-wrap"><span class="mask-text problem-text">Nobody checked if any of it was real.</span></div>
-        </div>
-        <p class="problem-desc reveal-up problem-desc-reveal">
-            Recruiters can’t tell the difference between real experience and a well-written lie. VerifiedWork adds the human layer that’s been missing — verified by real people who actually worked with you.
-        </p>
-    </section>
-
-    <!-- Section 4: How it works -->
-    <section class="how-it-works">
-        <div class="container">
-            <h2 class="section-title reveal-up">How it works</h2>
-            <div class="steps-grid">
-                <div class="step-card reveal-up">
-                    <div class="step-icon-wrap">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 20H21M16.5 3.50023C16.8978 3.1024 17.4374 2.87891 18 2.87891C18.2786 2.87891 18.5544 2.93378 18.8118 3.04038C19.0692 3.14699 19.303 3.30324 19.5 3.50023C19.697 3.69721 19.8532 3.93106 19.9598 4.18843C20.0665 4.4458 20.1213 4.72165 20.1213 5.00023C20.1213 5.2788 20.0665 5.55465 19.9598 5.81202C19.8532 6.06939 19.697 6.30324 19.5 6.50023L7 19.0002L3 20.0002L4 16.0002L16.5 3.50023Z" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3 class="step-title">Add your work</h3>
-                    <p class="step-desc">Add a project, internship, or role. Describe what you built and what the outcome was.</p>
+        <div class="problem-container">
+            <div class="problem-text-content reveal-up">
+                <span class="section-label">The Problem</span>
+                <h2 class="problem-title">Hiring is broken.</h2>
+                <p class="problem-desc">
+                    AI writes the resumes. AI screens the resumes. Nobody checks if any of it was real.<br><br>
+                    Recruiters can’t tell the difference between actual experience and a well-written lie. VerifiedWork adds the human layer that’s been missing.
+                </p>
+            </div>
+            
+            <div class="problem-visuals">
+                <div class="p-card c1 pcard-anim">
+                    <div class="pc-header">Resume_Final_v3.pdf</div>
+                    <div class="pc-text">Led a team of 15 engineers to scale infrastructure by 400%...</div>
+                    <div class="pc-alert">AI Generated</div>
                 </div>
-                <div class="step-card reveal-up" style="transition-delay: 0.1s;">
-                    <div class="step-icon-wrap">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M16 7L18 9L23 4M8.5 11C10.7091 11 12.5 9.20914 12.5 7C12.5 4.79086 10.7091 3 8.5 3C6.29086 3 4.5 4.79086 4.5 7C4.5 9.20914 6.29086 11 8.5 11Z" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3 class="step-title">Your verifier confirms</h3>
-                    <p class="step-desc">Invite your manager, professor, or client. They confirm in 90 seconds — no app needed, no corporate email required.</p>
+                <div class="p-card c2 pcard-anim" style="transition-delay: 0.2s">
+                    <div class="pc-header">ATS_Screening_Log</div>
+                    <div class="pc-text">Candidate match: 98% based on keyword optimization.</div>
+                    <div class="pc-alert">AI Screened</div>
                 </div>
-                <div class="step-card reveal-up" style="transition-delay: 0.2s;">
-                    <div class="step-icon-wrap">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 22S8 18 8 12V5L12 3L16 5V12C16 18 12 22 12 22Z" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9 12L11 14L15 10" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3 class="step-title">Share your profile</h3>
-                    <p class="step-desc">Get a public profile link with verified badges. Share it in job applications, proposals, or your LinkedIn bio.</p>
+                <div class="p-card c3 pcard-anim" style="transition-delay: 0.4s">
+                    <div class="pc-header">Reality Check</div>
+                    <div class="pc-text">"Wait, did they actually build this or just sit in the meetings?"</div>
+                    <div class="pc-alert" style="background:var(--black); color:white;">Unverified</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section 5: Refined Minimal UI Mockup -->
+    <!-- Roadmap / How it works -->
+    <section class="roadmap-section" id="roadmapSection">
+        <div class="container">
+            <div class="roadmap-header reveal-up">
+                <h2 class="section-title">How it works</h2>
+            </div>
+            
+            <div class="roadmap-container">
+                <div class="roadmap-line-bg"></div>
+                <div class="roadmap-line-fill" id="roadmapFill"></div>
+                
+                <div class="roadmap-step step-anim">
+                    <div class="roadmap-dot"></div>
+                    <div class="rm-card">
+                        <div class="rm-step-num">Step 1</div>
+                        <h3 class="rm-title">Add your work</h3>
+                        <p class="rm-desc">Add a project, internship, or role. Describe what you built and what the actual business outcome was.</p>
+                    </div>
+                </div>
+                
+                <div class="roadmap-step step-anim">
+                    <div class="roadmap-dot"></div>
+                    <div class="rm-card">
+                        <div class="rm-step-num">Step 2</div>
+                        <h3 class="rm-title">Your verifier confirms</h3>
+                        <p class="rm-desc">Invite your manager, professor, or client. They confirm in 90 seconds — no app needed, no corporate email required.</p>
+                    </div>
+                </div>
+                
+                <div class="roadmap-step step-anim">
+                    <div class="roadmap-dot"></div>
+                    <div class="rm-card">
+                        <div class="rm-step-num">Step 3</div>
+                        <h3 class="rm-title">Share your profile</h3>
+                        <p class="rm-desc">Get a public profile link with heavy verified badges. Share it in job applications, proposals, or your LinkedIn bio.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mockup Section -->
     <section class="mockup-section">
         <h2 class="section-title reveal-up">What your profile looks like</h2>
         
-        <div class="mockup-wrapper reveal-up" style="transition-delay: 0.1s;">
-            <div class="ui-card" id="uiCard">
-                <div class="ui-chrome">
-                    <div class="ui-dot"></div>
-                    <div class="ui-dot"></div>
-                    <div class="ui-dot"></div>
+        <div class="ui-card reveal-up" style="transition-delay: 0.1s;">
+            <div class="ui-header">
+                <div class="ui-profile-wrap">
+                    <div class="ui-avatar">AC</div>
+                    <div>
+                        <div class="ui-name">Alex Chen</div>
+                        <div class="ui-headline">Product Design Intern</div>
+                    </div>
+                </div>
+                <div class="ui-badge">
+                    <svg viewBox="0 0 24 24"><path d="M9 12.5L11 14.5L15.5 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+                    Verified
+                </div>
+            </div>
+            
+            <div class="ui-body">
+                <div class="ui-entry-title">Product Design Intern</div>
+                <div class="ui-entry-company">Rocketship Labs</div>
+                <div class="ui-entry-date">Jun 2023 — Dec 2023</div>
+                
+                <div class="ui-outcome">
+                    Redesigned the core onboarding flow across iOS and Web. Reduced user drop-off by 34%.
                 </div>
                 
-                <div class="ui-body">
-                    <!-- Header -->
-                    <div class="ui-header ui-item d1">
-                        <div class="ui-profile-info">
-                            <div class="ui-avatar">AC</div>
-                            <div>
-                                <div class="ui-name">Alex Chen</div>
-                                <div class="ui-headline">Product Design Intern</div>
-                            </div>
-                        </div>
-                        <div class="ui-verified-pill">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 12.5L11 14.5L15.5 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-                            Verified Member
-                        </div>
-                    </div>
-                    
-                    <!-- Content Block -->
-                    <div class="ui-entry ui-item d2">
-                        <div class="ui-role-title">Product Design Intern <span style="color:var(--grey-light); font-weight:400;">at</span> Rocketship Labs</div>
-                        <div class="ui-date">Jun 2023 — Dec 2023</div>
-                        <div class="ui-outcome">
-                            Redesigned the onboarding flow. Reduced drop-off by 34%.
-                        </div>
-                        
-                        <!-- Verification Ledger -->
-                        <div class="ui-meta-block">
-                            <div class="ui-meta-avatar">SJ</div>
-                            <div class="ui-meta-text">
-                                <span class="ui-meta-name">Verified by Sarah Jenkins</span> <span class="ui-meta-role">· Founder, via LinkedIn</span><br>
-                                <span style="color:var(--grey-light); font-size:12px;">May 2026</span>
-                            </div>
-                        </div>
+                <div class="ui-verifier-box">
+                    <div class="ui-v-avatar">SJ</div>
+                    <div class="ui-v-info">
+                        <div class="ui-v-name">Verified by Sarah Jenkins</div>
+                        <div class="ui-v-role">Founder, via LinkedIn</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section 6: Final CTA -->
+    <!-- Final CTA -->
     <section class="final-cta">
         <div class="container">
             <h2 class="final-cta-title reveal-up">Your work deserves proof.</h2>
@@ -493,8 +530,8 @@
             <div class="reveal-up" style="transition-delay: 0.2s;">
                 <a href="https://tally.so/r/your-form-url" target="_blank" rel="noopener noreferrer" class="final-btn">
                     Claim Your Early Access
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </a>
                 <div class="final-note">Free to join. No credit card.</div>
@@ -502,14 +539,19 @@
         </div>
     </section>
 
-    <!-- Section 7: Footer -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-logo-wrap">
                     <a href="/" class="logo" aria-label="VerifiedWork Home">
                         <span class="logo-verified">verified</span>
-                        <span class="logo-dot"></span>
+                        <span class="logo-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="12" fill="#2D6A4F"/>
+                                <path d="M7 12.5L10.5 16L17 9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
                         <span class="logo-work">work</span>
                     </a>
                     <div class="footer-tagline">Human validation in an AI world.</div>
@@ -540,82 +582,110 @@
         </div>
     </footer>
 
-    <!-- Intersection Observer & Scroll Scripts -->
+    <!-- Interactive Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // 1. Precise Hero Load Animation
-            setTimeout(() => {
-                document.querySelector('.hero-text-1').classList.add('active');
-            }, 50); // Instant start
-            setTimeout(() => {
-                document.querySelector('.hero-text-2').classList.add('active');
-            }, 150); // Snappy 100ms follow-up
-            
-            // Fade up the hero subtext and buttons manually for perfect timing
-            setTimeout(() => {
-                document.querySelector('.reveal-delay-1').classList.add('active');
-            }, 250);
-            setTimeout(() => {
-                document.querySelector('.reveal-delay-2').classList.add('active');
-            }, 350);
+            // 1. Word Carousel Logic
+            const words = document.querySelectorAll('.carousel-word');
+            if (words.length > 0) {
+                let currentIndex = 0;
+                setInterval(() => {
+                    const currentWord = words[currentIndex];
+                    currentWord.classList.remove('active');
+                    currentWord.classList.add('out');
+                    
+                    currentIndex = (currentIndex + 1) % words.length;
+                    
+                    const nextWord = words[currentIndex];
+                    nextWord.classList.remove('out');
+                    nextWord.classList.add('active');
+                }, 2000); 
+            }
 
-            // 2. Scroll Observer for all normal elements
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px 0px -10% 0px',
-                threshold: 0.1
-            };
+            // 2. Parallax Effect for Hero Visuals
+            const heroArea = document.getElementById('heroArea');
+            const vLeft = document.querySelector('.v-left');
+            const vRight = document.querySelector('.v-right');
 
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        // Skip elements handled by specific logic
-                        if (!entry.target.classList.contains('reveal-delay-1') && 
-                            !entry.target.classList.contains('reveal-delay-2')) {
+            if (heroArea && vLeft && vRight) {
+                heroArea.addEventListener('mousemove', (e) => {
+                    const x = (window.innerWidth / 2 - e.pageX) / 40;
+                    const y = (window.innerHeight / 2 - e.pageY) / 40;
+                    vLeft.style.transform = `translate(${x}px, ${y}px)`;
+                    vRight.style.transform = `translate(${-x}px, ${-y}px)`;
+                });
+            }
+
+            // 3. Guaranteed Visibility Fallback
+            const allElementsToReveal = document.querySelectorAll('.reveal-up, .pcard-anim, .step-anim');
+            setTimeout(() => {
+                allElementsToReveal.forEach(el => el.classList.add('active'));
+            }, 1200);
+
+            // 4. Scroll Observer Logic
+            if ('IntersectionObserver' in window) {
+                const standardObserver = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
                             entry.target.classList.add('active');
+                            obs.unobserve(entry.target);
                         }
-                        obs.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
+                    });
+                }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
-            // Attach to standard reveal elements
-            document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
-            
-            // Attach to UI Card to trigger its internal animations
-            const uiCard = document.getElementById('uiCard');
-            if(uiCard) observer.observe(uiCard);
+                document.querySelectorAll('.reveal-up').forEach(el => standardObserver.observe(el));
 
-            // 3. High-End Staggered Mask Reveal for Problem Section
-            const problemLines = document.querySelectorAll('.problem-text');
-            const problemDesc = document.querySelector('.problem-desc-reveal');
+                // Problem Cards Cascade Observer
+                const pcardObserver = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            document.querySelectorAll('.pcard-anim').forEach(el => el.classList.add('active'));
+                            obs.disconnect();
+                        }
+                    });
+                }, { threshold: 0.4 });
+                const problemSection = document.querySelector('.problem-section');
+                if (problemSection) pcardObserver.observe(problemSection);
+            }
+
+            // 5. Dynamic Roadmap Scroll Timeline
+            const roadmapSection = document.getElementById('roadmapSection');
+            const roadmapFill = document.getElementById('roadmapFill');
+            const roadmapSteps = document.querySelectorAll('.step-anim');
             
-            const problemObserver = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        problemLines.forEach((line, index) => {
-                            setTimeout(() => {
-                                line.classList.add('active');
-                            }, index * 100); // Fast 100ms cascade
+            if (roadmapSection && roadmapFill && roadmapSteps.length > 0) {
+                window.addEventListener('scroll', () => {
+                    const rect = roadmapSection.getBoundingClientRect();
+                    const winH = window.innerHeight;
+                    
+                    // Check if section is in view
+                    if (rect.top < winH && rect.bottom > 0) {
+                        // Calculate percentage
+                        const sectionTop = rect.top - (winH / 2); // Start filling when section is halfway up
+                        const sectionHeight = rect.height;
+                        let progress = (Math.abs(sectionTop) / sectionHeight) * 100;
+                        
+                        if (sectionTop > 0) progress = 0;
+                        if (progress > 100) progress = 100;
+                        
+                        roadmapFill.style.height = `${progress}%`;
+                        
+                        // Activate steps based on fill progress
+                        roadmapSteps.forEach((step, index) => {
+                            const stepThreshold = (index * 33) + 15; // approximate percentage down the line
+                            if (progress > stepThreshold) {
+                                step.classList.add('active');
+                            }
                         });
-                        
-                        setTimeout(() => {
-                            if(problemDesc) problemDesc.classList.add('active');
-                        }, problemLines.length * 100 + 100);
-                        
-                        obs.disconnect();
                     }
-                });
-            }, { threshold: 0.5 });
-            
-            const problemSection = document.getElementById('problemLines');
-            if (problemSection) problemObserver.observe(problemSection);
+                }, { passive: true });
+            }
 
-            // 4. Navbar Sleek Scroll Border
+            // 6. Navbar Sleek Border on Scroll
             const navbar = document.getElementById('navbar');
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 10) {
+                if (window.scrollY > 20) {
                     navbar.classList.add('scrolled');
                 } else {
                     navbar.classList.remove('scrolled');
