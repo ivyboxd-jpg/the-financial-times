@@ -3,147 +3,679 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VerifiedWork LinkedIn Banner</title>
-    <!-- Importing fonts to match the image exactly -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Playfair+Display:ital,wght@1,700;1,900&display=swap" rel="stylesheet">
+    <title>VerifiedWork | Intent-based hiring is here.</title>
     <style>
+        /* --- Premium CSS Variables --- */
         :root {
-            --navy: #1B2B4B;
-            --blue-accent: #4A90D9;
-            --white: #FFFFFF;
-            --logo-black: #000000;
-            --check-green: #24a17b;
+            --bg-white: #FFFFFF;
+            --bg-offwhite: #FAFAFA;
+            --bg-grey: #F3F4F6;
+            --primary: #2D6A4F;
+            --primary-hover: #1B4332;
+            --secondary-green: #40916C;
+            --tint: #D8F3DC;
+            --tint-light: #EBF8EE;
+            --black: #111111;
+            --grey-dark: #4B5563;
+            --grey: #6B7280;
+            --grey-light: #9CA3AF;
+            --border: #E5E7EB;
+            --border-light: #F3F4F6;
+            
+            /* Premium Shadows */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --shadow-xl: 0 20px 40px -10px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.02);
+            --shadow-glow: 0 20px 80px -20px rgba(45, 106, 79, 0.25);
+            
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
         }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-
-        /* EXACT LINKEDIN DIMENSIONS */
-        .banner {
-            width: 1584px;
-            height: 396px;
-            background-color: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 100px;
-            box-sizing: border-box;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        /* --- LOGO SECTION --- */
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .verified-text {
             font-family: 'Inter', sans-serif;
-            font-weight: 900;
-            font-size: 82px;
-            color: var(--logo-black);
-            letter-spacing: -3px;
+            background-color: var(--bg-white);
+            color: var(--black);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
         }
 
-        /* The green dot with checkmark */
-        .dot-icon {
-            width: 54px;
-            height: 54px;
-            background-color: var(--check-green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 10px;
-            position: relative;
-            top: 5px;
-        }
+        a { text-decoration: none; color: inherit; }
+        button { border: none; cursor: pointer; font-family: inherit; }
 
-        .dot-icon::after {
-            content: '';
-            width: 12px;
-            height: 24px;
-            border: solid white;
-            border-width: 0 6px 6px 0;
-            transform: rotate(45deg);
-            margin-bottom: 6px;
-        }
-
-        .work-text {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-weight: 900;
-            font-size: 96px;
-            color: var(--logo-black);
-            letter-spacing: -1px;
-        }
-
-        /* --- SLOGAN SECTION --- */
-        .slogan-container {
-            max-width: 600px;
-            text-align: right;
-        }
-
-        .slogan-text {
-            font-family: 'Inter', sans-serif;
-            font-size: 42px;
-            line-height: 1.1;
-            color: var(--navy);
-            font-weight: 900;
-            text-transform: uppercase;
-        }
-
-        .slogan-text span {
-            color: var(--blue-accent);
-            display: block;
-            font-size: 38px;
-            font-weight: 400;
-            text-transform: none;
-            margin-top: 5px;
-        }
-
-        /* Subtle professional accents */
-        .bottom-border {
-            position: absolute;
-            bottom: 0;
-            left: 0;
+        .container {
             width: 100%;
-            height: 10px;
-            background: linear-gradient(90deg, var(--navy) 0%, var(--blue-accent) 100%);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
+        /* --- Global Animations --- */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+        }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+
+        .mask-wrap {
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: bottom;
+            padding-bottom: 8px; 
+            margin-bottom: -8px;
+        }
+        .mask-text {
+            display: inline-block;
+            transform: translateY(110%);
+            transition: transform 1.2s var(--ease-out-expo);
+        }
+        .mask-text.active { transform: translateY(0); }
+
+        /* --- Section 1: Navbar --- */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid transparent;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: border-color 0.3s ease;
+        }
+        .navbar.scrolled { border-bottom: 1px solid var(--border-light); }
+        .navbar .container {
+            display: flex; justify-content: space-between; align-items: center; height: 80px;
+        }
+        .logo {
+            display: flex; align-items: center; font-size: 20px; letter-spacing: -0.04em;
+        }
+        .logo-verified { font-weight: 800; color: var(--black); }
+        .logo-dot {
+            width: 6px; height: 6px; background-color: var(--primary); border-radius: 50%; margin: 0 6px;
+        }
+        .logo-work { font-weight: 500; color: var(--grey); }
+        .nav-btn {
+            background-color: var(--primary); color: var(--bg-white);
+            font-weight: 600; font-size: 14px; padding: 10px 24px;
+            border-radius: 8px; transition: all 0.3s var(--ease-out-expo);
+        }
+        .nav-btn:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
+
+        /* --- Section 2: Hero --- */
+        .hero {
+            padding: 140px 24px 80px;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            max-width: 900px; margin: 0 auto; position: relative;
+        }
+        /* Subtle glowing orb behind hero */
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 600px; background: radial-gradient(circle, var(--tint-light) 0%, transparent 70%);
+            opacity: 0.6; z-index: -1; pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center;
+            background-color: var(--tint); color: var(--primary);
+            font-size: 13px; font-weight: 600; padding: 6px 16px;
+            border-radius: 999px; margin-bottom: 40px; letter-spacing: 0.02em; text-transform: uppercase;
+            opacity: 0; animation: fadeDown 1s var(--ease-out-expo) forwards;
+        }
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-title {
+            font-size: clamp(48px, 8vw, 84px); font-weight: 800; color: var(--black);
+            line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 32px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .hero-title .text-primary { color: var(--primary); }
+        .hero-subtitle {
+            font-size: clamp(18px, 2.5vw, 22px); color: var(--grey-dark); font-weight: 400;
+            max-width: 560px; margin: 0 auto 48px; line-height: 1.6; letter-spacing: -0.01em;
+        }
+        .hero-cta-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: var(--primary); color: var(--bg-white);
+            font-weight: 600; font-size: 16px; padding: 18px 40px;
+            border-radius: 12px; transition: all 0.3s var(--ease-out-expo);
+            margin-bottom: 24px; box-shadow: 0 8px 20px rgba(45, 106, 79, 0.2); gap: 10px;
+        }
+        .hero-cta-btn svg { transition: transform 0.3s var(--ease-out-expo); }
+        .hero-cta-btn:hover {
+            background-color: var(--primary-hover); transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(45, 106, 79, 0.3);
+        }
+        .hero-cta-btn:hover svg { transform: translateX(4px); }
+        .hero-guarantee {
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+            gap: 12px; font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 80px;
+        }
+        .hero-guarantee .dot { color: var(--primary); font-size: 10px; }
+        
+        .scroll-indicator {
+            color: var(--primary); animation: subtleBounce 2.5s infinite var(--ease-out-expo); opacity: 0.5;
+        }
+        @keyframes subtleBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+
+        /* --- Section 3: Problem Statement --- */
+        .problem-section {
+            padding: 120px 24px; max-width: 800px; margin: 0 auto; text-align: center;
+        }
+        .section-label {
+            display: inline-block; text-transform: uppercase; letter-spacing: 0.15em;
+            font-size: 12px; font-weight: 700; color: var(--grey-light); margin-bottom: 40px;
+        }
+        .problem-lines { display: flex; flex-direction: column; gap: 8px; margin-bottom: 48px; }
+        .problem-line {
+            font-size: clamp(32px, 5vw, 56px); font-weight: 800; color: var(--black);
+            line-height: 1.1; letter-spacing: -0.04em; opacity: 0.15;
+            transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+            transform: translateY(20px);
+        }
+        .problem-line.active { opacity: 1; transform: translateY(0); }
+        .problem-desc {
+            font-size: 20px; color: var(--grey-dark); line-height: 1.7; max-width: 640px; margin: 0 auto;
+        }
+
+        /* --- Section 4: How it works --- */
+        .how-it-works {
+            padding: 140px 0; background-color: var(--bg-white); position: relative;
+        }
+        .how-it-works .section-title {
+            text-align: center; font-size: clamp(36px, 4vw, 48px); font-weight: 800;
+            color: var(--black); margin-bottom: 80px; letter-spacing: -0.04em;
+        }
+        .steps-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+        @media (min-width: 768px) { .steps-grid { grid-template-columns: repeat(3, 1fr); } }
+        .step-card {
+            text-align: left; position: relative; padding: 16px;
+        }
+        .step-icon-wrap {
+            width: 64px; height: 64px; border-radius: 16px;
+            background: var(--bg-white); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center; margin-bottom: 32px;
+            box-shadow: var(--shadow-sm); position: relative;
+        }
+        /* Icon subtle glow effect */
+        .step-icon-wrap::before {
+            content: ''; position: absolute; inset: -1px; border-radius: 16px;
+            background: linear-gradient(135deg, var(--tint), transparent); z-index: -1; opacity: 0.5;
+        }
+        .step-icon-wrap svg { width: 28px; height: 28px; stroke: var(--primary); stroke-width: 1.5; }
+        .step-title {
+            font-size: 20px; font-weight: 700; color: var(--black); margin-bottom: 16px; letter-spacing: -0.02em;
+        }
+        .step-desc { font-size: 16px; color: var(--grey); line-height: 1.6; }
+
+        /* --- Section 5: Premium UI Mockup --- */
+        .mockup-section {
+            padding: 140px 24px; text-align: center; position: relative;
+            background-color: var(--bg-offwhite); border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light); overflow: hidden;
+        }
+        /* Engineering Grid Background */
+        .mockup-section::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(var(--border) 1px, transparent 1px);
+            background-size: 32px 32px; opacity: 0.5; pointer-events: none;
+        }
+        .mockup-section .section-title {
+            font-size: clamp(36px, 4vw, 48px); font-weight: 800; color: var(--black);
+            margin-bottom: 80px; letter-spacing: -0.04em; position: relative; z-index: 2;
+        }
+        
+        .mockup-wrapper {
+            position: relative; max-width: 680px; margin: 0 auto; z-index: 2;
+            perspective: 1000px;
+        }
+        .mockup-glow {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%);
+            width: 100%; height: 100%; background: var(--primary);
+            filter: blur(140px); opacity: 0.15; z-index: 0; border-radius: 50%; pointer-events: none;
+        }
+        
+        /* The Actual UI Card */
+        .ui-card {
+            background: var(--bg-white); border-radius: 24px; position: relative; z-index: 1;
+            box-shadow: var(--shadow-xl), var(--shadow-glow); border: 1px solid rgba(255,255,255,0.8);
+            overflow: hidden; text-align: left; transform: translateZ(0);
+        }
+        
+        /* Browser Chrome */
+        .ui-chrome {
+            height: 48px; background: rgba(249, 250, 251, 0.8); backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-light); display: flex; align-items: center; padding: 0 20px; gap: 8px;
+        }
+        .ui-dot { width: 10px; height: 10px; border-radius: 50%; background: #E5E7EB; }
+        .ui-dot:nth-child(1) { background: #FF5F56; }
+        .ui-dot:nth-child(2) { background: #FFBD2E; }
+        .ui-dot:nth-child(3) { background: #27C93F; }
+
+        /* Profile Banner & Avatar */
+        .ui-banner {
+            height: 120px; background: linear-gradient(135deg, #EBF8EE 0%, #D8F3DC 100%); position: relative;
+        }
+        .ui-body { padding: 0 40px 40px; position: relative; }
+        
+        .ui-avatar-group {
+            position: relative; margin-top: -48px; margin-bottom: 24px; display: inline-block;
+        }
+        .ui-avatar {
+            width: 96px; height: 96px; background: var(--black); border-radius: 50%;
+            border: 4px solid var(--bg-white); display: flex; align-items: center; justify-content: center;
+            color: var(--bg-white); font-size: 32px; font-weight: 600; box-shadow: var(--shadow-sm);
+        }
+        .ui-verified-tick {
+            position: absolute; bottom: 4px; right: 4px; width: 28px; height: 28px;
+            background: var(--primary); border: 3px solid var(--bg-white); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .ui-verified-tick svg { width: 14px; height: 14px; stroke: var(--bg-white); stroke-width: 3; }
+
+        /* Profile Info */
+        .ui-name { font-size: 28px; font-weight: 800; color: var(--black); letter-spacing: -0.03em; margin-bottom: 4px; }
+        .ui-headline { font-size: 16px; color: var(--grey); font-weight: 400; margin-bottom: 32px; }
+
+        /* Data Section */
+        .ui-section-title {
+            font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--grey-light); font-weight: 700; margin-bottom: 16px;
+        }
+        
+        .ui-experience-card {
+            background: var(--bg-white); border: 1px solid var(--border); border-radius: 16px; padding: 24px;
+        }
+        .ui-role-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+        .ui-role-title { font-size: 18px; font-weight: 700; color: var(--black); }
+        .ui-company { color: var(--grey-dark); font-weight: 500; font-size: 15px; margin-top: 2px; }
+        .ui-date { font-size: 14px; color: var(--grey-light); font-weight: 500; }
+        
+        .ui-outcome {
+            font-size: 16px; color: var(--black); line-height: 1.6; padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-light); margin-bottom: 24px;
+        }
+        .ui-outcome strong { color: var(--primary); background: var(--tint-light); padding: 2px 6px; border-radius: 4px; }
+
+        /* Verification Identity Block */
+        .ui-verifier { display: flex; align-items: center; gap: 16px; }
+        .ui-verifier-avatar {
+            width: 40px; height: 40px; border-radius: 50%; background: #F3F4F6;
+            display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: var(--grey-dark);
+        }
+        .ui-verifier-info { flex: 1; }
+        .ui-verifier-name { font-size: 14px; font-weight: 700; color: var(--black); display: flex; align-items: center; gap: 6px; }
+        .ui-verifier-name svg { width: 14px; height: 14px; fill: var(--primary); }
+        .ui-verifier-role { font-size: 13px; color: var(--grey); margin-top: 2px; }
+        .ui-timestamp { font-size: 12px; color: var(--grey-light); font-weight: 500; }
+
+        /* Mockup internal animations */
+        .anim-item { opacity: 0; transform: translateY(15px); transition: all 0.6s var(--ease-spring); }
+        .ui-card.active .anim-item { opacity: 1; transform: translateY(0); }
+        .ui-card.active .delay-1 { transition-delay: 0.2s; }
+        .ui-card.active .delay-2 { transition-delay: 0.3s; }
+        .ui-card.active .delay-3 { transition-delay: 0.4s; }
+        .ui-card.active .delay-4 { transition-delay: 0.5s; }
+
+        /* --- Section 6: Final CTA --- */
+        .final-cta {
+            background-color: var(--primary); padding: 140px 24px; text-align: center; position: relative; overflow: hidden;
+        }
+        .final-cta::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 40px 40px; opacity: 0.5; pointer-events: none;
+        }
+        .final-cta-content { position: relative; z-index: 1; }
+        .final-cta-title {
+            font-size: clamp(40px, 6vw, 64px); font-weight: 800; color: var(--bg-white);
+            margin-bottom: 24px; letter-spacing: -0.04em;
+        }
+        .final-cta-subtitle {
+            font-size: clamp(18px, 2.5vw, 22px); color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 56px; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.5;
+        }
+        .final-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: var(--bg-white); color: var(--primary);
+            font-weight: 700; font-size: 18px; padding: 20px 48px; border-radius: 12px;
+            transition: all 0.3s var(--ease-out-expo); margin-bottom: 20px; gap: 10px;
+        }
+        .final-btn svg { transition: transform 0.3s var(--ease-out-expo); }
+        .final-btn:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .final-btn:hover svg { transform: translateX(6px); }
+        .final-note { font-size: 14px; color: rgba(255, 255, 255, 0.6); font-weight: 500; }
+
+        /* --- Section 7: Footer --- */
+        .footer {
+            background-color: var(--bg-white); padding: 80px 24px 40px;
+        }
+        .footer-grid {
+            display: grid; grid-template-columns: 1fr; gap: 48px; margin-bottom: 80px; text-align: center;
+        }
+        @media (min-width: 768px) {
+            .footer-grid { grid-template-columns: 2fr 1fr 1fr; text-align: left; align-items: start; }
+        }
+        .footer-logo-wrap .logo { justify-content: center; margin-bottom: 20px; }
+        @media (min-width: 768px) { .footer-logo-wrap .logo { justify-content: flex-start; } }
+        .footer-tagline { font-size: 15px; color: var(--grey); line-height: 1.6; }
+        .footer-links { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+        @media (min-width: 768px) { .footer-links { flex-direction: row; justify-content: center; gap: 40px; } }
+        .footer-links a { font-size: 15px; color: var(--grey); font-weight: 500; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--black); }
+        .footer-socials { display: flex; justify-content: center; gap: 16px; }
+        @media (min-width: 768px) { .footer-socials { justify-content: flex-end; } }
+        .footer-socials a {
+            color: var(--grey); transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+            width: 44px; height: 44px; border-radius: 50%; background-color: var(--bg-offwhite); border: 1px solid var(--border-light);
+        }
+        .footer-socials a:hover { color: var(--primary); background-color: var(--tint-light); border-color: var(--tint); transform: translateY(-2px); }
+        .footer-socials svg { width: 20px; height: 20px; fill: currentColor; }
+        .footer-bottom {
+            border-top: 1px solid var(--border-light); padding-top: 32px; text-align: center;
+        }
+        .footer-copyright { font-size: 14px; color: var(--grey-light); }
     </style>
 </head>
 <body>
 
-    <div class="banner">
-        <!-- Logo Recreated from Image -->
-        <div class="logo-container">
-            <div class="verified-text">verified</div>
-            <div class="dot-icon"></div>
-            <div class="work-text">work</div>
+    <!-- Section 1: Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="/" class="logo" aria-label="VerifiedWork Home">
+                <span class="logo-verified">verified</span>
+                <span class="logo-dot"></span>
+                <span class="logo-work">work</span>
+            </a>
+            <a href="https://tally.so/r/your-form-url" target="_blank" rel="noopener noreferrer">
+                <button class="nav-btn">Join Waitlist</button>
+            </a>
         </div>
+    </nav>
 
-        <!-- Professional Typography Slogan -->
-        <div class="slogan-container">
-            <div class="slogan-text">
-                Human validation
-                <span>in an AI world.</span>
+    <!-- Section 2: Hero -->
+    <section class="hero">
+        <div class="hero-badge">
+            Intent-based hiring is here
+        </div>
+        
+        <h1 class="hero-title">
+            <div class="mask-wrap">
+                <span class="mask-text text-delay-1">Stop being filtered.</span>
+            </div>
+            <div class="mask-wrap">
+                <span class="mask-text text-delay-2">Start being <span class="text-primary">found.</span></span>
+            </div>
+        </h1>
+        
+        <p class="hero-subtitle reveal-up" style="transition-delay: 0.6s;">
+            Hiring based on what you’ve done. Not what your CV says.
+        </p>
+
+        <div class="reveal-up" style="transition-delay: 0.7s;">
+            <a href="https://tally.so/r/your-form-url" target="_blank" rel="noopener noreferrer" class="hero-cta-btn">
+                Claim Your Early Access
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            
+            <div class="hero-guarantee">
+                Join the waitlist <span class="dot">&bull;</span> We reach out personally before launch <span class="dot">&bull;</span> Founding member price guaranteed
             </div>
         </div>
 
-        <!-- Decorative UI Element -->
-        <div class="bottom-border"></div>
-    </div>
+        <div class="scroll-indicator reveal-up" style="transition-delay: 1s;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+    </section>
 
+    <!-- Section 3: Problem Statement -->
+    <section class="problem-section">
+        <span class="section-label reveal-up">Why VerifiedWork</span>
+        <div class="problem-lines" id="problemLines">
+            <span class="problem-line">AI wrote the resume.</span>
+            <span class="problem-line">AI screened the resume.</span>
+            <span class="problem-line">Nobody checked if any of it was real.</span>
+        </div>
+        <p class="problem-desc reveal-up">
+            Recruiters can’t tell the difference between real experience and a well-written lie. VerifiedWork adds the human layer that’s been missing — verified by real people who actually worked with you.
+        </p>
+    </section>
+
+    <!-- Section 4: How it works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title reveal-up">How it works</h2>
+            <div class="steps-grid">
+                <div class="step-card reveal-up">
+                    <div class="step-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 20H21M16.5 3.50023C16.8978 3.1024 17.4374 2.87891 18 2.87891C18.2786 2.87891 18.5544 2.93378 18.8118 3.04038C19.0692 3.14699 19.303 3.30324 19.5 3.50023C19.697 3.69721 19.8532 3.93106 19.9598 4.18843C20.0665 4.4458 20.1213 4.72165 20.1213 5.00023C20.1213 5.2788 20.0665 5.55465 19.9598 5.81202C19.8532 6.06939 19.697 6.30324 19.5 6.50023L7 19.0002L3 20.0002L4 16.0002L16.5 3.50023Z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="step-title">Add your work</h3>
+                    <p class="step-desc">Add a project, internship, or role. Describe what you built and what the outcome was.</p>
+                </div>
+                <div class="step-card reveal-up" style="transition-delay: 0.1s;">
+                    <div class="step-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M16 7L18 9L23 4M8.5 11C10.7091 11 12.5 9.20914 12.5 7C12.5 4.79086 10.7091 3 8.5 3C6.29086 3 4.5 4.79086 4.5 7C4.5 9.20914 6.29086 11 8.5 11Z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="step-title">Your verifier confirms</h3>
+                    <p class="step-desc">Invite your manager, professor, or client. They confirm in 90 seconds — no app needed, no corporate email required.</p>
+                </div>
+                <div class="step-card reveal-up" style="transition-delay: 0.2s;">
+                    <div class="step-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22S8 18 8 12V5L12 3L16 5V12C16 18 12 22 12 22Z" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 12L11 14L15 10" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="step-title">Share your profile</h3>
+                    <p class="step-desc">Get a public profile link with verified badges. Share it in job applications, proposals, or your LinkedIn bio.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Premium Visual / Mockup -->
+    <section class="mockup-section">
+        <h2 class="section-title reveal-up">What your profile looks like</h2>
+        
+        <div class="mockup-wrapper reveal-up" style="transition-delay: 0.2s;">
+            <div class="mockup-glow"></div>
+            
+            <!-- The UI Card Container -->
+            <div class="ui-card" id="uiCard">
+                <div class="ui-chrome">
+                    <div class="ui-dot"></div>
+                    <div class="ui-dot"></div>
+                    <div class="ui-dot"></div>
+                </div>
+                
+                <div class="ui-banner"></div>
+                
+                <div class="ui-body">
+                    <!-- Avatar & Badge -->
+                    <div class="ui-avatar-group anim-item delay-1">
+                        <div class="ui-avatar">AC</div>
+                        <div class="ui-verified-tick">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                    </div>
+                    
+                    <!-- User Header -->
+                    <div class="anim-item delay-2">
+                        <h3 class="ui-name">Alex Chen</h3>
+                        <p class="ui-headline">Product Designer · Building user-centric tools</p>
+                    </div>
+                    
+                    <!-- Experience Block -->
+                    <div class="ui-section-title anim-item delay-3">Verified Experience</div>
+                    
+                    <div class="ui-experience-card anim-item delay-4">
+                        <div class="ui-role-header">
+                            <div>
+                                <div class="ui-role-title">Product Design Intern</div>
+                                <div class="ui-company">Rocketship Labs</div>
+                            </div>
+                            <div class="ui-date">Jun 2023 — Dec 2023</div>
+                        </div>
+                        
+                        <div class="ui-outcome">
+                            Redesigned the core onboarding flow across iOS and Web. Reduced user drop-off by <strong>34%</strong> in Q3.
+                        </div>
+                        
+                        <!-- Verifier Block -->
+                        <div class="ui-verifier">
+                            <div class="ui-verifier-avatar">SJ</div>
+                            <div class="ui-verifier-info">
+                                <div class="ui-verifier-name">
+                                    Verified by Sarah Jenkins
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.2"/><path d="M9 12.5L11 14.5L15.5 9" stroke="#2D6A4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+                                </div>
+                                <div class="ui-verifier-role">Founder at Rocketship Labs · via LinkedIn</div>
+                            </div>
+                            <div class="ui-timestamp">May 2026</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Final CTA -->
+    <section class="final-cta">
+        <div class="container final-cta-content">
+            <h2 class="final-cta-title reveal-up">Your work deserves proof.</h2>
+            <p class="final-cta-subtitle reveal-up" style="transition-delay: 0.1s;">Join the waitlist and be first to build your verified profile.</p>
+            
+            <div class="reveal-up" style="transition-delay: 0.2s;">
+                <a href="https://tally.so/r/your-form-url" target="_blank" rel="noopener noreferrer" class="final-btn">
+                    Claim Your Early Access
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <div class="final-note">Free to join. No credit card.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-logo-wrap">
+                    <a href="/" class="logo" aria-label="VerifiedWork Home">
+                        <span class="logo-verified">verified</span>
+                        <span class="logo-dot"></span>
+                        <span class="logo-work">work</span>
+                    </a>
+                    <div class="footer-tagline">Human validation in an AI world.</div>
+                </div>
+                
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact</a>
+                </div>
+                
+                <div class="footer-socials">
+                    <a href="#" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Twitter / X">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2026 Aavishkar Technologies Private Limited. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Animations Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hero Title Mask Animation Trigger
+            setTimeout(() => {
+                document.querySelector('.text-delay-1').classList.add('active');
+            }, 100);
+            setTimeout(() => {
+                document.querySelector('.text-delay-2').classList.add('active');
+            }, 400);
+
+            // General Viewport Animations Observer
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -10% 0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Standard Reveals
+            document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+            
+            // UI Mockup Inner Animations
+            const uiCard = document.getElementById('uiCard');
+            if(uiCard) observer.observe(uiCard);
+
+            // Problem Lines Staggered Observer (High Impact Reveal)
+            const problemLines = document.querySelectorAll('.problem-line');
+            const problemObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        problemLines.forEach((line, index) => {
+                            setTimeout(() => {
+                                line.classList.add('active');
+                            }, index * 250);
+                        });
+                        problemObserver.disconnect();
+                    }
+                });
+            }, { threshold: 0.4 });
+            
+            const problemSection = document.getElementById('problemLines');
+            if (problemSection) problemObserver.observe(problemSection);
+            
+            // Navbar Scroll Effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 10) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }, { passive: true });
+        });
+    </script>
 </body>
 </html>
