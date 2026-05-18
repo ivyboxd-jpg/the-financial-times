@@ -15,10 +15,12 @@
 
     html, body {
         width: 1080px;
-        height: 1080px;
+        /* Changed from fixed height to min-height and allowed vertical scrolling so the bottom doesn't get cut off on smaller screens */
+        min-height: 1080px; 
         margin: 0;
         padding: 0;
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto; 
         background-color: #FFFFFF;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -172,9 +174,9 @@
     <div class="poster">
         <div class="nav">
             <div class="nav-left">
-                <!-- Sized to be fully visible but not overpowered, replacing the text completely -->
-                <a href="#">
-                    <img class="nav-logo-icon" src="https://placehold.co/80x80/F3F4F6/6B7280/png?text=ICON" alt="Icon Placeholder">
+                <!-- Icon Placeholder Link -->
+                <a href="https://verifiedwork.co">
+                    <img class="nav-logo-icon" src="https://placehold.co/40x40/F3F4F6/6B7280/png?text=ICON" alt="Icon Placeholder">
                 </a>
             </div>
         </div>
@@ -192,4 +194,18 @@
 
         <div class="stat-card">
             <div class="stat-card-left">7×</div>
-            <di
+            <div class="stat-card-right">
+                <div class="stat-card-right-top">Referred candidates are 7× more likely to get hired than job-board applicants.</div>
+                <div class="stat-card-right-bottom">— Pinpoint, 4.5M applications, 2023</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="footer">
+            <div class="footer-cta">Join the Waitlist &rarr;</div>
+            <!-- verifiedwork.co is safely right here -->
+            <div class="footer-url">verifiedwork.co</div>
+        </div>
+    </div>
+</body>
