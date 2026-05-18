@@ -28,13 +28,12 @@
         width: 1080px;
         height: 1080px;
         background-color: #FFFFFF;
-        padding: 72px;
+        padding: 64px 72px 40px 72px;
+        position: relative;
         display: flex;
         flex-direction: column;
-        position: relative;
     }
 
-    /* Top Navigation Area */
     .nav {
         display: flex;
         justify-content: space-between;
@@ -47,106 +46,84 @@
         align-items: center;
     }
 
-    .nav-logo-bold {
-        font-family: 'Inter', sans-serif;
-        font-weight: 700;
-        font-size: 28px;
-        color: #111111;
-        letter-spacing: -1px;
-        line-height: 1;
-    }
-
     .nav-logo-icon {
-        width: 28px;
-        height: 28px;
-        margin: 0 6px;
+        height: 48px; /* Perfect size—visible but not too big */
+        width: auto;
+        max-width: 200px;
         object-fit: contain;
-        /* Subtle background just in case the link is empty */
-        background-color: #F3F4F6;
-        border-radius: 6px;
         display: block;
     }
 
-    .nav-logo-light {
-        font-family: 'Inter', sans-serif;
-        font-weight: 400;
-        font-size: 28px;
-        color: #888888;
-        letter-spacing: -1px;
-        line-height: 1;
-    }
-
     .nav-right {
-        background-color: #FAFAFA;
-        border: 1px solid #EAEAEA;
+        background-color: #D8F3DC;
         border-radius: 999px;
-        padding: 10px 18px;
+        padding: 8px 18px;
         display: flex;
         align-items: center;
         gap: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
     }
 
     .nav-right-dot {
-        width: 6px;
-        height: 6px;
-        background-color: #111111;
-        border-radius: 50%;
+        width: 7px;
+        height: 7px;
+        background-color: #2D6A4F;
+        border-radius: 4px;
     }
 
     .nav-right-text {
         font-family: 'JetBrains Mono', monospace;
         font-weight: 500;
         font-size: 12px;
-        color: #111111;
+        color: #1F4A37;
         text-transform: uppercase;
         letter-spacing: 0.06em;
         line-height: 12px;
     }
 
-    /* Main Typography */
     .headline {
         width: 936px;
         margin-top: 100px;
-        margin-bottom: 32px;
+        margin-bottom: 28px;
         font-family: 'Inter', sans-serif;
         font-weight: 700;
-        font-size: 112px;
-        line-height: 1.0;
+        font-size: 108px;
+        line-height: 108px;
         letter-spacing: -4px;
-        color: #111111;
+        color: #1A1A1A;
+    }
+
+    .headline span {
+        color: #2D6A4F;
     }
 
     .subline {
         width: 936px;
+        margin-bottom: 48px;
         font-family: 'Inter', sans-serif;
         font-weight: 400;
-        font-size: 24px;
-        line-height: 1.6;
-        color: #666666;
-        margin-bottom: 56px;
+        font-size: 22px;
+        line-height: 35px; /* 1.6 */
+        color: #6B7280;
     }
 
-    /* Stat Card */
     .stat-card {
         width: 936px;
-        background-color: #FAFAFA;
-        border: 1px solid #EAEAEA;
-        border-radius: 16px;
-        padding: 36px 40px;
+        background-color: #EBEBEB;
+        border-radius: 20px;
+        padding: 32px 40px;
         display: flex;
         align-items: center;
-        gap: 40px;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+        gap: 32px;
+        margin-bottom: 48px;
     }
 
     .stat-card-left {
         font-family: 'Inter', sans-serif;
-        font-weight: 700;
-        font-size: 88px;
-        color: #111111;
-        letter-spacing: -4px;
-        line-height: 1;
+        font-weight: 800;
+        font-size: 80px;
+        color: #2D6A4F;
+        letter-spacing: -3px;
+        line-height: 80px;
     }
 
     .stat-card-right {
@@ -158,8 +135,8 @@
         font-family: 'Inter', sans-serif;
         font-weight: 500;
         font-size: 18px;
-        color: #111111;
-        line-height: 1.5;
+        color: #1A1A1A;
+        line-height: 27px; /* 1.5 */
         margin-bottom: 8px;
     }
 
@@ -167,65 +144,54 @@
         font-family: 'JetBrains Mono', monospace;
         font-weight: 400;
         font-size: 12px;
-        color: #888888;
-        line-height: 1;
+        color: #9CA3AF;
+        line-height: 12px;
     }
 
-    /* Structural Divider */
     .divider {
         width: 936px;
         height: 1px;
-        background-color: #EAEAEA;
-        margin-top: 56px;
-        margin-bottom: 32px;
+        background-color: #F3F4F6;
+        margin-bottom: 28px;
     }
 
-    /* Footer Elements */
     .footer {
         width: 936px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: auto; /* Pushes footer perfectly to the bottom of the container */
+        margin-top: auto; /* Ensures the footer sits perfectly at the bottom */
     }
 
     .footer-cta {
-        background-color: #111111;
+        background-color: #1A1A1A;
         border-radius: 999px;
-        padding: 16px 32px;
+        padding: 14px 28px;
         font-family: 'Inter', sans-serif;
-        font-weight: 500;
+        font-weight: 600;
         font-size: 18px;
         color: #FFFFFF;
-        line-height: 1;
-        display: inline-flex;
+        line-height: 18px;
+        display: flex;
         align-items: center;
-        gap: 8px;
-        text-decoration: none;
+        justify-content: center;
     }
 
     .footer-url {
         font-family: 'JetBrains Mono', monospace;
         font-weight: 400;
-        font-size: 15px;
-        color: #888888;
-        line-height: 1;
-        text-decoration: none;
+        font-size: 14px;
+        color: #9CA3AF;
+        line-height: 14px;
     }
 </style>
 </head>
 <body>
     <div class="poster">
-        
-        <!-- Navbar -->
         <div class="nav">
             <div class="nav-left">
-                <div class="nav-logo-bold">verified</div>
-                
-                <!-- PASTE YOUR ICON LINK IN THE SRC BELOW -->
-                <img class="nav-logo-icon" src="https://i.postimg.cc/SsQnGfmg/logo-white.png" alt="Icon Placeholder">
-                
-                <div class="nav-logo-light">work</div>
+                <!-- PASTE YOUR IMAGE URL IN THE SRC BELOW -->
+                <img class="nav-logo-icon" src="https://i.postimg.cc/SsQnGfmg/logo-white.png" alt="Logo">
             </div>
             <div class="nav-right">
                 <div class="nav-right-dot"></div>
@@ -233,37 +199,11 @@
             </div>
         </div>
 
-        <!-- Hero Headline -->
         <div class="headline">
             You did<br>
-            the work.<br>
+            the <span>work.</span><br>
             Now prove it.
         </div>
 
-        <!-- Subline -->
         <div class="subline">
-            Human validation in an AI world.<br>
-            Verified by people who were actually there.
-        </div>
-
-        <!-- Stat Card -->
-        <div class="stat-card">
-            <div class="stat-card-left">7×</div>
-            <div class="stat-card-right">
-                <div class="stat-card-right-top">Referred candidates are 7× more likely to get hired than job-board applicants.</div>
-                <div class="stat-card-right-bottom">— Pinpoint, 4.5M applications, 2023</div>
-            </div>
-        </div>
-
-        <!-- Divider Line -->
-        <div class="divider"></div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footer-cta">Join the Waitlist &rarr;</div>
-            <div class="footer-url">www.verifiedwork.vercel.app</div>
-        </div>
-
-    </div>
-</body>
-</html>
+            Human validati
