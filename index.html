@@ -13,6 +13,21 @@
         padding: 0;
     }
 
+    /* 
+      @page margin: 0; removes the default browser headers and footers 
+      (date, URL, time, page numbers) when trying to print or save to PDF.
+    */
+    @media print {
+        @page {
+            size: 1080px 1080px;
+            margin: 0;
+        }
+        body {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+    }
+
     html, body {
         width: 1080px;
         height: 1080px;
@@ -28,10 +43,12 @@
         width: 1080px;
         height: 1080px;
         background-color: #FFFFFF;
-        padding: 72px;
+        padding: 64px 72px 40px 72px;
         display: flex;
         flex-direction: column;
-        position: relative;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 
     /* Top Navigation Area */
@@ -51,8 +68,8 @@
         font-family: 'Inter', sans-serif;
         font-weight: 700;
         font-size: 28px;
-        color: #111111;
-        letter-spacing: -1px;
+        color: #1A1A1A;
+        letter-spacing: -0.5px;
         line-height: 1;
     }
 
@@ -60,27 +77,25 @@
         font-family: 'Inter', sans-serif;
         font-weight: 400;
         font-size: 28px;
-        color: #888888;
-        letter-spacing: -1px;
+        color: #6B7280;
+        letter-spacing: -0.5px;
         line-height: 1;
-        margin-left: 6px;
+        margin-left: 2px;
     }
 
     .nav-right {
-        background-color: #FAFAFA;
-        border: 1px solid #EAEAEA;
+        background-color: #D8F3DC;
         border-radius: 999px;
         padding: 10px 18px;
         display: flex;
         align-items: center;
         gap: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
     }
 
     .nav-right-dot {
-        width: 6px;
-        height: 6px;
-        background-color: #111111;
+        width: 7px;
+        height: 7px;
+        background-color: #2D6A4F;
         border-radius: 50%;
     }
 
@@ -88,7 +103,7 @@
         font-family: 'JetBrains Mono', monospace;
         font-weight: 500;
         font-size: 12px;
-        color: #111111;
+        color: #1F4A37;
         text-transform: uppercase;
         letter-spacing: 0.06em;
         line-height: 12px;
@@ -97,23 +112,27 @@
     /* Main Typography */
     .headline {
         width: 936px;
-        margin-top: 100px;
-        margin-bottom: 32px;
+        margin-top: 108px;
+        margin-bottom: 28px;
         font-family: 'Inter', sans-serif;
         font-weight: 700;
-        font-size: 112px;
+        font-size: 108px;
         line-height: 1.0;
         letter-spacing: -4px;
-        color: #111111;
+        color: #1A1A1A;
+    }
+
+    .headline span {
+        color: #2D6A4F;
     }
 
     .subline {
         width: 936px;
         font-family: 'Inter', sans-serif;
         font-weight: 400;
-        font-size: 24px;
+        font-size: 22px;
         line-height: 1.6;
-        color: #666666;
+        color: #6B7280;
         margin-bottom: 56px;
     }
 
@@ -122,7 +141,7 @@
         width: 936px;
         background-color: #FAFAFA;
         border: 1px solid #EAEAEA;
-        border-radius: 16px;
+        border-radius: 20px;
         padding: 36px 40px;
         display: flex;
         align-items: center;
@@ -132,10 +151,10 @@
 
     .stat-card-left {
         font-family: 'Inter', sans-serif;
-        font-weight: 700;
+        font-weight: 800;
         font-size: 88px;
-        color: #111111;
-        letter-spacing: -4px;
+        color: #2D6A4F;
+        letter-spacing: -3px;
         line-height: 1;
     }
 
@@ -148,7 +167,7 @@
         font-family: 'Inter', sans-serif;
         font-weight: 500;
         font-size: 18px;
-        color: #111111;
+        color: #1A1A1A;
         line-height: 1.5;
         margin-bottom: 8px;
     }
@@ -157,7 +176,7 @@
         font-family: 'JetBrains Mono', monospace;
         font-weight: 400;
         font-size: 12px;
-        color: #888888;
+        color: #9CA3AF;
         line-height: 1;
     }
 
@@ -165,7 +184,7 @@
     .divider {
         width: 936px;
         height: 1px;
-        background-color: #EAEAEA;
+        background-color: #F3F4F6;
         margin-top: 56px;
         margin-bottom: 32px;
     }
@@ -176,21 +195,20 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: auto; /* Pushes footer perfectly to the bottom of the container */
+        margin-top: auto;
     }
 
     .footer-cta {
-        background-color: #111111;
+        background-color: #1A1A1A;
         border-radius: 999px;
         padding: 16px 32px;
         font-family: 'Inter', sans-serif;
-        font-weight: 500;
+        font-weight: 600;
         font-size: 18px;
         color: #FFFFFF;
         line-height: 1;
         display: inline-flex;
         align-items: center;
-        gap: 8px;
         text-decoration: none;
     }
 
@@ -198,7 +216,7 @@
         font-family: 'JetBrains Mono', monospace;
         font-weight: 400;
         font-size: 15px;
-        color: #888888;
+        color: #9CA3AF;
         line-height: 1;
         text-decoration: none;
     }
@@ -222,7 +240,7 @@
         <!-- Hero Headline -->
         <div class="headline">
             You did<br>
-            the work.<br>
+            the <span>work.</span><br>
             Now prove it.
         </div>
 
