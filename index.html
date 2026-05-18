@@ -7,6 +7,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
     html, body {
         width: 1080px;
         height: 1080px;
@@ -18,16 +24,46 @@
         -moz-osx-font-smoothing: grayscale;
     }
 
-    * {
-        box-sizing: border-box;
-    }
-
     .poster {
         width: 1080px;
         height: 1080px;
         background-color: #FFFFFF;
-        padding: 64px 72px 40px 72px;
         position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    /* Ambient Background Glows for Visual Polish */
+    .glow-top-right {
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(216, 243, 220, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+        top: -150px;
+        right: -150px;
+        border-radius: 50%;
+        z-index: -1;
+    }
+
+    .glow-bottom-left {
+        position: absolute;
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(circle, rgba(243, 244, 246, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
+        bottom: -200px;
+        left: -200px;
+        border-radius: 50%;
+        z-index: -1;
+    }
+
+    .content-wrapper {
+        width: 1080px;
+        height: 1080px;
+        padding: 64px 72px 40px 72px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 2;
     }
 
     .nav {
@@ -48,18 +84,18 @@
         font-size: 28px;
         color: #1A1A1A;
         line-height: 28px;
+        letter-spacing: -0.5px;
     }
 
-    .nav-logo-circle {
-        width: 24px;
-        height: 24px;
-        background-color: #2D6A4F;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .nav-logo-image {
+        width: 28px;
+        height: 28px;
         margin-left: 8px;
         margin-right: 8px;
+        border-radius: 6px;
+        object-fit: cover;
+        /* Subtle shadow to make the placeholder sit nicely */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
     .nav-logo-work {
@@ -68,15 +104,19 @@
         font-size: 28px;
         color: #6B7280;
         line-height: 28px;
+        letter-spacing: -0.5px;
     }
 
     .nav-right {
-        background-color: #D8F3DC;
+        background-color: rgba(216, 243, 220, 0.8);
+        border: 1px solid #D8F3DC;
         border-radius: 999px;
         padding: 8px 18px;
         display: flex;
         align-items: center;
         gap: 8px;
+        box-shadow: 0 4px 12px rgba(45, 106, 79, 0.05);
+        backdrop-filter: blur(4px);
     }
 
     .nav-right-dot {
@@ -84,6 +124,7 @@
         height: 7px;
         background-color: #2D6A4F;
         border-radius: 4px;
+        box-shadow: 0 0 8px rgba(45, 106, 79, 0.4);
     }
 
     .nav-right-text {
@@ -98,14 +139,15 @@
 
     .headline {
         width: 936px;
-        margin-top: 108px;
-        margin-bottom: 28px;
+        margin-top: 100px;
+        margin-bottom: 24px;
         font-family: 'Inter', sans-serif;
         font-weight: 700;
         font-size: 108px;
         line-height: 108px;
         letter-spacing: -4px;
         color: #1A1A1A;
+        text-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
     }
 
     .headline span {
@@ -114,23 +156,25 @@
 
     .subline {
         width: 936px;
-        margin-bottom: 48px;
+        margin-bottom: 64px;
         font-family: 'Inter', sans-serif;
         font-weight: 400;
         font-size: 22px;
-        line-height: 35px; /* 1.6 */
+        line-height: 35px;
         color: #6B7280;
     }
 
     .stat-card {
         width: 936px;
-        background-color: #EBEBEB;
+        background: linear-gradient(145deg, #FFFFFF, #EBEBEB);
+        border: 1px solid #FFFFFF;
         border-radius: 20px;
         padding: 32px 40px;
         display: flex;
         align-items: center;
         gap: 32px;
-        margin-bottom: 48px;
+        margin-bottom: 56px;
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02);
     }
 
     .stat-card-left {
@@ -140,6 +184,7 @@
         color: #2D6A4F;
         letter-spacing: -3px;
         line-height: 80px;
+        text-shadow: 0 4px 12px rgba(45, 106, 79, 0.15);
     }
 
     .stat-card-right {
@@ -152,7 +197,7 @@
         font-weight: 500;
         font-size: 18px;
         color: #1A1A1A;
-        line-height: 27px; /* 1.5 */
+        line-height: 27px;
         margin-bottom: 8px;
     }
 
@@ -167,8 +212,8 @@
     .divider {
         width: 936px;
         height: 1px;
-        background-color: #F3F4F6;
-        margin-bottom: 28px;
+        background: linear-gradient(90deg, rgba(243,244,246,0) 0%, rgba(229,231,235,1) 15%, rgba(229,231,235,1) 85%, rgba(243,244,246,0) 100%);
+        margin-bottom: 32px;
     }
 
     .footer {
@@ -176,10 +221,12 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-top: auto;
     }
 
     .footer-cta {
-        background-color: #1A1A1A;
+        background: linear-gradient(180deg, #2A2A2A 0%, #1A1A1A 100%);
+        border: 1px solid #000000;
         border-radius: 999px;
         padding: 14px 28px;
         font-family: 'Inter', sans-serif;
@@ -190,6 +237,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: 0 12px 24px rgba(26, 26, 26, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+        text-decoration: none;
     }
 
     .footer-url {
@@ -198,51 +247,58 @@
         font-size: 14px;
         color: #9CA3AF;
         line-height: 14px;
+        text-decoration: none;
     }
 </style>
 </head>
 <body>
     <div class="poster">
-        <div class="nav">
-            <div class="nav-left">
-                <div class="nav-logo-verified">verified</div>
-                <div class="nav-logo-circle">
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.5 7.5L5.5 10.5L12.5 4" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+        <!-- Ambient Glow Elements -->
+        <div class="glow-top-right"></div>
+        <div class="glow-bottom-left"></div>
+
+        <div class="content-wrapper">
+            <div class="nav">
+                <div class="nav-left">
+                    <div class="nav-logo-verified">verified</div>
+                    
+                    <!-- PLACEHOLDER LINK FOR IMAGE LOGO -->
+                    <img class="nav-logo-image" src="YOUR_IMAGE_LINK_HERE.png" alt="Logo Placeholder">
+                    
+                    <div class="nav-logo-work">work</div>
                 </div>
-                <div class="nav-logo-work">work</div>
+                <div class="nav-right">
+                    <div class="nav-right-dot"></div>
+                    <div class="nav-right-text">PRIVATE BETA · WAITLIST OPEN</div>
+                </div>
             </div>
-            <div class="nav-right">
-                <div class="nav-right-dot"></div>
-                <div class="nav-right-text">PRIVATE BETA · WAITLIST OPEN</div>
+
+            <div class="headline">
+                You did<br>
+                the <span>work.</span><br>
+                Now prove it.
             </div>
-        </div>
 
-        <div class="headline">
-            You did<br>
-            the <span>work.</span><br>
-            Now prove it.
-        </div>
-
-        <div class="subline">
-            Human validation in an AI world.<br>
-            Verified by people who were actually there.
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-card-left">7×</div>
-            <div class="stat-card-right">
-                <div class="stat-card-right-top">Referred candidates are 7× more likely to get hired than job-board applicants.</div>
-                <div class="stat-card-right-bottom">— Pinpoint, 4.5M applications, 2023</div>
+            <div class="subline">
+                Human validation in an AI world.<br>
+                Verified by people who were actually there.
             </div>
-        </div>
 
-        <div class="divider"></div>
+            <div class="stat-card">
+                <div class="stat-card-left">7×</div>
+                <div class="stat-card-right">
+                    <div class="stat-card-right-top">Referred candidates are 7× more likely to get hired than job-board applicants.</div>
+                    <div class="stat-card-right-bottom">— Pinpoint, 4.5M applications, 2023</div>
+                </div>
+            </div>
 
-        <div class="footer">
-            <div class="footer-cta">Join the Waitlist &rarr;</div>
-            <div class="footer-url">verifiedwork.co</div>
+            <div class="divider"></div>
+
+            <div class="footer">
+                <!-- PLACEHOLDER LINK FOR CTA (if needed) -->
+                <a href="YOUR_DESTINATION_LINK_HERE" class="footer-cta">Join the Waitlist &rarr;</a>
+                <a href="https://verifiedwork.co" class="footer-url">verifiedwork.co</a>
+            </div>
         </div>
     </div>
 </body>
