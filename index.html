@@ -27,9 +27,8 @@
     .poster {
         width: 1080px;
         height: 1080px;
-        background-color: #FFFFFF;
         padding: 64px 72px 40px 72px;
-        position: relative;
+        background-color: #FFFFFF;
         display: flex;
         flex-direction: column;
     }
@@ -39,6 +38,8 @@
         justify-content: space-between;
         align-items: center;
         width: 936px;
+        height: 48px;
+        margin-bottom: 56px;
     }
 
     .nav-left {
@@ -47,11 +48,10 @@
     }
 
     .nav-logo-icon {
-        height: 48px; /* Perfect size—visible but not too big */
+        height: 40px;
         width: auto;
-        max-width: 200px;
-        object-fit: contain;
         display: block;
+        border-radius: 6px;
     }
 
     .nav-right {
@@ -61,6 +61,7 @@
         display: flex;
         align-items: center;
         gap: 8px;
+        height: 28px;
     }
 
     .nav-right-dot {
@@ -74,15 +75,14 @@
         font-family: 'JetBrains Mono', monospace;
         font-weight: 500;
         font-size: 12px;
+        line-height: 12px;
         color: #1F4A37;
         text-transform: uppercase;
         letter-spacing: 0.06em;
-        line-height: 12px;
     }
 
     .headline {
         width: 936px;
-        margin-top: 100px;
         margin-bottom: 28px;
         font-family: 'Inter', sans-serif;
         font-weight: 700;
@@ -92,7 +92,11 @@
         color: #1A1A1A;
     }
 
-    .headline span {
+    .headline-line {
+        height: 108px;
+    }
+
+    .headline-green {
         color: #2D6A4F;
     }
 
@@ -102,8 +106,12 @@
         font-family: 'Inter', sans-serif;
         font-weight: 400;
         font-size: 22px;
-        line-height: 35px; /* 1.6 */
+        line-height: 35px;
         color: #6B7280;
+    }
+
+    .subline-line {
+        height: 35px;
     }
 
     .stat-card {
@@ -121,9 +129,9 @@
         font-family: 'Inter', sans-serif;
         font-weight: 800;
         font-size: 80px;
-        color: #2D6A4F;
-        letter-spacing: -3px;
         line-height: 80px;
+        letter-spacing: -3px;
+        color: #2D6A4F;
     }
 
     .stat-card-right {
@@ -135,8 +143,8 @@
         font-family: 'Inter', sans-serif;
         font-weight: 500;
         font-size: 18px;
+        line-height: 27px;
         color: #1A1A1A;
-        line-height: 27px; /* 1.5 */
         margin-bottom: 8px;
     }
 
@@ -144,8 +152,8 @@
         font-family: 'JetBrains Mono', monospace;
         font-weight: 400;
         font-size: 12px;
-        color: #9CA3AF;
         line-height: 12px;
+        color: #9CA3AF;
     }
 
     .divider {
@@ -156,33 +164,34 @@
     }
 
     .footer {
-        width: 936px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: auto; /* Ensures the footer sits perfectly at the bottom */
+        width: 936px;
+        height: 50px;
     }
 
     .footer-cta {
         background-color: #1A1A1A;
         border-radius: 999px;
         padding: 14px 28px;
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        font-size: 18px;
-        color: #FFFFFF;
-        line-height: 18px;
+        height: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 18px;
+        color: #FFFFFF;
     }
 
     .footer-url {
         font-family: 'JetBrains Mono', monospace;
         font-weight: 400;
         font-size: 14px;
-        color: #9CA3AF;
         line-height: 14px;
+        color: #9CA3AF;
     }
 </style>
 </head>
@@ -190,8 +199,8 @@
     <div class="poster">
         <div class="nav">
             <div class="nav-left">
-                <!-- PASTE YOUR IMAGE URL IN THE SRC BELOW -->
-                <img class="nav-logo-icon" src="https://i.postimg.cc/SsQnGfmg/logo-white.png" alt="Logo">
+                <!-- Sized to be fully visible but not overpowered, replacing the text completely -->
+                <img class="nav-logo-icon" src="https://placehold.co/180x40/F3F4F6/6B7280/png?text=LOGO&font=Inter" alt="Logo Placeholder">
             </div>
             <div class="nav-right">
                 <div class="nav-right-dot"></div>
@@ -200,10 +209,30 @@
         </div>
 
         <div class="headline">
-            You did<br>
-            the <span>work.</span><br>
-            Now prove it.
+            <div class="headline-line">You did</div>
+            <div class="headline-line">the <span class="headline-green">work.</span></div>
+            <div class="headline-line">Now prove it.</div>
         </div>
 
         <div class="subline">
-            Human validati
+            <div class="subline-line">Human validation in an AI world.</div>
+            <div class="subline-line">Verified by people who were actually there.</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-card-left">7×</div>
+            <div class="stat-card-right">
+                <div class="stat-card-right-top">Referred candidates are 7× more likely to get hired than job-board applicants.</div>
+                <div class="stat-card-right-bottom">— Pinpoint, 4.5M applications, 2023</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="footer">
+            <div class="footer-cta">Join the Waitlist &rarr;</div>
+            <div class="footer-url">www.verifiedwork.co</div>
+        </div>
+    </div>
+</body>
+</html>
