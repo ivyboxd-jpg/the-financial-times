@@ -28,44 +28,13 @@
         width: 1080px;
         height: 1080px;
         background-color: #FFFFFF;
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
-    }
-
-    /* Ambient Background Glows for Visual Polish */
-    .glow-top-right {
-        position: absolute;
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(circle, rgba(216, 243, 220, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
-        top: -150px;
-        right: -150px;
-        border-radius: 50%;
-        z-index: -1;
-    }
-
-    .glow-bottom-left {
-        position: absolute;
-        width: 700px;
-        height: 700px;
-        background: radial-gradient(circle, rgba(243, 244, 246, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
-        bottom: -200px;
-        left: -200px;
-        border-radius: 50%;
-        z-index: -1;
-    }
-
-    .content-wrapper {
-        width: 1080px;
-        height: 1080px;
-        padding: 64px 72px 40px 72px;
+        padding: 72px;
         display: flex;
         flex-direction: column;
         position: relative;
-        z-index: 2;
     }
 
+    /* Top Navigation Area */
     .nav {
         display: flex;
         justify-content: space-between;
@@ -78,113 +47,96 @@
         align-items: center;
     }
 
-    .nav-logo-verified {
+    .nav-logo-bold {
         font-family: 'Inter', sans-serif;
         font-weight: 700;
         font-size: 28px;
-        color: #1A1A1A;
-        line-height: 28px;
-        letter-spacing: -0.5px;
+        color: #111111;
+        letter-spacing: -1px;
+        line-height: 1;
     }
 
-    .nav-logo-image {
-        width: 28px;
-        height: 28px;
-        margin-left: 8px;
-        margin-right: 8px;
-        border-radius: 6px;
-        object-fit: cover;
-        /* Subtle shadow to make the placeholder sit nicely */
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    }
-
-    .nav-logo-work {
+    .nav-logo-light {
         font-family: 'Inter', sans-serif;
         font-weight: 400;
         font-size: 28px;
-        color: #6B7280;
-        line-height: 28px;
-        letter-spacing: -0.5px;
+        color: #888888;
+        letter-spacing: -1px;
+        line-height: 1;
+        margin-left: 6px;
     }
 
     .nav-right {
-        background-color: rgba(216, 243, 220, 0.8);
-        border: 1px solid #D8F3DC;
+        background-color: #FAFAFA;
+        border: 1px solid #EAEAEA;
         border-radius: 999px;
-        padding: 8px 18px;
+        padding: 10px 18px;
         display: flex;
         align-items: center;
         gap: 8px;
-        box-shadow: 0 4px 12px rgba(45, 106, 79, 0.05);
-        backdrop-filter: blur(4px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
     }
 
     .nav-right-dot {
-        width: 7px;
-        height: 7px;
-        background-color: #2D6A4F;
-        border-radius: 4px;
-        box-shadow: 0 0 8px rgba(45, 106, 79, 0.4);
+        width: 6px;
+        height: 6px;
+        background-color: #111111;
+        border-radius: 50%;
     }
 
     .nav-right-text {
         font-family: 'JetBrains Mono', monospace;
         font-weight: 500;
         font-size: 12px;
-        color: #1F4A37;
+        color: #111111;
         text-transform: uppercase;
         letter-spacing: 0.06em;
         line-height: 12px;
     }
 
+    /* Main Typography */
     .headline {
         width: 936px;
         margin-top: 100px;
-        margin-bottom: 24px;
+        margin-bottom: 32px;
         font-family: 'Inter', sans-serif;
         font-weight: 700;
-        font-size: 108px;
-        line-height: 108px;
+        font-size: 112px;
+        line-height: 1.0;
         letter-spacing: -4px;
-        color: #1A1A1A;
-        text-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
-    }
-
-    .headline span {
-        color: #2D6A4F;
+        color: #111111;
     }
 
     .subline {
         width: 936px;
-        margin-bottom: 64px;
         font-family: 'Inter', sans-serif;
         font-weight: 400;
-        font-size: 22px;
-        line-height: 35px;
-        color: #6B7280;
+        font-size: 24px;
+        line-height: 1.6;
+        color: #666666;
+        margin-bottom: 56px;
     }
 
+    /* Stat Card */
     .stat-card {
         width: 936px;
-        background: linear-gradient(145deg, #FFFFFF, #EBEBEB);
-        border: 1px solid #FFFFFF;
-        border-radius: 20px;
-        padding: 32px 40px;
+        background-color: #FAFAFA;
+        border: 1px solid #EAEAEA;
+        border-radius: 16px;
+        padding: 36px 40px;
         display: flex;
         align-items: center;
-        gap: 32px;
-        margin-bottom: 56px;
-        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02);
+        gap: 40px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
     }
 
     .stat-card-left {
         font-family: 'Inter', sans-serif;
-        font-weight: 800;
-        font-size: 80px;
-        color: #2D6A4F;
-        letter-spacing: -3px;
-        line-height: 80px;
-        text-shadow: 0 4px 12px rgba(45, 106, 79, 0.15);
+        font-weight: 700;
+        font-size: 88px;
+        color: #111111;
+        letter-spacing: -4px;
+        line-height: 1;
     }
 
     .stat-card-right {
@@ -196,8 +148,8 @@
         font-family: 'Inter', sans-serif;
         font-weight: 500;
         font-size: 18px;
-        color: #1A1A1A;
-        line-height: 27px;
+        color: #111111;
+        line-height: 1.5;
         margin-bottom: 8px;
     }
 
@@ -205,101 +157,99 @@
         font-family: 'JetBrains Mono', monospace;
         font-weight: 400;
         font-size: 12px;
-        color: #9CA3AF;
-        line-height: 12px;
+        color: #888888;
+        line-height: 1;
     }
 
+    /* Structural Divider */
     .divider {
         width: 936px;
         height: 1px;
-        background: linear-gradient(90deg, rgba(243,244,246,0) 0%, rgba(229,231,235,1) 15%, rgba(229,231,235,1) 85%, rgba(243,244,246,0) 100%);
+        background-color: #EAEAEA;
+        margin-top: 56px;
         margin-bottom: 32px;
     }
 
+    /* Footer Elements */
     .footer {
         width: 936px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: auto;
+        margin-top: auto; /* Pushes footer perfectly to the bottom of the container */
     }
 
     .footer-cta {
-        background: linear-gradient(180deg, #2A2A2A 0%, #1A1A1A 100%);
-        border: 1px solid #000000;
+        background-color: #111111;
         border-radius: 999px;
-        padding: 14px 28px;
+        padding: 16px 32px;
         font-family: 'Inter', sans-serif;
-        font-weight: 600;
+        font-weight: 500;
         font-size: 18px;
         color: #FFFFFF;
-        line-height: 18px;
-        display: flex;
+        line-height: 1;
+        display: inline-flex;
         align-items: center;
-        justify-content: center;
-        box-shadow: 0 12px 24px rgba(26, 26, 26, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+        gap: 8px;
         text-decoration: none;
     }
 
     .footer-url {
         font-family: 'JetBrains Mono', monospace;
         font-weight: 400;
-        font-size: 14px;
-        color: #9CA3AF;
-        line-height: 14px;
+        font-size: 15px;
+        color: #888888;
+        line-height: 1;
         text-decoration: none;
     }
 </style>
 </head>
 <body>
     <div class="poster">
-        <!-- Ambient Glow Elements -->
-        <div class="glow-top-right"></div>
-        <div class="glow-bottom-left"></div>
-
-        <div class="content-wrapper">
-            <div class="nav">
-                <div class="nav-left">
-                    <div class="nav-logo-verified">verified</div>
-                    
-                    <!-- PLACEHOLDER LINK FOR IMAGE LOGO -->
-                    <img class="nav-logo-image" src="YOUR_IMAGE_LINK_HERE.png" alt="Logo Placeholder">
-                    
-                    <div class="nav-logo-work">work</div>
-                </div>
-                <div class="nav-right">
-                    <div class="nav-right-dot"></div>
-                    <div class="nav-right-text">PRIVATE BETA · WAITLIST OPEN</div>
-                </div>
+        
+        <!-- Navbar -->
+        <div class="nav">
+            <div class="nav-left">
+                <div class="nav-logo-bold">verified</div>
+                <div class="nav-logo-light">work</div>
             </div>
-
-            <div class="headline">
-                You did<br>
-                the <span>work.</span><br>
-                Now prove it.
-            </div>
-
-            <div class="subline">
-                Human validation in an AI world.<br>
-                Verified by people who were actually there.
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-card-left">7×</div>
-                <div class="stat-card-right">
-                    <div class="stat-card-right-top">Referred candidates are 7× more likely to get hired than job-board applicants.</div>
-                    <div class="stat-card-right-bottom">— Pinpoint, 4.5M applications, 2023</div>
-                </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="footer">
-                <!-- PLACEHOLDER LINK FOR CTA (if needed) -->
-                <a href="YOUR_DESTINATION_LINK_HERE" class="footer-cta">Join the Waitlist &rarr;</a>
-                <a href="https://verifiedwork.co" class="footer-url">verifiedwork.co</a>
+            <div class="nav-right">
+                <div class="nav-right-dot"></div>
+                <div class="nav-right-text">PRIVATE BETA · WAITLIST OPEN</div>
             </div>
         </div>
+
+        <!-- Hero Headline -->
+        <div class="headline">
+            You did<br>
+            the work.<br>
+            Now prove it.
+        </div>
+
+        <!-- Subline -->
+        <div class="subline">
+            Human validation in an AI world.<br>
+            Verified by people who were actually there.
+        </div>
+
+        <!-- Stat Card -->
+        <div class="stat-card">
+            <div class="stat-card-left">7×</div>
+            <div class="stat-card-right">
+                <div class="stat-card-right-top">Referred candidates are 7× more likely to get hired than job-board applicants.</div>
+                <div class="stat-card-right-bottom">— Pinpoint, 4.5M applications, 2023</div>
+            </div>
+        </div>
+
+        <!-- Divider Line -->
+        <div class="divider"></div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-cta">Join the Waitlist &rarr;</div>
+            <div class="footer-url">www.verifiedwork.vercel.app</div>
+        </div>
+
     </div>
 </body>
 </html>
