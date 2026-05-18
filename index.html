@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>our early stage chats.</title>
+  <title>Our Early Stage Chats</title>
   
-  <!-- Fonts -->
+  <!-- Fonts: Garamond for Narrative, Inter for UI, Caveat for highly visible handwriting -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&family=Reenie+Beanie&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   
   <!-- GSAP Core & ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -17,18 +17,18 @@
   <style>
     /* --- VARIABLES --- */
     :root {
-      --bg-color: #F5F5F0; /* Cream scrapbook paper */
-      --text-color: #2A2A2A;
-      --font-title: "EB Garamond", serif;
+      --bg-paper: #F2EFE9; /* Richer cream paper texture */
+      --text-main: #2A2A2A;
+      --font-narrative: "EB Garamond", serif;
       --font-ui: "Inter", -apple-system, sans-serif;
-      --font-handwriting: "Reenie Beanie", cursive;
+      --font-handwriting: "Caveat", cursive; /* More visible marker font */
       
       /* Instagram Dark Mode Colors */
       --ig-bg: #000000;
       --ig-received: #262626;
       --ig-sent: linear-gradient(170deg, #9333ea, #6366f1);
       --ig-text: #ffffff;
-      --ig-border: #1f1f1f;
+      --ig-border: #262626;
 
       /* WhatsApp Dark Mode Colors */
       --wa-bg: #0b141a;
@@ -43,16 +43,18 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: var(--font-title);
+      background-color: var(--bg-paper);
+      /* Subtle noise texture for paper feel */
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+      color: var(--text-main);
+      font-family: var(--font-narrative);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* --- LAYOUT & TITLES --- */
+    /* --- LAYOUT & NARRATIVE TEXT --- */
     .scrapbook-container {
-      max-width: 700px;
+      max-width: 800px;
       margin: 0 auto;
       padding: 0 20px 100px;
       display: flex;
@@ -70,7 +72,7 @@
     }
 
     .title {
-      font-size: 52px;
+      font-size: 56px;
       font-weight: 400;
       letter-spacing: -1px;
       margin-bottom: 20px;
@@ -78,50 +80,105 @@
     }
 
     .subtitle {
-      font-size: 22px;
+      font-size: 24px;
       font-style: italic;
-      color: #777;
+      color: #666;
       opacity: 0;
+    }
+
+    .narrative-block {
+      max-width: 580px;
+      margin: 80px auto 40px;
+      text-align: center;
+      opacity: 0; /* GSAP */
+    }
+
+    .narrative-block p {
+      font-size: 22px;
+      line-height: 1.6;
+      color: #333;
     }
 
     .date-stamp {
       font-family: var(--font-ui);
-      font-size: 11px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #999;
-      margin: 80px 0 30px;
-      text-align: center;
-      width: 100%;
+      letter-spacing: 3px;
+      color: #888;
+      margin-bottom: 20px;
+      display: block;
     }
 
     .scene {
       position: relative;
-      margin: 50px 0 80px;
+      margin: 20px 0 60px;
       width: 100%;
       display: flex;
       justify-content: center;
     }
 
-    /* --- UI MOCKUP CONTAINERS (No Polaroids) --- */
-    .mockup-container {
-      width: 100%;
-      max-width: 420px;
-      border-radius: 12px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
-      overflow: hidden;
-      opacity: 0; /* GSAP */
+    /* --- VISUAL ELEMENTS (Tape & Annotations) --- */
+    .washi-tape {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      width: 120px;
+      height: 30px;
+      background-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      backdrop-filter: blur(2px);
+      z-index: 20;
+      border-radius: 2px;
+      opacity: 0.8;
     }
+    .washi-tape.tape-2 { transform: translateX(-50%) rotate(3deg); width: 140px; background-color: rgba(220, 210, 200, 0.5); }
 
     .handwritten-note {
       font-family: var(--font-handwriting);
-      font-size: 28px;
-      color: #333;
+      font-size: 34px;
+      font-weight: 700;
+      color: #1a1a1a;
       position: absolute;
       z-index: 10;
       line-height: 1.1;
       opacity: 0; /* GSAP */
+      text-shadow: 2px 2px 0px rgba(255,255,255,0.8); /* Makes it pop off background */
     }
+
+    /* --- UI MOCKUP CONTAINERS --- */
+    .mockup-container {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15), 0 5px 15px rgba(0,0,0,0.05);
+      border: 8px solid #111; /* Phone bezel */
+      background: #000;
+      overflow: hidden;
+      opacity: 0; /* GSAP */
+      position: relative;
+    }
+
+    /* Input Bars for Realism */
+    .chat-input-bar {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      background: var(--ig-bg);
+      border-top: 1px solid var(--ig-border);
+      gap: 12px;
+    }
+    .wa-input-bar { background: var(--wa-header); border-top: none; }
+    .input-pill {
+      flex: 1;
+      background: #262626;
+      border-radius: 20px;
+      padding: 8px 15px;
+      font-size: 14px;
+      color: #888;
+      font-family: var(--font-ui);
+    }
+    .wa-input-pill { background: #2a3942; }
 
     /* --- INSTAGRAM UI --- */
     .ig-mockup {
@@ -130,56 +187,56 @@
       color: var(--ig-text);
       display: flex;
       flex-direction: column;
+      height: 100%;
     }
 
     .ig-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 16px; background: var(--ig-bg); border-bottom: 1px solid var(--ig-border);
+      padding: 15px 16px; background: var(--ig-bg); border-bottom: 1px solid var(--ig-border);
+      z-index: 2;
     }
     .ig-header-left { display: flex; align-items: center; gap: 12px; }
     .ig-name-block { display: flex; flex-direction: column; }
     .ig-name { font-weight: 600; font-size: 15px; }
     .ig-username { font-size: 12px; color: #888; }
-    .ig-header-icons svg { width: 22px; height: 22px; fill: none; stroke: white; stroke-width: 2; margin-left: 15px; }
+    .ig-header-icons svg { width: 24px; height: 24px; fill: none; stroke: white; stroke-width: 2; margin-left: 15px; }
 
-    .ig-chat { padding: 15px 12px; display: flex; flex-direction: column; gap: 3px; }
-    .ig-timestamp { text-align: center; font-size: 11px; color: #777; margin: 15px 0 10px; }
-    .ig-story-reply { align-self: center; font-size: 12px; color: #888; margin-bottom: 8px; }
+    .ig-chat { padding: 20px 15px; display: flex; flex-direction: column; gap: 3px; }
+    .ig-timestamp { text-align: center; font-size: 11.5px; color: #777; margin: 10px 0; }
+    .ig-story-reply { align-self: center; font-size: 12px; color: #888; margin-bottom: 12px; }
 
-    .msg-row { display: flex; align-items: flex-end; margin-bottom: 1px; width: 100%; opacity: 0; }
+    .msg-row { display: flex; align-items: flex-end; margin-bottom: 2px; width: 100%; opacity: 0; }
     .msg-row.received { justify-content: flex-start; }
     .msg-row.sent { justify-content: flex-end; }
 
     .bubble {
-      padding: 10px 14px; border-radius: 20px; font-size: 14.5px;
-      line-height: 1.35; max-width: 78%; word-wrap: break-word; position: relative;
+      padding: 11px 15px; border-radius: 22px; font-size: 14.8px;
+      line-height: 1.35; max-width: 82%; word-wrap: break-word; position: relative;
     }
     .received .bubble { background: var(--ig-received); }
     .sent .bubble { background: var(--ig-sent); }
 
-    /* Border radius logic */
-    .received.group-top .bubble { border-bottom-left-radius: 4px; }
-    .received.group-middle .bubble { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
-    .received.group-bottom .bubble { border-top-left-radius: 4px; margin-bottom: 6px; }
-    .received.single .bubble { margin-bottom: 6px; }
+    /* Border radius logic for IG */
+    .received.group-top .bubble { border-bottom-left-radius: 5px; }
+    .received.group-middle .bubble { border-top-left-radius: 5px; border-bottom-left-radius: 5px; }
+    .received.group-bottom .bubble { border-top-left-radius: 5px; margin-bottom: 8px; }
+    .received.single .bubble { margin-bottom: 8px; }
     
-    .sent.group-top .bubble { border-bottom-right-radius: 4px; }
-    .sent.group-middle .bubble { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
-    .sent.group-bottom .bubble { border-top-right-radius: 4px; margin-bottom: 6px; }
-    .sent.single .bubble { margin-bottom: 6px; }
+    .sent.group-top .bubble { border-bottom-right-radius: 5px; }
+    .sent.group-middle .bubble { border-top-right-radius: 5px; border-bottom-right-radius: 5px; }
+    .sent.group-bottom .bubble { border-top-right-radius: 5px; margin-bottom: 8px; }
+    .sent.single .bubble { margin-bottom: 8px; }
 
     .heart-reaction {
-      position: absolute; bottom: -10px; left: 15px; background: #262626;
-      border: 2px solid black; border-radius: 50%; padding: 3px; font-size: 12px; z-index: 2;
+      position: absolute; bottom: -12px; left: 15px; background: #262626;
+      border: 2px solid black; border-radius: 50%; padding: 4px; font-size: 12px; z-index: 2;
     }
 
-    .ig-reply-context {
-      font-size: 11px; color: #888; display: flex; flex-direction: column; margin-bottom: 2px;
-    }
+    .ig-reply-context { font-size: 11.5px; color: #888; display: flex; flex-direction: column; margin-bottom: 4px; }
     .sent + .ig-reply-context { align-items: flex-end; }
     .reply-bubble {
-      background: #262626; padding: 6px 12px 14px; border-radius: 16px;
-      margin-bottom: -12px; font-size: 13px; color: #aaa; display: inline-block; max-width: 70%;
+      background: #262626; padding: 8px 14px 16px; border-radius: 18px;
+      margin-bottom: -14px; font-size: 13px; color: #aaa; display: inline-block; max-width: 75%;
     }
 
     /* --- WHATSAPP UI --- */
@@ -187,45 +244,52 @@
       background: var(--wa-bg);
       font-family: var(--font-ui);
       display: flex; flex-direction: column;
-      background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 1px, transparent 1px);
-      background-size: 20px 20px;
+      position: relative;
+    }
+
+    /* Realistic WA Doodle Background */
+    .wa-bg-pattern {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.83-2.652 2.652-.83-.83 2.652-2.652zM27.5 35.5c-.276 0-.5-.224-.5-.5s.224-.5.5-.5.5.224.5.5-.224.5-.5.5zm19-20c-.276 0-.5-.224-.5-.5s.224-.5.5-.5.5.224.5.5-.224.5-.5.5z' fill='%23ffffff' fill-opacity='0.04' fill-rule='evenodd'/%3E%3C/svg%3E");
+      z-index: 0;
     }
 
     .wa-header {
-      background: var(--wa-header); padding: 10px 15px; display: flex; align-items: center; gap: 12px; z-index: 2;
+      background: var(--wa-header); padding: 12px 15px; display: flex; align-items: center; gap: 12px; z-index: 2;
     }
+    .wa-avatar { width: 36px; height: 36px; background: #555; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     .wa-name-block { display: flex; flex-direction: column; }
-    .wa-name { color: white; font-weight: 500; font-size: 15px; }
+    .wa-name { color: white; font-weight: 500; font-size: 16px; }
     
-    .wa-chat { padding: 15px 5%; display: flex; flex-direction: column; gap: 4px; }
+    .wa-chat { padding: 20px 5%; display: flex; flex-direction: column; gap: 4px; z-index: 1; }
     .wa-msg {
-      max-width: 80%; padding: 6px 7px 8px 9px; border-radius: 7.5px; position: relative;
-      font-size: 14.2px; line-height: 19px; color: var(--wa-text); display: inline-block; opacity: 0;
+      max-width: 85%; padding: 6px 8px 8px 10px; border-radius: 8px; position: relative;
+      font-size: 14.5px; line-height: 19px; color: var(--wa-text); display: inline-block; opacity: 0;
     }
     
     .wa-left { background: var(--wa-received); align-self: flex-start; border-top-left-radius: 0; }
-    .wa-right { background: var(--wa-sent); align-self: flex-end; border-top-right-radius: 0; }
+    .wa-left::before { content: ''; position: absolute; top: 0; left: -8px; border-top: 8px solid var(--wa-received); border-left: 8px solid transparent; }
     
-    .wa-meta {
-      display: inline-flex; align-items: center; gap: 4px; float: right; margin: 6px 0 -4px 10px;
-      font-size: 10.5px; color: var(--wa-time);
-    }
-    .wa-ticks { width: 15px; height: 10px; fill: var(--wa-tick); }
-    .wa-group-margin { margin-top: 8px; }
+    .wa-right { background: var(--wa-sent); align-self: flex-end; border-top-right-radius: 0; }
+    .wa-right::before { content: ''; position: absolute; top: 0; right: -8px; border-top: 8px solid var(--wa-sent); border-right: 8px solid transparent; }
+    
+    .wa-meta { display: inline-flex; align-items: center; gap: 4px; float: right; margin: 6px 0 -4px 12px; font-size: 11px; color: var(--wa-time); }
+    .wa-ticks { width: 16px; height: 11px; fill: var(--wa-tick); }
+    .wa-group-margin { margin-top: 10px; }
 
     /* --- FINAL HANDWRITTEN PARAGRAPH --- */
     .handwritten-paragraph {
       font-family: var(--font-handwriting);
-      font-size: 32px;
-      color: #333;
+      font-size: 40px;
+      color: #1a1a1a;
       line-height: 1.4;
-      max-width: 500px;
-      margin: 100px auto;
+      max-width: 600px;
+      margin: 120px auto;
       text-align: center;
       opacity: 0;
-      transform: rotate(-1deg);
+      transform: rotate(-1.5deg);
     }
-    .handwritten-paragraph p { margin-bottom: 20px; }
+    .handwritten-paragraph p { margin-bottom: 25px; }
 
   </style>
 </head>
@@ -237,21 +301,29 @@
     <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
     <symbol id="icon-video" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></symbol>
     <symbol id="icon-tick" viewBox="0 0 16 15"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"/></symbol>
+    <symbol id="icon-cam" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></symbol>
+    <symbol id="icon-mic" viewBox="0 0 24 24"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></symbol>
   </svg>
 
   <main class="scrapbook-container">
     
     <!-- Hero -->
     <section class="hero">
-      <h1 class="title">our early stage chats.</h1>
+      <h1 class="title">Our Early Stage Chats</h1>
       <p class="subtitle">before we knew what it was.</p>
     </section>
 
+    <!-- NARRATIVE 1 -->
+    <div class="narrative-block">
+      <span class="date-stamp">May 2025</span>
+      <p>It started with a simple story reply. Just a quick thought sent into the void, hoping it might land somewhere softly. I had been following her poetry for years, and I never actually expected it to become the foundation of everything.</p>
+    </div>
+
     <!-- SCENE 1: The First Ever Chat -->
-    <div class="date-stamp">MAY 2025</div>
-    
     <div class="scene" id="scene-1">
-      <div class="handwritten-note" style="top: -40px; left: -30px; transform: rotate(-4deg); color: #8B7355;">
+      <div class="washi-tape"></div>
+      <div class="handwritten-note" style="top: -20px; left: -60px; transform: rotate(-6deg); color: #8B7355;">
         our first ever chat.<br>
       </div>
       
@@ -264,6 +336,10 @@
                 <div class="ig-name">aaradhya <span style="font-size: 10px; margin-left:4px;">›</span></div>
                 <div class="ig-username">draftsofheart</div>
               </div>
+            </div>
+            <div class="ig-header-icons">
+              <svg><use href="#icon-phone"></use></svg>
+              <svg><use href="#icon-video"></use></svg>
             </div>
           </div>
 
@@ -284,25 +360,41 @@
               <div class="bubble">this is oddly comforting. thank you.</div>
             </div>
           </div>
+          
+          <div class="chat-input-bar">
+            <svg style="width: 24px; fill: white;"><use href="#icon-cam"></use></svg>
+            <div class="input-pill">Message...</div>
+            <svg style="width: 24px; fill: white;"><use href="#icon-mic"></use></svg>
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- NARRATIVE 2 -->
+    <div class="narrative-block">
+      <p>Of course, when she actually followed me back, all sense of calm completely vanished. I immediately did what any rational person would do: I spiraled, and I panicked to my best friend, Shambroghini.</p>
+    </div>
+
     <!-- SCENE 2: Panicking with Shambroghini -->
-    <div class="scene" id="scene-2" style="margin-top: 100px; flex-direction: column; align-items: center; gap: 40px;">
-      <div class="handwritten-note" style="top: -20px; right: -40px; transform: rotate(5deg);">
-        panicking to<br>my best friend...
-      </div>
+    <div class="scene" id="scene-2" style="flex-direction: column; align-items: center; gap: 40px;">
       
-      <!-- WA Screenshot 1 Equivalent -->
-      <div class="mockup-container" style="transform: rotate(-1.5deg);">
+      <!-- WA Chat 1 -->
+      <div class="mockup-container" style="transform: rotate(-1.5deg); margin-bottom: 20px;">
+        <div class="washi-tape tape-2"></div>
+        <div class="handwritten-note" style="top: -20px; right: -70px; transform: rotate(5deg);">
+          freaking out...
+        </div>
+        
         <div class="wa-mockup">
+          <div class="wa-bg-pattern"></div>
           <div class="wa-header">
             <svg style="width: 20px; stroke: white;"><use href="#icon-back"></use></svg>
+            <div class="wa-avatar"><svg style="width: 20px; fill: #aaa;"><use href="#icon-user"></use></svg></div>
             <div class="wa-name-block">
               <div class="wa-name">shambroghini</div>
             </div>
           </div>
+          
           <div class="wa-chat">
             <div class="wa-msg wa-left bubble">
               Do u have intentions???
@@ -345,17 +437,23 @@
               <div class="wa-meta">8:26 PM</div>
             </div>
           </div>
+          <div class="chat-input-bar wa-input-bar">
+            <div class="input-pill wa-input-pill">Message</div>
+            <svg style="width: 24px; fill: #8696a0;"><use href="#icon-mic"></use></svg>
+          </div>
         </div>
       </div>
 
-      <div class="handwritten-note" style="top: 50%; left: -60px; transform: rotate(-3deg); color: #8B7355;">
-        (she followed me back)
-      </div>
+      <!-- WA Chat 2 -->
+      <div class="mockup-container" style="transform: rotate(1.5deg);">
+        <div class="washi-tape"></div>
+        <div class="handwritten-note" style="top: 40%; left: -100px; transform: rotate(-8deg); color: #8B7355; width: 200px;">
+          (she finally followed me back)
+        </div>
 
-      <!-- WA Screenshot 2 Equivalent -->
-      <div class="mockup-container" style="transform: rotate(1deg);">
         <div class="wa-mockup">
-          <div class="wa-chat">
+          <div class="wa-bg-pattern"></div>
+          <div class="wa-chat" style="padding-top: 30px;">
             <div class="wa-msg wa-right bubble">NRO <div class="wa-meta">8:55 PM <svg class="wa-ticks"><use href="#icon-tick"></use></svg></div></div>
             <div class="wa-msg wa-right bubble">BROSHE SENT <div class="wa-meta">8:55 PM <svg class="wa-ticks"><use href="#icon-tick"></use></svg></div></div>
             <div class="wa-msg wa-right bubble">ME A POEM <div class="wa-meta">8:55 PM <svg class="wa-ticks"><use href="#icon-tick"></use></svg></div></div>
@@ -388,10 +486,16 @@
       </div>
     </div>
 
+    <!-- NARRATIVE 3 -->
+    <div class="narrative-block">
+      <p>But the panic eventually settled, replaced by something much more dangerous: effortless banter. The digital walls fell down almost immediately, leading to the exact moment the entire dynamic shifted.</p>
+    </div>
+
     <!-- SCENE 3: The Turning Point -->
-    <div class="scene" id="scene-3" style="margin-top: 100px;">
-      <div class="handwritten-note" style="bottom: -20px; right: -20px; transform: rotate(-3deg);">
-        the exact moment<br>everything shifted.
+    <div class="scene" id="scene-3">
+      <div class="washi-tape tape-2" style="top: -15px;"></div>
+      <div class="handwritten-note" style="bottom: 20px; right: -90px; transform: rotate(-5deg); width: 220px;">
+        the exact moment everything shifted.
       </div>
       
       <div class="mockup-container" style="transform: rotate(-1deg);">
@@ -402,6 +506,10 @@
               <div class="ig-name-block">
                 <div class="ig-name">aaradhya <span style="font-size: 10px; margin-left:4px;">›</span></div>
               </div>
+            </div>
+            <div class="ig-header-icons">
+              <svg><use href="#icon-phone"></use></svg>
+              <svg><use href="#icon-video"></use></svg>
             </div>
           </div>
 
@@ -426,16 +534,28 @@
 
             <div class="msg-row received group-top"><div class="bubble">then it didn't</div></div>
             <div class="msg-row received group-bottom" id="the-moment">
-              <div class="bubble" style="border: 1px solid #444;">i prefer you alive</div>
+              <div class="bubble" style="border: 1px solid #555;">i prefer you alive</div>
             </div>
+          </div>
+          
+          <div class="chat-input-bar">
+            <svg style="width: 24px; fill: white;"><use href="#icon-cam"></use></svg>
+            <div class="input-pill">Message...</div>
+            <svg style="width: 24px; fill: white;"><use href="#icon-mic"></use></svg>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- NARRATIVE 4 -->
+    <div class="narrative-block">
+      <p>After that, time stopped working normally. Night turned into early morning, and neither of us was willing to be the first to say goodnight. Sleep deprivation breeds a very specific, beautiful kind of honesty.</p>
+    </div>
+
     <!-- SCENE 4: 5 AM Logic -->
-    <div class="scene" id="scene-4" style="margin-top: 100px;">
-      <div class="handwritten-note" style="top: 20%; left: -80px; transform: rotate(4deg); color: #8B7355;">
+    <div class="scene" id="scene-4">
+      <div class="washi-tape"></div>
+      <div class="handwritten-note" style="top: 15%; left: -110px; transform: rotate(6deg); color: #8B7355; width: 200px;">
         running on no sleep.<br>refusing to say goodnight.
       </div>
       
@@ -447,6 +567,10 @@
               <div class="ig-name-block">
                 <div class="ig-name">aaradhya <span style="font-size: 10px; margin-left:4px;">›</span></div>
               </div>
+            </div>
+            <div class="ig-header-icons">
+              <svg><use href="#icon-phone"></use></svg>
+              <svg><use href="#icon-video"></use></svg>
             </div>
           </div>
 
@@ -462,12 +586,18 @@
             <div class="msg-row sent group-top"><div class="bubble">NOOOO</div></div>
             <div class="msg-row sent group-bottom"><div class="bubble">DEFINITELY NOT</div></div>
 
-            <div class="ig-reply-context" style="margin-top: 8px;">
+            <div class="ig-reply-context" style="margin-top: 12px;">
               <div>Replied to you</div>
               <div class="reply-bubble" style="color: white; background: #333;">can you tell i have had no sleep</div>
             </div>
             <div class="msg-row received group-top"><div class="bubble">i can actually. why didn't you?</div></div>
             <div class="msg-row received group-bottom"><div class="bubble">i've never been mother zoned before</div></div>
+          </div>
+          
+          <div class="chat-input-bar">
+            <svg style="width: 24px; fill: white;"><use href="#icon-cam"></use></svg>
+            <div class="input-pill">Message...</div>
+            <svg style="width: 24px; fill: white;"><use href="#icon-mic"></use></svg>
           </div>
         </div>
       </div>
@@ -492,61 +622,5 @@
       gsap.to(".hero .title", { opacity: 1, y: -10, duration: 1.5, ease: "power2.out" });
       gsap.to(".hero .subtitle", { opacity: 1, y: -10, duration: 1.5, delay: 0.5, ease: "power2.out" });
 
-      // Animate each Scene
-      const scenes = ["#scene-1", "#scene-2", "#scene-3", "#scene-4"];
-
-      scenes.forEach((sceneId) => {
-        const scene = document.querySelector(sceneId);
-        if(!scene) return;
-        
-        const mockups = scene.querySelectorAll('.mockup-container');
-        const notes = scene.querySelectorAll('.handwritten-note');
-        
-        // 1. Mockups slide up and fade in
-        gsap.to(mockups, {
-          scrollTrigger: { trigger: scene, start: "top 80%" },
-          opacity: 1, y: -20, duration: 1, stagger: 0.2, ease: "power3.out"
-        });
-
-        // 2. Handwritten notes pop in
-        if (notes.length) {
-          gsap.set(notes, { scale: 0.9 });
-          gsap.to(notes, {
-            scrollTrigger: { trigger: scene, start: "top 70%" },
-            opacity: 1, scale: 1, duration: 0.8, stagger: 0.3, ease: "back.out(1.5)"
-          });
-        }
-
-        // 3. Stagger chat bubbles (both IG and WA)
-        const chatElements = scene.querySelectorAll('.msg-row, .wa-msg, .ig-reply-context, .ig-timestamp, .ig-story-reply');
-        gsap.set(chatElements, { y: 10 });
-        gsap.to(chatElements, {
-          scrollTrigger: { trigger: scene, start: "top 60%" },
-          opacity: 1, y: 0, duration: 0.4, stagger: 0.1, ease: "back.out(1.2)"
-        });
-      });
-
-      // Special highlight for "the moment" bubble
-      gsap.to("#the-moment .bubble", {
-        scrollTrigger: { trigger: "#the-moment", start: "top 80%" },
-        boxShadow: "0 0 15px rgba(147, 51, 234, 0.4)",
-        duration: 1.5, delay: 1.2
-      });
-
-      // Outro paragraphs
-      const outroText = document.querySelector("#outro-text");
-      const outroLines = outroText.querySelectorAll("p");
-      
-      gsap.to(outroText, {
-        scrollTrigger: { trigger: outroText, start: "top 85%" },
-        opacity: 1, duration: 0.5
-      });
-
-      gsap.from(outroLines, {
-        scrollTrigger: { trigger: outroText, start: "top 85%" },
-        opacity: 0, y: 20, duration: 1.2, stagger: 0.5, ease: "power2.out"
-      });
-    });
-  </script>
-</body>
-</html>
+      // Narrative Blocks
+      gsap.utils.toArray('.
