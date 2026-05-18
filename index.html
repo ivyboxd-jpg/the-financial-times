@@ -623,4 +623,69 @@
       gsap.to(".hero .subtitle", { opacity: 1, y: -10, duration: 1.5, delay: 0.5, ease: "power2.out" });
 
       // Narrative Blocks
-      gsap.utils.toArray('.
+      gsap.utils.toArray('.narrative-block').forEach(block => {
+        gsap.to(block, {
+          scrollTrigger: { trigger: block, start: "top 85%" },
+          opacity: 1, y: -20, duration: 1.2, ease: "power2.out"
+        });
+      });
+
+      // Animate each Scene
+      const scenes = ["#scene-1", "#scene-2", "#scene-3", "#scene-4"];
+
+      scenes.forEach((sceneId) => {
+        const scene = document.querySelector(sceneId);
+        if(!scene) return;
+        
+        const mockups = scene.querySelectorAll('.mockup-container');
+        const notes = scene.querySelectorAll('.handwritten-note');
+        
+        // 1. Mockups slide up and fade in
+        gsap.to(mockups, {
+          scrollTrigger: { trigger: scene, start: "top 75%" },
+          opacity: 1, y: -20, duration: 1, stagger: 0.2, ease: "power3.out"
+        });
+
+        // 2. Handwritten notes pop in (Bouncy marker effect)
+        if (notes.length) {
+          gsap.set(notes, { scale: 0.8 });
+          gsap.to(notes, {
+            scrollTrigger: { trigger: scene, start: "top 65%" },
+            opacity: 1, scale: 1, duration: 0.8, stagger: 0.3, ease: "back.out(1.8)"
+          });
+        }
+
+        // 3. Stagger chat bubbles (both IG and WA) inside
+        const chatElements = scene.querySelectorAll('.msg-row, .wa-msg, .ig-reply-context, .ig-timestamp, .ig-story-reply');
+        gsap.set(chatElements, { y: 10 });
+        gsap.to(chatElements, {
+          scrollTrigger: { trigger: scene, start: "top 50%" },
+          opacity: 1, y: 0, duration: 0.4, stagger: 0.1, ease: "back.out(1.2)"
+        });
+      });
+
+      // Special highlight for "the moment" bubble
+      gsap.to("#the-moment .bubble", {
+        scrollTrigger: { trigger: "#the-moment", start: "top 80%" },
+        boxShadow: "0 0 20px rgba(147, 51, 234, 0.6)",
+        borderColor: "#9333ea",
+        duration: 1.5, delay: 1.5
+      });
+
+      // Outro paragraphs (Writing effect)
+      const outroText = document.querySelector("#outro-text");
+      const outroLines = outroText.querySelectorAll("p");
+      
+      gsap.to(outroText, {
+        scrollTrigger: { trigger: outroText, start: "top 85%" },
+        opacity: 1, duration: 0.5
+      });
+
+      gsap.from(outroLines, {
+        scrollTrigger: { trigger: outroText, start: "top 85%" },
+        opacity: 0, y: 15, duration: 1.5, stagger: 0.6, ease: "power2.out"
+      });
+    });
+  </script>
+</body>
+</html>
