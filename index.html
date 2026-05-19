@@ -39,8 +39,8 @@
         justify-content: space-between;
         align-items: center;
         width: 936px;
-        height: 90px; /* Increased slightly to fit the new logo size */
-        margin-bottom: 14px; /* Reduced to keep the exact same 104px total spacing above the headline */
+        height: 48px; /* Completely reverted to your original 48px */
+        margin-bottom: 56px; /* Completely reverted to your original 56px */
     }
 
     .nav-left {
@@ -49,10 +49,11 @@
     }
 
     .nav-logo-icon {
-        height: 90px; /* Increased just a little bit more from 80px */
+        height: 120px; /* Increased significantly to 3x the original size so it's clearly visible */
         width: auto;
         display: block;
         border-radius: 6px;
+        /* Since the nav container is still 48px, this larger image will simply overlap into the empty white space above and below it without pushing down any text. */
     }
 
     .headline {
