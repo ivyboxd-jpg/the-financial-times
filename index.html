@@ -15,7 +15,6 @@
 
     html, body {
         width: 1080px;
-        /* Changed from fixed height to min-height and allowed vertical scrolling so the bottom doesn't get cut off on smaller screens */
         min-height: 1080px; 
         margin: 0;
         padding: 0;
@@ -40,8 +39,8 @@
         justify-content: space-between;
         align-items: center;
         width: 936px;
-        height: 48px;
-        margin-bottom: 56px;
+        height: 64px; /* Increased to fit the larger logo */
+        margin-bottom: 40px; /* Reduced from 56px to perfectly compensate. Total space is still exactly 104px, so nothing below shifts */
     }
 
     .nav-left {
@@ -50,7 +49,7 @@
     }
 
     .nav-logo-icon {
-        height: 48px; /* Increased from 40px to 48px to perfectly fit the nav container */
+        height: 64px; /* Increased to make it properly visible but not too big */
         width: auto;
         display: block;
         border-radius: 6px;
@@ -209,4 +208,4 @@
         </div>
     </div>
 </body>
-</html> 
+</html>
