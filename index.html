@@ -1,212 +1,1080 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>VerifiedWork Poster</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>On Being Someone's Constant - The New York Times</title>
+  <style>
+    :root {
+      --nyt-bg: #FFFFFF;
+      --nyt-text: #121212;
+      --nyt-link: #326891;
+      --nyt-meta: #666666;
+      --nyt-border: #E5E5E5;
+      
+      /* NYT Colors for Games */
+      --wordle-green: #6aaa64;
+      --wordle-yellow: #c9b458;
+      --wordle-gray: #787c7e;
+      --wordle-dark-gray: #3a3a3c;
+      
+      --conn-yellow: #f9df3d;
+      --conn-green: #a0c35a;
+      --conn-blue: #b0c4ef;
+      --conn-purple: #ba76c2;
+      
+      --font-serif: "nyt-cheltenham", Georgia, serif;
+      --font-sans: "nyt-franklin", "Helvetica Neue", Arial, sans-serif;
+    }
+
     * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    html, body {
-        width: 1080px;
-        min-height: 1080px; 
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-        overflow-y: auto; 
-        background-color: #FFFFFF;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+    body {
+      background-color: var(--nyt-bg);
+      color: var(--nyt-text);
+      font-family: var(--font-serif);
+      line-height: 1.8;
+      padding: 0 20px;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .poster {
-        width: 1080px;
-        height: 1080px;
-        padding: 64px 72px 40px 72px;
-        background-color: #FFFFFF;
-        display: flex;
-        flex-direction: column;
+    /* NYT Header */
+    header {
+      max-width: 950px;
+      margin: 0 auto;
+      border-bottom: 2px solid var(--nyt-text);
+      padding: 20px 0 10px 0;
+      text-align: center;
     }
 
-    .nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 936px;
-        height: 48px; /* Completely reverted to your original 48px */
-        margin-bottom: 56px; /* Completely reverted to your original 56px */
+    .nyt-logo {
+      font-family: var(--font-serif);
+      font-weight: 900;
+      font-size: 32px;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--nyt-border);
+      padding-bottom: 5px;
+      margin-bottom: 5px;
     }
 
-    .nav-left {
-        display: flex;
-        align-items: center;
+    .section-tag {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      color: var(--nyt-text);
     }
 
-    .nav-logo-icon {
-        height: 120px; /* Increased significantly to 3x the original size so it's clearly visible */
-        width: auto;
-        display: block;
-        border-radius: 6px;
-        /* Since the nav container is still 48px, this larger image will simply overlap into the empty white space above and below it without pushing down any text. */
+    /* Article Layout */
+    .article-container {
+      max-width: 680px;
+      margin: 40px auto;
     }
 
-    .headline {
-        width: 936px;
-        margin-bottom: 28px;
-        font-family: 'Inter', sans-serif;
-        font-weight: 700;
-        font-size: 108px;
-        line-height: 108px;
-        letter-spacing: -4px;
-        color: #1A1A1A;
+    h1 {
+      font-size: 42px;
+      line-height: 1.15;
+      font-weight: 700;
+      margin-bottom: 12px;
     }
 
-    .headline-line {
-        height: 108px;
+    .subheadline {
+      font-size: 20px;
+      line-height: 1.4;
+      color: #4a4a4a;
+      margin-bottom: 24px;
     }
 
-    .headline-green {
-        color: #2D6A4F;
+    .byline-container {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--nyt-meta);
+      border-top: 1px solid var(--nyt-border);
+      border-bottom: 1px solid var(--nyt-border);
+      padding: 12px 0;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
     }
 
-    .subline {
-        width: 936px;
-        margin-bottom: 48px;
-        font-family: 'Inter', sans-serif;
-        font-weight: 400;
-        font-size: 22px;
-        line-height: 35px;
-        color: #6B7280;
+    .byline {
+      font-weight: 700;
+      color: var(--nyt-text);
     }
 
-    .subline-line {
-        height: 35px;
+    /* Custom Live Connection Dashboard Widget */
+    .connection-widget {
+      background: #f8f9fa;
+      border: 1px solid var(--nyt-border);
+      padding: 20px;
+      border-radius: 4px;
+      margin: 30px 0;
+      font-family: var(--font-sans);
     }
 
-    .stat-card {
-        width: 936px;
-        background-color: #EBEBEB;
-        border-radius: 20px;
-        padding: 32px 40px;
-        display: flex;
-        align-items: center;
-        gap: 32px;
-        margin-bottom: 48px;
+    .widget-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      color: var(--nyt-meta);
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--nyt-border);
+      padding-bottom: 5px;
     }
 
-    .stat-card-left {
-        font-family: 'Inter', sans-serif;
-        font-weight: 800;
-        font-size: 80px;
-        line-height: 80px;
-        letter-spacing: -3px;
-        color: #2D6A4F;
+    .widget-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
     }
 
-    .stat-card-right {
-        display: flex;
-        flex-direction: column;
+    @media (max-width: 480px) {
+      .widget-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .stat-card-right-top {
-        font-family: 'Inter', sans-serif;
-        font-weight: 500;
-        font-size: 18px;
-        line-height: 27px;
-        color: #1A1A1A;
-        margin-bottom: 8px;
+    .widget-item {
+      display: flex;
+      flex-direction: column;
     }
 
-    .stat-card-right-bottom {
-        font-family: 'Inter', sans-serif;
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 12px;
-        color: #9CA3AF;
+    .widget-label {
+      font-size: 11px;
+      color: var(--nyt-meta);
+      text-transform: uppercase;
     }
 
-    .divider {
-        width: 936px;
-        height: 1px;
-        background-color: #F3F4F6;
-        margin-bottom: 28px;
+    .widget-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--nyt-text);
     }
 
-    .footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 936px;
-        height: 50px;
+    .live-timer {
+      font-family: monospace;
+      font-size: 15px;
     }
 
-    .footer-cta {
-        background-color: #1A1A1A;
-        border-radius: 999px;
-        padding: 14px 28px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        font-size: 18px;
-        line-height: 18px;
-        color: #FFFFFF;
+    /* Article Typography */
+    p {
+      font-size: 18px;
+      margin-bottom: 24px;
+      color: var(--nyt-text);
     }
 
-    .footer-url {
-        font-family: 'Inter', sans-serif;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 14px;
-        color: #9CA3AF;
+    h2 {
+      font-size: 24px;
+      margin: 40px 0 16px 0;
+      font-weight: 700;
     }
-</style>
+
+    .pullquote {
+      font-size: 26px;
+      font-style: italic;
+      line-height: 1.4;
+      border-left: 3px solid var(--nyt-text);
+      padding-left: 20px;
+      margin: 35px 0;
+      color: #333;
+    }
+
+    /* Games Divider & General Styles */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--nyt-border);
+      margin: 50px 0;
+      position: relative;
+    }
+
+    .section-divider::after {
+      content: "NYT Games";
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--nyt-bg);
+      padding: 0 15px;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--nyt-meta);
+    }
+
+    .game-section {
+      max-width: 500px;
+      margin: 0 auto 80px auto;
+      text-align: center;
+    }
+
+    .game-title {
+      font-family: var(--font-sans);
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    .game-subtitle {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      color: var(--nyt-meta);
+      margin-bottom: 25px;
+    }
+
+    /* Interactive Game Styles */
+    .solve-button {
+      background: #000000;
+      color: #FFFFFF;
+      padding: 12px 32px;
+      border: none;
+      border-radius: 24px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin: 20px auto;
+      display: block;
+      transition: all 0.2s;
+    }
+
+    .solve-button:hover {
+      background: #333333;
+      transform: scale(1.02);
+    }
+
+    .solve-button:active {
+      transform: scale(0.98);
+    }
+
+    .solve-button:disabled {
+      background: #CCCCCC;
+      cursor: not-allowed;
+    }
+
+    /* Wordle Styling */
+    .wordle-grid {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 5px;
+      width: fit-content;
+      margin: 0 auto;
+    }
+
+    .wordle-row {
+      display: flex;
+      gap: 5px;
+    }
+
+    .wordle-cell {
+      width: 50px;
+      height: 50px;
+      border: 2px solid #d3d6da;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-sans);
+      font-size: 24px;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: background-color 0.5s, border-color 0.5s, color 0.5s;
+    }
+
+    .wordle-cell.correct {
+      background-color: var(--wordle-green);
+      border-color: var(--wordle-green);
+      color: white;
+    }
+
+    .wordle-cell.present {
+      background-color: var(--wordle-yellow);
+      border-color: var(--wordle-yellow);
+      color: white;
+    }
+
+    .wordle-cell.absent {
+      background-color: var(--wordle-gray);
+      border-color: var(--wordle-gray);
+      color: white;
+    }
+
+    /* Connections Styling */
+    .connections-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .connections-card {
+      background: #efefe6;
+      border-radius: 4px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .connections-card.selected {
+      background: #5a5a5a;
+      color: white;
+    }
+
+    .connections-row-solved {
+      grid-column: span 4;
+      border-radius: 4px;
+      padding: 15px;
+      font-family: var(--font-sans);
+      text-align: center;
+      font-weight: bold;
+      animation: popIn 0.5s ease;
+    }
+
+    .connections-row-solved.yellow { background-color: var(--conn-yellow); }
+    .connections-row-solved.green { background-color: var(--conn-green); color: white; }
+    .connections-row-solved.blue { background-color: var(--conn-blue); }
+    .connections-row-solved.purple { background-color: var(--conn-purple); color: white; }
+
+    .category-title {
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .category-members {
+      font-size: 13px;
+      font-weight: normal;
+      margin-top: 4px;
+    }
+
+    /* Crossword Styling */
+    .crossword-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .crossword-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 50px);
+      grid-template-rows: repeat(5, 50px);
+      gap: 2px;
+      background: #000;
+      border: 2px solid #000;
+    }
+
+    .crossword-cell {
+      background: white;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-sans);
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .crossword-cell.black {
+      background: black;
+    }
+
+    .cell-number {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      font-size: 9px;
+      font-family: var(--font-sans);
+      font-weight: normal;
+    }
+
+    .clues-container {
+      display: flex;
+      gap: 30px;
+      text-align: left;
+      width: 100%;
+      max-width: 450px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+    }
+
+    .clues-column {
+      flex: 1;
+    }
+
+    .clues-column h4 {
+      border-bottom: 1px solid var(--nyt-border);
+      padding-bottom: 5px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .clue-item {
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    /* Spelling Bee Styling */
+    .bee-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .honeycomb {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin-bottom: 30px;
+    }
+
+    .cell-hex {
+      position: absolute;
+      width: 60px;
+      height: 69px;
+      background: #e6e6e6;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-sans);
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s;
+    }
+
+    .cell-hex.center {
+      background: #f8cd05;
+      top: 65px;
+      left: 70px;
+    }
+
+    .cell-hex.n { top: 0px; left: 70px; }
+    .cell-hex.ne { top: 32px; left: 125px; }
+    .cell-hex.se { top: 98px; left: 125px; }
+    .cell-hex.s { top: 130px; left: 70px; }
+    .cell-hex.sw { top: 98px; left: 15px; }
+    .cell-hex.nw { top: 32px; left: 15px; }
+
+    .bee-word-list {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--nyt-meta);
+      min-height: 24px;
+      margin-top: 10px;
+    }
+
+    /* Modals & Reveal Cards */
+    .success-card {
+      background: #f7f9fa;
+      border: 1px dashed var(--nyt-border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-top: 20px;
+      text-align: center;
+      display: none;
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .success-headline {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+      color: var(--wordle-green);
+    }
+
+    .success-text {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--nyt-text);
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Footer styling */
+    footer {
+      max-width: 680px;
+      margin: 80px auto 40px auto;
+      border-top: 1px solid var(--nyt-border);
+      padding-top: 20px;
+      text-align: center;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      color: var(--nyt-meta);
+    }
+  </style>
 </head>
 <body>
-    <div class="poster">
-        <div class="nav">
-            <div class="nav-left">
-                <!-- Icon Placeholder Link -->
-                <a href="https://verifiedwork.co">
-                    <img class="nav-logo-icon" src="https://i.postimg.cc/hvb5rRgM/0615707E-93DD-4BC6-902B-CDE330CD398C.jpg" alt="Icon Placeholder">
-                </a>
-            </div>
-        </div>
 
-        <div class="headline">
-            <div class="headline-line">You did</div>
-            <div class="headline-line">the <span class="headline-green">work.</span></div>
-            <div class="headline-line">Now prove it.</div>
-        </div>
+  <header>
+    <div class="section-tag">Modern Love</div>
+    <div class="nyt-logo">The New York Times</div>
+  </header>
 
-        <div class="subline">
-            <div class="subline-line">Human validation in an AI world.</div>
-            <div class="subline-line">Verified by people who were actually there.</div>
-        </div>
+  <main class="article-container">
+    <h1>On Being Someone's Constant</h1>
+    <p class="subheadline">Some things don't change: distance, time zones, or the fact that I'm not going anywhere.</p>
 
-        <div class="stat-card">
-            <div class="stat-card-left">7×</div>
-            <div class="stat-card-right">
-                <div class="stat-card-right-top">Referred candidates are 7× more likely to get hired than job-board applicants.</div>
-                <div class="stat-card-right-bottom">— Pinpoint, 4.5M applications, 2023</div>
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="footer">
-            <div class="footer-cta">Join the Waitlist &rarr;</div>
-            <!-- verifiedwork.co is safely right here -->
-            <div class="footer-url">verifiedwork.co</div>
-        </div>
+    <div class="byline-container">
+      <div>By <span class="byline">Niv</span></div>
+      <div>May 21, 2026</div>
     </div>
+
+    <!-- Live Connection Widget -->
+    <div class="connection-widget">
+      <div class="widget-title">Live Connection Status</div>
+      <div class="widget-grid">
+        <div class="widget-item">
+          <span class="widget-label">Distance</span>
+          <span class="widget-value">2,083 Kilometers</span>
+        </div>
+        <div class="widget-item">
+          <span class="widget-label">Status</span>
+          <span class="widget-value" style="color: var(--wordle-green);">Unchanging</span>
+        </div>
+        <div class="widget-item">
+          <span class="widget-label">Anniversary Milestone</span>
+          <span class="widget-value">May 19, 2025</span>
+        </div>
+        <div class="widget-item">
+          <span class="widget-label">Time Elapsed</span>
+          <span class="widget-value live-timer" id="connection-timer">Loading...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article Text -->
+    <p>Listen, I need to tell you something, and I'm going to dress it up in Times New Roman and call it an article because apparently that's easier than just saying it directly.</p>
+
+    <p>You know how people always say "I'm here for you"? It's become this thing we say automatically, like "how are you" when we don't actually want to know how someone is. It's a reflex. A nicety.</p>
+
+    <p>But I mean it literally. I am here. Not just in the "I'll be here if you need me" conditional way. I'm here regardless of whether you need me, whether you want me, whether things are good or bad, whether you're handling everything perfectly or falling apart.</p>
+
+    <p>I'm here the way gravity is here. You don't have to think about it or check if it's still working. It just is.</p>
+
+    <h2>The Distance Thing</h2>
+
+    <p>We're 2,083 kilometers apart. I know this because I googled it once and the number stuck in my head like an annoying song lyric. That's far enough that we can't just meet for coffee when one of us is having a bad day. It's far enough that time zones matter. It's far enough that "see you soon" requires plane tickets and planning.</p>
+
+    <p>But here's what I've learned about distance: it's terrible for logistics and completely irrelevant for everything else.</p>
+
+    <div class="pullquote">
+      "Geography is just geography. It doesn't change the fact that when you're stressed about exams, I'm thinking about you."
+    </div>
+
+    <p>You could be on another continent and I'd still be here. You could move to Antarctica to study penguins and I'd still be here. The physical space between us has exactly zero correlation with how present I am in this.</p>
+
+    <p>When you're happy, I want to hear about it in real time, not the sanitized version you'd tell someone else. When you're upset, I want the raw, unfiltered truth.</p>
+
+    <h2>The Anniversary, Delayed</h2>
+
+    <p>We hit our first anniversary on the nineteenth—exactly one year since we spoke for the very first time. I wanted to give you this then, but work and life and the reality of coordinates got in the way, so you are reading this on the twenty-first. In a way, though, that delay is the entire point.</p>
+
+    <p>Love isn't a museum piece that has to be dusted off and celebrated exactly on the stroke of midnight or else it loses its value. It exists in the messy gaps between the nineteenth and the twenty-first, in the busy hours, in the moments when we are tired but still looking in the same direction. It is robust enough to survive work schedules, timezone lags, and the general friction of being alive. Celebrating late doesn't mean we missed it; it means we are building something that doesn't depend on perfect timing to survive.</p>
+
+    <h2>The Unconditional Part</h2>
+
+    <p>Most support comes with invisible conditions. "I'm here for you" often means "I'm here for you if you're struggling" or "I'm here for you if you need me" or "I'm here for you unless you push me away."</p>
+
+    <p>That's not this.</p>
+
+    <p>I'm here for you when you're doing great. I'm here for you when you're doing terribly. I'm here for you when you want to talk and when you need space. I'm here for you when you're easy to love and when you're being difficult. I'm here for you on days when you feel like you're too much and on days when you feel like you're not enough.</p>
+
+    <p>The conditions don't exist. I've looked for them. They're not there.</p>
+
+    <h2>What This Actually Means</h2>
+
+    <p>Okay, practically speaking, what does "I'm always here for you" actually mean? Because it's easy to say and hard to define.</p>
+
+    <p>It means if you text me at 3 a.m. because you can't sleep, I'm reading it. Even if I'm asleep, I'm reading it when I wake up, and it matters.</p>
+
+    <p>It means if something good happens and I'm the person you want to tell, that means everything to me.</p>
+
+    <p>It means if you fail an exam or don't get something you wanted or have a day where everything feels heavy, I don't need you to pretend it's fine. You can just say it's not fine, and I'm not going anywhere.</p>
+
+    <p>It means you don't have to earn this. You don't have to be perfect or impressive or easy. You just have to be you, and that's been enough since day one.</p>
+
+    <h2>The Appreciation Part</h2>
+
+    <p>I should probably also mention that I think you're extraordinary, but you get weird when I say that too directly, so I'll bury it in the middle of an article where maybe you won't notice.</p>
+
+    <p>You're a poet who loves biology. You write about emotions with precision and study cells with curiosity. Most people have to choose between art and science, between feeling deeply and thinking clearly. You just refused to choose, and somehow that works.</p>
+
+    <p>You feel things intensely. This sometimes makes things harder for you, but it's also what makes you interesting. Shallow people are easy to be around and boring to know. You're the opposite.</p>
+
+    <p>And you're beautiful, which I'm contractually obligated to mention because it's true and also because you'll accuse me of not mentioning it if I don't.</p>
+
+    <h2>The Reassurance Part</h2>
+
+    <p>I know you get in your head sometimes. I know you worry about things that probably won't happen. I know you're sometimes convinced you're too much or not enough or that people will eventually get tired of you.</p>
+
+    <p>So let me be extremely clear: I'm not going anywhere.</p>
+
+    <p>I'm not going anywhere if you don't crack NEET. I'm not going anywhere if you do crack NEET. I'm not going anywhere if you end up on a completely different path than you planned.</p>
+
+    <p>Your worth to me was never conditional on your achievements. It's conditional on nothing. You're just worth it, and that's the whole equation.</p>
+
+    <h2>The "But What About" Section</h2>
+
+    <p>I can hear you coming up with exceptions in your head. "But what if I..." and "But what about when..."</p>
+
+    <p>So let's address those:</p>
+
+    <p>What if you're annoying? You're not, but even if you were, I'm here.</p>
+    <p>What if you need time alone? Take it. I'll be here when you're done.</p>
+    <p>What if you're convinced I'll eventually leave? I won't. Eventually is a long time, and I'll still be here.</p>
+
+    <h2>The Part Where I Ruin the Seriousness</h2>
+
+    <p>Look, I know this whole thing is very sincere and might be making you uncomfortable, so let me ruin it by saying something stupid:</p>
+
+    <p>I've memorized how you type. I can tell when you're tired because your messages get longer and more stream-of-consciousness. I know when you're stressed because you suddenly become extremely formal. I know when you're happy because your texts get shorter and you actually use punctuation less.</p>
+
+    <p>Also, you send voice notes at the most random times, and they take up 60% of my phone storage, and I've never once considered deleting them because apparently I'm that person now.</p>
+
+    <h2>The Actual Point</h2>
+
+    <p>What I'm trying to say, buried under all these words, is simple:</p>
+
+    <p>You have someone who's not leaving. Not conditionally. Not temporarily. Not unless things are easy.</p>
+    <p>You have someone who's 2,083 kilometers away and completely present anyway.</p>
+    <p>You have me. Permanently. Whether you need it right now or not.</p>
+    <p>I'm here. I'm staying here. That's not changing.</p>
+
+    <h2>The End (Sort Of)</h2>
+
+    <p>This is the part where I'm supposed to wrap this up with something profound, but honestly, I've said what I needed to say.</p>
+
+    <p>You're appreciated. You're valued. You're not alone in this, whatever "this" is.</p>
+
+    <p>And if you don't believe me, I put some puzzles below that prove it. They solve themselves, which feels appropriate because you also solve yourself—you figure things out, you work through things, you're more capable than you give yourself credit for.</p>
+
+    <p>But also, I'm here. Just in case you need a reminder.</p>
+
+    <p>Always.</p>
+
+    <p>—Niv</p>
+
+    <!-- Interactive Games Section -->
+    <hr class="section-divider">
+
+    <!-- Puzzle 1: Wordle -->
+    <section class="game-section" id="wordle-section">
+      <div class="game-title">Wordle</div>
+      <div class="game-subtitle">Solve to reveal a message</div>
+      
+      <div class="wordle-grid">
+        <!-- Row 1 -->
+        <div class="wordle-row" id="w-row-0">
+          <div class="wordle-cell">S</div>
+          <div class="wordle-cell">M</div>
+          <div class="wordle-cell">A</div>
+          <div class="wordle-cell">R</div>
+          <div class="wordle-cell">T</div>
+        </div>
+        <!-- Row 2 -->
+        <div class="wordle-row" id="w-row-1">
+          <div class="wordle-cell">W</div>
+          <div class="wordle-cell">R</div>
+          <div class="wordle-cell">I</div>
+          <div class="wordle-cell">T</div>
+          <div class="wordle-cell">E</div>
+        </div>
+        <!-- Row 3 -->
+        <div class="wordle-row" id="w-row-2">
+          <div class="wordle-cell">L</div>
+          <div class="wordle-cell">O</div>
+          <div class="wordle-cell">V</div>
+          <div class="wordle-cell">E</div>
+          <div class="wordle-cell">D</div>
+        </div>
+      </div>
+
+      <button class="solve-button" id="btn-wordle" onclick="solveWordle()">Solve Puzzle</button>
+      
+      <div class="success-card" id="card-wordle">
+        <div class="success-headline">You Are Loved</div>
+        <div class="success-text">Always have been. Always will be.</div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Puzzle 2: Connections -->
+    <section class="game-section" id="connections-section">
+      <div class="game-title">Connections</div>
+      <div class="game-subtitle">Group these words into four categories</div>
+
+      <div class="connections-grid" id="conn-grid">
+        <div class="connections-card" data-val="SMART">SMART</div>
+        <div class="connections-card" data-val="KIND">KIND</div>
+        <div class="connections-card" data-val="STRONG">STRONG</div>
+        <div class="connections-card" data-val="REAL">REAL</div>
+
+        <div class="connections-card" data-val="WRITE">WRITE</div>
+        <div class="connections-card" data-val="THINK">THINK</div>
+        <div class="connections-card" data-val="CREATE">CREATE</div>
+        <div class="connections-card" data-val="CARE">CARE</div>
+
+        <div class="connections-card" data-val="PROUD">PROUD</div>
+        <div class="connections-card" data-val="LUCKY">LUCKY</div>
+        <div class="connections-card" data-val="GRATEFUL">GRATEFUL</div>
+        <div class="connections-card" data-val="SURE">SURE</div>
+
+        <div class="connections-card" data-val="DISTANCE">DISTANCE</div>
+        <div class="connections-card" data-val="TIME">TIME</div>
+        <div class="connections-card" data-val="DOUBT">DOUBT</div>
+        <div class="connections-card" data-val="WORRY">WORRY</div>
+      </div>
+
+      <button class="solve-button" id="btn-connections" onclick="solveConnections()">Solve Puzzle</button>
+
+      <div class="success-card" id="card-connections">
+        <div class="success-headline">Perfect Solve</div>
+        <div class="success-text">
+          You are: smart, kind, strong, real<br>
+          You do: write, think, create, care<br>
+          I feel: proud, lucky, grateful, sure<br><br>
+          And what doesn't change? <br><strong>Nothing that matters.</strong>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Puzzle 3: Mini Crossword -->
+    <section class="game-section" id="crossword-section">
+      <div class="game-title">The Mini Crossword</div>
+      <div class="game-subtitle">A small puzzle about us</div>
+
+      <div class="crossword-container">
+        <div class="crossword-grid">
+          <!-- Row 1 -->
+          <div class="crossword-cell"><span class="cell-number">1</span><span class="cell-letter" id="c-0-0"></span></div>
+          <div class="crossword-cell"><span class="cell-number">2</span><span class="cell-letter" id="c-0-1"></span></div>
+          <div class="crossword-cell"><span class="cell-number">3</span><span class="cell-letter" id="c-0-2"></span></div>
+          <div class="crossword-cell"><span class="cell-letter" id="c-0-3"></span></div>
+          <div class="crossword-cell black"></div>
+
+          <!-- Row 2 -->
+          <div class="crossword-cell"><span class="cell-letter" id="c-1-0"></span></div>
+          <div class="crossword-cell black"></div>
+          <div class="crossword-cell"><span class="cell-letter" id="c-1-2"></span></div>
+          <div class="crossword-cell black"></div>
+          <div class="crossword-cell black"></div>
+
+          <!-- Row 3 -->
+          <div class="crossword-cell"><span class="cell-letter" id="c-2-0"></span></div>
+          <div class="crossword-cell"><span class="cell-letter" id="c-2-1"></span></div>
+          <div class="crossword-cell"><span class="cell-letter" id="c-2-2"></span></div>
+          <div class="crossword-cell black"></div>
+          <div class="crossword-cell black"></div>
+
+          <!-- Row 4 -->
+          <div class="crossword-cell"><span class="cell-letter" id="c-3-0"></span></div>
+          <div class="crossword-cell black"></div>
+          <div class="crossword-cell"><span class="cell-letter" id="c-3-2"></span></div>
+          <div class="crossword-cell black"></div>
+          <div class="crossword-cell black"></div>
+
+          <!-- Row 5 -->
+          <div class="crossword-cell black"></div>
+          <div class="crossword-cell"><span class="cell-letter" id="c-4-1"></span></div>
+          <div class="crossword-cell"><span class="cell-letter" id="c-4-2"></span></div>
+          <div class="crossword-cell"><span class="cell-letter" id="c-4-3"></span></div>
+          <div class="crossword-cell black"></div>
+        </div>
+
+        <div class="clues-container">
+          <div class="clues-column">
+            <h4>Across</h4>
+            <div class="clue-item"><strong>1</strong> Where I am</div>
+            <div class="clue-item"><strong>2</strong> 2,083 of these between us</div>
+            <div class="clue-item"><strong>3</strong> Who this is for</div>
+          </div>
+          <div class="clues-column">
+            <h4>Down</h4>
+            <div class="clue-item"><strong>1</strong> Where you are</div>
+            <div class="clue-item"><strong>2</strong> What connects us</div>
+            <div class="clue-item"><strong>3</strong> How long I'm staying</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="solve-button" id="btn-crossword" onclick="solveCrossword()">Solve Puzzle</button>
+
+      <div class="success-card" id="card-crossword">
+        <div class="success-headline">Solved</div>
+        <div class="success-text">
+          Here. Home. Miles. Love. You. Stay. <br><br>
+          That's the whole story.
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Puzzle 4: Spelling Bee -->
+    <section class="game-section" id="bee-section">
+      <div class="game-title">Spelling Bee</div>
+      <div class="game-subtitle">Make words using the honeycomb</div>
+
+      <div class="bee-container">
+        <div class="honeycomb">
+          <div class="cell-hex center">A</div>
+          <div class="cell-hex n">L</div>
+          <div class="cell-hex ne">W</div>
+          <div class="cell-hex se">Y</div>
+          <div class="cell-hex s">S</div>
+          <div class="cell-hex sw">H</div>
+          <div class="cell-hex nw">E</div>
+        </div>
+
+        <div class="bee-word-list" id="bee-found-words">
+          Words found: <span id="found-words-list">None yet</span>
+        </div>
+      </div>
+
+      <button class="solve-button" id="btn-bee" onclick="solveBee()">Solve Puzzle</button>
+
+      <div class="success-card" id="card-bee">
+        <div class="success-headline">Genius!</div>
+        <div class="success-text">
+          You found: <strong>ALWAYS</strong><br><br>
+          That's the only word that matters anyway.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 The New York Times Company. Created for Aaradhya with love.</p>
+  </footer>
+
+  <script>
+    // --- Live Connection Counter ---
+    const startDate = new Date('2025-05-19T00:00:00');
+    function updateTimer() {
+      const now = new Date();
+      const difference = now - startDate;
+
+      const years = Math.floor(difference / (1000 * 60 * 60 * 24 * 365));
+      const days = Math.floor((difference % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      document.getElementById('connection-timer').innerHTML = 
+        `${years}y ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // --- Wordle Auto-Solve ---
+    function solveWordle() {
+      const btn = document.getElementById('btn-wordle');
+      btn.disabled = true;
+
+      // Row 0 states: S(absent), M(absent), A(absent), R(absent), T(absent)
+      // Row 1 states: W(absent), R(absent), I(absent), T(absent), E(present) -> yellow
+      // Row 2 states: L(correct), O(correct), V(correct), E(correct), D(correct) -> green
+      
+      const row0Cells = document.querySelectorAll('#w-row-0 .wordle-cell');
+      const row1Cells = document.querySelectorAll('#w-row-1 .wordle-cell');
+      const row2Cells = document.querySelectorAll('#w-row-2 .wordle-cell');
+
+      // Animate Row 0
+      row0Cells.forEach((cell, idx) => {
+        setTimeout(() => {
+          cell.classList.add('absent');
+        }, idx * 150);
+      });
+
+      // Animate Row 1
+      setTimeout(() => {
+        row1Cells.forEach((cell, idx) => {
+          setTimeout(() => {
+            if (cell.textContent === 'E') {
+              cell.classList.add('present');
+            } else {
+              cell.classList.add('absent');
+            }
+          }, idx * 150);
+        });
+      }, 1000);
+
+      // Animate Row 2 (LOVED)
+      setTimeout(() => {
+        row2Cells.forEach((cell, idx) => {
+          setTimeout(() => {
+            cell.classList.add('correct');
+          }, idx * 200);
+        });
+      }, 2200);
+
+      // Show Success Card
+      setTimeout(() => {
+        document.getElementById('card-wordle').style.display = 'block';
+      }, 3600);
+    }
+
+    // --- Connections Auto-Solve ---
+    const categories = [
+      {
+        class: 'yellow',
+        title: "What Doesn't Change",
+        members: "DISTANCE, TIME, DOUBT, WORRY",
+        words: ["DISTANCE", "TIME", "DOUBT", "WORRY"]
+      },
+      {
+        class: 'green',
+        title: "What I Feel",
+        members: "PROUD, LUCKY, GRATEFUL, SURE",
+        words: ["PROUD", "LUCKY", "GRATEFUL", "SURE"]
+      },
+      {
+        class: 'blue',
+        title: "What You Do",
+        members: "WRITE, THINK, CREATE, CARE",
+        words: ["WRITE", "THINK", "CREATE", "CARE"]
+      },
+      {
+        class: 'purple',
+        title: "What You Are",
+        members: "SMART, KIND, STRONG, REAL",
+        words: ["SMART", "KIND", "STRONG", "REAL"]
+      }
+    ];
+
+    function solveConnections() {
+      const btn = document.getElementById('btn-connections');
+      btn.disabled = true;
+
+      const grid = document.getElementById('conn-grid');
+      let step = 0;
+
+      function solveStep() {
+        if (step >= categories.length) {
+          document.getElementById('card-connections').style.display = 'block';
+          return;
+        }
+
+        const cat = categories[step];
+        const cards = Array.from(document.querySelectorAll('.connections-card'));
+        
+        // Match cards belonging to the current category
+        const targetCards = cards.filter(card => cat.words.includes(card.getAttribute('data-val')));
+
+        // Highlight matching cards
+        targetCards.forEach(card => card.classList.add('selected'));
+
+        setTimeout(() => {
+          // Remove them from the grid visually
+          targetCards.forEach(card => card.remove());
+
+          // Create the unified solved row
+          const solvedRow = document.createElement('div');
+          solvedRow.className = `connections-row-solved ${cat.class}`;
+          solvedRow.innerHTML = `
+            <div class="category-title">${cat.title}</div>
+            <div class="category-members">${cat.members}</div>
+          `;
+
+          // Insert solved row at the top of the grid
+          grid.insertBefore(solvedRow, grid.firstChild);
+
+          step++;
+          setTimeout(solveStep, 800);
+        }, 1000);
+      }
+
+      solveStep();
+    }
+
+    // --- Crossword Auto-Solve ---
+    function solveCrossword() {
+      const btn = document.getElementById('btn-crossword');
+      btn.disabled = true;
+
+      // Coordinate mapping for answers
+      const answers = {
+        'c-0-0': 'H', 'c-0-1': 'E', 'c-0-2': 'R', 'c-0-3': 'E',
+        'c-1-0': 'O', 'c-1-2': 'I',
+        'c-2-0': 'M', 'c-2-1': 'I', 'c-2-2': 'L', 'c-2-3': 'E', 'c-2-4': 'S',
+        'c-3-0': 'E', 'c-3-2': 'O',
+        'c-4-1': 'Y', 'c-4-2': 'O', 'c-4-3': 'U'
+      };
+
+      const keys = Object.keys(answers);
+      keys.forEach((key, idx) => {
+        setTimeout(() => {
+          document.getElementById(key).textContent = answers[key];
+        }, idx * 150);
+      });
+
+      setTimeout(() => {
+        document.getElementById('card-crossword').style.display = 'block';
+      }, keys.length * 150 + 500);
+    }
+
+    // --- Spelling Bee Auto-Solve ---
+    function solveBee() {
+      const btn = document.getElementById('btn-bee');
+      btn.disabled = true;
+
+      const foundWords = ["STAY", "SURE", "REAL", "HEAL", "ALWAYS"];
+      const displayElem = document.getElementById('found-words-list');
+      displayElem.textContent = '';
+
+      foundWords.forEach((word, idx) => {
+        setTimeout(() => {
+          if (idx === 0) {
+            displayElem.textContent = word;
+          } else {
+            displayElem.textContent += `, ${word}`;
+          }
+        }, idx * 600);
+      });
+
+      setTimeout(() => {
+        document.getElementById('card-bee').style.display = 'block';
+      }, foundWords.length * 600 + 400);
+    }
+  </script>
 </body>
-</html>
+</html> 
