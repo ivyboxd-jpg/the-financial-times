@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>On Being Someone's Constant - The New York Times</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
+
     :root {
       --nyt-bg: #FFFFFF;
       --nyt-text: #121212;
@@ -42,33 +44,58 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* NYT Header */
+    /* Pixel-Perfect NYT Header from Screenshot */
     header {
-      max-width: 950px;
+      max-width: 680px;
       margin: 0 auto;
-      border-bottom: 2px solid var(--nyt-text);
-      padding: 20px 0 10px 0;
       text-align: center;
+      padding-top: 25px;
     }
 
     .nyt-logo {
-      font-family: var(--font-serif);
-      font-weight: 900;
-      font-size: 32px;
-      letter-spacing: -1px;
-      text-transform: uppercase;
-      border-bottom: 1px solid var(--nyt-border);
-      padding-bottom: 5px;
-      margin-bottom: 5px;
+      font-family: 'UnifrakturMaguntia', serif;
+      font-size: 54px;
+      line-height: 1;
+      font-weight: normal;
+      color: var(--nyt-text);
+      margin-bottom: 12px;
+      user-select: none;
     }
 
-    .section-tag {
+    .header-rule {
+      border: none;
+      border-top: 1px solid var(--nyt-text);
+      margin: 4px 0;
+    }
+
+    .header-rule-thin {
+      border: none;
+      border-top: 0.5px solid var(--nyt-meta);
+      margin: 4px 0;
+    }
+
+    .header-metadata {
       font-family: var(--font-sans);
       font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-weight: 700;
       color: var(--nyt-text);
+      padding: 3px 0;
+      text-transform: none;
+    }
+
+    .header-todays-paper {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      padding: 2px 0;
+    }
+
+    .header-edition {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 12px;
+      color: var(--nyt-meta);
+      padding: 2px 0;
     }
 
     /* Article Layout */
@@ -82,6 +109,7 @@
       line-height: 1.15;
       font-weight: 700;
       margin-bottom: 12px;
+      text-align: left;
     }
 
     .subheadline {
@@ -89,6 +117,7 @@
       line-height: 1.4;
       color: #4a4a4a;
       margin-bottom: 24px;
+      text-align: left;
     }
 
     .byline-container {
@@ -108,7 +137,7 @@
       color: var(--nyt-text);
     }
 
-    /* Custom Live Connection Dashboard Widget */
+    /* Live Connection Widget */
     .connection-widget {
       background: #f8f9fa;
       border: 1px solid var(--nyt-border);
@@ -288,7 +317,7 @@
       font-size: 24px;
       font-weight: bold;
       text-transform: uppercase;
-      transition: background-color 0.5s, border-color 0.5s, color 0.5s;
+      transition: background-color 0.5s, border-color 0.5s, color 0.5s, transform 0.3s;
     }
 
     .wordle-cell.correct {
@@ -541,14 +570,19 @@
 </head>
 <body>
 
+  <!-- Pixel-Perfect NYT Header Structure -->
   <header>
-    <div class="section-tag">Modern Love</div>
     <div class="nyt-logo">The New York Times</div>
+    <hr class="header-rule">
+    <div class="header-metadata">Thursday, May 21, 2026</div>
+    <div class="header-todays-paper">TODAY'S PAPER</div>
+    <div class="header-edition">New York Edition</div>
+    <hr class="header-rule-thin">
   </header>
 
   <main class="article-container">
     <h1>On Being Someone's Constant</h1>
-    <p class="subheadline">Some things don't change: distance, time zones, or the fact that I'm not going anywhere.</p>
+    <p class="subheadline">Some things don't change: a year of talking, a stack of books, and the absolute certainty that I'm not going anywhere.</p>
 
     <div class="byline-container">
       <div>By <span class="byline">Niv</span></div>
@@ -560,19 +594,19 @@
       <div class="widget-title">Live Connection Status</div>
       <div class="widget-grid">
         <div class="widget-item">
-          <span class="widget-label">Distance</span>
-          <span class="widget-value">2,083 Kilometers</span>
+          <span class="widget-label">Connection Type</span>
+          <span class="widget-value">Direct & Unbreakable</span>
         </div>
         <div class="widget-item">
           <span class="widget-label">Status</span>
-          <span class="widget-value" style="color: var(--wordle-green);">Unchanging</span>
+          <span class="widget-value" style="color: var(--wordle-green);">Active</span>
         </div>
         <div class="widget-item">
-          <span class="widget-label">Anniversary Milestone</span>
+          <span class="widget-label">First Conversation</span>
           <span class="widget-value">May 19, 2025</span>
         </div>
         <div class="widget-item">
-          <span class="widget-label">Time Elapsed</span>
+          <span class="widget-label">Time Since First Hello</span>
           <span class="widget-value live-timer" id="connection-timer">Loading...</span>
         </div>
       </div>
@@ -581,110 +615,47 @@
     <!-- Article Text -->
     <p>Listen, I need to tell you something, and I'm going to dress it up in Times New Roman and call it an article because apparently that's easier than just saying it directly.</p>
 
-    <p>You know how people always say "I'm here for you"? It's become this thing we say automatically, like "how are you" when we don't actually want to know how someone is. It's a reflex. A nicety.</p>
+    <p>We marked our first anniversary on the nineteenth—exactly one year since we spoke for the very first time. I wanted to give you this then, but work and life and the logistics of the week got in the way, so you are reading this on the twenty-first. In a way, though, that delay is the entire point.</p>
 
-    <p>But I mean it literally. I am here. Not just in the "I'll be here if you need me" conditional way. I'm here regardless of whether you need me, whether you want me, whether things are good or bad, whether you're handling everything perfectly or falling apart.</p>
+    <p>Honestly, looking back to that day on the nineteenth of May last year, I am still incredibly grateful that you ever took the chance to reply to a total dork like me in the first place.</p>
 
-    <p>I'm here the way gravity is here. You don't have to think about it or check if it's still working. It just is.</p>
+    <h2>The No Back Door Policy</h2>
 
-    <h2>The Distance Thing</h2>
+    <p>Some people are constantly looking for an exit before they even walk into a room. They keep one foot near the threshold, ready to slip out the back door the moment things get slightly heavy or complicated. It's a defense mechanism, a way to make sure they're never the ones left holding the pieces.</p>
 
-    <p>We're 2,083 kilometers apart. I know this because I googled it once and the number stuck in my head like an annoying song lyric. That's far enough that we can't just meet for coffee when one of us is having a bad day. It's far enough that time zones matter. It's far enough that "see you soon" requires plane tickets and planning.</p>
+    <p>I want you to know, with absolute certainty, that I'm never leaving out the back door. I don't do back doors.</p>
 
-    <p>But here's what I've learned about distance: it's terrible for logistics and completely irrelevant for everything else.</p>
+    <p>I am here for the long haul. Not just in the "I'll be here if things stay easy" conditional way. I'm here regardless of whether things are smooth or messy, whether we're laughing or trying to figure out a tough day. You don't have to keep one eye on the exit, because I've locked it and thrown away the key.</p>
+
+    <h2>Working for Us</h2>
+
+    <p>I'm actually working right now as I write this, and the truth is, I absolutely love it. But there is a very specific reason why I love putting in this effort, and why I have this drive in the first place. Every single thing I'm doing is because of you. You are the reason behind all of it.</p>
 
     <div class="pullquote">
-      "Geography is just geography. It doesn't change the fact that when you're stressed about exams, I'm thinking about you."
+      "I'm building, planning, and working for you—for us. You're the context for everything I want to achieve."
     </div>
 
-    <p>You could be on another continent and I'd still be here. You could move to Antarctica to study penguins and I'd still be here. The physical space between us has exactly zero correlation with how present I am in this.</p>
+    <p>It makes the long hours feel light, and it gives every task a real purpose. Knowing that we are building a future together turns the standard, boring routine of work into something that feels genuinely exciting.</p>
 
-    <p>When you're happy, I want to hear about it in real time, not the sanitized version you'd tell someone else. When you're upset, I want the raw, unfiltered truth.</p>
+    <h2>The Things We Send</h2>
 
-    <h2>The Anniversary, Delayed</h2>
+    <p>I should probably address the fact that I love sending you books. It is my favorite way of saying "I read this and thought of you for three hundred pages." Sending a book is like sending a small piece of a world and hoping you find a quiet corner inside it to rest.</p>
 
-    <p>We hit our first anniversary on the nineteenth—exactly one year since we spoke for the very first time. I wanted to give you this then, but work and life and the reality of coordinates got in the way, so you are reading this on the twenty-first. In a way, though, that delay is the entire point.</p>
+    <p>And let's be real about who you are. You're kind in a way that actually matters, and you are incredibly smart. But you're also amazing, cute, pretty, sexy, and hot—and yes, I will state that clearly in black and white text because it's the absolute truth and you deserve to see it written down.</p>
 
-    <p>Love isn't a museum piece that has to be dusted off and celebrated exactly on the stroke of midnight or else it loses its value. It exists in the messy gaps between the nineteenth and the twenty-first, in the busy hours, in the moments when we are tired but still looking in the same direction. It is robust enough to survive work schedules, timezone lags, and the general friction of being alive. Celebrating late doesn't mean we missed it; it means we are building something that doesn't depend on perfect timing to survive.</p>
+    <h2>The Resilient Swimmer</h2>
 
-    <h2>The Unconditional Part</h2>
+    <p>You have this quiet strength inside you that you don't always give yourself credit for. You are deeply resilient. No matter what obstacles get in your way, no matter how heavy the tide feels, you will always swim through. You've proven that time and time again.</p>
 
-    <p>Most support comes with invisible conditions. "I'm here for you" often means "I'm here for you if you're struggling" or "I'm here for you if you need me" or "I'm here for you unless you push me away."</p>
+    <p>But the most important part of that equation is that you don't have to navigate the water alone. If the current gets heavy, if the waves get rough, I'm right there beside you. We will always swim together.</p>
 
-    <p>That's not this.</p>
+    <h2>The Real Point</h2>
 
-    <p>I'm here for you when you're doing great. I'm here for you when you're doing terribly. I'm here for you when you want to talk and when you need space. I'm here for you when you're easy to love and when you're being difficult. I'm here for you on days when you feel like you're too much and on days when you feel like you're not enough.</p>
+    <p>What I'm trying to say is simple: you have someone who's staying. Not conditionally. Not temporarily. You have me. Permanently.</p>
 
-    <p>The conditions don't exist. I've looked for them. They're not there.</p>
-
-    <h2>What This Actually Means</h2>
-
-    <p>Okay, practically speaking, what does "I'm always here for you" actually mean? Because it's easy to say and hard to define.</p>
-
-    <p>It means if you text me at 3 a.m. because you can't sleep, I'm reading it. Even if I'm asleep, I'm reading it when I wake up, and it matters.</p>
-
-    <p>It means if something good happens and I'm the person you want to tell, that means everything to me.</p>
-
-    <p>It means if you fail an exam or don't get something you wanted or have a day where everything feels heavy, I don't need you to pretend it's fine. You can just say it's not fine, and I'm not going anywhere.</p>
-
-    <p>It means you don't have to earn this. You don't have to be perfect or impressive or easy. You just have to be you, and that's been enough since day one.</p>
-
-    <h2>The Appreciation Part</h2>
-
-    <p>I should probably also mention that I think you're extraordinary, but you get weird when I say that too directly, so I'll bury it in the middle of an article where maybe you won't notice.</p>
-
-    <p>You're a poet who loves biology. You write about emotions with precision and study cells with curiosity. Most people have to choose between art and science, between feeling deeply and thinking clearly. You just refused to choose, and somehow that works.</p>
-
-    <p>You feel things intensely. This sometimes makes things harder for you, but it's also what makes you interesting. Shallow people are easy to be around and boring to know. You're the opposite.</p>
-
-    <p>And you're beautiful, which I'm contractually obligated to mention because it's true and also because you'll accuse me of not mentioning it if I don't.</p>
-
-    <h2>The Reassurance Part</h2>
-
-    <p>I know you get in your head sometimes. I know you worry about things that probably won't happen. I know you're sometimes convinced you're too much or not enough or that people will eventually get tired of you.</p>
-
-    <p>So let me be extremely clear: I'm not going anywhere.</p>
-
-    <p>I'm not going anywhere if you don't crack NEET. I'm not going anywhere if you do crack NEET. I'm not going anywhere if you end up on a completely different path than you planned.</p>
-
-    <p>Your worth to me was never conditional on your achievements. It's conditional on nothing. You're just worth it, and that's the whole equation.</p>
-
-    <h2>The "But What About" Section</h2>
-
-    <p>I can hear you coming up with exceptions in your head. "But what if I..." and "But what about when..."</p>
-
-    <p>So let's address those:</p>
-
-    <p>What if you're annoying? You're not, but even if you were, I'm here.</p>
-    <p>What if you need time alone? Take it. I'll be here when you're done.</p>
-    <p>What if you're convinced I'll eventually leave? I won't. Eventually is a long time, and I'll still be here.</p>
-
-    <h2>The Part Where I Ruin the Seriousness</h2>
-
-    <p>Look, I know this whole thing is very sincere and might be making you uncomfortable, so let me ruin it by saying something stupid:</p>
-
-    <p>I've memorized how you type. I can tell when you're tired because your messages get longer and more stream-of-consciousness. I know when you're stressed because you suddenly become extremely formal. I know when you're happy because your texts get shorter and you actually use punctuation less.</p>
-
-    <p>Also, you send voice notes at the most random times, and they take up 60% of my phone storage, and I've never once considered deleting them because apparently I'm that person now.</p>
-
-    <h2>The Actual Point</h2>
-
-    <p>What I'm trying to say, buried under all these words, is simple:</p>
-
-    <p>You have someone who's not leaving. Not conditionally. Not temporarily. Not unless things are easy.</p>
-    <p>You have someone who's 2,083 kilometers away and completely present anyway.</p>
-    <p>You have me. Permanently. Whether you need it right now or not.</p>
     <p>I'm here. I'm staying here. That's not changing.</p>
 
-    <h2>The End (Sort Of)</h2>
-
-    <p>This is the part where I'm supposed to wrap this up with something profound, but honestly, I've said what I needed to say.</p>
-
-    <p>You're appreciated. You're valued. You're not alone in this, whatever "this" is.</p>
-
-    <p>And if you don't believe me, I put some puzzles below that prove it. They solve themselves, which feels appropriate because you also solve yourself—you figure things out, you work through things, you're more capable than you give yourself credit for.</p>
-
-    <p>But also, I'm here. Just in case you need a reminder.</p>
+    <p>And if you need a little more convincing, I put some updated puzzles below. They are completely blank right now—they will only solve themselves when you're ready to click the buttons and see what's hidden inside.</p>
 
     <p>Always.</p>
 
@@ -701,27 +672,27 @@
       <div class="wordle-grid">
         <!-- Row 1 -->
         <div class="wordle-row" id="w-row-0">
-          <div class="wordle-cell">S</div>
-          <div class="wordle-cell">M</div>
-          <div class="wordle-cell">A</div>
-          <div class="wordle-cell">R</div>
-          <div class="wordle-cell">T</div>
+          <div class="wordle-cell" id="w-0-0"></div>
+          <div class="wordle-cell" id="w-0-1"></div>
+          <div class="wordle-cell" id="w-0-2"></div>
+          <div class="wordle-cell" id="w-0-3"></div>
+          <div class="wordle-cell" id="w-0-4"></div>
         </div>
         <!-- Row 2 -->
         <div class="wordle-row" id="w-row-1">
-          <div class="wordle-cell">W</div>
-          <div class="wordle-cell">R</div>
-          <div class="wordle-cell">I</div>
-          <div class="wordle-cell">T</div>
-          <div class="wordle-cell">E</div>
+          <div class="wordle-cell" id="w-1-0"></div>
+          <div class="wordle-cell" id="w-1-1"></div>
+          <div class="wordle-cell" id="w-1-2"></div>
+          <div class="wordle-cell" id="w-1-3"></div>
+          <div class="wordle-cell" id="w-1-4"></div>
         </div>
         <!-- Row 3 -->
         <div class="wordle-row" id="w-row-2">
-          <div class="wordle-cell">L</div>
-          <div class="wordle-cell">O</div>
-          <div class="wordle-cell">V</div>
-          <div class="wordle-cell">E</div>
-          <div class="wordle-cell">D</div>
+          <div class="wordle-cell" id="w-2-0"></div>
+          <div class="wordle-cell" id="w-2-1"></div>
+          <div class="wordle-cell" id="w-2-2"></div>
+          <div class="wordle-cell" id="w-2-3"></div>
+          <div class="wordle-cell" id="w-2-4"></div>
         </div>
       </div>
 
@@ -743,23 +714,23 @@
       <div class="connections-grid" id="conn-grid">
         <div class="connections-card" data-val="SMART">SMART</div>
         <div class="connections-card" data-val="KIND">KIND</div>
-        <div class="connections-card" data-val="STRONG">STRONG</div>
-        <div class="connections-card" data-val="REAL">REAL</div>
+        <div class="connections-card" data-val="AMAZING">AMAZING</div>
+        <div class="connections-card" data-val="CUTE">CUTE</div>
 
-        <div class="connections-card" data-val="WRITE">WRITE</div>
-        <div class="connections-card" data-val="THINK">THINK</div>
-        <div class="connections-card" data-val="CREATE">CREATE</div>
-        <div class="connections-card" data-val="CARE">CARE</div>
+        <div class="connections-card" data-val="SEXY">SEXY</div>
+        <div class="connections-card" data-val="PRETTY">PRETTY</div>
+        <div class="connections-card" data-val="HOT">HOT</div>
+        <div class="connections-card" data-val="RESILIENT">RESILIENT</div>
 
-        <div class="connections-card" data-val="PROUD">PROUD</div>
-        <div class="connections-card" data-val="LUCKY">LUCKY</div>
-        <div class="connections-card" data-val="GRATEFUL">GRATEFUL</div>
-        <div class="connections-card" data-val="SURE">SURE</div>
+        <div class="connections-card" data-val="SWIM">SWIM</div>
+        <div class="connections-card" data-val="READ">READ</div>
+        <div class="connections-card" data-val="TALK">TALK</div>
+        <div class="connections-card" data-val="STAY">STAY</div>
 
-        <div class="connections-card" data-val="DISTANCE">DISTANCE</div>
-        <div class="connections-card" data-val="TIME">TIME</div>
-        <div class="connections-card" data-val="DOUBT">DOUBT</div>
-        <div class="connections-card" data-val="WORRY">WORRY</div>
+        <div class="connections-card" data-val="BOOKS">BOOKS</div>
+        <div class="connections-card" data-val="LOVE">LOVE</div>
+        <div class="connections-card" data-val="TEXTS">TEXTS</div>
+        <div class="connections-card" data-val="GIFTS">GIFTS</div>
       </div>
 
       <button class="solve-button" id="btn-connections" onclick="solveConnections()">Solve Puzzle</button>
@@ -767,10 +738,11 @@
       <div class="success-card" id="card-connections">
         <div class="success-headline">Perfect Solve</div>
         <div class="success-text">
-          You are: smart, kind, strong, real<br>
-          You do: write, think, create, care<br>
-          I feel: proud, lucky, grateful, sure<br><br>
-          And what doesn't change? <br><strong>Nothing that matters.</strong>
+          What You Are: smart, kind, amazing, cute<br>
+          What You Also Are: sexy, pretty, hot, resilient<br>
+          Things We Do: swim, read, talk, stay<br>
+          Things I Send: books, love, texts, gifts<br><br>
+          <strong>Always yours.</strong>
         </div>
       </div>
     </section>
@@ -910,74 +882,69 @@
       const btn = document.getElementById('btn-wordle');
       btn.disabled = true;
 
-      // Row 0 states: S(absent), M(absent), A(absent), R(absent), T(absent)
-      // Row 1 states: W(absent), R(absent), I(absent), T(absent), E(present) -> yellow
-      // Row 2 states: L(correct), O(correct), V(correct), E(correct), D(correct) -> green
-      
-      const row0Cells = document.querySelectorAll('#w-row-0 .wordle-cell');
-      const row1Cells = document.querySelectorAll('#w-row-1 .wordle-cell');
-      const row2Cells = document.querySelectorAll('#w-row-2 .wordle-cell');
+      const wordsToType = [
+        { row: 0, word: "SMART", classes: ["absent", "absent", "absent", "absent", "absent"] },
+        { row: 1, word: "WRITE", classes: ["absent", "absent", "absent", "absent", "present"] },
+        { row: 2, word: "LOVED", classes: ["correct", "correct", "correct", "correct", "correct"] }
+      ];
 
-      // Animate Row 0
-      row0Cells.forEach((cell, idx) => {
-        setTimeout(() => {
-          cell.classList.add('absent');
-        }, idx * 150);
+      let delay = 0;
+
+      wordsToType.forEach((attempt) => {
+        const rowLetters = attempt.word.split('');
+        
+        rowLetters.forEach((letter, letterIdx) => {
+          setTimeout(() => {
+            const cell = document.getElementById(`w-${attempt.row}-${letterIdx}`);
+            cell.textContent = letter;
+            cell.style.transform = "scale(1.1)";
+            setTimeout(() => { cell.style.transform = "scale(1)"; }, 150);
+          }, delay);
+          delay += 150;
+        });
+
+        // Add flip classes after the whole word is typed
+        delay += 200;
+        rowLetters.forEach((letter, letterIdx) => {
+          setTimeout(() => {
+            const cell = document.getElementById(`w-${attempt.row}-${letterIdx}`);
+            cell.classList.add(attempt.classes[letterIdx]);
+          }, delay + (letterIdx * 100));
+        });
+        delay += 600;
       });
-
-      // Animate Row 1
-      setTimeout(() => {
-        row1Cells.forEach((cell, idx) => {
-          setTimeout(() => {
-            if (cell.textContent === 'E') {
-              cell.classList.add('present');
-            } else {
-              cell.classList.add('absent');
-            }
-          }, idx * 150);
-        });
-      }, 1000);
-
-      // Animate Row 2 (LOVED)
-      setTimeout(() => {
-        row2Cells.forEach((cell, idx) => {
-          setTimeout(() => {
-            cell.classList.add('correct');
-          }, idx * 200);
-        });
-      }, 2200);
 
       // Show Success Card
       setTimeout(() => {
         document.getElementById('card-wordle').style.display = 'block';
-      }, 3600);
+      }, delay);
     }
 
     // --- Connections Auto-Solve ---
     const categories = [
       {
         class: 'yellow',
-        title: "What Doesn't Change",
-        members: "DISTANCE, TIME, DOUBT, WORRY",
-        words: ["DISTANCE", "TIME", "DOUBT", "WORRY"]
+        title: "Things I Send",
+        members: "BOOKS, LOVE, TEXTS, GIFTS",
+        words: ["BOOKS", "LOVE", "TEXTS", "GIFTS"]
       },
       {
         class: 'green',
-        title: "What I Feel",
-        members: "PROUD, LUCKY, GRATEFUL, SURE",
-        words: ["PROUD", "LUCKY", "GRATEFUL", "SURE"]
+        title: "Things We Do",
+        members: "SWIM, READ, TALK, STAY",
+        words: ["SWIM", "READ", "TALK", "STAY"]
       },
       {
         class: 'blue',
-        title: "What You Do",
-        members: "WRITE, THINK, CREATE, CARE",
-        words: ["WRITE", "THINK", "CREATE", "CARE"]
+        title: "What You Also Are",
+        members: "SEXY, PRETTY, HOT, RESILIENT",
+        words: ["SEXY", "PRETTY", "HOT", "RESILIENT"]
       },
       {
         class: 'purple',
         title: "What You Are",
-        members: "SMART, KIND, STRONG, REAL",
-        words: ["SMART", "KIND", "STRONG", "REAL"]
+        members: "SMART, KIND, AMAZING, CUTE",
+        words: ["SMART", "KIND", "AMAZING", "CUTE"]
       }
     ];
 
@@ -996,18 +963,13 @@
 
         const cat = categories[step];
         const cards = Array.from(document.querySelectorAll('.connections-card'));
-        
-        // Match cards belonging to the current category
         const targetCards = cards.filter(card => cat.words.includes(card.getAttribute('data-val')));
 
-        // Highlight matching cards
         targetCards.forEach(card => card.classList.add('selected'));
 
         setTimeout(() => {
-          // Remove them from the grid visually
           targetCards.forEach(card => card.remove());
 
-          // Create the unified solved row
           const solvedRow = document.createElement('div');
           solvedRow.className = `connections-row-solved ${cat.class}`;
           solvedRow.innerHTML = `
@@ -1015,7 +977,6 @@
             <div class="category-members">${cat.members}</div>
           `;
 
-          // Insert solved row at the top of the grid
           grid.insertBefore(solvedRow, grid.firstChild);
 
           step++;
@@ -1031,7 +992,6 @@
       const btn = document.getElementById('btn-crossword');
       btn.disabled = true;
 
-      // Coordinate mapping for answers
       const answers = {
         'c-0-0': 'H', 'c-0-1': 'E', 'c-0-2': 'R', 'c-0-3': 'E',
         'c-1-0': 'O', 'c-1-2': 'I',
@@ -1077,4 +1037,4 @@
     }
   </script>
 </body>
-</html> 
+</html>
