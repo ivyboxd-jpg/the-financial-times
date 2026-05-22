@@ -6,34 +6,34 @@
 <title>Manav Agarwal — Agile Coach · AI Strategist · Author</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<!-- Premium Geometric & Technical Typefaces -->
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<!-- Premium Fontshare Fonts -->
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&f[]=clash-display@700,600,500&display=swap" rel="stylesheet">
 <style>
 :root, [data-theme="dark"] {
-  --bg: #0A0B0D;                 /* Velvet black */
-  --bg2: #111216;                /* Deep slate surface */
-  --bg3: #18191E;                /* Card surface */
-  --border: rgba(250, 246, 240, 0.05);
-  --lime: #C6FF00;               /* Vivid cyber lime */
-  --lime-dim: rgba(198, 255, 0, 0.08);
-  --white: #FAF8F5;              /* Clean alabaster */
-  --muted: #7A7771;              /* Warm ash gray */
-  --muted2: #AFAEA9;             /* Soft body copy gray */
+  --bg: #0A0D0B;                 /* Deep organic forest obsidian */
+  --bg2: #121714;                /* Dark sage charcoal */
+  --bg3: #18201B;                /* Deep forest surface */
+  --border: rgba(234, 239, 233, 0.06);
+  --lime: #86EFAC;               /* Soft, glowing minty sage green */
+  --lime-dim: rgba(134, 239, 172, 0.08);
+  --white: #EAEFE9;              /* Comfort warm sage white */
+  --muted: #687C71;              /* Soft sage gray */
+  --muted2: #9EB5A8;             /* Light legible sage gray */
   --card-shadow: rgba(0, 0, 0, 0.4);
   --transition-theme: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
 }
 
 [data-theme="light"] {
-  --bg: #FAF9F6;                 /* Warm linen white */
-  --bg2: #F3F1EC;                /* Soft stone gray */
-  --bg3: #EBE9E2;                /* Balanced card background */
-  --border: rgba(10, 11, 14, 0.08);
-  --lime: #6E9B00;               /* Forest-lime with high light contrast */
-  --lime-dim: rgba(110, 155, 0, 0.08);
-  --white: #101114;              /* Deep obsidian dark text */
-  --muted: #73706B;              /* Darker warm ash gray */
-  --muted2: #4A4844;             /* High readability text */
-  --card-shadow: rgba(10, 11, 14, 0.05);
+  --bg: #F1F5F1;                 /* Light linen sage white */
+  --bg2: #E2E8E2;                /* Mid sage stone */
+  --bg3: #FFFFFF;                /* Pristine clinical card white */
+  --border: rgba(27, 59, 43, 0.08);
+  --lime: #234935;               /* Deep forest green */
+  --lime-dim: rgba(35, 73, 53, 0.06);
+  --white: #1B3226;              /* Obsidian dark forest text */
+  --muted: #5C7064;              /* Medium slate gray */
+  --muted2: #3A4B40;             /* High contrast dark sage text */
+  --card-shadow: rgba(10, 11, 14, 0.04);
   --transition-theme: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
 }
 
@@ -42,7 +42,7 @@ html { scroll-behavior: smooth; font-size: 16px; }
 body {
   background: var(--bg);
   color: var(--white);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Satoshi', sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   transition: var(--transition-theme);
@@ -63,7 +63,7 @@ nav.scrolled {
   border-color: var(--border);
 }
 .nav-logo {
-  font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 1.15rem;
+  font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 1.15rem;
   letter-spacing: -0.02em; color: var(--white); text-decoration: none;
 }
 .nav-logo span { color: var(--lime); }
@@ -120,7 +120,7 @@ nav.scrolled {
   content: ''; position: absolute;
   top: -20%; right: -5%;
   width: 60%; height: 140%;
-  background: radial-gradient(ellipse at center, rgba(198, 255, 0, 0.03) 0%, transparent 65%);
+  background: radial-gradient(ellipse at center, rgba(134, 239, 172, 0.03) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -138,14 +138,14 @@ nav.scrolled {
 .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--lime); }
 
 .hero-headline {
-  font-family: 'Space Grotesk', sans-serif; font-weight: 800;
+  font-family: 'Clash Display', sans-serif; font-weight: 700;
   font-size: clamp(2.8rem, 5.5vw, 4.6rem);
   line-height: 0.98; letter-spacing: -0.03em;
   color: var(--white);
 }
 .hero-headline .line2 {
   display: block; color: var(--muted); font-weight: 400;
-  font-style: italic; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-style: italic; font-family: 'Satoshi', sans-serif;
   font-size: 0.55em; letter-spacing: -0.01em; margin-top: 0.4em;
   line-height: 1.45;
 }
@@ -159,7 +159,7 @@ nav.scrolled {
   color: var(--muted);
 }
 .carousel-display {
-  font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+  font-family: 'Clash Display', sans-serif; font-weight: 600;
   font-size: clamp(1.4rem, 3vw, 2.2rem); letter-spacing: -0.01em;
   color: var(--white);
   min-height: 1.3em;
@@ -227,7 +227,7 @@ nav.scrolled {
 .callout {
   position: absolute; z-index: 10;
   display: flex; align-items: center; gap: 0.65rem;
-  background: rgba(24, 25, 30, 0.85);
+  background: rgba(24, 32, 27, 0.85);
   backdrop-filter: blur(16px);
   border: 1px solid var(--border);
   padding: 0.75rem 1.1rem;
@@ -242,11 +242,11 @@ nav.scrolled {
 }
 .callout:hover { border-color: var(--lime); transform: translateY(-2px); }
 .callout-n {
-  font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 0.9rem;
+  font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 0.9rem;
   color: var(--lime); min-width: 1rem;
 }
 .callout-main {
-  font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+  font-family: 'Clash Display', sans-serif; font-weight: 600;
   font-size: 0.8rem; letter-spacing: 0.02em; color: var(--white);
   white-space: nowrap;
 }
@@ -292,7 +292,7 @@ nav.scrolled {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem;
 }
 .metric-num {
-  font-family: 'Space Grotesk', sans-serif; font-weight: 800;
+  font-family: 'Clash Display', sans-serif; font-weight: 700;
   font-size: clamp(2.5rem, 5vw, 4.2rem);
   letter-spacing: -0.03em; color: var(--white);
   line-height: 1;
@@ -332,7 +332,7 @@ nav.scrolled {
 }
 .section-eyebrow::after { content: ''; flex: 0 0 32px; height: 1px; background: var(--lime); }
 .section-title {
-  font-family: 'Space Grotesk', sans-serif; font-weight: 800;
+  font-family: 'Clash Display', sans-serif; font-weight: 700;
   font-size: clamp(2.2rem, 5vw, 3.6rem);
   letter-spacing: -0.03em; line-height: 1.05;
   color: var(--white);
@@ -341,27 +341,27 @@ nav.scrolled {
 
 .workshops-split {
   display: grid;
-  grid-template-columns: 0.7fr 1.3fr;
+  grid-template-columns: 0.65fr 1.35fr;
   gap: 5rem;
   align-items: start;
 }
 
-/* Line-by-Line Stacked Filters */
+/* Kane Sherwell Style Left Navigation (Vertical Stacked Options) */
 .filter-tabs {
   display: flex; flex-direction: column; gap: 1.2rem;
-  border-left: 1px solid var(--border);
+  border-left: 2px solid var(--border);
   padding-left: 1.5rem;
 }
 .filter-tab {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.95rem; font-weight: 700; letter-spacing: 0.02em;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 0.95rem; font-weight: 600; letter-spacing: 0.02em;
   color: var(--muted); background: transparent; border: none; cursor: pointer;
   padding: 0.5rem 0; text-align: left;
   position: relative; transition: color 0.3s ease, transform 0.3s ease;
   display: flex; justify-content: space-between; align-items: center;
 }
 .filter-tab::before {
-  content: ''; position: absolute; left: -1.55rem; top: 0; bottom: 0; width: 2px;
+  content: ''; position: absolute; left: -1.6rem; top: 0; bottom: 0; width: 3px;
   background: var(--lime); transform: scaleY(0); transition: transform 0.3s ease;
 }
 .filter-tab.active { color: var(--white); transform: translateX(4px); }
@@ -372,7 +372,7 @@ nav.scrolled {
   background: var(--border); padding: 0.2rem 0.5rem; border-radius: 99px;
   transition: color 0.3s ease;
 }
-.filter-tab.active .tab-count { color: var(--lime); background: var(--lime-dim); }
+.filter-tab.active .tab-count { color: var(--bg); background: var(--lime); }
 
 /* Dynamic Workshops Container */
 .workshops-container { position: relative; min-height: 400px; }
@@ -390,7 +390,7 @@ nav.scrolled {
   border: 1px dashed var(--border); border-radius: 8px; padding: 2rem;
 }
 .workshops-placeholder svg { width: 40px; height: 40px; color: var(--muted); margin-bottom: 1.25rem; opacity: 0.6; }
-.workshops-placeholder h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--white); }
+.workshops-placeholder h3 { font-family: 'Clash Display', sans-serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--white); }
 .workshops-placeholder p { font-size: 0.9rem; max-width: 300px; font-weight: 300; line-height: 1.6; }
 
 .workshop-card {
@@ -405,11 +405,28 @@ nav.scrolled {
 .wcard-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
 .wcard-tag {
   font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--lime); background: var(--lime-dim); padding: 0.4rem 0.8rem; border-radius: 2px; flex-shrink: 0;
+  color: var(--white); background: var(--lime); padding: 0.4rem 0.8rem; border-radius: 2px; flex-shrink: 0;
+}
+[data-theme="dark"] .wcard-tag {
+  color: var(--bg);
 }
 .wcard-duration { font-size: 0.78rem; color: var(--muted); font-weight: 500; margin-top: 0.35rem; }
-.wcard-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.01em; color: var(--white); }
+.wcard-title { font-family: 'Clash Display', sans-serif; font-weight: 600; font-size: 1.25rem; letter-spacing: -0.01em; color: var(--white); }
 .wcard-desc { font-size: 0.9rem; line-height: 1.75; color: var(--muted2); font-weight: 300; }
+
+/* Visual Tool Badges Row */
+.wcard-tools {
+  display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;
+}
+.tool-badge {
+  font-size: 0.75rem; font-weight: 700; background: var(--border);
+  border: 1px solid rgba(250, 246, 240, 0.05); padding: 0.35rem 0.75rem;
+  border-radius: 4px; color: var(--white); display: inline-flex; align-items: center; gap: 0.35rem;
+}
+[data-theme="light"] .tool-badge {
+  border-color: rgba(10, 11, 14, 0.04);
+}
+
 .wcard-perspective {
   font-size: 0.85rem; color: var(--muted); font-style: italic;
   border-left: 2px solid var(--lime); padding-left: 1rem; margin-top: 0.5rem; line-height: 1.65;
@@ -432,19 +449,56 @@ nav.scrolled {
   display: grid; grid-template-columns: 100px 1fr; gap: 2rem;
   padding: 2rem 0; border-top: 1px solid var(--border); align-items: start;
 }
-.tl-year { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--lime); letter-spacing: 0.04em; padding-top: 0.1rem; }
-.tl-role { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--white); margin-bottom: 0.2rem; }
+.tl-year { font-family: 'Clash Display', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--lime); letter-spacing: 0.04em; padding-top: 0.1rem; }
+.tl-role { font-family: 'Clash Display', sans-serif; font-weight: 600; font-size: 1.05rem; color: var(--white); margin-bottom: 0.2rem; }
 .tl-org { font-size: 0.82rem; color: var(--muted); font-weight: 500; }
 
-/* ─── LIBRARY (Spacious Editorial Layout) ────── */
+/* ─── LIBRARY WITH CSS 3D BOOK SPINE COVERS ─── */
 .books-section { padding: 10rem 3.5rem; border-top: 1px solid var(--border); }
 .books-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 3.5rem; background: transparent; margin-top: 5rem;
 }
-.book-card { background: transparent; padding: 0; display: flex; flex-direction: column; gap: 1.2rem; }
-.book-num { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 3.5rem; color: rgba(198, 255, 0, 0.1); line-height: 1; letter-spacing: -0.04em; }
-.book-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.15rem; color: var(--white); line-height: 1.35; }
+.book-card { background: transparent; padding: 0; display: flex; flex-direction: column; gap: 1.5rem; }
+
+/* 3D Spines */
+.book-visual {
+  perspective: 1200px;
+  display: flex; justify-content: center; margin-bottom: 1rem;
+}
+.book-spine-cover {
+  width: 170px; height: 250px;
+  position: relative;
+  border-radius: 3px 8px 8px 3px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 8px 12px 28px rgba(0, 0, 0, 0.4);
+}
+.book-spine-cover::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+  background: rgba(0,0,0,0.15); z-index: 5;
+  border-radius: 3px 0 0 3px;
+  box-shadow: inset -1px 0 3px rgba(255,255,255,0.08);
+}
+.book-visual:hover .book-spine-cover {
+  transform: rotateY(-18deg) rotateX(6deg) translateY(-4px);
+  box-shadow: 14px 18px 36px rgba(0, 0, 0, 0.5);
+}
+
+/* Individual Book Cover Gradients */
+.book1 { background: linear-gradient(135deg, #122118 0%, #1E3D2B 100%); border-right: 2px solid #234935; }
+.book2 { background: linear-gradient(135deg, #2D1A10 0%, #4D2D1B 100%); border-right: 2px solid #4D2D1B; }
+.book3 { background: linear-gradient(135deg, #101B2B 0%, #1A304D 100%); border-right: 2px solid #1A304D; }
+.book4 { background: linear-gradient(135deg, #1C102B 0%, #301A4D 100%); border-right: 2px solid #301A4D; }
+
+.book-title-overlay {
+  padding: 1.5rem; height: 100%; display: flex; flex-direction: column; justify-content: space-between;
+}
+.book-brand-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lime); }
+.book-hero-title { font-family: 'Clash Display', sans-serif; font-size: 1.15rem; font-weight: 600; color: #FAF8F5; line-height: 1.25; }
+.book-cover-meta { font-size: 0.65rem; color: rgba(250, 246, 240, 0.6); }
+
+.book-title { font-family: 'Clash Display', sans-serif; font-weight: 600; font-size: 1.15rem; color: var(--white); line-height: 1.35; }
 .book-sub { font-size: 0.9rem; color: var(--muted2); line-height: 1.7; font-weight: 300; }
 .book-link {
   display: inline-flex; align-items: center; gap: 0.5rem; margin-top: auto;
@@ -485,7 +539,7 @@ nav.scrolled {
 .testi-q { font-size: 0.95rem; line-height: 1.8; color: var(--muted2); font-weight: 300; font-style: italic; }
 .testi-q strong { color: var(--white); font-weight: 500; font-style: normal; }
 .testi-bottom { margin-top: auto; }
-.testi-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--white); }
+.testi-name { font-family: 'Clash Display', sans-serif; font-weight: 600; font-size: 0.88rem; color: var(--white); }
 .testi-role { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; font-weight: 500; }
 
 @keyframes testiTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -494,11 +548,11 @@ nav.scrolled {
 .cta-section { padding: 12rem 3.5rem; text-align: center; position: relative; overflow: hidden; }
 .cta-section::before {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(198, 255, 0, 0.04) 0%, transparent 70%);
+  background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(134, 239, 172, 0.04) 0%, transparent 70%);
   pointer-events: none;
 }
 .cta-headline {
-  font-family: 'Space Grotesk', sans-serif; font-weight: 800;
+  font-family: 'Clash Display', sans-serif; font-weight: 700;
   font-size: clamp(2.4rem, 6vw, 4.5rem);
   letter-spacing: -0.03em; line-height: 1.05;
   color: var(--white); margin-bottom: 1.5rem;
@@ -511,7 +565,7 @@ footer {
   padding: 3.5rem; border-top: 1px solid var(--border);
   display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem;
 }
-.footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; color: var(--white); text-decoration: none; }
+.footer-logo { font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 1.05rem; letter-spacing: -0.02em; color: var(--white); text-decoration: none; }
 .footer-logo span { color: var(--lime); }
 .footer-links { display: flex; gap: 2.5rem; }
 .footer-links a { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s ease; }
@@ -531,7 +585,7 @@ footer {
   opacity: 0; pointer-events: none; transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .mobile-menu.open { display: flex; opacity: 1; pointer-events: all; }
-.mobile-menu a { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 2.2rem; color: var(--white); text-decoration: none; letter-spacing: -0.02em; transition: color 0.3s ease; }
+.mobile-menu a { font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 2.2rem; color: var(--white); text-decoration: none; letter-spacing: -0.02em; transition: color 0.3s ease; }
 .mobile-menu a:hover { color: var(--lime); }
 .mobile-menu-close { position: absolute; top: 2rem; right: 2rem; font-size: 1.8rem; color: var(--muted); cursor: pointer; background: none; border: none; line-height: 1; }
 
@@ -555,10 +609,10 @@ footer {
   .metrics { grid-template-columns: 1fr 1fr; gap: 3rem; padding: 6rem 2rem; }
   .about-strip { grid-template-columns: 1fr; gap: 4rem; padding: 6rem 2rem; }
 
-  /* Split layout collapses cleanly into stacked row style on tablet/mobile */
+  /* Collapse active layout cleanly on tablet & mobile */
   .workshops-split { grid-template-columns: 1fr; gap: 3rem; }
   .filter-tabs { flex-direction: row; flex-wrap: wrap; border-left: none; border-bottom: 1px solid var(--border); padding-left: 0; padding-bottom: 1.25rem; }
-  .filter-tab::before { left: 0; bottom: -1.35rem; top: auto; width: auto; right: 0; height: 2px; transform: scaleX(0); }
+  .filter-tab::before { left: 0; bottom: -1.35rem; top: auto; width: auto; right: 0; height: 3px; transform: scaleX(0); }
   .filter-tab.active::before { transform: scaleX(1); }
 
   .section { padding: 6rem 2rem; }
@@ -582,7 +636,7 @@ footer {
 </head>
 <body>
 
-<!-- MOBILE NAVIGATION OVERLAY -->
+<!-- MOBILE DRAWER NAVIGATION -->
 <div class="mobile-menu" id="mobileMenu">
   <button class="mobile-menu-close" id="menuClose">✕</button>
   <a href="#workshops" onclick="closeMobile()">Workshops</a>
@@ -603,7 +657,7 @@ footer {
       <li><a href="#testimonials">Proof</a></li>
     </ul>
 
-    <!-- Theme Toggle Switcher -->
+    <!-- Soft Light Theme Switch Toggle -->
     <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
       <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="12" cy="12" r="5"></circle>
@@ -784,6 +838,11 @@ footer {
           </div>
           <div class="wcard-title">Project Management Essentials</div>
           <div class="wcard-desc">Waterfall structure meets Agile flexibility. Stakeholders who don't know what they want, risk mitigation that people actually use, and delivery under pressure — all covered.</div>
+          <div class="wcard-tools">
+            <span class="tool-badge">Jira</span>
+            <span class="tool-badge">Miro</span>
+            <span class="tool-badge">MS Project</span>
+          </div>
           <div class="wcard-perspective">"Psychological Safety for PMs: How to deliver bad news without getting shot."</div>
           <div class="wcard-footer">
             <span class="wcard-level">All levels</span>
@@ -797,6 +856,11 @@ footer {
           </div>
           <div class="wcard-title">The Agile Mindset & Scrum</div>
           <div class="wcard-desc">Stop doing Agile in name only. We simulate real sprint pressure to teach teams how to prioritise value over paperwork. Standups that actually stand up. Retros people don't dread.</div>
+          <div class="wcard-tools">
+            <span class="tool-badge">Scrum Board</span>
+            <span class="tool-badge">Planning Poker</span>
+            <span class="tool-badge">Confluence</span>
+          </div>
           <div class="wcard-perspective">"The No-BS Retrospective: How to get people to speak up when trust is low."</div>
           <div class="wcard-footer">
             <span class="wcard-level">Beginners welcome</span>
@@ -810,6 +874,11 @@ footer {
           </div>
           <div class="wcard-title">AI-Powered Project Management</div>
           <div class="wcard-desc">Not a coding class. A strategy session on how to use LLMs to automate grunt work, write better requirements, and push back on unrealistic deadlines — with data.</div>
+          <div class="wcard-tools">
+            <span class="tool-badge">ChatGPT</span>
+            <span class="tool-badge">Claude AI</span>
+            <span class="tool-badge">Notion AI</span>
+          </div>
           <div class="wcard-perspective">"AI as a Negotiation Partner: Using data to push back on management."</div>
           <div class="wcard-footer">
             <span class="wcard-level">PM · Scrum Master · PO</span>
@@ -823,6 +892,11 @@ footer {
           </div>
           <div class="wcard-title">Leading SAFe® (SA)</div>
           <div class="wcard-desc">Official certification. Unofficial insight: the stuff that's not in the workbook. How to apply massive frameworks without crushing your company culture.</div>
+          <div class="wcard-tools">
+            <span class="tool-badge">SAFe Board</span>
+            <span class="tool-badge">PI Planning</span>
+            <span class="tool-badge">Value Stream Mapping</span>
+          </div>
           <div class="wcard-perspective">"The Political Shield: Getting Finance, HR, and Legal on board without a revolt."</div>
           <div class="wcard-footer">
             <span class="wcard-level">Executives · Leaders</span>
@@ -836,6 +910,11 @@ footer {
           </div>
           <div class="wcard-title">SAFe® Scrum Master (SSM)</div>
           <div class="wcard-desc">Servant leadership in a scaled enterprise isn't the same as in a startup. Facilitation when you have dependencies on five teams and authority over none of them.</div>
+          <div class="wcard-tools">
+            <span class="tool-badge">ART Board</span>
+            <span class="tool-badge">Kanban metrics</span>
+            <span class="tool-badge">Miro Collaboration</span>
+          </div>
           <div class="wcard-perspective">"Servant Leadership vs. Being a Doormat: How to say No to protect your team."</div>
           <div class="wcard-footer">
             <span class="wcard-level">New & Existing SMs</span>
@@ -849,6 +928,11 @@ footer {
           </div>
           <div class="wcard-title">The Interview Reverse-Engineer</div>
           <div class="wcard-desc">Stop memorising answers. Start understanding the game. Deconstruct job descriptions, interview the company back, and spot the toxic culture before you sign the contract.</div>
+          <div class="wcard-tools">
+            <span class="tool-badge">CV Optimization</span>
+            <span class="tool-badge">Interactive Roleplay</span>
+            <span class="tool-badge">Culture Audit</span>
+          </div>
           <div class="wcard-perspective">"The Red Flag Radar: How to spot a bad manager before you start."</div>
           <div class="wcard-footer">
             <span class="wcard-level">All career stages</span>
@@ -862,6 +946,11 @@ footer {
           </div>
           <div class="wcard-title">Practitioner-to-Leader Transition</div>
           <div class="wcard-desc">The skills that got you here won't get you there. For high-performers moving into management. The hardest part isn't strategy — it's the identity shift.</div>
+          <div class="wcard-tools">
+            <span class="tool-badge">Leadership Blueprint</span>
+            <span class="tool-badge">EQ Mapping</span>
+            <span class="tool-badge">Delegation Tools</span>
+          </div>
           <div class="wcard-perspective">"The Grief of the Expert: How to stop doing the work and start leading people."</div>
           <div class="wcard-footer">
             <span class="wcard-level">Senior ICs · New Managers</span>
@@ -875,6 +964,11 @@ footer {
           </div>
           <div class="wcard-title">SAFe® PO/PM (POPM)</div>
           <div class="wcard-desc">Bridge strategy to execution. Write user stories engineers actually understand. Prioritise features in a world where everyone thinks their request is urgent.</div>
+          <div class="wcard-tools">
+            <span class="tool-badge">Backlog Grooming</span>
+            <span class="tool-badge">User Stories</span>
+            <span class="tool-badge">Feature Prioritisation</span>
+          </div>
           <div class="wcard-perspective">"The Art of the Backlog: Writing stories that comply with physics and deadlines."</div>
           <div class="wcard-footer">
             <span class="wcard-level">Product Owners · PMs</span>
@@ -939,35 +1033,76 @@ footer {
   </div>
 </section>
 
-<!-- BOOKS -->
+<!-- LIBRARY (Spacious Editorial Layout with 3D Book spine Covers) -->
 <section class="books-section" id="books">
   <p class="section-eyebrow">The Library</p>
   <h2 class="section-title">Business books written<br><em>like actual stories.</em></h2>
   <div class="books-grid">
+    
+    <!-- Book 1 -->
     <div class="book-card">
-      <div class="book-num">01</div>
+      <div class="book-visual">
+        <div class="book-spine-cover book1">
+          <div class="book-title-overlay">
+            <span class="book-brand-label">Vol. 01</span>
+            <span class="book-hero-title">When Sally Met Scrum</span>
+            <span class="book-cover-meta">M. Agarwal</span>
+          </div>
+        </div>
+      </div>
       <div class="book-title">When Sally Met Scrum</div>
       <div class="book-sub">Experience the Scrum Guide through an engaging story — the specific challenges Scrum was designed to solve, felt viscerally rather than memorised.</div>
       <a class="book-link" href="https://www.amazon.de/dp/B0DJL2GNPT" target="_blank">Read on Amazon →</a>
     </div>
+
+    <!-- Book 2 -->
     <div class="book-card">
-      <div class="book-num">02</div>
+      <div class="book-visual">
+        <div class="book-spine-cover book2">
+          <div class="book-title-overlay">
+            <span class="book-brand-label">Vol. 02</span>
+            <span class="book-hero-title">When Sally Met Kanban</span>
+            <span class="book-cover-meta">M. Agarwal</span>
+          </div>
+        </div>
+      </div>
       <div class="book-title">When Sally Met Kanban</div>
       <div class="book-sub">A journey from chaos to clarity. Why is everyone busy yet nothing gets done? Sally learns that 'busy' and 'productive' are not the same thing.</div>
       <a class="book-link" href="https://www.amazon.de/dp/B0DJL2GNPT" target="_blank">Read on Amazon →</a>
     </div>
+
+    <!-- Book 3 -->
     <div class="book-card">
-      <div class="book-num">03</div>
+      <div class="book-visual">
+        <div class="book-spine-cover book3">
+          <div class="book-title-overlay">
+            <span class="book-brand-label">Vol. 03</span>
+            <span class="book-hero-title">When Sally Met Agile</span>
+            <span class="book-cover-meta">M. Agarwal</span>
+          </div>
+        </div>
+      </div>
       <div class="book-title">When Sally Met Agile</div>
       <div class="book-sub">Beyond frameworks. Agile isn't one-size-fits-all. Sally faces the ultimate challenge: adapting rigid frameworks to a complex, non-standard environment.</div>
       <a class="book-link" href="https://www.amazon.de/dp/B0DJL2GNPT" target="_blank">Read on Amazon →</a>
     </div>
+
+    <!-- Book 4 -->
     <div class="book-card">
-      <div class="book-num">04</div>
+      <div class="book-visual">
+        <div class="book-spine-cover book4">
+          <div class="book-title-overlay">
+            <span class="book-brand-label">Vol. 04</span>
+            <span class="book-hero-title">The Silent Whisper</span>
+            <span class="book-cover-meta">M. Agarwal</span>
+          </div>
+        </div>
+      </div>
       <div class="book-title">The Silent Whisper</div>
       <div class="book-sub">Tales of love in the AI era. What happens to human connection when algorithms know our desires better than we do? Not a manual — a mirror.</div>
       <a class="book-link" href="https://www.amazon.de/dp/B0DJL2GNPT" target="_blank">Read on Amazon →</a>
     </div>
+
   </div>
 </section>
 
@@ -990,218 +1125,4 @@ footer {
   <p class="cta-sub">Your team's relationship with Agile, AI, or Monday mornings. Whatever it is — let's talk about it like adults.</p>
   <div class="cta-actions">
     <a class="btn-fill" href="https://manavagarwal.com/#contact" target="_blank">Inquire for Workshops →</a>
-    <a class="btn-outline" href="https://www.linkedin.com/in/manavag/" target="_blank">Connect on LinkedIn</a>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <a class="footer-logo" href="#">MANAV<span>.</span></a>
-  <div class="footer-links">
-    <a href="https://www.linkedin.com/in/manavag/" target="_blank">LinkedIn</a>
-    <a href="https://medium.com/@manav_agarwal" target="_blank">Medium</a>
-    <a href="https://www.instagram.com/justamanav/" target="_blank">Instagram</a>
-    <a href="https://manavagarwal.com/impressum" target="_blank">Impressum</a>
-  </div>
-  <p class="footer-copy">© 2026 Manav Agarwal. Corporate boredom not found.</p>
-</footer>
-
-<script>
-/* ─── DYNAMIC COLOR THEME CONTROLLER ─── */
-const themeToggle = document.getElementById('themeToggle');
-const currentTheme = localStorage.getItem('theme') || 'dark';
-
-document.documentElement.setAttribute('data-theme', currentTheme);
-
-themeToggle.addEventListener('click', () => {
-  let theme = document.documentElement.getAttribute('data-theme');
-  let targetTheme = theme === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', targetTheme);
-  localStorage.setItem('theme', targetTheme);
-});
-
-/* ─── NAV SCROLL TRIGGER ─── */
-const nav = document.getElementById('mainNav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
-
-/* ─── MOBILE DRAWER NAVIGATION ─── */
-function openMobile() { document.getElementById('mobileMenu').classList.add('open'); }
-function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
-document.getElementById('menuClose').onclick = closeMobile;
-
-/* ─── KINETIC 3D FLIP HELPING TEXT ─── */
-const carouselWords = document.querySelectorAll('#audience-carousel .carousel-word');
-let activeWordIndex = 0;
-
-setInterval(() => {
-  const currentWord = carouselWords[activeWordIndex];
-  
-  currentWord.classList.remove('active');
-  currentWord.classList.add('exit');
-
-  activeWordIndex = (activeWordIndex + 1) % carouselWords.length;
-  const nextWord = carouselWords[activeWordIndex];
-
-  nextWord.classList.remove('exit');
-  nextWord.classList.add('active');
-
-  setTimeout(() => {
-    currentWord.classList.remove('exit');
-  }, 600);
-}, 2200);
-
-/* ─── AUDIENCE MARQUEE CAROUSEL ─── */
-const audiences = [
-  'Freshers & Career Switchers', 'Engineers → Management', 'Scrum Masters', 'Product Owners',
-  'Mid-level Managers', 'Executives & VPs', 'AI-Anxious Teams', 'HR & L&D Buyers',
-  'Startup Founders', 'Burned-Out Overachievers', 'New to PM', 'Senior Leaders'
-];
-const track = document.getElementById('tickerTrack');
-[...audiences, ...audiences].forEach(a => {
-  const item = document.createElement('div');
-  item.className = 'ticker-item';
-  item.innerHTML = `<span class="dot"></span>${a}`;
-  track.appendChild(item);
-});
-
-/* ─── INFINITE TESTIMONIAL MARQUEE ─── */
-const testimonialsData = [
-  {
-    q: "I used to think soft skills were fluff. Manav was the first coach who explained empathy using <strong>logic I could actually respect.</strong> He didn't try to turn me into a cheerleader.",
-    name: "Lead Backend Engineer",
-    role: "FinTech — Engineering to Management"
-  },
-  {
-    q: "The official SAFe training tells you how it should work. Manav taught us <strong>how it actually works when you have budget cuts and angry stakeholders.</strong> His advice saved my project.",
-    name: "Release Train Engineer",
-    role: "Automotive Sector"
-  },
-  {
-    q: "My CV was a laundry list of tasks that bored everyone. We stopped talking about Jira tickets and started talking about <strong>business value.</strong> I got the role within 3 months.",
-    name: "Head of Product, Berlin",
-    role: "Career Pivot"
-  },
-  {
-    q: "He's the only facilitator I've seen who can get a room of <strong>introverted developers to debate and laugh.</strong> He doesn't bring slides. He brings energy.",
-    name: "Director of People & Culture",
-    role: "SaaS Scale-up"
-  },
-  {
-    q: "We brought Manav in expecting a technical AI roadmap. He showed us that our bottleneck was <strong>decision fatigue, not technology.</strong> Rare ability to cut through corporate noise.",
-    name: "VP of Engineering",
-    role: "Aerospace"
-  },
-  {
-    q: "Retrospectives were painful because nobody admitted mistakes. Manav introduced a failure framework that <strong>changed the temperature in the room instantly.</strong>",
-    name: "Scrum Master",
-    role: "Logistics Enterprise"
-  }
-];
-
-const testiTrack = document.getElementById('testiTrack');
-// Duplicated to create a seamless infinite rolling loop
-[...testimonialsData, ...testimonialsData, ...testimonialsData].forEach(t => {
-  const card = document.createElement('div');
-  card.className = 'testi-card';
-  card.innerHTML = `
-    <div class="testi-q">"${t.q}"</div>
-    <div class="testi-bottom">
-      <div class="testi-name">${t.name}</div>
-      <div class="testi-role">${t.role}</div>
-    </div>
-  `;
-  testiTrack.appendChild(card);
-});
-
-/* ─── METRIC COUNT-UP CONTROLLER ─── */
-function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-function animateCount(el) {
-  const target = parseInt(el.dataset.target);
-  const suffix = el.dataset.suffix || '';
-  const duration = 1600;
-  const start = performance.now();
-  function step(now) {
-    const progress = Math.min((now - start) / duration, 1);
-    const val = Math.floor(easeOut(progress) * target);
-    el.textContent = val + suffix;
-    if (progress < 1) requestAnimationFrame(step);
-    else el.textContent = target + suffix;
-  }
-  requestAnimationFrame(step);
-}
-
-const counters = document.querySelectorAll('.count-up');
-const metricObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      animateCount(e.target);
-      metricObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.5 });
-counters.forEach(c => metricObs.observe(c));
-
-/* ─── WORKSHOP FILTER REVEAL CONTROLLER ─── */
-const tabs = document.querySelectorAll('.filter-tab');
-const cards = document.querySelectorAll('.workshop-card');
-const workshopsGrid = document.getElementById('workshopsGrid');
-const placeholderState = document.getElementById('placeholderState');
-
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    const isAlreadyActive = tab.classList.contains('active');
-    
-    // Deactivate current active tab
-    tabs.forEach(t => t.classList.remove('active'));
-    
-    if (isAlreadyActive) {
-      // Toggle back to clean blank placeholder mode if clicking the already active tab
-      workshopsGrid.classList.remove('active');
-      setTimeout(() => {
-        placeholderState.style.display = 'flex';
-        cards.forEach(card => card.style.display = 'none');
-      }, 300);
-    } else {
-      // Activate new tab and slide workshops into view
-      tab.classList.add('active');
-      const filter = tab.dataset.filter;
-      
-      placeholderState.style.display = 'none';
-      
-      // Update displays
-      cards.forEach(card => {
-        const match = card.dataset.category === filter;
-        card.style.display = match ? 'flex' : 'none';
-      });
-      
-      workshopsGrid.classList.add('active');
-    }
-  });
-});
-
-// Initially hide all workshop cards (blank placeholder mode)
-cards.forEach(card => card.style.display = 'none');
-
-/* ─── SCROLL REVEAL TRIGGERS ─── */
-const fadeEls = document.querySelectorAll('.metric-item, .book-card, .tl-item');
-const fadeObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.style.opacity = '1';
-      e.target.style.transform = 'translateY(0)';
-      fadeObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-fadeEls.forEach((el, i) => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(20px)';
-  el.style.transition = `opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${(i % 4) * 0.08}s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${(i % 4) * 0.08}s`;
-  fadeObs.observe(el);
-});
-</script>
-</body>
-</html>
+    <a class="btn-outline" href="https://ww
