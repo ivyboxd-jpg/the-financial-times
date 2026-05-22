@@ -3,1037 +3,726 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>On Being Someone's Constant - The New York Times</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+  <title>Manav Agarwal | Transforming Complex Chaos into Human Stories</title>
+  
+  <!-- Premium Editorial Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
+  <style>
+    /* 🎨 CSS CUSTOM VARIABLES */
     :root {
-      --nyt-bg: #FFFFFF;
-      --nyt-text: #121212;
-      --nyt-link: #326891;
-      --nyt-meta: #666666;
-      --nyt-border: #E5E5E5;
-      
-      /* NYT Colors for Games */
-      --wordle-green: #6aaa64;
-      --wordle-yellow: #c9b458;
-      --wordle-gray: #787c7e;
-      --wordle-dark-gray: #3a3a3c;
-      
-      --conn-yellow: #f9df3d;
-      --conn-green: #a0c35a;
-      --conn-blue: #b0c4ef;
-      --conn-purple: #ba76c2;
-      
-      --font-serif: "nyt-cheltenham", Georgia, serif;
-      --font-sans: "nyt-franklin", "Helvetica Neue", Arial, sans-serif;
+      --bg-color: #0D0D0D;
+      --primary: #F5C518;
+      --cream: #F0EAD6;
+      --slate-blue: #1A1F2E;
+      --slate-blue-hover: #242B3F;
+      --text-muted: #A8A8A8;
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+      --max-width: 1200px;
     }
 
-    * {
+    /* 🧼 BASE RESET */
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
     body {
-      background-color: var(--nyt-bg);
-      color: var(--nyt-text);
-      font-family: var(--font-serif);
-      line-height: 1.8;
-      padding: 0 20px;
+      background-color: var(--bg-color);
+      color: var(--cream);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Pixel-Perfect Responsive NYT Header */
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* 🧭 NAVIGATION */
     header {
-      max-width: 680px;
+      width: 100%;
+      max-width: var(--max-width);
       margin: 0 auto;
-      text-align: center;
-      padding-top: 25px;
-    }
-
-    .nyt-logo {
-      font-family: 'UnifrakturMaguntia', serif;
-      font-size: clamp(28px, 7.5vw, 48px);
-      line-height: 1;
-      font-weight: normal;
-      color: var(--nyt-text);
-      margin-bottom: 12px;
-      user-select: none;
-      white-space: nowrap;
-    }
-
-    .header-rule {
-      border: none;
-      border-top: 1px solid var(--nyt-text);
-      margin: 4px 0;
-    }
-
-    .header-rule-thin {
-      border: none;
-      border-top: 0.5px solid var(--nyt-meta);
-      margin: 4px 0;
-    }
-
-    .header-metadata {
-      font-family: var(--font-sans);
-      font-size: 11px;
-      color: var(--nyt-text);
-      padding: 3px 0;
-    }
-
-    .header-todays-paper {
-      font-family: var(--font-sans);
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      padding: 2px 0;
-    }
-
-    .header-edition {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 12px;
-      color: var(--nyt-meta);
-      padding: 2px 0;
-    }
-
-    /* Article Layout */
-    .article-container {
-      max-width: 680px;
-      margin: 40px auto;
-    }
-
-    h1 {
-      font-size: 42px;
-      line-height: 1.15;
-      font-weight: 700;
-      margin-bottom: 12px;
-      text-align: left;
-    }
-
-    .subheadline {
-      font-size: 20px;
-      line-height: 1.4;
-      color: #4a4a4a;
-      margin-bottom: 24px;
-      text-align: left;
-    }
-
-    .byline-container {
-      font-family: var(--font-sans);
-      font-size: 14px;
-      color: var(--nyt-meta);
-      border-top: 1px solid var(--nyt-border);
-      border-bottom: 1px solid var(--nyt-border);
-      padding: 12px 0;
-      margin-bottom: 30px;
+      padding: 2rem 1.5rem;
       display: flex;
       justify-content: space-between;
-    }
-
-    .byline {
-      font-weight: 700;
-      color: var(--nyt-text);
-    }
-
-    /* Live Connection Widget */
-    .connection-widget {
-      background: #f8f9fa;
-      border: 1px solid var(--nyt-border);
-      padding: 20px;
-      border-radius: 4px;
-      margin: 30px 0;
-      font-family: var(--font-sans);
-    }
-
-    .widget-title {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 700;
-      color: var(--nyt-meta);
-      margin-bottom: 15px;
-      border-bottom: 1px solid var(--nyt-border);
-      padding-bottom: 5px;
-    }
-
-    .widget-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-    }
-
-    @media (max-width: 480px) {
-      .widget-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .widget-item {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .widget-label {
-      font-size: 11px;
-      color: var(--nyt-meta);
-      text-transform: uppercase;
-    }
-
-    .widget-value {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--nyt-text);
-    }
-
-    .live-timer {
-      font-family: monospace;
-      font-size: 15px;
-    }
-
-    /* Article Typography */
-    p {
-      font-size: 18px;
-      margin-bottom: 24px;
-      color: var(--nyt-text);
-    }
-
-    h2 {
-      font-size: 24px;
-      margin: 40px 0 16px 0;
-      font-weight: 700;
-    }
-
-    .pullquote {
-      font-size: 26px;
-      font-style: italic;
-      line-height: 1.4;
-      border-left: 3px solid var(--nyt-text);
-      padding-left: 20px;
-      margin: 35px 0;
-      color: #333;
-    }
-
-    /* Games Divider & General Styles */
-    .section-divider {
-      border: none;
-      border-top: 1px solid var(--nyt-border);
-      margin: 50px 0;
+      align-items: center;
       position: relative;
+      z-index: 100;
     }
 
-    .section-divider::after {
-      content: "NYT Games";
-      position: absolute;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--nyt-bg);
-      padding: 0 15px;
-      font-family: var(--font-sans);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--nyt-meta);
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 2rem;
+      letter-spacing: -0.05em;
+      color: var(--primary);
     }
 
-    .game-section {
-      max-width: 500px;
-      margin: 0 auto 80px auto;
-      text-align: center;
-    }
-
-    .game-title {
-      font-family: var(--font-sans);
-      font-size: 20px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 5px;
-    }
-
-    .game-subtitle {
-      font-family: var(--font-serif);
-      font-size: 15px;
-      color: var(--nyt-meta);
-      margin-bottom: 25px;
-    }
-
-    /* Interactive Game Styles */
-    .solve-button {
-      background: #000000;
-      color: #FFFFFF;
-      padding: 12px 32px;
-      border: none;
-      border-radius: 24px;
-      font-family: var(--font-sans);
-      font-size: 14px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      cursor: pointer;
-      margin: 20px auto;
-      display: block;
-      transition: all 0.2s;
-    }
-
-    .solve-button:hover {
-      background: #333333;
-      transform: scale(1.02);
-    }
-
-    .solve-button:active {
-      transform: scale(0.98);
-    }
-
-    .solve-button:disabled {
-      background: #CCCCCC;
-      cursor: not-allowed;
-    }
-
-    /* Wordle Styling */
-    .wordle-grid {
-      display: grid;
-      grid-template-rows: repeat(3, 1fr);
-      gap: 5px;
-      width: fit-content;
-      margin: 0 auto;
-    }
-
-    .wordle-row {
-      display: flex;
-      gap: 5px;
-    }
-
-    .wordle-cell {
-      width: 50px;
-      height: 50px;
-      border: 2px solid #d3d6da;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-sans);
-      font-size: 24px;
-      font-weight: bold;
-      text-transform: uppercase;
-      transition: background-color 0.5s, border-color 0.5s, color 0.5s, transform 0.3s;
-    }
-
-    .wordle-cell.correct {
-      background-color: var(--wordle-green);
-      border-color: var(--wordle-green);
-      color: white;
-    }
-
-    .wordle-cell.present {
-      background-color: var(--wordle-yellow);
-      border-color: var(--wordle-yellow);
-      color: white;
-    }
-
-    .wordle-cell.absent {
-      background-color: var(--wordle-gray);
-      border-color: var(--wordle-gray);
-      color: white;
-    }
-
-    /* Connections Styling */
-    .connections-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-
-    .connections-card {
-      background: #efefe6;
-      border-radius: 4px;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-sans);
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      padding: 5px;
-      cursor: pointer;
+    .nav-cta {
+      border: 1px solid rgba(240, 234, 214, 0.3);
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 500;
       transition: all 0.3s ease;
     }
 
-    .connections-card.selected {
-      background: #5a5a5a;
-      color: white;
+    .nav-cta:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 0 15px rgba(245, 197, 24, 0.2);
     }
 
-    .connections-row-solved {
-      grid-column: span 4;
-      border-radius: 4px;
-      padding: 15px;
-      font-family: var(--font-sans);
-      text-align: center;
-      font-weight: bold;
-      animation: popIn 0.5s ease;
-    }
-
-    .connections-row-solved.yellow { background-color: var(--conn-yellow); }
-    .connections-row-solved.green { background-color: var(--conn-green); color: white; }
-    .connections-row-solved.blue { background-color: var(--conn-blue); }
-    .connections-row-solved.purple { background-color: var(--conn-purple); color: white; }
-
-    .category-title {
-      font-size: 15px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .category-members {
-      font-size: 13px;
-      font-weight: normal;
-      margin-top: 4px;
-    }
-
-    /* Crossword Styling */
-    .crossword-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .crossword-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 50px);
-      grid-template-rows: repeat(5, 50px);
-      gap: 2px;
-      background: #000;
-      border: 2px solid #000;
-    }
-
-    .crossword-cell {
-      background: white;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-sans);
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .crossword-cell.black {
-      background: black;
-    }
-
-    .cell-number {
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      font-size: 9px;
-      font-family: var(--font-sans);
-      font-weight: normal;
-    }
-
-    .clues-container {
-      display: flex;
-      gap: 30px;
-      text-align: left;
+    /* 🖼️ HERO SECTION */
+    .hero-section {
       width: 100%;
-      max-width: 450px;
-      font-family: var(--font-sans);
-      font-size: 13px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+      min-height: calc(100vh - 120px);
     }
 
-    .clues-column {
-      flex: 1;
-    }
-
-    .clues-column h4 {
-      border-bottom: 1px solid var(--nyt-border);
-      padding-bottom: 5px;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      font-size: 11px;
-      letter-spacing: 1px;
-    }
-
-    .clue-item {
-      margin-bottom: 6px;
-      line-height: 1.4;
-    }
-
-    /* Spelling Bee Styling */
-    .bee-container {
+    /* HERO LEFT: TEXT & COPY */
+    .hero-content {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      justify-content: center;
     }
 
-    .honeycomb {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      margin-bottom: 30px;
+    .hero-logotype {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--primary);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
     }
 
-    .cell-hex {
-      position: absolute;
-      width: 60px;
-      height: 69px;
-      background: #e6e6e6;
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: var(--cream);
+    }
+
+    .hero-headline span {
+      color: var(--primary);
+    }
+
+    .hero-subhead {
+      font-size: clamp(1.1rem, 2vw, 1.25rem);
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 540px;
+    }
+
+    .hero-subhead strong {
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    .hero-ctas {
       display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-family: var(--font-sans);
-      font-size: 20px;
-      font-weight: 700;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: all 0.3s ease;
       cursor: pointer;
-      user-select: none;
-      transition: background 0.2s;
     }
 
-    .cell-hex.center {
-      background: #f8cd05;
-      top: 65px;
-      left: 70px;
+    .btn-primary {
+      background-color: var(--primary);
+      color: #000;
+      border: 1px solid var(--primary);
     }
 
-    .cell-hex.n { top: 0px; left: 70px; }
-    .cell-hex.ne { top: 32px; left: 125px; }
-    .cell-hex.se { top: 98px; left: 125px; }
-    .cell-hex.s { top: 130px; left: 70px; }
-    .cell-hex.sw { top: 98px; left: 15px; }
-    .cell-hex.nw { top: 32px; left: 15px; }
-
-    .bee-word-list {
-      font-family: var(--font-sans);
-      font-size: 14px;
-      color: var(--nyt-meta);
-      min-height: 24px;
-      margin-top: 10px;
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(245, 197, 24, 0.4);
     }
 
-    /* Modals & Reveal Cards */
-    .success-card {
-      background: #f7f9fa;
-      border: 1px dashed var(--nyt-border);
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(240, 234, 214, 0.4);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--cream);
+      background-color: rgba(240, 234, 214, 0.05);
+      transform: translateY(-2px);
+    }
+
+    /* HERO RIGHT: PORTRAIT & KANE SHERWELL ARROWS */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .portrait-container {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 1 / 1.1;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(26, 31, 46, 0.3) 0%, rgba(13, 13, 13, 0.8) 100%);
+      padding: 1rem;
+    }
+
+    .portrait-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       border-radius: 8px;
-      padding: 24px;
-      margin-top: 20px;
-      text-align: center;
-      display: none;
-      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      filter: grayscale(15%) contrast(105%);
     }
 
-    .success-headline {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 10px;
-      color: var(--wordle-green);
+    /* 🏹 CALLOUTS & ARROW CONNECTIONS */
+    .callout {
+      position: absolute;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      pointer-events: auto;
     }
 
-    .success-text {
-      font-family: var(--font-serif);
-      font-size: 16px;
-      line-height: 1.5;
-      color: var(--nyt-text);
+    .callout-pill {
+      background-color: var(--slate-blue);
+      border: 1px solid rgba(245, 197, 24, 0.15);
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+      color: var(--cream);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
     }
 
-    @keyframes popIn {
-      from {
-        opacity: 0;
-        transform: scale(0.95);
+    .callout-pill span {
+      color: var(--primary);
+      margin-right: 0.4rem;
+    }
+
+    .callout:hover .callout-pill {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(245, 197, 24, 0.15);
+    }
+
+    /* SVG Lines & Pulsing Dots */
+    .callout-svg {
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .draw-line {
+      stroke-dasharray: 120;
+      stroke-dashoffset: 120;
+      animation: drawLineAnim 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: 1.2s;
+    }
+
+    .pulse-dot {
+      animation: dotPulse 2s infinite ease-in-out;
+    }
+
+    /* DESKTOP CALLOUT POSITIONING & SIZES */
+    @media (min-width: 1024px) {
+      /* Left-side Callouts */
+      .callout-left {
+        flex-direction: row;
+        right: 100%;
       }
+      /* Right-side Callouts */
+      .callout-right {
+        flex-direction: row-reverse;
+        left: 100%;
+      }
+
+      /* ① Aerospace → PM → Agile */
+      .callout-1 {
+        top: 10%;
+        margin-right: -40px;
+      }
+      /* ② SAFe SPC Certified */
+      .callout-2 {
+        top: 48%;
+        margin-right: -10px;
+      }
+      /* ③ Author of 4 Business Fables */
+      .callout-3 {
+        top: 5%;
+        margin-left: -50px;
+      }
+      /* ④ Beginners to C-Suite */
+      .callout-4 {
+        top: 38%;
+        margin-left: -15px;
+      }
+      /* ⑤ Based in Germany, workshops globally */
+      .callout-5 {
+        bottom: 12%;
+        margin-left: -40px;
+      }
+    }
+
+    /* 👥 AUDIENCE CLARITY STRIP */
+    .audience-section {
+      width: 100%;
+      background-color: rgba(26, 31, 46, 0.4);
+      border-top: 1px solid rgba(240, 234, 214, 0.05);
+      border-bottom: 1px solid rgba(240, 234, 214, 0.05);
+      padding: 1.5rem 0;
+      margin: 2rem 0 5rem 0;
+    }
+
+    .scroll-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    /* Edge Gradient Fades */
+    .scroll-wrapper::before,
+    .scroll-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .scroll-wrapper::before {
+      left: 0;
+      background: linear-gradient(to right, var(--bg-color), transparent);
+    }
+    .scroll-wrapper::after {
+      right: 0;
+      background: linear-gradient(to left, var(--bg-color), transparent);
+    }
+
+    .scroll-container {
+      display: flex;
+      gap: 1.25rem;
+      overflow-x: auto;
+      padding: 0.5rem 2rem;
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .scroll-container::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+
+    .audience-chip {
+      flex: 0 0 auto;
+      background-color: var(--slate-blue);
+      color: var(--primary);
+      border: 1px solid rgba(245, 197, 24, 0.15);
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.3s ease;
+    }
+
+    .audience-chip:hover {
+      border-color: var(--primary);
+      background-color: var(--slate-blue-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(245, 197, 24, 0.15);
+    }
+
+    /* 🧩 "WHAT I DO" SECTION */
+    .services-section {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto 8rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-header {
+      margin-bottom: 3.5rem;
+    }
+
+    .section-tag {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      color: var(--primary);
+      text-transform: uppercase;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 800;
+      color: var(--cream);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .service-card {
+      background-color: var(--slate-blue);
+      border-top: 4px solid var(--primary);
+      border-radius: 0 0 8px 8px;
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      background-color: var(--slate-blue-hover);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .service-number {
+      font-size: 0.85rem;
+      color: var(--primary);
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .service-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--cream);
+    }
+
+    .service-subtitle {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .service-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ✨ MICRO-INTERACTIONS & ANIMATIONS */
+    .fade-in-1 {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: 0.2s;
+    }
+    .fade-in-2 {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: 0.4s;
+    }
+    .fade-in-3 {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: 0.6s;
+    }
+    .fade-in-portrait {
+      opacity: 0;
+      transform: scale(0.98);
+      animation: fadeInScale 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: 0.5s;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInScale {
       to {
         opacity: 1;
         transform: scale(1);
       }
     }
 
-    /* Footer styling */
-    footer {
-      max-width: 680px;
-      margin: 80px auto 40px auto;
-      border-top: 1px solid var(--nyt-border);
-      padding-top: 20px;
-      text-align: center;
-      font-family: var(--font-sans);
-      font-size: 12px;
-      color: var(--nyt-meta);
+    @keyframes drawLineAnim {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.6); opacity: 0.4; }
+    }
+
+    /* 📱 RESPONSIVE DESIGN WORK (MOBILE & TABLET) */
+    @media (max-width: 1023px) {
+      .hero-section {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding-top: 1rem;
+        min-height: auto;
+      }
+
+      .hero-content {
+        text-align: center;
+        align-items: center;
+      }
+
+      .hero-subhead {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-ctas {
+        justify-content: center;
+      }
+
+      .hero-visual {
+        margin-top: 2rem;
+      }
+
+      /* On mobile, remove pointer lines to prevent UI breakage. Transform callouts into a tidy grid layout below the portrait. */
+      .callout-svg {
+        display: none;
+      }
+
+      .callout {
+        position: static !important;
+        width: 100%;
+        margin: 0 !important;
+      }
+
+      .callout-pill {
+        width: 100%;
+        text-align: center;
+      }
+
+      .mobile-callout-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        width: 100%;
+        max-width: 500px;
+        margin: 2rem auto 0 auto;
+      }
+
+      .callout-5-mobile {
+        grid-column: span 2;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .mobile-callout-grid {
+        grid-template-columns: 1fr;
+      }
+      .callout-5-mobile {
+        grid-column: span 1;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- 🧭 NAVIGATION BAR -->
   <header>
-    <div class="nyt-logo">The New York Times</div>
-    <hr class="header-rule">
-    <div class="header-metadata">Thursday, May 21, 2026</div>
-    <div class="header-todays-paper">TODAY'S PAPER</div>
-    <div class="header-edition">New York Edition</div>
-    <hr class="header-rule-thin">
+    <a href="#" class="logo">MANAV.</a>
+    <a href="#workshops" class="nav-cta">Inquire for Workshops</a>
   </header>
 
-  <main class="article-container">
-    <h1>On Being Someone's Constant</h1>
-    <p class="subheadline">Some things don't change: a year of talking, a steady flow of Amazon packages, and the absolute certainty that I'm not going anywhere.</p>
-
-    <div class="byline-container">
-      <div>By <span class="byline">Niv</span></div>
-      <div>May 21, 2026</div>
-    </div>
-
-    <!-- Live Connection Widget -->
-    <div class="connection-widget">
-      <div class="widget-title">Live Connection Status</div>
-      <div class="widget-grid">
-        <div class="widget-item">
-          <span class="widget-label">Connection Type</span>
-          <span class="widget-value">Direct & Unbreakable</span>
-        </div>
-        <div class="widget-item">
-          <span class="widget-label">Status</span>
-          <span class="widget-value" style="color: var(--wordle-green);">Active</span>
-        </div>
-        <div class="widget-item">
-          <span class="widget-label">First Conversation</span>
-          <span class="widget-value">May 19, 2025</span>
-        </div>
-        <div class="widget-item">
-          <span class="widget-label">Time Since First Hello</span>
-          <span class="widget-value live-timer" id="connection-timer">Loading...</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Article Text -->
-    <p>Listen, I need to tell you something, and I'm going to dress it up in Times New Roman and call it an article because apparently that's easier than just saying it directly.</p>
-
-    <p>We marked our first anniversary on the nineteenth—exactly one year since we spoke for the very first time. I wanted to give you this then, but work and life and the logistics of the week got in the way, so you are reading this on the twenty-first. In a way, though, that delay is the entire point.</p>
-
-    <p>Honestly, looking back to that day on the nineteenth of May last year, I am still incredibly grateful that you ever took the chance to reply to a total dork like me in the first place.</p>
-
-    <h2>The No Back Door Policy</h2>
-
-    <p>Some people are constantly looking for an exit before they even walk into a room. They keep one foot near the threshold, ready to slip out the back door the moment things get slightly heavy or complicated. It's a defense mechanism, a way to make sure they're never the ones left holding the pieces.</p>
-
-    <p>I want you to know, with absolute certainty, that I'm never leaving out the back door. I don't do back doors.</p>
-
-    <p>I am here for the long haul. Not just in the "I'll be here if things stay easy" conditional way. I'm here regardless of whether things are smooth or messy, whether we're laughing or trying to figure out a tough day. You don't have to keep one eye on the exit, because I've locked it and thrown away the key.</p>
-
-    <h2>Working for Us</h2>
-
-    <p>I'm actually working right now as I write this, and the truth is, I absolutely love it. But there is a very specific reason why I love putting in this effort, and why I have this drive in the first place. Every single thing I'm doing is because of you. You are the reason behind all of it.</p>
-
-    <div class="pullquote">
-      "I'm building, planning, and working for you—for us. You're the context for everything I want to achieve."
-    </div>
-
-    <p>It makes the long hours feel light, and it gives every task a real purpose. Knowing that we are building a future together turns the standard, boring routine of work into something that feels genuinely exciting.</p>
-
-    <h2>The Things We Send</h2>
-
-    <p>I should probably address the fact that I love sending you books via Amazon. It is my favorite way of sending you things I think you'll love. I might not be a big reader myself, but I love picking out books that I know will speak to you, hitting order, and waiting for that delivery notification to hit your phone. It's my way of sending a small piece of a world, hoping you'll enjoy it.</p>
-
-    <p>And let's be real about who you are. You're kind in a way that actually matters, and you are incredibly smart. But you're also amazing, cute, pretty, sexy, and hot—and yes, I will state that clearly in black and white text because it's the absolute truth and you deserve to see it written down.</p>
-
-    <h2>The Resilient Swimmer</h2>
-
-    <p>You have this quiet strength inside you that you don't always give yourself credit for. You are deeply resilient. No matter what obstacles get in your way, no matter how heavy the tide feels, you will always swim through. You've proven that time and time again.</p>
-
-    <p>But the most important part of that equation is that you don't have to navigate the water alone. If the current gets heavy, if the waves get rough, I'm right there beside you. We will always swim together.</p>
-
-    <h2>The Real Point</h2>
-
-    <p>What I'm trying to say is simple: you have someone who's staying. Not conditionally. Not temporarily. You have me. Permanently.</p>
-
-    <p>I'm here. I'm staying here. That's not changing.</p>
-
-    <p>And if you need a little more convincing, I put some updated puzzles below. They are completely blank right now—they will only solve themselves when you're ready to click the buttons and see what's hidden inside.</p>
-
-    <p>Always.</p>
-
-    <p>—Niv</p>
-
-    <!-- Interactive Games Section -->
-    <hr class="section-divider">
-
-    <!-- Puzzle 1: Wordle -->
-    <section class="game-section" id="wordle-section">
-      <div class="game-title">Wordle</div>
-      <div class="game-subtitle">Solve to reveal a message</div>
-      
-      <div class="wordle-grid">
-        <!-- Row 1 -->
-        <div class="wordle-row" id="w-row-0">
-          <div class="wordle-cell" id="w-0-0"></div>
-          <div class="wordle-cell" id="w-0-1"></div>
-          <div class="wordle-cell" id="w-0-2"></div>
-          <div class="wordle-cell" id="w-0-3"></div>
-          <div class="wordle-cell" id="w-0-4"></div>
-        </div>
-        <!-- Row 2 -->
-        <div class="wordle-row" id="w-row-1">
-          <div class="wordle-cell" id="w-1-0"></div>
-          <div class="wordle-cell" id="w-1-1"></div>
-          <div class="wordle-cell" id="w-1-2"></div>
-          <div class="wordle-cell" id="w-1-3"></div>
-          <div class="wordle-cell" id="w-1-4"></div>
-        </div>
-        <!-- Row 3 -->
-        <div class="wordle-row" id="w-row-2">
-          <div class="wordle-cell" id="w-2-0"></div>
-          <div class="wordle-cell" id="w-2-1"></div>
-          <div class="wordle-cell" id="w-2-2"></div>
-          <div class="wordle-cell" id="w-2-3"></div>
-          <div class="wordle-cell" id="w-2-4"></div>
-        </div>
-      </div>
-
-      <button class="solve-button" id="btn-wordle" onclick="solveWordle()">Solve Puzzle</button>
-      
-      <div class="success-card" id="card-wordle">
-        <div class="success-headline">You Are Loved</div>
-        <div class="success-text">Always have been. Always will be.</div>
+  <!-- 🖼️ HERO SECTION -->
+  <main class="hero-section">
+    <!-- Left Hero Area (Text Assets) -->
+    <section class="hero-content">
+      <div class="hero-logotype fade-in-1">MANAV.</div>
+      <h1 class="hero-headline fade-in-1">
+        Transforming Complex Chaos<br><span>into Human Stories.</span>
+      </h1>
+      <p class="hero-subhead fade-in-2">
+        <strong>Agile Coach. AI Strategist. Author. Workshop Facilitator.</strong><br>
+        From junior devs to VPs — I help every level of your org actually work together.
+      </p>
+      <div class="hero-ctas fade-in-3">
+        <a href="#workshops" class="btn btn-primary">Inquire for Workshops</a>
+        <a href="#books" class="btn btn-secondary">Explore The Books</a>
       </div>
     </section>
 
-    <hr class="section-divider">
+    <!-- Right Hero Area (Portrait Asset & Arrow Pointers) -->
+    <section class="hero-visual fade-in-portrait">
+      <div class="portrait-container">
+        <!-- Main Portrait Asset with fallback mechanism -->
+        <img 
+          class="portrait-img" 
+          src="https://manavagarwal.com/_next/image?url=%2Fassets%2FManav_CasuallySitting_professional.png&w=3840&q=75" 
+          alt="Manav Agarwal sitting casually in professional attire" 
+          onerror="this.onerror=null; this.src='https://manavagarwal.com/images/og-default.jpg';"
+        />
 
-    <!-- Puzzle 2: Connections -->
-    <section class="game-section" id="connections-section">
-      <div class="game-title">Connections</div>
-      <div class="game-subtitle">Group these words into four categories</div>
-
-      <div class="connections-grid" id="conn-grid">
-        <div class="connections-card" data-val="SMART">SMART</div>
-        <div class="connections-card" data-val="KIND">KIND</div>
-        <div class="connections-card" data-val="AMAZING">AMAZING</div>
-        <div class="connections-card" data-val="CUTE">CUTE</div>
-
-        <div class="connections-card" data-val="SEXY">SEXY</div>
-        <div class="connections-card" data-val="PRETTY">PRETTY</div>
-        <div class="connections-card" data-val="HOT">HOT</div>
-        <div class="connections-card" data-val="RESILIENT">RESILIENT</div>
-
-        <div class="connections-card" data-val="SWIM">SWIM</div>
-        <div class="connections-card" data-val="LAUGH">LAUGH</div>
-        <div class="connections-card" data-val="TALK">TALK</div>
-        <div class="connections-card" data-val="STAY">STAY</div>
-
-        <div class="connections-card" data-val="BOOKS">BOOKS</div>
-        <div class="connections-card" data-val="LOVE">LOVE</div>
-        <div class="connections-card" data-val="TEXTS">TEXTS</div>
-        <div class="connections-card" data-val="GIFTS">GIFTS</div>
-      </div>
-
-      <button class="solve-button" id="btn-connections" onclick="solveConnections()">Solve Puzzle</button>
-
-      <div class="success-card" id="card-connections">
-        <div class="success-headline">Perfect Solve</div>
-        <div class="success-text">
-          What You Are: smart, kind, amazing, cute<br>
-          What You Also Are: sexy, pretty, hot, resilient<br>
-          Things We Do: swim, laugh, talk, stay<br>
-          Things I Send: books, love, texts, gifts<br><br>
-          <strong>Always yours.</strong>
-        </div>
-      </div>
-    </section>
-
-    <hr class="section-divider">
-
-    <!-- Puzzle 3: Mini Crossword -->
-    <section class="game-section" id="crossword-section">
-      <div class="game-title">The Mini Crossword</div>
-      <div class="game-subtitle">A small puzzle about us</div>
-
-      <div class="crossword-container">
-        <div class="crossword-grid">
-          <!-- Row 1 -->
-          <div class="crossword-cell"><span class="cell-number">1</span><span class="cell-letter" id="c-0-0"></span></div>
-          <div class="crossword-cell"><span class="cell-number">2</span><span class="cell-letter" id="c-0-1"></span></div>
-          <div class="crossword-cell"><span class="cell-number">3</span><span class="cell-letter" id="c-0-2"></span></div>
-          <div class="crossword-cell"><span class="cell-letter" id="c-0-3"></span></div>
-          <div class="crossword-cell black"></div>
-
-          <!-- Row 2 -->
-          <div class="crossword-cell"><span class="cell-letter" id="c-1-0"></span></div>
-          <div class="crossword-cell black"></div>
-          <div class="crossword-cell"><span class="cell-letter" id="c-1-2"></span></div>
-          <div class="crossword-cell black"></div>
-          <div class="crossword-cell black"></div>
-
-          <!-- Row 3 -->
-          <div class="crossword-cell"><span class="cell-letter" id="c-2-0"></span></div>
-          <div class="crossword-cell"><span class="cell-letter" id="c-2-1"></span></div>
-          <div class="crossword-cell"><span class="cell-letter" id="c-2-2"></span></div>
-          <div class="crossword-cell black"></div>
-          <div class="crossword-cell black"></div>
-
-          <!-- Row 4 -->
-          <div class="crossword-cell"><span class="cell-letter" id="c-3-0"></span></div>
-          <div class="crossword-cell black"></div>
-          <div class="crossword-cell"><span class="cell-letter" id="c-3-2"></span></div>
-          <div class="crossword-cell black"></div>
-          <div class="crossword-cell black"></div>
-
-          <!-- Row 5 -->
-          <div class="crossword-cell black"></div>
-          <div class="crossword-cell"><span class="cell-letter" id="c-4-1"></span></div>
-          <div class="crossword-cell"><span class="cell-letter" id="c-4-2"></span></div>
-          <div class="crossword-cell"><span class="cell-letter" id="c-4-3"></span></div>
-          <div class="crossword-cell black"></div>
+        <!-- Desktop Pointing System (Hidden on mobile) -->
+        
+        <!-- ① Aerospace → PM → Agile -->
+        <div class="callout callout-left callout-1">
+          <div class="callout-pill"><span>①</span> Aerospace &rarr; PM &rarr; Agile</div>
+          <svg class="callout-svg" width="80" height="30" viewBox="0 0 80 30">
+            <path d="M 0 10 Q 40 12, 75 25" stroke="#F5C518" stroke-width="1.5" fill="none" class="draw-line"/>
+            <circle cx="75" cy="25" r="3" fill="#F5C518" class="pulse-dot" style="transform-origin: 75px 25px;"/>
+          </svg>
         </div>
 
-        <div class="clues-container">
-          <div class="clues-column">
-            <h4>Across</h4>
-            <div class="clue-item"><strong>1</strong> Where I am</div>
-            <div class="clue-item"><strong>2</strong> 2,083 of these between us</div>
-            <div class="clue-item"><strong>3</strong> Who this is for</div>
-          </div>
-          <div class="clues-column">
-            <h4>Down</h4>
-            <div class="clue-item"><strong>1</strong> Where you are</div>
-            <div class="clue-item"><strong>2</strong> What connects us</div>
-            <div class="clue-item"><strong>3</strong> How long I'm staying</div>
-          </div>
-        </div>
-      </div>
-
-      <button class="solve-button" id="btn-crossword" onclick="solveCrossword()">Solve Puzzle</button>
-
-      <div class="success-card" id="card-crossword">
-        <div class="success-headline">Solved</div>
-        <div class="success-text">
-          Here. Home. Miles. Love. You. Stay. <br><br>
-          That's the whole story.
-        </div>
-      </div>
-    </section>
-
-    <hr class="section-divider">
-
-    <!-- Puzzle 4: Spelling Bee -->
-    <section class="game-section" id="bee-section">
-      <div class="game-title">Spelling Bee</div>
-      <div class="game-subtitle">Make words using the honeycomb</div>
-
-      <div class="bee-container">
-        <div class="honeycomb">
-          <div class="cell-hex center">A</div>
-          <div class="cell-hex n">L</div>
-          <div class="cell-hex ne">W</div>
-          <div class="cell-hex se">Y</div>
-          <div class="cell-hex s">S</div>
-          <div class="cell-hex sw">H</div>
-          <div class="cell-hex nw">E</div>
+        <!-- ② SAFe SPC Certified -->
+        <div class="callout callout-left callout-2">
+          <div class="callout-pill"><span>②</span> SAFe SPC Certified</div>
+          <svg class="callout-svg" width="80" height="20" viewBox="0 0 80 20">
+            <path d="M 0 10 Q 40 10, 75 10" stroke="#F5C518" stroke-width="1.5" fill="none" class="draw-line"/>
+            <circle cx="75" cy="10" r="3" fill="#F5C518" class="pulse-dot" style="transform-origin: 75px 10px;"/>
+          </svg>
         </div>
 
-        <div class="bee-word-list" id="bee-found-words">
-          Words found: <span id="found-words-list">None yet</span>
+        <!-- ③ Author of 4 Business Fables -->
+        <div class="callout callout-right callout-3">
+          <div class="callout-pill"><span>③</span> Author of 4 Business Fables</div>
+          <svg class="callout-svg" width="80" height="30" viewBox="0 0 80 30">
+            <path d="M 80 10 Q 40 12, 5 25" stroke="#F5C518" stroke-width="1.5" fill="none" class="draw-line"/>
+            <circle cx="5" cy="25" r="3" fill="#F5C518" class="pulse-dot" style="transform-origin: 5px 25px;"/>
+          </svg>
         </div>
-      </div>
 
-      <button class="solve-button" id="btn-bee" onclick="solveBee()">Solve Puzzle</button>
-
-      <div class="success-card" id="card-bee">
-        <div class="success-headline">Genius!</div>
-        <div class="success-text">
-          You found: <strong>ALWAYS</strong><br><br>
-          That's the only word that matters anyway.
+        <!-- ④ Beginners to C-Suite -->
+        <div class="callout callout-right callout-4">
+          <div class="callout-pill"><span>④</span> Beginners to C-Suite</div>
+          <svg class="callout-svg" width="80" height="20" viewBox="0 0 80 20">
+            <path d="M 80 10 Q 40 10, 5 10" stroke="#F5C518" stroke-width="1.5" fill="none" class="draw-line"/>
+            <circle cx="5" cy="10" r="3" fill="#F5C518" class="pulse-dot" style="transform-origin: 5px 10px;"/>
+          </svg>
         </div>
+
+        <!-- ⑤ Based in Germany, workshops globally -->
+        <div class="callout callout-right callout-5">
+          <div class="callout-pill"><span>⑤</span> Based in Germany, workshops globally</div>
+          <svg class="callout-svg" width="80" height="30" viewBox="0 0 80 30">
+            <path d="M 80 20 Q 40 15, 5 5" stroke="#F5C518" stroke-width="1.5" fill="none" class="draw-line"/>
+            <circle cx="5" cy="5" r="3" fill="#F5C518" class="pulse-dot" style="transform-origin: 5px 5px;"/>
+          </svg>
+        </div>
+
       </div>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2026 The New York Times Company. Created for Aaradhya with love.</p>
-  </footer>
+  <!-- 📱 MOBILE ALTERNATIVE BADGE DISPLAY (Displays only on viewports < 1024px) -->
+  <section class="mobile-callout-grid">
+    <div class="callout"><div class="callout-pill"><span>①</span> Aerospace &rarr; PM &rarr; Agile</div></div>
+    <div class="callout"><div class="callout-pill"><span>②</span> SAFe SPC Certified</div></div>
+    <div class="callout"><div class="callout-pill"><span>③</span> Author of 4 Business Fables</div></div>
+    <div class="callout"><div class="callout-pill"><span>④</span> Beginners to C-Suite</div></div>
+    <div class="callout callout-5-mobile"><div class="callout-pill"><span>⑤</span> Germany-based, global delivery</div></div>
+  </section>
 
-  <script>
-    // --- Live Connection Counter ---
-    const startDate = new Date('2025-05-19T00:00:00');
-    function updateTimer() {
-      const now = new Date();
-      const difference = now - startDate;
+  <!-- 👥 AUDIENCE CLARITY STRIP -->
+  <section class="audience-section">
+    <div class="scroll-wrapper">
+      <div class="scroll-container">
+        <div class="audience-chip">🚀 New to PM / Career Switchers</div>
+        <div class="audience-chip">⚙️ Engineers moving into management</div>
+        <div class="audience-chip">📋 Scrum Masters & POs</div>
+        <div class="audience-chip">🧭 Mid-level Managers</div>
+        <div class="audience-chip">🏢 Executives & VPs</div>
+        <div class="audience-chip">🏗️ HR Directors & L&D Buyers</div>
+      </div>
+    </div>
+  </section>
 
-      const years = Math.floor(difference / (1000 * 60 * 60 * 24 * 365));
-      const days = Math.floor((difference % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+  <!-- 🧩 "WHAT I DO" SERVICES SECTION -->
+  <section class="services-section" id="workshops">
+    <div class="section-header">
+      <span class="section-tag">Offerings</span>
+      <h2 class="section-title">What I Do</h2>
+    </div>
 
-      document.getElementById('connection-timer').innerHTML = 
-        `${years}y ${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-    setInterval(updateTimer, 1000);
-    updateTimer();
+    <div class="services-grid">
+      <!-- Card 1: Workshops & Training -->
+      <article class="service-card">
+        <div class="service-number">01 / CAPABILITIES</div>
+        <h3 class="service-title">Workshops & Training</h3>
+        <p class="service-subtitle">Implementation, SAFe, Career Evolution</p>
+        <p class="service-desc">
+          Accelerating structural alignment through masterclasses, hands-on agile framework execution, and certified SAFe training designed for cross-functional scale.
+        </p>
+      </article>
 
-    // --- Wordle Auto-Solve ---
-    function solveWordle() {
-      const btn = document.getElementById('btn-wordle');
-      btn.disabled = true;
+      <!-- Card 2: Books & Resources -->
+      <article class="service-card" id="books">
+        <div class="service-number">02 / PUBLICATIONS</div>
+        <h3 class="service-title">Books & Resources</h3>
+        <p class="service-subtitle">Business Fables</p>
+        <p class="service-desc">
+          Complex system dynamics distilled into unforgettable narratives, including the popular Sally series and <em>The Silent Whisper</em>. Helping leaders learn through narrative.
+        </p>
+      </article>
 
-      const wordsToType = [
-        { row: 0, word: "SMART", classes: ["absent", "absent", "absent", "absent", "absent"] },
-        { row: 1, word: "WRITE", classes: ["absent", "absent", "absent", "absent", "present"] },
-        { row: 2, word: "LOVED", classes: ["correct", "correct", "correct", "correct", "correct"] }
-      ];
+      <!-- Card 3: Coaching & Advisory -->
+      <article class="service-card">
+        <div class="service-number">03 / PARTNERSHIP</div>
+        <h3 class="service-title">Coaching & Advisory</h3>
+        <p class="service-subtitle">1:1, Team Transformations, AI Strategy</p>
+        <p class="service-desc">
+          Bespoke strategic alignment mapping, leadership evolution blueprints, and artificial intelligence integration models designed to keep human collaboration at the center.
+        </p>
+      </article>
+    </div>
+  </section>
 
-      let delay = 0;
-
-      wordsToType.forEach((attempt) => {
-        const rowLetters = attempt.word.split('');
-        
-        rowLetters.forEach((letter, letterIdx) => {
-          setTimeout(() => {
-            const cell = document.getElementById(`w-${attempt.row}-${letterIdx}`);
-            cell.textContent = letter;
-            cell.style.transform = "scale(1.1)";
-            setTimeout(() => { cell.style.transform = "scale(1)"; }, 150);
-          }, delay);
-          delay += 150;
-        });
-
-        // Add flip classes after the whole word is typed
-        delay += 200;
-        rowLetters.forEach((letter, letterIdx) => {
-          setTimeout(() => {
-            const cell = document.getElementById(`w-${attempt.row}-${letterIdx}`);
-            cell.classList.add(attempt.classes[letterIdx]);
-          }, delay + (letterIdx * 100));
-        });
-        delay += 600;
-      });
-
-      // Show Success Card
-      setTimeout(() => {
-        document.getElementById('card-wordle').style.display = 'block';
-      }, delay);
-    }
-
-    // --- Connections Auto-Solve ---
-    const categories = [
-      {
-        class: 'yellow',
-        title: "Things I Send",
-        members: "BOOKS, LOVE, TEXTS, GIFTS",
-        words: ["BOOKS", "LOVE", "TEXTS", "GIFTS"]
-      },
-      {
-        class: 'green',
-        title: "Things We Do",
-        members: "SWIM, LAUGH, TALK, STAY",
-        words: ["SWIM", "LAUGH", "TALK", "STAY"]
-      },
-      {
-        class: 'blue',
-        title: "What You Also Are",
-        members: "SEXY, PRETTY, HOT, RESILIENT",
-        words: ["SEXY", "PRETTY", "HOT", "RESILIENT"]
-      },
-      {
-        class: 'purple',
-        title: "What You Are",
-        members: "SMART, KIND, AMAZING, CUTE",
-        words: ["SMART", "KIND", "AMAZING", "CUTE"]
-      }
-    ];
-
-    function solveConnections() {
-      const btn = document.getElementById('btn-connections');
-      btn.disabled = true;
-
-      const grid = document.getElementById('conn-grid');
-      let step = 0;
-
-      function solveStep() {
-        if (step >= categories.length) {
-          document.getElementById('card-connections').style.display = 'block';
-          return;
-        }
-
-        const cat = categories[step];
-        const cards = Array.from(document.querySelectorAll('.connections-card'));
-        const targetCards = cards.filter(card => cat.words.includes(card.getAttribute('data-val')));
-
-        targetCards.forEach(card => card.classList.add('selected'));
-
-        setTimeout(() => {
-          targetCards.forEach(card => card.remove());
-
-          const solvedRow = document.createElement('div');
-          solvedRow.className = `connections-row-solved ${cat.class}`;
-          solvedRow.innerHTML = `
-            <div class="category-title">${cat.title}</div>
-            <div class="category-members">${cat.members}</div>
-          `;
-
-          grid.insertBefore(solvedRow, grid.firstChild);
-
-          step++;
-          setTimeout(solveStep, 800);
-        }, 1000);
-      }
-
-      solveStep();
-    }
-
-    // --- Crossword Auto-Solve ---
-    function solveCrossword() {
-      const btn = document.getElementById('btn-crossword');
-      btn.disabled = true;
-
-      const answers = {
-        'c-0-0': 'H', 'c-0-1': 'E', 'c-0-2': 'R', 'c-0-3': 'E',
-        'c-1-0': 'O', 'c-1-2': 'I',
-        'c-2-0': 'M', 'c-2-1': 'I', 'c-2-2': 'L', 'c-2-3': 'E', 'c-2-4': 'S',
-        'c-3-0': 'E', 'c-3-2': 'O',
-        'c-4-1': 'Y', 'c-4-2': 'O', 'c-4-3': 'U'
-      };
-
-      const keys = Object.keys(answers);
-      keys.forEach((key, idx) => {
-        setTimeout(() => {
-          document.getElementById(key).textContent = answers[key];
-        }, idx * 150);
-      });
-
-      setTimeout(() => {
-        document.getElementById('card-crossword').style.display = 'block';
-      }, keys.length * 150 + 500);
-    }
-
-    // --- Spelling Bee Auto-Solve ---
-    function solveBee() {
-      const btn = document.getElementById('btn-bee');
-      btn.disabled = true;
-
-      const foundWords = ["STAY", "SURE", "REAL", "HEAL", "ALWAYS"];
-      const displayElem = document.getElementById('found-words-list');
-      displayElem.textContent = '';
-
-      foundWords.forEach((word, idx) => {
-        setTimeout(() => {
-          if (idx === 0) {
-            displayElem.textContent = word;
-          } else {
-            displayElem.textContent += `, ${word}`;
-          }
-        }, idx * 600);
-      });
-
-      setTimeout(() => {
-        document.getElementById('card-bee').style.display = 'block';
-      }, foundWords.length * 600 + 400);
-    }
-  </script>
 </body>
 </html>
