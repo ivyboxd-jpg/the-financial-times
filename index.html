@@ -1,748 +1,1031 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manav Agarwal — Agile Coach, AI Strategist & Stand-up Comedian</title>
-  
-  <!-- Modern Geometric Typography -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MANAV. | Agile Coach · AI Strategist · Author</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --yellow: #F5C518;
+    --yellow-dim: #c9a010;
+    --cream: #F0EAD6;
+    --slate: #1A1F2E;
+    --bg: #0A0A0A;
+    --bg2: #111116;
+    --text: #c8c2b4;
+    --border: rgba(245,197,24,0.15);
+  }
 
-  <style>
-    /* 🎨 COLOR SYSTEM (Electric Tangerine & Deep Slate Obsidian) */
-    :root {
-      --bg-color: #08080B;         /* Dark velvet background */
-      --primary: #FF521B;          /* Electric Spotlight Orange */
-      --primary-glow: rgba(255, 82, 27, 0.15);
-      --cream: #FAF6F0;           /* Soft warm cream for premium readability */
-      --cream-muted: #A39E96;     /* Low-contrast readable body text */
-      --slate-dark: #121217;      /* Subtle clean backgrounds for sections */
-      --font-sans: 'Plus Jakarta Sans', sans-serif;
-      --transition-bezier: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* 🧼 MINIMAL RESET & SCROLL OPTIMIZATION */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  html { scroll-behavior: smooth; }
 
-    body {
-      background-color: var(--bg-color);
-      color: var(--cream);
-      font-family: var(--font-sans);
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
 
-    /* 🤫 HIDE SCROLLBARS BUT ALLOW FUNCTION */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: var(--bg-color);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255, 82, 27, 0.3);
-      border-radius: 99px;
-    }
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 3rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
 
-    /* 🧭 MINIMALIST COMEDY CLUB STYLE NAV */
-    header {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-      z-index: 100;
-    }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.12em;
+    color: var(--yellow);
+    text-decoration: none;
+  }
 
-    .logo {
-      font-weight: 800;
-      font-size: 1.3rem;
-      letter-spacing: -0.04em;
-    }
+  .nav-links {
+    display: flex; gap: 2.2rem; list-style: none;
+  }
 
-    .logo span {
-      color: var(--primary);
-    }
+  .nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
 
-    .cta-tag {
-      background: var(--primary-glow);
-      border: 1px solid rgba(255, 82, 27, 0.3);
-      color: var(--primary);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.5rem 1rem;
-      border-radius: 99px;
-      transition: var(--transition-bezier);
-    }
+  .nav-links a:hover { color: var(--yellow); }
 
-    .cta-tag:hover {
-      background: var(--primary);
-      color: #000;
-    }
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 7rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+    gap: 2rem;
+  }
 
-    /* 🖼️ HERO SECTION */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 65% 50%, rgba(245,197,24,0.055) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* LEFT */
+  .hero-left {
+    display: flex; flex-direction: column;
+    gap: 1.6rem;
+    z-index: 2;
+    opacity: 0; transform: translateX(-30px);
+    animation: slideInLeft 0.9s ease 0.2s forwards;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 28px; height: 2px;
+    background: var(--yellow);
+    display: inline-block;
+  }
+
+  .hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: 0.04em;
+    color: var(--cream);
+  }
+
+  .hero-headline span.hl { color: var(--yellow); }
+
+  /* CAROUSEL WORD SWITCHER */
+  .carousel-line {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    color: var(--cream);
+    line-height: 1.2;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .carousel-line .static { color: var(--text); font-size: 0.95em; }
+
+  .word-ticker {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    height: 1.3em;
+    vertical-align: middle;
+  }
+
+  .word-track {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.45s cubic-bezier(0.77, 0, 0.18, 1);
+  }
+
+  .word-track span {
+    display: block;
+    height: 1.3em;
+    line-height: 1.3em;
+    white-space: nowrap;
+    color: var(--yellow);
+    font-family: 'Bebas Neue', sans-serif;
+    font-style: normal;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    letter-spacing: 0.06em;
+    padding: 0 0.15em;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 480px;
+  }
+
+  .hero-sub em {
+    color: var(--cream);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .cta-row {
+    display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem;
+  }
+
+  .btn-primary {
+    padding: 0.85rem 2rem;
+    background: var(--yellow);
+    color: #0A0A0A;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none; cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .btn-primary:hover {
+    background: #fff;
+    box-shadow: 0 0 22px rgba(245,197,24,0.5);
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid rgba(240,234,214,0.35);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--yellow);
+    color: var(--yellow);
+    transform: translateY(-2px);
+  }
+
+  /* RIGHT — Photo + arrows */
+  .hero-right {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 2;
+    opacity: 0; transform: translateX(30px);
+    animation: slideInRight 0.9s ease 0.4s forwards;
+  }
+
+  .photo-container {
+    position: relative;
+    width: min(360px, 100%);
+  }
+
+  .photo-glow {
+    position: absolute;
+    bottom: -30px; left: 50%;
+    transform: translateX(-50%);
+    width: 80%; height: 80px;
+    background: radial-gradient(ellipse, rgba(245,197,24,0.3) 0%, transparent 70%);
+    filter: blur(20px);
+    z-index: 0;
+  }
+
+  .photo-frame {
+    position: relative;
+    z-index: 1;
+  }
+
+  .photo-frame img {
+    width: 100%;
+    display: block;
+    filter: grayscale(15%) contrast(1.05);
+    border-bottom: 3px solid var(--yellow);
+  }
+
+  .photo-frame::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    border: 1px solid rgba(245,197,24,0.2);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* NUMBERED CALLOUTS */
+  .callout {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: calloutIn 0.5s ease forwards;
+  }
+
+  .callout-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: #0A0A0A;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 12px rgba(245,197,24,0.4);
+  }
+
+  .callout-text {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cream);
+    white-space: nowrap;
+    line-height: 1.3;
+  }
+
+  .callout-text small {
+    display: block;
+    color: var(--text);
+    font-weight: 400;
+    font-size: 0.65rem;
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+
+  /* arrow line */
+  .callout-line {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, rgba(245,197,24,0.6));
+    height: 1px;
+    transform-origin: left center;
+  }
+
+  /* callout positions */
+  .c1 { top: 8%; right: 103%; animation-delay: 0.8s; flex-direction: row-reverse; }
+  .c2 { top: 28%; left: 102%; animation-delay: 1s; }
+  .c3 { top: 50%; right: 103%; animation-delay: 1.2s; flex-direction: row-reverse; }
+  .c4 { top: 68%; left: 102%; animation-delay: 1.4s; }
+  .c5 { top: 85%; right: 103%; animation-delay: 1.6s; flex-direction: row-reverse; }
+
+  /* arrow connectors (SVG lines) */
+  .arrows-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+    overflow: visible;
+  }
+
+  .arrow-path {
+    fill: none;
+    stroke: rgba(245,197,24,0.35);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+    opacity: 0;
+    animation: fadeIn 0.4s ease forwards;
+  }
+
+  .arrow-path:nth-child(1) { animation-delay: 0.9s; }
+  .arrow-path:nth-child(2) { animation-delay: 1.1s; }
+  .arrow-path:nth-child(3) { animation-delay: 1.3s; }
+  .arrow-path:nth-child(4) { animation-delay: 1.5s; }
+  .arrow-path:nth-child(5) { animation-delay: 1.7s; }
+
+  /* AUDIENCE STRIP */
+  .audience-strip {
+    padding: 2.5rem 0;
+    background: var(--slate);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .audience-strip::before,
+  .audience-strip::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .audience-strip::before { left: 0; background: linear-gradient(90deg, var(--slate), transparent); }
+  .audience-strip::after { right: 0; background: linear-gradient(-90deg, var(--slate), transparent); }
+
+  .audience-track {
+    display: flex; gap: 1rem;
+    animation: scrollLeft 22s linear infinite;
+    width: max-content;
+  }
+
+  .audience-track:hover { animation-play-state: paused; }
+
+  .aud-chip {
+    display: flex; align-items: center; gap: 0.55rem;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid rgba(245,197,24,0.2);
+    border-radius: 2px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    white-space: nowrap;
+    background: rgba(245,197,24,0.04);
+    transition: background 0.2s, border-color 0.2s;
+    cursor: default;
+  }
+
+  .aud-chip:hover {
+    background: rgba(245,197,24,0.1);
+    border-color: rgba(245,197,24,0.5);
+  }
+
+  .aud-chip .icon { font-size: 1rem; }
+
+  /* WHAT I DO */
+  .section {
+    padding: 6rem 3rem;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+
+  .section-title em {
+    color: var(--yellow);
+    font-style: normal;
+  }
+
+  .section-sub {
+    color: var(--text);
+    font-size: 1rem;
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5px;
+  }
+
+  .card {
+    background: var(--slate);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--yellow);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .card:hover::before { transform: scaleX(1); }
+  .card:hover { transform: translateY(-4px); }
+
+  .card-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: rgba(245,197,24,0.1);
+    line-height: 1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .card-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.06em;
+    color: var(--cream);
+    margin-bottom: 0.8rem;
+  }
+
+  .card-desc {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .card-desc em {
+    color: var(--yellow);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .card-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 1.5rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+
+  .card-link:hover { gap: 0.8rem; }
+
+  /* QUOTE BAND */
+  .quote-band {
+    padding: 5rem 3rem;
+    background: var(--yellow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quote-band::before {
+    content: '"';
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: 20rem;
+    line-height: 1;
+    top: -3rem; left: 1rem;
+    color: rgba(0,0,0,0.07);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .quote-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-style: italic;
+    color: #0A0A0A;
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+  }
+
+  .quote-attr {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.5);
+  }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    padding: 6rem 3rem;
+    background: var(--bg2);
+  }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1px;
+    margin-top: 3rem;
+  }
+
+  .testi-card {
+    padding: 2rem;
+    background: var(--bg);
+    border-left: 2px solid transparent;
+    transition: border-color 0.3s;
+    cursor: default;
+  }
+
+  .testi-card:hover { border-left-color: var(--yellow); }
+
+  .testi-quote {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 1.2rem;
+  }
+
+  .testi-quote strong {
+    color: var(--cream);
+    font-style: normal;
+  }
+
+  .testi-author {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--yellow);
+  }
+
+  .testi-role {
+    font-size: 0.72rem;
+    color: var(--text);
+    margin-top: 0.2rem;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    padding: 7rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(245,197,24,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section .section-title { margin-bottom: 1rem; }
+  .cta-section .section-sub { margin: 0 auto 2.5rem; text-align: center; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.12em;
+    color: var(--yellow);
+  }
+
+  .footer-links {
+    display: flex; gap: 1.5rem;
+  }
+
+  .footer-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--yellow); }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(200,194,180,0.4);
+    font-style: italic;
+  }
+
+  /* ANIMATIONS */
+  @keyframes slideInLeft {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes slideInRight {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes calloutIn {
+    to { opacity: 1; }
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  @keyframes scrollLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+
     .hero {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem 6rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3.5rem;
-    }
-
-    /* 📸 CLEAN CUTOUT PORTRAIT WITH DYNAMIC SVG LOOPS */
-    .hero-visual {
-      position: relative;
-      width: 100%;
-      max-width: 460px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .portrait-container {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1 / 1.1;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-    }
-
-    .portrait-img {
-      width: 90%;
-      height: 95%;
-      object-fit: contain;
-      z-index: 5;
-      filter: grayscale(10%) contrast(102%);
-      pointer-events: none;
-    }
-
-    /* 🏹 CURVED CONNECTOR LINES & FLOATING METRICS */
-    .floating-card {
-      position: absolute;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .floating-text {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .floating-value {
-      font-weight: 800;
-      font-size: 1.15rem;
-      color: var(--cream);
-      line-height: 1.1;
-    }
-
-    .floating-label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--cream-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .arrow-svg {
-      overflow: visible;
-      pointer-events: none;
-      width: 90px;
-      height: 40px;
-    }
-
-    .handdrawn-path {
-      fill: none;
-      stroke: var(--primary);
-      stroke-width: 1.5;
-      stroke-dasharray: 200;
-      stroke-dashoffset: 200;
-      animation: drawCurve 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      animation-delay: 0.8s;
-    }
-
-    /* DESKTOP METRICS ALIGNMENT */
-    @media (min-width: 1024px) {
-      .card-left-1 { top: 15%; right: 92%; flex-direction: row; }
-      .card-left-2 { bottom: 25%; right: 94%; flex-direction: row; }
-      .card-right-1 { top: 10%; left: 92%; flex-direction: row-reverse; }
-      .card-right-2 { bottom: 30%; left: 94%; flex-direction: row-reverse; }
-    }
-
-    /* 📝 ENERGETIC HERO COPY & DYNAMIC CAROUSEL */
-    .hero-text-block {
+      grid-template-columns: 1fr;
+      padding: 6rem 1.5rem 3rem;
       text-align: center;
-      max-width: 820px;
-      margin: 0 auto;
     }
 
-    .hero-comedy-badge {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      margin-bottom: 1.25rem;
-      display: inline-block;
-    }
+    .hero-left { align-items: center; }
+    .hero-sub { text-align: center; }
+    .eyebrow { justify-content: center; }
+    .cta-row { justify-content: center; }
+    .carousel-line { justify-content: center; }
 
-    .hero-headline {
-      font-size: clamp(2rem, 5.5vw, 3.6rem);
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.04em;
-      color: var(--cream);
-      margin-bottom: 1.5rem;
-    }
+    .hero-right { order: -1; }
 
-    /* 💥 CAROUSEL WORKPLACE TEXT ENGINE */
-    .carousel-container {
-      display: inline-block;
-      position: relative;
-      color: var(--primary);
-      vertical-align: bottom;
-      height: 1.2em;
-      overflow: hidden;
-      min-width: 250px;
-    }
+    .c1, .c2, .c3, .c4, .c5 { display: none; }
+    .arrows-svg { display: none; }
 
-    .carousel-word {
-      position: absolute;
-      left: 0;
-      right: 0;
-      font-weight: 800;
-      opacity: 0;
-      transform: translateY(100%);
-      transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .carousel-word.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .carousel-word.exit {
-      opacity: 0;
-      transform: translateY(-100%);
-    }
-
-    .hero-subtitle {
-      font-size: clamp(1.1rem, 2vw, 1.25rem);
-      font-weight: 400;
-      color: var(--cream-muted);
-      line-height: 1.7;
-      margin-bottom: 2.5rem;
-    }
-
-    .hero-subtitle strong {
-      color: var(--cream);
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 1.25rem;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    /* BUTTONS */
-    .btn {
-      font-family: var(--font-sans);
-      font-size: 0.95rem;
-      font-weight: 700;
-      padding: 1rem 2rem;
-      border-radius: 99px;
-      transition: var(--transition-bezier);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .btn-primary {
-      background-color: var(--primary);
-      color: #08080B;
-      border: 1px solid var(--primary);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px var(--primary-glow);
-    }
-
-    .btn-secondary {
-      background-color: transparent;
-      color: var(--cream);
-      border: 1px solid rgba(250, 246, 240, 0.15);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--cream);
-      background-color: rgba(250, 246, 240, 0.03);
-      transform: translateY(-3px);
-    }
-
-    /* 🌊 INTERSECTION OBSERVER SCROLL REVEAL STYLES */
-    .reveal-on-scroll {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .reveal-on-scroll.revealed {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* 👥 AUDIENCE HORIZONTAL SCROLL CHIPS */
-    .audience-band {
-      width: 100%;
-      padding: 3.5rem 0;
-      border-top: 1px solid rgba(250, 246, 240, 0.04);
-      border-bottom: 1px solid rgba(250, 246, 240, 0.04);
-      background-color: rgba(18, 18, 23, 0.2);
-    }
-
-    .scroll-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      overflow: hidden;
-    }
-
-    .scroll-wrapper::before,
-    .scroll-wrapper::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 120px;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .scroll-wrapper::before {
-      left: 0;
-      background: linear-gradient(to right, var(--bg-color), transparent);
-    }
-
-    .scroll-wrapper::after {
-      right: 0;
-      background: linear-gradient(to left, var(--bg-color), transparent);
-    }
-
-    .scroll-track {
-      display: flex;
-      gap: 1.25rem;
-      overflow-x: auto;
-      padding: 0.5rem 2rem;
-      scrollbar-width: none;
-    }
-
-    .scroll-track::-webkit-scrollbar {
-      display: none;
-    }
-
-    .pill-chip {
-      flex: 0 0 auto;
-      background-color: rgba(250, 246, 240, 0.02);
-      border: 1px solid rgba(250, 246, 240, 0.06);
-      color: var(--cream);
-      padding: 0.75rem 1.5rem;
-      border-radius: 99px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      transition: var(--transition-bezier);
-    }
-
-    .pill-chip:hover {
-      border-color: var(--primary);
-      background-color: var(--primary-glow);
-      transform: translateY(-2px);
-    }
-
-    /* 🧩 "WHAT I DO" SECTION WITH CLEAN WHITE SPACE */
-    .offerings {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 8rem 1.5rem;
-    }
-
-    .offerings-header {
-      max-width: 700px;
-      margin-bottom: 6rem;
-    }
-
-    .tagline {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      margin-bottom: 0.75rem;
-      display: block;
-    }
-
-    .main-section-title {
-      font-size: clamp(2.2rem, 5vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-    }
-
-    .offerings-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3rem;
-    }
-
-    .offering-card {
-      background-color: transparent;
-      border-top: 1px solid rgba(250, 246, 240, 0.1);
-      padding-top: 2.5rem;
-      transition: var(--transition-bezier);
-    }
-
-    .offering-card:hover {
-      border-top-color: var(--primary);
-      transform: translateY(-6px);
-    }
-
-    .offering-num {
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-    }
-
-    .offering-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      letter-spacing: -0.02em;
-    }
-
-    .offering-subtitle {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--cream-muted);
-      margin-bottom: 1.5rem;
-    }
-
-    .offering-desc {
-      font-size: 0.95rem;
-      color: var(--cream-muted);
-      line-height: 1.7;
-    }
-
-    /* 📱 RESPONSIVE ADJUSTMENTS FOR MOBILE */
-    @media (max-width: 1023px) {
-      .hero {
-        gap: 3rem;
-      }
-
-      .arrow-svg {
-        display: none; /* Hide complex desktop lines to avoid mobile clutter */
-      }
-
-      .floating-card {
-        position: static !important;
-        width: 100%;
-        margin: 0 !important;
-      }
-
-      /* Clean grid system for stats below portrait on mobile */
-      .mobile-stats-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.85rem;
-        width: 100%;
-        max-width: 460px;
-        margin: 1.5rem auto 0 auto;
-        padding: 0 1rem;
-      }
-
-      .stat-full-width {
-        grid-column: span 2;
-      }
-
-      .mobile-stat-pill {
-        background-color: rgba(250, 246, 240, 0.02);
-        border: 1px solid rgba(250, 246, 240, 0.06);
-        padding: 1rem;
-        border-radius: 8px;
-        text-align: center;
-      }
-
-      .offerings-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .offering-card {
-        padding-top: 2rem;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .mobile-stats-grid {
-        grid-template-columns: 1fr;
-      }
-      .stat-full-width {
-        grid-column: span 1;
-      }
-    }
-  </style>
+    .section { padding: 4rem 1.5rem; }
+    .testimonials { padding: 4rem 1.5rem; }
+    .quote-band { padding: 3rem 1.5rem; }
+    .cta-section { padding: 4rem 1.5rem; }
+    footer { padding: 1.5rem; flex-direction: column; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- 🧭 MINIMAL NAV -->
-  <header>
-    <a href="#" class="logo">MANAV<span>.</span></a>
-    <a href="#contact" class="cta-tag">Inquire for Workshops</a>
-  </header>
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">MANAV.</a>
+  <ul class="nav-links">
+    <li><a href="#about">The Story</a></li>
+    <li><a href="#services">Workshops</a></li>
+    <li><a href="#books">Books</a></li>
+    <li><a href="#testimonials">Proof</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-  <!-- 🖼️ HERO CONTAINER -->
-  <main class="hero">
+<!-- HERO -->
+<section class="hero" id="about">
+  <div class="hero-left">
+    <p class="eyebrow">Agile · AI · Author · Actually Funny</p>
 
-    <!-- 📸 PORTRAIT AT THE TOP (First visual item) -->
-    <section class="hero-visual reveal-on-scroll">
-      <div class="portrait-container">
-        <!-- Cutout portrait on transparent background -->
-        <img 
-          class="portrait-img" 
-          src="https://manavagarwal.com/_next/image?url=%2Fassets%2FManav_CasuallySitting_professional.png&w=3840&q=75" 
-          alt="Manav Agarwal" 
-          onerror="this.onerror=null; this.src='https://manavagarwal.com/images/og-default.jpg';"
-        />
+    <h1 class="hero-headline">
+      I SPEAK<br>
+      <span class="hl">HUMAN.</span><br>
+      NOT BUZZWORD.
+    </h1>
 
-        <!-- Desktop Pointer System (Loop-the-loop paths pointing to center) -->
-
-        <!-- Left Top Callout -->
-        <div class="floating-card card-left-1">
-          <div class="floating-text">
-            <span class="floating-value">Aerospace &rarr; Agile</span>
-            <span class="floating-label">Career Arc</span>
-          </div>
-          <svg class="arrow-svg" viewBox="0 0 100 40">
-            <path d="M 5 10 C 40 10, 30 35, 95 25" class="handdrawn-path" />
-          </svg>
-        </div>
-
-        <!-- Left Bottom Callout -->
-        <div class="floating-card card-left-2">
-          <div class="floating-text">
-            <span class="floating-value">SAFe SPC</span>
-            <span class="floating-label">Certified Coach</span>
-          </div>
-          <svg class="arrow-svg" viewBox="0 0 100 40">
-            <path d="M 5 25 C 45 25, 35 5, 95 15" class="handdrawn-path" />
-          </svg>
-        </div>
-
-        <!-- Right Top Callout -->
-        <div class="floating-card card-right-1">
-          <svg class="arrow-svg" viewBox="0 0 100 40">
-            <path d="M 95 10 C 60 10, 70 35, 5 25" class="handdrawn-path" />
-          </svg>
-          <div class="floating-text">
-            <span class="floating-value">4 Business Fables</span>
-            <span class="floating-label">Published Author</span>
-          </div>
-        </div>
-
-        <!-- Right Bottom Callout -->
-        <div class="floating-card card-right-2">
-          <svg class="arrow-svg" viewBox="0 0 100 40">
-            <path d="M 95 25 C 55 25, 65 5, 5 15" class="handdrawn-path" />
-          </svg>
-          <div class="floating-text">
-            <span class="floating-value">Germany-Based</span>
-            <span class="floating-label">Workshops Globally</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 📱 MOBILE ALTERNATIVE STATS SYSTEM -->
-    <section class="mobile-stats-grid">
-      <div class="mobile-stat-pill">
-        <span class="floating-value">Aerospace &rarr; Agile</span>
-        <span class="floating-label">Career Arc</span>
-      </div>
-      <div class="mobile-stat-pill">
-        <span class="floating-value">SAFe SPC</span>
-        <span class="floating-label">Certified</span>
-      </div>
-      <div class="mobile-stat-pill">
-        <span class="floating-value">4 Books</span>
-        <span class="floating-label">Business Fables</span>
-      </div>
-      <div class="mobile-stat-pill">
-        <span class="floating-value">Beginners &rarr; VPs</span>
-        <span class="floating-label">Coaching Range</span>
-      </div>
-      <div class="mobile-stat-pill stat-full-width">
-        <span class="floating-value">Germany-Based</span>
-        <span class="floating-label">Workshops Globally</span>
-      </div>
-    </section>
-
-    <!-- 📝 HERO COPYWRITING WITH COMEDY-INSPIRED RELATABILITY -->
-    <section class="hero-text-block reveal-on-scroll">
-      <span class="hero-comedy-badge">Stand-Up Comedy &bull; Corporate Strategy</span>
-      
-      <h1 class="hero-headline">
-        I help 
-        <span class="carousel-container" id="audience-carousel">
-          <span class="carousel-word active">stressed-out PMs</span>
-          <span class="carousel-word">junior developers</span>
-          <span class="carousel-word">micromanaged squads</span>
-          <span class="carousel-word">C-suite VPs</span>
-          <span class="carousel-word">burnt-out Scrum Masters</span>
-          <span class="carousel-word">actual human beings</span>
+    <!-- WORD CAROUSEL -->
+    <div class="carousel-line">
+      <span class="static">Whether you're a</span>
+      <span class="word-ticker" id="ticker" aria-live="polite">
+        <span class="word-track" id="wordTrack">
+          <span>FOUNDER</span>
+          <span>INTERN</span>
+          <span>VP</span>
+          <span>SCRUM MASTER</span>
+          <span>ENGINEER</span>
+          <span>PM</span>
+          <span>CEO</span>
+          <span>CONFUSED</span>
+          <span>BURNED OUT</span>
+          <span>AMBITIOUS</span>
+          <span>SKEPTIC</span>
+          <span>BEGINNER</span>
         </span>
-        <br>work together without wanting to throw their laptops out the window.
-      </h1>
+      </span>
+    </div>
 
-      <p class="hero-subtitle">
-        Your Scrum team thinks agile is a punchline—and let's be honest, sometimes they are right. I combine structural process coaching and AI strategy with the high-energy delivery of a <strong>stand-up comedian</strong> to fix teams. No boring status meetings allowed.
+    <p class="hero-sub">
+      Most corporate trainers make you feel like you're back in school — except <em>more bored</em>. I do the opposite. I take Agile, AI, and Transformation and strip away the jargon until what's left is actually <em>useful</em>. Then I probably make a joke about it.
+    </p>
+
+    <div class="cta-row">
+      <a class="btn-primary" href="#contact">Inquire for Workshops</a>
+      <a class="btn-ghost" href="#books">Explore The Books</a>
+    </div>
+  </div>
+
+  <!-- RIGHT: Photo + callouts -->
+  <div class="hero-right">
+    <div class="photo-container">
+      <div class="photo-glow"></div>
+
+      <!-- Left callouts -->
+      <div class="callout c1">
+        <div class="callout-num">1</div>
+        <div class="callout-text">
+          Aerospace → PM → Agile
+          <small>The career nobody expected</small>
+        </div>
+      </div>
+
+      <div class="callout c3">
+        <div class="callout-num">3</div>
+        <div class="callout-text">
+          Beginners to C-Suite
+          <small>Everybody gets it</small>
+        </div>
+      </div>
+
+      <div class="callout c5">
+        <div class="callout-num">5</div>
+        <div class="callout-text">
+          Based in Germany
+          <small>Workshops globally</small>
+        </div>
+      </div>
+
+      <!-- Right callouts -->
+      <div class="callout c2">
+        <div class="callout-num">2</div>
+        <div class="callout-text">
+          SAFe SPC Certified
+          <small>Enterprise-scale Agile</small>
+        </div>
+      </div>
+
+      <div class="callout c4">
+        <div class="callout-num">4</div>
+        <div class="callout-text">
+          4 Books Published
+          <small>Business fables that actually stick</small>
+        </div>
+      </div>
+
+      <div class="photo-frame">
+        <img
+          src="https://manavagarwal.com/_next/image?url=%2Fassets%2FManav_CasuallySitting_professional.png&w=1200&q=85"
+          alt="Manav Agarwal"
+          onerror="this.src='https://manavagarwal.com/images/og-default.jpg'"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE STRIP -->
+<div class="audience-strip">
+  <div class="audience-track" id="audTrack">
+    <div class="aud-chip"><span class="icon">🚀</span> Freshers & Career Switchers</div>
+    <div class="aud-chip"><span class="icon">⚙️</span> Engineers Going into Management</div>
+    <div class="aud-chip"><span class="icon">📋</span> Scrum Masters & POs</div>
+    <div class="aud-chip"><span class="icon">🧭</span> Mid-level Managers</div>
+    <div class="aud-chip"><span class="icon">🏢</span> Executives & VPs</div>
+    <div class="aud-chip"><span class="icon">🤖</span> AI-Anxious Teams</div>
+    <div class="aud-chip"><span class="icon">🏗️</span> HR & L&D Buyers</div>
+    <div class="aud-chip"><span class="icon">📖</span> Aspiring Authors</div>
+    <div class="aud-chip"><span class="icon">🎯</span> Startup Founders</div>
+    <div class="aud-chip"><span class="icon">🔥</span> Burned-Out Overachievers</div>
+    <!-- duplicate for seamless loop -->
+    <div class="aud-chip"><span class="icon">🚀</span> Freshers & Career Switchers</div>
+    <div class="aud-chip"><span class="icon">⚙️</span> Engineers Going into Management</div>
+    <div class="aud-chip"><span class="icon">📋</span> Scrum Masters & POs</div>
+    <div class="aud-chip"><span class="icon">🧭</span> Mid-level Managers</div>
+    <div class="aud-chip"><span class="icon">🏢</span> Executives & VPs</div>
+    <div class="aud-chip"><span class="icon">🤖</span> AI-Anxious Teams</div>
+    <div class="aud-chip"><span class="icon">🏗️</span> HR & L&D Buyers</div>
+    <div class="aud-chip"><span class="icon">📖</span> Aspiring Authors</div>
+    <div class="aud-chip"><span class="icon">🎯</span> Startup Founders</div>
+    <div class="aud-chip"><span class="icon">🔥</span> Burned-Out Overachievers</div>
+  </div>
+</div>
+
+<!-- WHAT I DO -->
+<section class="section" id="services">
+  <p class="section-label">What I Actually Do</p>
+  <h2 class="section-title">I MAKE THE <em>BORING</em><br>BITS STICK.</h2>
+  <p class="section-sub">Three ways I can help your team stop surviving and start shipping — without the soul-crushing death-by-PowerPoint experience.</p>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-num">01</div>
+      <div class="card-icon">🛠️</div>
+      <h3 class="card-title">Workshops & Training</h3>
+      <p class="card-desc">
+        From <em>Project Management Essentials</em> to <em>SAFe® Certification</em> to <em>AI-Augmented Leadership</em> — strictly customizable, ruthlessly practical. We solve <em>your</em> backlog, not a generic case study from 2009.
       </p>
-
-      <div class="hero-actions">
-        <a href="#contact" class="btn btn-primary">Book an Engaging Workshop &rarr;</a>
-        <a href="#books" class="btn btn-secondary">Explore the Fables</a>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- 👥 SCROLLING CHIPS BAND -->
-  <section class="audience-band reveal-on-scroll">
-    <div class="scroll-wrapper">
-      <div class="scroll-track">
-        <div class="pill-chip"><span>🚀</span> New to PM / Career Switchers</div>
-        <div class="pill-chip"><span>⚙️</span> Engineers moving into management</div>
-        <div class="pill-chip"><span>📋</span> Scrum Masters & POs</div>
-        <div class="pill-chip"><span>🧭</span> Mid-level Managers</div>
-        <div class="pill-chip"><span>🏢</span> Executives & VPs</div>
-        <div class="pill-chip"><span>🏗️</span> HR Directors & L&D Buyers</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 🧩 "WHAT I DO" WITH MINIMAL EDITORIAL DESIGN -->
-  <section class="offerings" id="offerings">
-    <div class="offerings-header reveal-on-scroll">
-      <span class="tagline">Process without the corporate theater</span>
-      <h2 class="main-section-title">Engagements designed to stick.</h2>
+      <a class="card-link" href="#contact">Book a Workshop →</a>
     </div>
 
-    <div class="offerings-grid">
-      <!-- Grid card 1 -->
-      <article class="offering-card reveal-on-scroll">
-        <div class="offering-num">01 / ENGAGEMENTS</div>
-        <h3 class="offering-title">Workshops & Training</h3>
-        <p class="offering-subtitle">Because a four-hour presentation could have been a Slack message.</p>
-        <p class="offering-desc">
-          Un-boring corporate transformations and certified SAFe trainings that actually keep people awake. Learn structural agility frameworks through dry wit and actionable steps.
-        </p>
-      </article>
-
-      <!-- Grid card 2 -->
-      <article class="offering-card reveal-on-scroll" id="books">
-        <div class="offering-num">02 / PUBLICATIONS</div>
-        <h3 class="offering-title">Books & Resources</h3>
-        <p class="offering-subtitle">Business Fables. Read: Stories that aren't dry corporate guides.</p>
-        <p class="offering-desc">
-          No jargon-heavy technical handbooks here. Through narrative fables (the Sally Series & The Silent Whisper), I tackle real communication dysfunctions and project management disasters.
-        </p>
-      </article>
-
-      <!-- Grid card 3 -->
-      <article class="offering-card reveal-on-scroll">
-        <div class="offering-num">03 / ADVISORY</div>
-        <h3 class="offering-title">Coaching & AI Strategy</h3>
-        <p class="offering-subtitle">1:1 and team scaling, keeping the AI real.</p>
-        <p class="offering-desc">
-          Practical advice on implementing modern AI toolsets into engineering processes. No buzzwords, no magical thinking—just real-world productivity alignment that people actually support.
-        </p>
-      </article>
+    <div class="card">
+      <div class="card-num">02</div>
+      <div class="card-icon">📚</div>
+      <h3 class="card-title">Books & Resources</h3>
+      <p class="card-desc">
+        Business books written as <em>stories</em>, because your brain learns from narratives, not bullet lists. Follow Sally through Scrum, Kanban, and Agile — and actually <em>remember it on Monday</em>.
+      </p>
+      <a class="card-link" href="#books">Explore the Library →</a>
     </div>
-  </section>
 
-  <!-- 💡 DYNAMIC CODE: WORDS CAROUSEL & SCROLL REVEALS -->
-  <script>
-    // 1. DYNAMIC WORD CAROUSEL ENGINE (Changes every 1.5 seconds)
-    document.addEventListener('DOMContentLoaded', () => {
-      const words = document.querySelectorAll('#audience-carousel .carousel-word');
-      let currentIndex = 0;
+    <div class="card">
+      <div class="card-num">03</div>
+      <div class="card-icon">🎯</div>
+      <h3 class="card-title">Career & Brand Coaching</h3>
+      <p class="card-desc">
+        Junior dev staring at a senior role? Mid-manager stuck in the middle? I'll help you <em>reverse-engineer</em> interviews, rewrite your CV as a <em>marketing document</em>, and build a LinkedIn that doesn't make you cringe.
+      </p>
+      <a class="card-link" href="#contact">Let's Talk →</a>
+    </div>
+  </div>
+</section>
 
-      setInterval(() => {
-        const activeWord = words[currentIndex];
-        
-        // Setup transition out class
-        activeWord.classList.remove('active');
-        activeWord.classList.add('exit');
+<!-- QUOTE BAND -->
+<div class="quote-band">
+  <div class="quote-inner">
+    <p class="quote-text">"Most Agile coaches make your team feel judged. Manav makes your team feel understood — and then drags them (lovingly) toward being better."</p>
+    <p class="quote-attr">— Director of People & Culture, SaaS Scale-up</p>
+  </div>
+</div>
 
-        // Set next target index
-        currentIndex = (currentIndex + 1) % words.length;
-        const nextWord = words[currentIndex];
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <p class="section-label">Proof It Works</p>
+  <h2 class="section-title">THEY SAID IT.<br><em>NOT ME.</em></h2>
 
-        // Animate new target in
-        nextWord.classList.remove('exit');
-        nextWord.classList.add('active');
+  <div class="testi-grid">
+    <div class="testi-card">
+      <p class="testi-quote">"I used to think soft skills were fluff. Manav was the first coach who explained empathy using <strong>logic I could actually respect.</strong> He didn't try to turn me into a cheerleader."</p>
+      <p class="testi-author">Lead Backend Engineer</p>
+      <p class="testi-role">FinTech — The "Engineering to Management" Bridge</p>
+    </div>
 
-        // Reset exit state of the old target
-        setTimeout(() => {
-          activeWord.classList.remove('exit');
-        }, 400);
+    <div class="testi-card">
+      <p class="testi-quote">"The official SAFe training tells you how the framework should work. Manav taught us <strong>how it actually works when you have budget cuts and angry stakeholders.</strong>"</p>
+      <p class="testi-author">Release Train Engineer</p>
+      <p class="testi-role">Automotive Sector — Political Survival Success</p>
+    </div>
 
-      }, 1500);
+    <div class="testi-card">
+      <p class="testi-quote">"My CV was a laundry list of tasks that bored anyone who read it. We stopped talking about Jira tickets and started talking about <strong>business value.</strong>"</p>
+      <p class="testi-author">Head of Product, Berlin</p>
+      <p class="testi-role">Career Pivot — Narrative Shift</p>
+    </div>
+
+    <div class="testi-card">
+      <p class="testi-quote">"He's the only facilitator I've seen who can get a room full of <strong>introverted developers to actually debate and laugh.</strong> He doesn't bring slides; he brings energy."</p>
+      <p class="testi-author">Director of People & Culture</p>
+      <p class="testi-role">SaaS Scale-up — Anti-Boredom Workshop</p>
+    </div>
+
+    <div class="testi-card">
+      <p class="testi-quote">"We brought Manav in expecting a technical AI roadmap. Instead, he showed us our bottleneck was <strong>decision fatigue.</strong> Rare ability to cut through corporate noise."</p>
+      <p class="testi-author">VP of Engineering</p>
+      <p class="testi-role">Aerospace — The Reality Check Consultant</p>
+    </div>
+
+    <div class="testi-card">
+      <p class="testi-quote">"Retrospectives were painful because nobody admitted mistakes. Manav introduced a <strong>failure framework that changed the temperature in the room instantly.</strong>"</p>
+      <p class="testi-author">Scrum Master</p>
+      <p class="testi-role">Logistics Enterprise — Psychological Safety Breakthrough</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <p class="section-label" style="justify-content:center;">Ready When You Are</p>
+  <h2 class="section-title">YOUR TEAM<br>DESERVES <em>BETTER.</em></h2>
+  <p class="section-sub">Tell me what's broken — your backlog, your culture, your team's relationship with the word "Agile" — and I'll tell you exactly how I'd fix it.</p>
+  <div class="cta-row" style="justify-content:center;">
+    <a class="btn-primary" href="https://manavagarwal.com/#contact" target="_blank">Inquire for Workshops</a>
+    <a class="btn-ghost" href="https://www.linkedin.com/in/manavag/" target="_blank">Connect on LinkedIn</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">MANAV.</span>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/manavag/" target="_blank">LinkedIn</a>
+    <a href="https://medium.com/@manav_agarwal" target="_blank">Medium</a>
+    <a href="https://www.instagram.com/justamanav/" target="_blank">Instagram</a>
+  </div>
+  <p class="footer-copy">Error 404: Corporate Boredom not found.</p>
+</footer>
+
+<script>
+  // WORD TICKER — slot machine style
+  const words = [
+    "FOUNDER","INTERN","VP","SCRUM MASTER",
+    "ENGINEER","PM","CEO","CONFUSED",
+    "BURNED OUT","AMBITIOUS","SKEPTIC","BEGINNER"
+  ];
+
+  const track = document.getElementById('wordTrack');
+  const ticker = document.getElementById('ticker');
+
+  // Measure the widest word so ticker doesn't jump
+  function setTickerWidth() {
+    const temp = document.createElement('span');
+    temp.style.cssText = `
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      letter-spacing: 0.06em;
+      visibility: hidden;
+      position: absolute;
+      white-space: nowrap;
+      padding: 0 0.15em;
+    `;
+    document.body.appendChild(temp);
+    let max = 0;
+    words.forEach(w => {
+      temp.textContent = w;
+      max = Math.max(max, temp.offsetWidth);
     });
+    document.body.removeChild(temp);
+    ticker.style.width = max + 'px';
+  }
 
-    // 2. LIGHTWEIGHT INTERSECTION OBSERVER FOR SCROLL REVEALS
-    const revealElements = document.querySelectorAll('.reveal-on-scroll');
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          observer.unobserve(entry.target); // Trigger only once
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: "0px 0px -40px 0px" // Triggers slightly before element enters view
-    });
+  setTickerWidth();
+  window.addEventListener('resize', setTickerWidth);
 
-    revealElements.forEach(element => {
-      revealObserver.observe(element);
-    });
-  </script>
+  let current = 0;
+
+  function nextWord() {
+    current = (current + 1) % words.length;
+    track.style.transform = `translateY(calc(-${current} * 1.3em))`;
+  }
+
+  setInterval(nextWord, 1100);
+</script>
 
 </body>
 </html>
