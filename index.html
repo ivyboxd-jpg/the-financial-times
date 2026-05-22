@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root, [data-theme="dark"] {
-  --bg: #0F1012;                 /* Deep, warm graphite black (comforting) */
+  --bg: #0F1012;                 /* Deep, warm graphite black */
   --bg2: #17181C;                /* Slate charcoal surface */
   --bg3: #1F2126;                /* Rich graphite card backing */
   --border: rgba(245, 242, 235, 0.06);
@@ -90,7 +90,7 @@ nav.scrolled {
   box-shadow: 0 8px 24px var(--lime-dim);
 }
 
-/* Elegant Theme Switch Toggle */
+/* Theme Toggle Switch */
 .theme-toggle {
   background: none; border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
@@ -107,94 +107,28 @@ nav.scrolled {
 .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
 .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--white); transition: all 0.3s; }
 
-/* ─── HERO (Copy Priority System) ────────── */
-.hero {
+/* ─── NEW HIERARCHY: HERO WRAPPER ────────── */
+.hero-wrapper {
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  padding: 7rem 3.5rem 5rem 3.5rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 9rem 3.5rem 5rem 3.5rem;
-  gap: 5rem;
+  gap: 4rem;
   position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content: ''; position: absolute;
-  top: -20%; right: -5%;
-  width: 60%; height: 140%;
-  background: radial-gradient(ellipse at center, rgba(229, 195, 152, 0.03) 0%, transparent 65%);
-  pointer-events: none;
 }
 
-/* HERO LEFT (Copy Deck) */
-.hero-left {
-  display: flex; flex-direction: column; gap: 3rem;
-  opacity: 0; transform: translateY(30px);
-  animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
-}
-.hero-tag {
-  display: inline-flex; align-items: center; gap: 0.75rem;
-  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--lime);
-}
-.hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--lime); }
-
-/* The Dynamic Statement Leading on Top */
-.hero-headline {
-  font-family: 'Lora', serif; font-weight: 600;
-  font-size: clamp(2.4rem, 5.2vw, 4.2rem);
-  line-height: 1.1; letter-spacing: -0.02em;
-  color: var(--white);
-}
-
-.carousel-inline-container {
-  display: inline-block;
+/* Centered Portrait at the Very Top */
+.hero-top-visual {
   position: relative;
-  height: 1.25em;
-  vertical-align: bottom;
-  min-width: 180px;
-  overflow: hidden;
-}
-.carousel-inline-word {
-  position: absolute; left: 0; top: 0;
-  opacity: 0;
-  transform: translateY(20px) rotateX(-30deg);
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
-  color: var(--lime);
-  font-weight: 700;
-  white-space: nowrap;
-}
-.carousel-inline-word.active {
-  opacity: 1;
-  transform: translateY(0) rotateX(0deg);
-}
-.carousel-inline-word.exit {
-  opacity: 0;
-  transform: translateY(-20px) rotateX(30deg);
-}
-
-.hero-headline .line2 {
-  display: block; color: var(--muted); font-weight: 400;
-  font-style: italic; font-family: 'Lora', serif;
-  font-size: 0.5em; letter-spacing: -0.01em; margin-top: 0.5em;
-  line-height: 1.5;
-}
-
-.hero-sub {
-  font-size: 1rem; line-height: 1.8; color: var(--muted2);
-  max-width: 480px; font-weight: 300;
-}
-.hero-sub strong { color: var(--white); font-weight: 500; }
-
-.hero-actions { display: flex; gap: 1.25rem; flex-wrap: wrap; align-items: center; }
-
-/* HERO RIGHT (Visual Portrait) */
-.hero-right {
-  position: relative; display: flex; justify-content: center; align-items: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   opacity: 0; transform: translateY(30px);
-  animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  width: 100%;
 }
-.photo-wrap { position: relative; width: min(400px, 100%); }
+.photo-wrap { position: relative; width: min(380px, 100%); }
 .photo-img {
   display: block; width: 100%;
   filter: grayscale(10%) contrast(1.02);
@@ -210,7 +144,56 @@ nav.scrolled {
   background: var(--border); z-index: 2;
 }
 
-/* ─── KANE SHERWELL ARROWS ─── */
+/* Main Headline Area Directly Below Picture */
+.hero-copy-section {
+  text-align: center;
+  max-width: 860px;
+  opacity: 0; transform: translateY(30px);
+  animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--lime);
+}
+
+/* "I Help..." Inline Text Carousel Headline */
+.hero-headline {
+  font-family: 'Lora', serif; font-weight: 600;
+  font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+  line-height: 1.1; letter-spacing: -0.02em;
+  color: var(--white);
+}
+.carousel-word-highlight {
+  color: var(--lime);
+  font-weight: 700;
+  display: inline-block;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.carousel-word-highlight.fade-out { opacity: 0; transform: translateY(-5px); }
+.carousel-word-highlight.fade-in { opacity: 1; transform: translateY(0); }
+
+.hero-headline .line2 {
+  display: block; color: var(--muted); font-weight: 400;
+  font-style: italic; font-family: 'Lora', serif;
+  font-size: 0.5em; letter-spacing: -0.01em; margin-top: 0.5em;
+  line-height: 1.5;
+}
+
+.hero-sub {
+  font-size: 1rem; line-height: 1.8; color: var(--muted2);
+  max-width: 540px; font-weight: 300;
+}
+.hero-sub strong { color: var(--white); font-weight: 500; }
+
+.hero-actions { display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center; align-items: center; }
+
+/* ─── CALLOUT CARD ARROWS (Desktop only) ─── */
 .callout {
   position: absolute; z-index: 10;
   display: flex; align-items: center; gap: 0.65rem;
@@ -224,9 +207,7 @@ nav.scrolled {
   transition: all 0.3s ease;
   animation: calloutPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
-[data-theme="light"] .callout {
-  background: rgba(240, 236, 228, 0.85);
-}
+[data-theme="light"] .callout { background: rgba(240, 236, 228, 0.85); }
 .callout:hover { border-color: var(--lime); transform: translateY(-2px); }
 .callout-n {
   font-family: 'Lora', serif; font-weight: 700; font-size: 0.95rem;
@@ -309,7 +290,7 @@ nav.scrolled {
 .ticker-item .dot { width: 4px; height: 4px; background: var(--lime); border-radius: 50%; flex-shrink: 0; }
 .ticker-item:hover { color: var(--white); }
 
-/* ─── WORKSHOPS (Line-by-Line Split Grid) ─── */
+/* ─── WORKSHOPS (Line-by-Line Stacked Filters) ─── */
 .section { padding: 10rem 3.5rem; }
 .section-header { margin-bottom: 5rem; }
 .section-eyebrow {
@@ -333,7 +314,7 @@ nav.scrolled {
   align-items: start;
 }
 
-/* Vertical Stacked Filter Navigation */
+/* Vertical stacked tabs list, matching Kane's screenshot exactly */
 .filter-tabs {
   display: flex; flex-direction: column; gap: 1.2rem;
   border-left: 2px solid var(--border);
@@ -361,7 +342,7 @@ nav.scrolled {
 }
 .filter-tab.active .tab-count { color: var(--bg); background: var(--lime); }
 
-/* Dynamic Workshops Container */
+/* Workshop Cards Container */
 .workshops-container { position: relative; min-height: 400px; }
 .workshops-grid {
   display: grid; grid-template-columns: 1fr; gap: 3rem;
@@ -370,7 +351,6 @@ nav.scrolled {
 }
 .workshops-grid.active { opacity: 1; transform: translateY(0); }
 
-/* Workshop Cards */
 .workshop-card {
   background: var(--bg2); border: 1px solid var(--border);
   padding: 2.5rem; border-radius: 8px;
@@ -390,10 +370,7 @@ nav.scrolled {
 .wcard-title { font-family: 'Lora', serif; font-weight: 600; font-size: 1.35rem; letter-spacing: -0.01em; color: var(--white); }
 .wcard-desc { font-size: 0.9rem; line-height: 1.75; color: var(--muted2); font-weight: 300; }
 
-/* Visual Pill Tool Badges (Replaces plain text layout) */
-.wcard-tools {
-  display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;
-}
+.wcard-tools { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
 .tool-badge {
   font-size: 0.72rem; font-weight: 700; background: var(--border);
   border: 1px solid rgba(245, 242, 235, 0.05); padding: 0.35rem 0.75rem;
@@ -410,95 +387,94 @@ nav.scrolled {
 .wcard-arrow { color: var(--lime); font-size: 1rem; transition: transform 0.3s ease; }
 .workshop-card:hover .wcard-arrow { transform: translateX(6px); }
 
-/* ─── STORY PROFILE STRIP ───────────────────── */
-.about-strip {
-  padding: 10rem 3.5rem; background: var(--bg2); border-top: 1px solid var(--border);
-  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 7rem; align-items: start;
-}
-.about-text p { font-size: 1.05rem; line-height: 1.85; color: var(--muted2); font-weight: 300; margin-bottom: 1.5rem; }
-.about-text p strong { color: var(--white); font-weight: 500; }
-
-.timeline { display: flex; flex-direction: column; }
-.tl-item {
-  display: grid; grid-template-columns: 100px 1fr; gap: 2rem;
-  padding: 2rem 0; border-top: 1px solid var(--border); align-items: start;
-}
-.tl-year { font-family: 'Lora', serif; font-weight: 600; font-size: 0.95rem; color: var(--lime); letter-spacing: 0.04em; padding-top: 0.1rem; }
-.tl-role { font-family: 'Lora', serif; font-weight: 600; font-size: 1.1rem; color: var(--white); margin-bottom: 0.2rem; }
-.tl-org { font-size: 0.82rem; color: var(--muted); font-weight: 500; }
-
-/* ─── LIBRARY (Visual Literary 3D Book Covers) ─── */
+/* ─── LIBRARY (Space-saving dynamic book shelf row) ─── */
 .books-section { padding: 10rem 3.5rem; border-top: 1px solid var(--border); }
-.books-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 3.5rem; background: transparent; margin-top: 5rem;
-}
-.book-card { background: transparent; padding: 0; display: flex; flex-direction: column; gap: 1.5rem; }
 
-/* Elegant 3D Cover Structure */
+/* Horizontal scrolling track preventing huge vertical space consumption */
+.books-shelf-wrapper {
+  overflow-x: auto;
+  padding: 3rem 1.5rem;
+  margin-top: 3rem;
+  scrollbar-width: thin;
+}
+.books-shelf-wrapper::-webkit-scrollbar { height: 4px; }
+.books-shelf-wrapper::-webkit-scrollbar-track { background: var(--bg); }
+.books-shelf-wrapper::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+.books-shelf {
+  display: flex;
+  gap: 3.5rem;
+  width: max-content;
+}
+
+.book-card {
+  width: 250px;
+  background: transparent; padding: 0; display: flex; flex-direction: column; gap: 1.5rem;
+}
+
+/* 3D Spines */
 .book-visual {
-  perspective: 1200px;
-  display: flex; justify-content: center; margin-bottom: 1rem;
+  perspective: 1000px;
+  display: flex; justify-content: flex-start; margin-bottom: 0.5rem;
 }
 .book-spine-cover {
-  width: 170px; height: 250px;
+  width: 140px; height: 210px;
   position: relative;
-  border-radius: 3px 8px 8px 3px;
+  border-radius: 2px 6px 6px 2px;
   transform-style: preserve-3d;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 8px 12px 28px rgba(0, 0, 0, 0.4);
+  box-shadow: 6px 10px 24px rgba(0, 0, 0, 0.35);
 }
-/* Shading spine strip */
 .book-spine-cover::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
   background: rgba(0,0,0,0.18); z-index: 5;
-  border-radius: 3px 0 0 3px;
-  box-shadow: inset -1px 0 3px rgba(255,255,255,0.06);
+  border-radius: 2px 0 0 2px;
 }
 .book-visual:hover .book-spine-cover {
   transform: rotateY(-18deg) rotateX(6deg) translateY(-4px);
-  box-shadow: 14px 18px 36px rgba(0, 0, 0, 0.5);
+  box-shadow: 12px 16px 32px rgba(0, 0, 0, 0.45);
 }
 
-/* Deluxe Custom Cover Designs */
 .book1 { background: linear-gradient(135deg, #1C2D22 0%, #2E4C38 100%); border-right: 2px solid #365C43; }
 .book2 { background: linear-gradient(135deg, #301E15 0%, #523425 100%); border-right: 2px solid #5C3A29; }
 .book3 { background: linear-gradient(135deg, #152330 0%, #253D52 100%); border-right: 2px solid #29455C; }
 .book4 { background: linear-gradient(135deg, #221530 0%, #3D2552 100%); border-right: 2px solid #45295C; }
 
 .book-title-overlay {
-  padding: 1.5rem; height: 100%; display: flex; flex-direction: column; justify-content: space-between;
+  padding: 1.25rem; height: 100%; display: flex; flex-direction: column; justify-content: space-between;
 }
-.book-brand-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lime); }
-.book-hero-title { font-family: 'Lora', serif; font-size: 1.2rem; font-weight: 600; color: #FAF8F5; line-height: 1.3; }
-.book-cover-meta { font-size: 0.65rem; color: rgba(250, 246, 240, 0.6); font-family: 'Lora', serif; font-style: italic; }
+.book-brand-label { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lime); }
+.book-hero-title { font-family: 'Lora', serif; font-size: 1rem; font-weight: 600; color: #FAF8F5; line-height: 1.3; }
+.book-cover-meta { font-size: 0.6rem; color: rgba(250, 246, 240, 0.6); font-family: 'Lora', serif; font-style: italic; }
 
-.book-title { font-family: 'Lora', serif; font-weight: 600; font-size: 1.25rem; color: var(--white); line-height: 1.35; }
-.book-sub { font-size: 0.9rem; color: var(--muted2); line-height: 1.7; font-weight: 300; }
+.book-title { font-family: 'Lora', serif; font-weight: 600; font-size: 1.2rem; color: var(--white); line-height: 1.35; }
+.book-sub { font-size: 0.85rem; color: var(--muted2); line-height: 1.65; font-weight: 300; }
 .book-link {
   display: inline-flex; align-items: center; gap: 0.5rem; margin-top: auto;
-  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--lime); text-decoration: none; transition: all 0.3s ease;
 }
 .book-link:hover { gap: 0.85rem; }
 
-/* ─── TESTIMONIALS (Continuous Auto-Scroller Row) ─── */
+/* ─── TESTIMONIALS (Seamless CSS Hardware Carousel) ─── */
 .testi-section {
   padding: 10rem 3.5rem; background: var(--bg2); border-top: 1px solid var(--border);
   overflow: hidden;
 }
 .testi-marquee {
   width: 100%; overflow: hidden; position: relative; margin-top: 4rem; padding: 2rem 0;
+  display: flex;
 }
 .testi-marquee::before, .testi-marquee::after {
-  content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
+  content: ''; position: absolute; top: 0; bottom: 0; width: 150px; z-index: 2; pointer-events: none;
 }
 .testi-marquee::before { left: 0; background: linear-gradient(90deg, var(--bg2), transparent); }
 .testi-marquee::after { right: 0; background: linear-gradient(-90deg, var(--bg2), transparent); }
 
 .testi-track {
   display: flex; gap: 2.5rem; width: max-content;
-  animation: testiTicker 45s linear infinite;
+  animation: testiTicker 38s linear infinite;
+  will-change: transform;
 }
 .testi-track:hover { animation-play-state: paused; }
 
@@ -517,7 +493,10 @@ nav.scrolled {
 .testi-name { font-family: 'Lora', serif; font-weight: 600; font-size: 0.88rem; color: var(--white); }
 .testi-role { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; font-weight: 500; }
 
-@keyframes testiTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@keyframes testiTicker {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-33.33%, 0, 0); } /* Loops cleanly on three identical card sets */
+}
 
 /* ─── ACTION DRIVEN FOOTER PANEL ──────────── */
 .cta-section { padding: 12rem 3.5rem; text-align: center; position: relative; overflow: hidden; }
@@ -575,20 +554,14 @@ footer {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
 
-  .hero { grid-template-columns: 1fr; padding: 8rem 2rem 4rem; gap: 4rem; text-align: left; }
-  .hero-right { order: -1; }
-  .photo-wrap { width: min(320px, 90%); }
-  .hero-left { gap: 2.5rem; }
-  .hero-sub { max-width: 100%; }
+  .hero-wrapper { padding: 7rem 2rem 4rem; gap: 3rem; }
+  .hero-copy-section { gap: 1.5rem; }
 
-  .metrics { grid-template-columns: 1fr 1fr; gap: 3rem; padding: 6rem 2rem; }
-  .about-strip { grid-template-columns: 1fr; gap: 4rem; padding: 6rem 2rem; }
-
-  /* Collapse active layout cleanly on tablet & mobile */
+  /* Keeps filters stacked vertically on mobile */
   .workshops-split { grid-template-columns: 1fr; gap: 3rem; }
-  .filter-tabs { flex-direction: row; flex-wrap: wrap; border-left: none; border-bottom: 1px solid var(--border); padding-left: 0; padding-bottom: 1.25rem; }
-  .filter-tab::before { left: 0; bottom: -1.35rem; top: auto; width: auto; right: 0; height: 3px; transform: scaleX(0); }
-  .filter-tab.active::before { transform: scaleX(1); }
+  .filter-tabs { border-left: 2px solid var(--border); padding-left: 1.5rem; flex-direction: column; gap: 1rem; }
+  .filter-tab::before { left: -1.6rem; bottom: 0; top: 0; width: 3px; height: auto; right: auto; transform: scaleY(0); }
+  .filter-tab.active::before { transform: scaleY(1); }
 
   .section { padding: 6rem 2rem; }
   .books-section { padding: 6rem 2rem; }
@@ -601,38 +574,34 @@ footer {
 @media(max-width:600px){
   .metrics { grid-template-columns: 1fr; gap: 2.5rem; }
   .metric-item { padding: 0; }
-  .hero-headline { font-size: 2.5rem; }
-  .filter-tabs { gap: 1rem; }
-  .filter-tab { font-size: 0.82rem; }
-  .testi-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .books-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-headline { font-size: 2.3rem; }
+  .testi-card { flex: 0 0 320px; padding: 2rem; }
+  .filter-tab { font-size: 0.9rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- MOBILE NAVIGATION DRAWERS -->
+<!-- MOBILE DRAWER NAVIGATION -->
 <div class="mobile-menu" id="mobileMenu">
   <button class="mobile-menu-close" id="menuClose">✕</button>
   <a href="#workshops" onclick="closeMobile()">Workshops</a>
   <a href="#books" onclick="closeMobile()">Books</a>
-  <a href="#about-section" onclick="closeMobile()">Story</a>
   <a href="#testimonials" onclick="closeMobile()">Proof</a>
   <a href="#contact" class="btn-fill" onclick="closeMobile()">Book a Workshop</a>
 </div>
 
-<!-- NAVIGATION BAR -->
+<!-- HEADER / NAVIGATION -->
 <nav id="mainNav">
   <a class="nav-logo" href="#">MANAV<span>.</span></a>
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="#workshops">Workshops</a></li>
       <li><a href="#books">Books</a></li>
-      <li><a href="#about-section">Story</a></li>
       <li><a href="#testimonials">Proof</a></li>
     </ul>
 
-    <!-- Light Theme Toggle -->
+    <!-- Theme Toggle -->
     <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
       <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="12" cy="12" r="5"></circle>
@@ -657,45 +626,14 @@ footer {
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <span class="hero-tag">Agile Coach · AI Strategist · Author</span>
-
-    <!-- Leading on top with "I help..." target logic -->
-    <h1 class="hero-headline">
-      I help 
-      <div class="carousel-inline-container" id="audience-carousel">
-        <span class="carousel-inline-word active">founders</span>
-        <span class="carousel-inline-word">engineers</span>
-        <span class="carousel-inline-word">executives</span>
-        <span class="carousel-inline-word">Scrum Masters</span>
-        <span class="carousel-inline-word">developers</span>
-        <span class="carousel-inline-word">stressed PMs</span>
-        <span class="carousel-inline-word">agile skeptics</span>
-        <span class="carousel-inline-word">creative teams</span>
-        <span class="carousel-inline-word">human beings</span>
-      </div><br>
-      actually work together.
-      <span class="line2">Transforming complex chaos into human stories.<br>No corporate theater. No buzzword karaoke.</span>
-    </h1>
-
-    <p class="hero-sub">
-      From <strong>Aerospace Engineering</strong> to the frontlines of Agile transformation —
-      I spent years watching brilliant strategies die because the humans behind them
-      were never brought along for the ride. Now I fix that.
-    </p>
-
-    <div class="hero-actions">
-      <a class="btn-fill" href="#contact">Book a Workshop →</a>
-      <a class="btn-outline" href="#books">Explore the Books</a>
-    </div>
-  </div>
-
-  <div class="hero-right">
+<!-- HERO COMPONENT -->
+<main class="hero-wrapper">
+  
+  <!-- Centered picture right at the top (First visual item) -->
+  <section class="hero-top-visual">
     <div class="photo-wrap">
 
-      <!-- Desktop interactive metric lines (Kane Sherwell Style) -->
+      <!-- Desktop interactive pointers -->
       <div class="callout c1">
         <span class="callout-n">01</span>
         <div class="callout-body">
@@ -740,8 +678,33 @@ footer {
       />
       <div class="photo-img-fallback">Image loads on live site</div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- Headline Copy Area directly below portrait -->
+  <section class="hero-copy-section">
+    <span class="hero-tag">Agile Coach · AI Strategist · Author</span>
+    
+    <h1 class="hero-headline">
+      I help 
+      <!-- Smooth Inline Text Carousel - Never Wraps or clips on Mobile -->
+      <span id="scramble-word" class="carousel-word-highlight">founders</span> 
+      actually work together.
+      <span class="line2">Transforming complex chaos into human stories.<br>No corporate theater. No buzzword karaoke.</span>
+    </h1>
+
+    <p class="hero-sub">
+      From <strong>Aerospace Engineering</strong> to the frontlines of Agile transformation —
+      I spent years watching brilliant strategies die because the humans behind them
+      were never brought along for the ride. Now I fix that.
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn-fill" href="#contact">Book a Workshop →</a>
+      <a class="btn-outline" href="#books">Explore the Books</a>
+    </div>
+  </section>
+
+</main>
 
 <!-- CENTRED BOLD METRICS -->
 <div class="metrics" id="metricsSection">
@@ -763,7 +726,7 @@ footer {
   </div>
 </div>
 
-<!-- TICKER -->
+<!-- AUDIENCE TICKER -->
 <div class="ticker-wrap">
   <div class="ticker-track" id="tickerTrack"></div>
 </div>
@@ -776,7 +739,7 @@ footer {
   </div>
 
   <div class="workshops-split">
-    <!-- Line-by-Line Stacked Sidebar Filters (Kane's exact selector style) -->
+    <!-- Line-by-Line Stacked Sidebar Filters (Saves vast space, Kane's exact selector style) -->
     <div class="filter-tabs" id="filterTabs">
       <button class="filter-tab active" data-filter="implementation">Implementation <span class="tab-count">2</span></button>
       <button class="filter-tab" data-filter="safe">SAFe® Cert <span class="tab-count">3</span></button>
@@ -868,7 +831,7 @@ footer {
           <div class="wcard-title">SAFe® Scrum Master (SSM)</div>
           <div class="wcard-desc">Servant leadership in a scaled enterprise isn't the same as in a startup. Facilitation when you have dependencies on five teams and authority over none of them.</div>
           <div class="wcard-tools">
-            <span class="tool-badge">Enterprise Board</span>
+            <span class="tool-badge">ART Board</span>
             <span class="tool-badge">Kanban cards</span>
             <span class="tool-badge">Dependency sheets</span>
           </div>
@@ -938,139 +901,130 @@ footer {
   </div>
 </section>
 
-<!-- STORY STRIP -->
-<section class="about-strip" id="about-section">
-  <div class="about-text">
-    <p class="section-eyebrow">The Story</p>
-    <p>My career started in <strong>Aerospace Engineering</strong> — a world where process guarantees result. Math doesn't have moods. Physics doesn't have bad days.</p>
-    <p>Then I moved into <strong>Project Management</strong> and hit the wall everyone hits: the biggest variable in any system is the human beings operating it. Brilliant strategies failing not because the logic was wrong, but because the connection was missing.</p>
-    <p><strong>'Agile' had become a micromanagement weapon. AI had become a source of fear.</strong> I pivoted. Today I use my technical background to deconstruct complex org problems, and storytelling to rebuild the culture needed to solve them.</p>
-    <div style="margin-top:2.5rem;">
-      <a class="btn-outline" href="#contact">Work with Manav →</a>
-    </div>
-  </div>
-  <div>
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-year">2024</div>
-        <div class="tl-body">
-          <div class="tl-role">Scaled Agile Advisor</div>
-          <div class="tl-org">Windpower Production</div>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-year">2022</div>
-        <div class="tl-body">
-          <div class="tl-role">Scrum Master</div>
-          <div class="tl-org">IT Consulting</div>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-year">2020</div>
-        <div class="tl-body">
-          <div class="tl-role">Product Owner</div>
-          <div class="tl-org">Engineering Consulting</div>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-year">2018</div>
-        <div class="tl-body">
-          <div class="tl-role">Product Manager</div>
-          <div class="tl-org">Marketing Automation</div>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-year">2015</div>
-        <div class="tl-body">
-          <div class="tl-role">Aerospace Project Mgmt</div>
-          <div class="tl-org">ISAE-SUPAERO, France</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- LIBRARY (Visual 3D Books with tilting covers) -->
+<!-- LIBRARY (Space-saving horizontal scroll shelf) -->
 <section class="books-section" id="books">
   <p class="section-eyebrow">The Library</p>
   <h2 class="section-title">Business books written<br><em>like actual stories.</em></h2>
-  <div class="books-grid">
-    
-    <!-- Book 1 -->
-    <div class="book-card">
-      <div class="book-visual">
-        <div class="book-spine-cover book1">
-          <div class="book-title-overlay">
-            <span class="book-brand-label">Vol. 01</span>
-            <span class="book-hero-title">When Sally Met Scrum</span>
-            <span class="book-cover-meta">M. Agarwal</span>
+  
+  <div class="books-shelf-wrapper">
+    <div class="books-shelf">
+      
+      <!-- Book 1 -->
+      <div class="book-card">
+        <div class="book-visual">
+          <div class="book-spine-cover book1">
+            <div class="book-title-overlay">
+              <span class="book-brand-label">Vol. 01</span>
+              <span class="book-hero-title">When Sally Met Scrum</span>
+              <span class="book-cover-meta">M. Agarwal</span>
+            </div>
           </div>
         </div>
+        <div class="book-title">When Sally Met Scrum</div>
+        <div class="book-sub">Experience the Scrum Guide through an story — specific challenges Scrum solved.</div>
+        <a class="book-link" href="https://www.amazon.de/dp/B0DJL2GNPT" target="_blank">Read on Amazon →</a>
       </div>
-      <div class="book-title">When Sally Met Scrum</div>
-      <div class="book-sub">Experience the Scrum Guide through an engaging story — the specific challenges Scrum was designed to solve, felt viscerally rather than memorised.</div>
-      <a class="book-link" href="https://www.amazon.de/dp/B0DJL2GNPT" target="_blank">Read on Amazon →</a>
-    </div>
 
-    <!-- Book 2 -->
-    <div class="book-card">
-      <div class="book-visual">
-        <div class="book-spine-cover book2">
-          <div class="book-title-overlay">
-            <span class="book-brand-label">Vol. 02</span>
-            <span class="book-hero-title">When Sally Met Kanban</span>
-            <span class="book-cover-meta">M. Agarwal</span>
+      <!-- Book 2 -->
+      <div class="book-card">
+        <div class="book-visual">
+          <div class="book-spine-cover book2">
+            <div class="book-title-overlay">
+              <span class="book-brand-label">Vol. 02</span>
+              <span class="book-hero-title">When Sally Met Kanban</span>
+              <span class="book-cover-meta">M. Agarwal</span>
+            </div>
           </div>
         </div>
+        <div class="book-title">When Sally Met Kanban</div>
+        <div class="book-sub">A journey from chaos to clarity. Sally learns busy and productive aren't the same.</div>
+        <a class="book-link" href="https://www.amazon.de/dp/B0DJL2GNPT" target="_blank">Read on Amazon →</a>
       </div>
-      <div class="book-title">When Sally Met Kanban</div>
-      <div class="book-sub">A journey from chaos to clarity. Why is everyone busy yet nothing gets done? Sally learns that 'busy' and 'productive' are not the same thing.</div>
-      <a class="book-link" href="https://www.amazon.de/dp/B0DJL2GNPT" target="_blank">Read on Amazon →</a>
-    </div>
 
-    <!-- Book 3 -->
-    <div class="book-card">
-      <div class="book-visual">
-        <div class="book-spine-cover book3">
-          <div class="book-title-overlay">
-            <span class="book-brand-label">Vol. 03</span>
-            <span class="book-hero-title">When Sally Met Agile</span>
-            <span class="book-cover-meta">M. Agarwal</span>
+      <!-- Book 3 -->
+      <div class="book-card">
+        <div class="book-visual">
+          <div class="book-spine-cover book3">
+            <div class="book-title-overlay">
+              <span class="book-brand-label">Vol. 03</span>
+              <span class="book-hero-title">When Sally Met Agile</span>
+              <span class="book-cover-meta">M. Agarwal</span>
+            </div>
           </div>
         </div>
+        <div class="book-title">When Sally Met Agile</div>
+        <div class="book-sub">Sally faces her ultimate challenge: adapting frameworks to a non-standard team.</div>
+        <a class="book-link" href="https://www.amazon.de/dp/B0DJL2GNPT" target="_blank">Read on Amazon →</a>
       </div>
-      <div class="book-title">When Sally Met Agile</div>
-      <div class="book-sub">Beyond frameworks. Agile isn't one-size-fits-all. Sally faces the ultimate challenge: adapting rigid frameworks to a complex, non-standard environment.</div>
-      <a class="book-link" href="https://www.amazon.de/dp/B0DJL2GNPT" target="_blank">Read on Amazon →</a>
-    </div>
 
-    <!-- Book 4 -->
-    <div class="book-card">
-      <div class="book-visual">
-        <div class="book-spine-cover book4">
-          <div class="book-title-overlay">
-            <span class="book-brand-label">Vol. 04</span>
-            <span class="book-hero-title">The Silent Whisper</span>
-            <span class="book-cover-meta">M. Agarwal</span>
+      <!-- Book 4 -->
+      <div class="book-card">
+        <div class="book-visual">
+          <div class="book-spine-cover book4">
+            <div class="book-title-overlay">
+              <span class="book-brand-label">Vol. 04</span>
+              <span class="book-hero-title">The Silent Whisper</span>
+              <span class="book-cover-meta">M. Agarwal</span>
+            </div>
           </div>
         </div>
+        <div class="book-title">The Silent Whisper</div>
+        <div class="book-sub">What happens to human connection when algorithms know our desires better than we do?</div>
+        <a class="book-link" href="https://www.amazon.de/dp/B0DJL2GNPT" target="_blank">Read on Amazon →</a>
       </div>
-      <div class="book-title">The Silent Whisper</div>
-      <div class="book-sub">Tales of love in the AI era. What happens to human connection when algorithms know our desires better than we do? Not a manual — a mirror.</div>
-      <a class="book-link" href="https://www.amazon.de/dp/B0DJL2GNPT" target="_blank">Read on Amazon →</a>
-    </div>
 
+    </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS (Marquee carousel) -->
+<!-- TESTIMONIALS (Seamless CSS Hardware Carousel Loop) -->
 <section class="testi-section" id="testimonials">
   <p class="section-eyebrow">Proof It Works</p>
   <h2 class="section-title">They said it.<br><em>Not me.</em></h2>
   
   <div class="testi-marquee">
     <div class="testi-track" id="testiTrack">
-      <!-- Injected with testimonials via Javascript dynamically to construct a loop -->
+      <!-- Injected duplicates in HTML to prevent JS layout calculation errors -->
+      <div class="testi-card">
+        <div class="testi-q">"I used to think soft skills were fluff. Manav was the first coach who explained empathy using <strong>logic I could actually respect.</strong> He didn't try to turn me into a cheerleader."</div>
+        <div class="testi-bottom"><div class="testi-name">Lead Backend Engineer</div><div class="testi-role">FinTech — Engineering to Management</div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-q">"The official SAFe training tells you how it should work. Manav taught us <strong>how it actually works when you have budget cuts and angry stakeholders.</strong> His advice saved my project."</div>
+        <div class="testi-bottom"><div class="testi-name">Release Train Engineer</div><div class="testi-role">Automotive Sector</div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-q">"My CV was a laundry list of tasks that bored everyone. We stopped talking about Jira tickets and started talking about <strong>business value.</strong> I got the role within 3 months."</div>
+        <div class="testi-bottom"><div class="testi-name">Head of Product, Berlin</div><div class="testi-role">Career Pivot</div></div>
+      </div>
+      
+      <!-- Duplicate Set for Seamless Flow -->
+      <div class="testi-card">
+        <div class="testi-q">"I used to think soft skills were fluff. Manav was the first coach who explained empathy using <strong>logic I could actually respect.</strong> He didn't try to turn me into a cheerleader."</div>
+        <div class="testi-bottom"><div class="testi-name">Lead Backend Engineer</div><div class="testi-role">FinTech — Engineering to Management</div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-q">"The official SAFe training tells you how it should work. Manav taught us <strong>how it actually works when you have budget cuts and angry stakeholders.</strong> His advice saved my project."</div>
+        <div class="testi-bottom"><div class="testi-name">Release Train Engineer</div><div class="testi-role">Automotive Sector</div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-q">"My CV was a laundry list of tasks that bored everyone. We stopped talking about Jira tickets and started talking about <strong>business value.</strong> I got the role within 3 months."</div>
+        <div class="testi-bottom"><div class="testi-name">Head of Product, Berlin</div><div class="testi-role">Career Pivot</div></div>
+      </div>
+
+      <!-- Third Set for Absolute Seamless Coverage -->
+      <div class="testi-card">
+        <div class="testi-q">"I used to think soft skills were fluff. Manav was the first coach who explained empathy using <strong>logic I could actually respect.</strong> He didn't try to turn me into a cheerleader."</div>
+        <div class="testi-bottom"><div class="testi-name">Lead Backend Engineer</div><div class="testi-role">FinTech — Engineering to Management</div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-q">"The official SAFe training tells you how it should work. Manav taught us <strong>how it actually works when you have budget cuts and angry stakeholders.</strong> His advice saved my project."</div>
+        <div class="testi-bottom"><div class="testi-name">Release Train Engineer</div><div class="testi-role">Automotive Sector</div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-q">"My CV was a laundry list of tasks that bored everyone. We stopped talking about Jira tickets and started talking about <strong>business value.</strong> I got the role within 3 months."</div>
+        <div class="testi-bottom"><div class="testi-name">Head of Product, Berlin</div><div class="testi-role">Career Pivot</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1123,26 +1077,27 @@ function openMobile() { document.getElementById('mobileMenu').classList.add('ope
 function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
 document.getElementById('menuClose').onclick = closeMobile;
 
-/* ─── KINETIC 3D FLIP HELPING TEXT (At the top of the hero) ─── */
-const carouselWords = document.querySelectorAll('#audience-carousel .carousel-inline-word');
+/* ─── SMOOTH DYNAMIC TEXT INLINE CAROUSEL (ZERO CLIPPING ENGINE) ─── */
+const carouselWords = ['founders', 'engineers', 'executives', 'Scrum Masters', 'developers', 'stressed PMs', 'agile skeptics', 'creative teams', 'human beings'];
 let activeWordIndex = 0;
+const targetSpan = document.getElementById('scramble-word');
 
 setInterval(() => {
-  const currentWord = carouselWords[activeWordIndex];
-  
-  currentWord.classList.remove('active');
-  currentWord.classList.add('exit');
-
-  activeWordIndex = (activeWordIndex + 1) % carouselWords.length;
-  const nextWord = carouselWords[activeWordIndex];
-
-  nextWord.classList.remove('exit');
-  nextWord.classList.add('active');
+  // Fade current word out smoothly
+  targetSpan.classList.add('fade-out');
 
   setTimeout(() => {
-    currentWord.classList.remove('exit');
-  }, 600);
-}, 2200);
+    // Switch value and fade back in (lets document flow handle auto-width dynamically)
+    activeWordIndex = (activeWordIndex + 1) % carouselWords.length;
+    targetSpan.textContent = carouselWords[activeWordIndex];
+    targetSpan.classList.remove('fade-out');
+    targetSpan.classList.add('fade-in');
+    
+    setTimeout(() => {
+      targetSpan.classList.remove('fade-in');
+    }, 300);
+  }, 300);
+}, 2400);
 
 /* ─── AUDIENCE MARQUEE CAROUSEL ─── */
 const audiences = [
@@ -1156,55 +1111,6 @@ const track = document.getElementById('tickerTrack');
   item.className = 'ticker-item';
   item.innerHTML = `<span class="dot"></span>${a}`;
   track.appendChild(item);
-});
-
-/* ─── INFINITE TESTIMONIAL MARQUEE ─── */
-const testimonialsData = [
-  {
-    q: "I used to think soft skills were fluff. Manav was the first coach who explained empathy using <strong>logic I could actually respect.</strong> He didn't try to turn me into a cheerleader.",
-    name: "Lead Backend Engineer",
-    role: "FinTech — Engineering to Management"
-  },
-  {
-    q: "The official SAFe training tells you how it should work. Manav taught us <strong>how it actually works when you have budget cuts and angry stakeholders.</strong> His advice saved my project.",
-    name: "Release Train Engineer",
-    role: "Automotive Sector"
-  },
-  {
-    q: "My CV was a laundry list of tasks that bored everyone. We stopped talking about Jira tickets and started talking about <strong>business value.</strong> I got the role within 3 months.",
-    name: "Head of Product, Berlin",
-    role: "Career Pivot"
-  },
-  {
-    q: "He's the only facilitator I've seen who can get a room of <strong>introverted developers to debate and laugh.</strong> He doesn't bring slides. He brings energy.",
-    name: "Director of People & Culture",
-    role: "SaaS Scale-up"
-  },
-  {
-    q: "We brought Manav in expecting a technical AI roadmap. He showed us that our bottleneck was <strong>decision fatigue, not technology.</strong> Rare ability to cut through corporate noise.",
-    name: "VP of Engineering",
-    role: "Aerospace"
-  },
-  {
-    q: "Retrospectives were painful because nobody admitted mistakes. Manav introduced a failure framework that <strong>changed the temperature in the room instantly.</strong>",
-    name: "Scrum Master",
-    role: "Logistics Enterprise"
-  }
-];
-
-const testiTrack = document.getElementById('testiTrack');
-// Duplicated to create a seamless infinite rolling loop
-[...testimonialsData, ...testimonialsData, ...testimonialsData].forEach(t => {
-  const card = document.createElement('div');
-  card.className = 'testi-card';
-  card.innerHTML = `
-    <div class="testi-q">"${t.q}"</div>
-    <div class="testi-bottom">
-      <div class="testi-name">${t.name}</div>
-      <div class="testi-role">${t.role}</div>
-    </div>
-  `;
-  testiTrack.appendChild(card);
 });
 
 /* ─── METRIC COUNT-UP CONTROLLER ─── */
@@ -1235,26 +1141,25 @@ const metricObs = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 counters.forEach(c => metricObs.observe(c));
 
-/* ─── WORKSHOP FILTER REVEAL CONTROLLER ─── */
+/* ─── WORKSHOP FILTER REVEAL CONTROLLER (Kane Sherwell style stack logic) ─── */
 const tabs = document.querySelectorAll('.filter-tab');
 const cards = document.querySelectorAll('.workshop-card');
 const workshopsGrid = document.getElementById('workshopsGrid');
 
 tabs.forEach(tab => {
   tab.addEventListener('click', () => {
-    // Deactivate current active tab
     tabs.forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
 
     const filter = tab.dataset.filter;
     
-    // Smoothly fade grid down, switch, then fade back up
+    // Smooth opacity transition trigger
     workshopsGrid.style.opacity = '0';
     workshopsGrid.style.transform = 'translateY(10px)';
 
     setTimeout(() => {
       cards.forEach(card => {
-        const match = filter === 'all' || card.dataset.category === filter;
+        const match = card.dataset.category === filter;
         card.style.display = match ? 'flex' : 'none';
       });
       workshopsGrid.style.opacity = '1';
@@ -1263,14 +1168,14 @@ tabs.forEach(tab => {
   });
 });
 
-// Default behavior: Active on "Implementation" category cards on initial page render
+// Default category load state config
 cards.forEach(card => {
   const match = card.dataset.category === 'implementation';
   card.style.display = match ? 'flex' : 'none';
 });
 
 /* ─── SCROLL REVEAL TRIGGERS ─── */
-const fadeEls = document.querySelectorAll('.metric-item, .book-card, .tl-item');
+const fadeEls = document.querySelectorAll('.metric-item, .book-card');
 const fadeObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
